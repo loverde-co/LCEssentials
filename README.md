@@ -8,6 +8,7 @@ Loverde Co. Essentials Swift Scripts
 > iOS 10.+
 
 ----
+This is a repository of essential scripts written in Swift for Loverde Co. used to save time on re-writing and keeping it on all other projects. So this Cocoapods will evolve with Swift and will improve with every release!
 
 ## Installation
 
