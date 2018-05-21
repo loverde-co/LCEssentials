@@ -1,12 +1,13 @@
 
-![](loverde_company_logo_full.png)
+![](loverde_company_logo_full.png)  
 Loverde Co. Essentials Swift Scripts
 ----
 > Writen in Swift 4 - XCode 9.3.1
 > 
 > iOS 10.+
+> 
+----
 
--
 This is a repository of essential scripts written in Swift for Loverde Co. used to save time on re-writing and keeping it on all other projects. So this Cocoapods will evolve with Swift and will improve with every release!
 
 ## Features
