@@ -15,7 +15,7 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
 - [x] Pop To View Controller with animation
 - [x] Stars Rating Designable
 - [x] Many others usefull Designables
-- [] Create a XCode Proj example with all features
+- [ ] Create a XCode Proj example with all features
 
 
 Installation
@@ -29,7 +29,7 @@ use_frameworks!
 pod 'LCEssentials'
 ```
 
-To get the full benefits import `YourLibrary` wherever you import UIKit
+To get the full benefits import `LCEssentials` wherever you import UIKit
 
 ``` swift
 import LCEssentials
@@ -37,9 +37,6 @@ import LCEssentials
 
 ## Usage example
 
-```swift
-import LCEssentials  
-```
 * Background Trhead  
 
 ```swift
