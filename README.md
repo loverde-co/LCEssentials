@@ -59,6 +59,8 @@ self.navigationController?.popViewControllerWithHandler {
     //Do some stuff after pop
 }
 ```
+* See the custom [PickerViewController](PickerViewController.md) 
+* See the custom [DatePickerViewController](DatePickerViewController.md) 
 
 
 Author of v1.0
