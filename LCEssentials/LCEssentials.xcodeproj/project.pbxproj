@@ -83,6 +83,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B19453B920B5C5C500A451B4 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				B1AD446720B4C40A00FAA190 /* PickerViews.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		B1AD43E720B200A600FAA190 = {
 			isa = PBXGroup;
 			children = (
@@ -104,8 +112,7 @@
 		B1AD43F320B200A600FAA190 /* LCEssentials */ = {
 			isa = PBXGroup;
 			children = (
-				B1AD446620B4C3DB00FAA190 /* Historyboards */,
-				B1AD440B20B2037500FAA190 /* Defaults */,
+				B1AD440B20B2037500FAA190 /* Classes */,
 				B1AD446920B4C41C00FAA190 /* PickerViews */,
 				B1AD43F420B200A600FAA190 /* LCEssentials.h */,
 				B1AD43F520B200A600FAA190 /* Info.plist */,
@@ -122,27 +129,20 @@
 			path = LCEssentialsTests;
 			sourceTree = "<group>";
 		};
-		B1AD440B20B2037500FAA190 /* Defaults */ = {
+		B1AD440B20B2037500FAA190 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				B1AD440C20B203B200FAA190 /* LCDefaults.swift */,
 				B1AD440E20B20E2F00FAA190 /* LCDesignables.swift */,
 				B1AD446420B4C32500FAA190 /* LCSingleton.swift */,
 			);
-			path = Defaults;
-			sourceTree = "<group>";
-		};
-		B1AD446620B4C3DB00FAA190 /* Historyboards */ = {
-			isa = PBXGroup;
-			children = (
-				B1AD446720B4C40A00FAA190 /* PickerViews.storyboard */,
-			);
-			path = Historyboards;
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		B1AD446920B4C41C00FAA190 /* PickerViews */ = {
 			isa = PBXGroup;
 			children = (
+				B19453B920B5C5C500A451B4 /* Storyboards */,
 				B1AD446A20B4C46C00FAA190 /* PickerViewController.swift */,
 				B1AD446C20B4C49B00FAA190 /* DatePickerViewController.swift */,
 			);
