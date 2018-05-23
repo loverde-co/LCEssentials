@@ -22,13 +22,13 @@
 
 import UIKit
 
-@objc protocol PickerViewControllerDelegate {
+@objc public protocol PickerViewControllerDelegate {
     @objc func pickerViewController(_ picker: PickerViewController, didConfirm selectedString: String, selectedValue: Int)
     @objc func pickerViewController(didCancel picker: PickerViewController)
     @objc func pickerViewController(_ picker: PickerViewController, didEndScrollPicker SelectedString: String, SelectedValue: Int)
 }
 
-class PickerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var btConfirm: UIButton!
@@ -51,19 +51,19 @@ class PickerViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     var delegate : PickerViewControllerDelegate!
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         self.pickerView.selectRow(self.setSelectedRow, inComponent: 0, animated: true)
         self.setSelectedRow = self.arrayParams[0]["row"] as! Int
     }
     
-    override func didReceiveMemoryWarning() {
+    override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     //MARK: - Methods
-    func show(){
+    public func show(){
         view.removeFromSuperview()
         borderTop.backgroundColor = setBorderTopColor
         borderBottom.backgroundColor = setBorderBottomColor
@@ -86,7 +86,7 @@ class PickerViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
-    func hidde(){
+    public func hidde(){
         UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear],
                        animations: {
                         self.view.center.y += self.view.bounds.height
@@ -109,20 +109,20 @@ class PickerViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     //MARK: - UIPickerView Delegate and DataSource
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return arrayParams.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         delegate.pickerViewController(self, didEndScrollPicker: (arrayParams[row]["title"] as? String)!, SelectedValue: (arrayParams[row]["row"] as? Int)!)
         pickerView.reloadAllComponents()
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return arrayParams[row]["title"] as? String
     }
     
-    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+    public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
         let pickerLabel = UILabel()
         var titleData : String = String()
@@ -145,11 +145,11 @@ class PickerViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     @available(iOS 2.0, *)
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+    public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return 34
     }
 }

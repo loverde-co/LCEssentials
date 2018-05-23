@@ -22,13 +22,13 @@
 
 import UIKit
 
-@objc protocol DatePickerViewControllerDelegate {
+@objc public protocol DatePickerViewControllerDelegate {
     @objc func datePickerViewController(didConfirm picker: DatePickerViewController, withValue: String)
     @objc func datePickerViewController(didCancel picker: DatePickerViewController)
     @objc func datePickerViewController(didEndScrollPicker picker: DatePickerViewController, withValue: String)
 }
 
-class DatePickerViewController: UIViewController {
+public class DatePickerViewController: UIViewController {
     
     var delegate: DatePickerViewControllerDelegate!
     
@@ -49,21 +49,21 @@ class DatePickerViewController: UIViewController {
     var setBorderTopColor: UIColor = UIColor.darkGray
     var setBorderBottomColor: UIColor = UIColor.darkGray
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         datePicker.locale = Locale(identifier: setLocale)
         datePicker.datePickerMode = setDatePickerMode
     }
     
-    override func didReceiveMemoryWarning() {
+    override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     
     //MARK: - Methods
-    func show(){
+    public func show(){
         view.removeFromSuperview()
         borderTop.backgroundColor = setBorderTopColor
         borderBottom.backgroundColor = setBorderBottomColor
@@ -85,7 +85,7 @@ class DatePickerViewController: UIViewController {
         }
     }
     
-    func hidde(){
+    public func hidde(){
         UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear],
                        animations: {
                         self.view.center.y += self.view.bounds.height

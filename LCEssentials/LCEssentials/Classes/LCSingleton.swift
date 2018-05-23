@@ -22,7 +22,7 @@
 import Foundation
 import UIKit
 
-@objc protocol LCSingletonDelegate: class {
+@objc public protocol LCSingletonDelegate: class {
     @objc optional var dictParams: [String:Any]? { get set }
     @objc optional var arrayParams: [[String:Any]]? { get set }
     
@@ -36,29 +36,29 @@ import UIKit
     optional func setParamsArray(params: [[String:Any]]?)
 }
 
-class LCSingleton: UIViewController {
+public class LCSingleton: UIViewController {
     public weak var delegate: LCSingletonDelegate? = nil
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
     
-    override func didReceiveMemoryWarning() {
+    override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func singleton(update viewController: LCSingleton){
+    public func singleton(update viewController: LCSingleton){
         self.delegate?.update!(viewController: viewController)
     }
     
-    func singleton(setDictParams params: [String:Any]){
+    public func singleton(setDictParams params: [String:Any]){
         self.delegate?.setParamsDict!(params: params)
     }
     
-    func singleton(setArrayParams params: [[String:Any]]){
+    public func singleton(setArrayParams params: [[String:Any]]){
         self.delegate?.setParamsArray!(params: params)
     }
 }
