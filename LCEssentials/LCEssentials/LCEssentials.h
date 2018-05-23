@@ -21,7 +21,7 @@
  
 
 #import <UIKit/UIKit.h>
-#import <CommonCrypto/CommonCrypto.h>
+//#import <CommonCrypto/CommonCrypto.h>
 
 //! Project version number for LCEssentials.
 FOUNDATION_EXPORT double LCEssentialsVersionNumber;
