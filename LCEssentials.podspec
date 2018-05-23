@@ -14,6 +14,6 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
   s.swift_version    = '4.0'
   s.platform         = :ios, '9.0'
   s.ios.deployment_target = '10.0'
-  s.source_files = 'LCEssentials/LCEssentials/*'
+  s.source_files     = 'LCEssentials/LCEssentials/**/*.{swift,storyboard}'
  
 end
