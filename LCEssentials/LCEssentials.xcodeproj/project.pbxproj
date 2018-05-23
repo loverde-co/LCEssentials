@@ -26,6 +26,10 @@
 		B1AD440220B200A600FAA190 /* LCEssentials.h in Headers */ = {isa = PBXBuildFile; fileRef = B1AD43F420B200A600FAA190 /* LCEssentials.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B1AD440D20B203B200FAA190 /* LCDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AD440C20B203B200FAA190 /* LCDefaults.swift */; };
 		B1AD440F20B20E2F00FAA190 /* LCDesignables.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AD440E20B20E2F00FAA190 /* LCDesignables.swift */; };
+		B1AD446520B4C32500FAA190 /* LCSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AD446420B4C32500FAA190 /* LCSingleton.swift */; };
+		B1AD446820B4C40A00FAA190 /* PickerViews.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1AD446720B4C40A00FAA190 /* PickerViews.storyboard */; };
+		B1AD446B20B4C46C00FAA190 /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AD446A20B4C46C00FAA190 /* PickerViewController.swift */; };
+		B1AD446D20B4C49B00FAA190 /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AD446C20B4C49B00FAA190 /* DatePickerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +58,10 @@
 		B1AD440120B200A600FAA190 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1AD440C20B203B200FAA190 /* LCDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCDefaults.swift; sourceTree = "<group>"; };
 		B1AD440E20B20E2F00FAA190 /* LCDesignables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCDesignables.swift; sourceTree = "<group>"; };
+		B1AD446420B4C32500FAA190 /* LCSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSingleton.swift; sourceTree = "<group>"; };
+		B1AD446720B4C40A00FAA190 /* PickerViews.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PickerViews.storyboard; sourceTree = "<group>"; };
+		B1AD446A20B4C46C00FAA190 /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
+		B1AD446C20B4C49B00FAA190 /* DatePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +104,9 @@
 		B1AD43F320B200A600FAA190 /* LCEssentials */ = {
 			isa = PBXGroup;
 			children = (
+				B1AD446620B4C3DB00FAA190 /* Historyboards */,
 				B1AD440B20B2037500FAA190 /* Defaults */,
+				B1AD446920B4C41C00FAA190 /* PickerViews */,
 				B1AD43F420B200A600FAA190 /* LCEssentials.h */,
 				B1AD43F520B200A600FAA190 /* Info.plist */,
 			);
@@ -117,8 +127,26 @@
 			children = (
 				B1AD440C20B203B200FAA190 /* LCDefaults.swift */,
 				B1AD440E20B20E2F00FAA190 /* LCDesignables.swift */,
+				B1AD446420B4C32500FAA190 /* LCSingleton.swift */,
 			);
 			path = Defaults;
+			sourceTree = "<group>";
+		};
+		B1AD446620B4C3DB00FAA190 /* Historyboards */ = {
+			isa = PBXGroup;
+			children = (
+				B1AD446720B4C40A00FAA190 /* PickerViews.storyboard */,
+			);
+			path = Historyboards;
+			sourceTree = "<group>";
+		};
+		B1AD446920B4C41C00FAA190 /* PickerViews */ = {
+			isa = PBXGroup;
+			children = (
+				B1AD446A20B4C46C00FAA190 /* PickerViewController.swift */,
+				B1AD446C20B4C49B00FAA190 /* DatePickerViewController.swift */,
+			);
+			path = PickerViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,6 +246,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1AD446820B4C40A00FAA190 /* PickerViews.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +281,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1AD440F20B20E2F00FAA190 /* LCDesignables.swift in Sources */,
+				B1AD446D20B4C49B00FAA190 /* DatePickerViewController.swift in Sources */,
+				B1AD446520B4C32500FAA190 /* LCSingleton.swift in Sources */,
+				B1AD446B20B4C46C00FAA190 /* PickerViewController.swift in Sources */,
 				B1AD440D20B203B200FAA190 /* LCDefaults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -36,6 +36,10 @@ public enum EnumBorderSide {
 }
 
 public struct Defaults {
+    let DEFAULT_ERROR_DOMAIN = "LoverdeCoErrorDomain"
+    let DEFAULT_ERROR_CODE = -99
+    let DEFAULT_ERROR_MSG = "Error Unknow"
+    let IS_PROD = false
     #if targetEnvironment(simulator)
     static let DEVICE_IS_SIMULATOR = true
     #else
@@ -56,6 +60,8 @@ public struct Defaults {
             }
         }
     }
+    
+    //MARK: - Set Root View Controller
     public func setRootViewControllerWithAnimation(fromView from: UIView, toViewController to: UIViewController, duration: TimeInterval = 0.6, options: UIViewAnimationOptions, completion: (() -> Void)? = nil) {
 
         let appDelegate = UIApplication.shared.delegate
@@ -67,6 +73,11 @@ public struct Defaults {
         })
     }
 
+    //MARK: - Instance View Controllers Thru Storyboard
+    func instanceViewController(_ storyBoardName:String = "Intro", withIdentifier: String = "mainIntro" ) -> UIViewController {
+        return UIStoryboard(name: storyBoardName, bundle: nil).instantiateViewController(withIdentifier: withIdentifier)
+    }
+    
     public func returnBetweenDate(startDate: Date, endDate: Date, years:Bool = false, months:Bool = false,  days:Bool = false) -> Int {
 
         let calendar = NSCalendar.current
