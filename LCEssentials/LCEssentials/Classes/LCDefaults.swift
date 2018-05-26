@@ -537,7 +537,7 @@ extension UIColor{
 
 extension String {
     
-    var isEmailValid: Bool {
+    public var isEmailValid: Bool {
         do {
             let regex = try NSRegularExpression(pattern: "(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])", options: .caseInsensitive)
             return regex.firstMatch(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, self.count)) != nil
@@ -545,7 +545,7 @@ extension String {
             return false
         }
     }
-    var currentTimeZone : String {
+    public var currentTimeZone : String {
         let date = NSDate();
         let formatter = DateFormatter();
         formatter.dateFormat = "ZZZ";
@@ -647,13 +647,13 @@ extension String {
         return  dateFormatter.string(from: date!)
     }
     
-    var first: String {
+    public var first: String {
         return String(prefix(1))
     }
-    var last: String {
+    public var last: String {
         return String(suffix(1))
     }
-    var uppercaseFirst: String {
+    public var uppercaseFirst: String {
         return first.uppercased() + String(dropFirst())
     }
     
@@ -740,7 +740,7 @@ extension String {
     //
     //Usage Example: label.text = yourString.html2String
     //
-    var html2AttributedString: NSAttributedString? {
+    public var html2AttributedString: NSAttributedString? {
         guard
             let data = data(using: String.Encoding.utf8)
             else { return nil }
@@ -755,7 +755,7 @@ extension String {
             return  nil
         }
     }
-    var html2String: String {
+    public var html2String: String {
         return html2AttributedString?.string ?? ""
     }
     
@@ -1069,7 +1069,7 @@ extension UITableView {
 
 public extension UIDevice {
     
-    var modelName: String {
+    public var modelName: String {
         var systemInfo = utsname()
         uname(&systemInfo)
         let machineMirror = Mirror(reflecting: systemInfo.machine)
@@ -1139,7 +1139,7 @@ extension UIResponder {
 //view.getParentViewController() //provide reference to vc
 
 extension Array where Element : Equatable {
-    var unique: [Element] {
+    public var unique: [Element] {
         var uniqueValues: [Element] = []
         forEach { item in
             if !uniqueValues.contains(item) {
