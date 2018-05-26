@@ -36,17 +36,17 @@ public enum EnumBorderSide {
 }
 
 public struct Defaults {
-    static let DEFAULT_ERROR_DOMAIN = "LoverdeCoErrorDomain"
-    static let DEFAULT_ERROR_CODE = -99
-    static let DEFAULT_ERROR_MSG = "Error Unknow"
-    static let IS_PROD = false
+    public let DEFAULT_ERROR_DOMAIN = "LoverdeCoErrorDomain"
+    public let DEFAULT_ERROR_CODE = -99
+    public let DEFAULT_ERROR_MSG = "Error Unknow"
+    public let IS_PROD = false
     #if targetEnvironment(simulator)
-    static let DEVICE_IS_SIMULATOR = true
+    public let DEVICE_IS_SIMULATOR = true
     #else
-    static let DEVICE_IS_SIMULATOR = false
+    public let DEVICE_IS_SIMULATOR = false
     #endif
     static let DEVICE_NAME: String = UIDevice().modelName
-    static let OLDER_DEVICES: Bool = (DEVICE_NAME == "iPhone 5" || DEVICE_NAME == "iPhone 5c" || DEVICE_NAME == "iPhone 5s" || DEVICE_NAME == "iPhone 4" || DEVICE_NAME == "iPhone 4s") ? true : false
+    public let OLDER_DEVICES: Bool = (DEVICE_NAME == "iPhone 5" || DEVICE_NAME == "iPhone 5c" || DEVICE_NAME == "iPhone 5s" || DEVICE_NAME == "iPhone 4" || DEVICE_NAME == "iPhone 4s") ? true : false
 
     public init(){}
     
@@ -1077,7 +1077,7 @@ public extension UIDevice {
             guard let value = element.value as? Int8 , value != 0 else { return identifier }
             return identifier + String(UnicodeScalar(UInt8(value)))
         }
-        if Defaults.DEVICE_IS_SIMULATOR {
+        if Defaults().DEVICE_IS_SIMULATOR {
             // this neat trick is found at http://kelan.io/2015/easier-getenv-in-swift/
             if let dir = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
                 identifier = dir
