@@ -36,10 +36,10 @@ public enum EnumBorderSide {
 }
 
 public struct Defaults {
-    let DEFAULT_ERROR_DOMAIN = "LoverdeCoErrorDomain"
-    let DEFAULT_ERROR_CODE = -99
-    let DEFAULT_ERROR_MSG = "Error Unknow"
-    let IS_PROD = false
+    static let DEFAULT_ERROR_DOMAIN = "LoverdeCoErrorDomain"
+    static let DEFAULT_ERROR_CODE = -99
+    static let DEFAULT_ERROR_MSG = "Error Unknow"
+    static let IS_PROD = false
     #if targetEnvironment(simulator)
     static let DEVICE_IS_SIMULATOR = true
     #else
