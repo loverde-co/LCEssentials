@@ -74,7 +74,7 @@ public struct Defaults {
     }
 
     //MARK: - Instance View Controllers Thru Storyboard
-    func instanceViewController(_ storyBoardName:String = "Intro", withIdentifier: String = "mainIntro" ) -> UIViewController {
+    public func instanceViewController(_ storyBoardName:String = "Intro", withIdentifier: String = "mainIntro" ) -> UIViewController {
         return UIStoryboard(name: storyBoardName, bundle: nil).instantiateViewController(withIdentifier: withIdentifier)
     }
     
@@ -157,7 +157,7 @@ extension UIView {
      
      - parameter duration: custom animation duration
      */
-    func fadeIn(withDuration duration: TimeInterval = 1.0, withDelay delay: TimeInterval = 0, completionHandler:@escaping (Bool) -> ()) {
+    public func fadeIn(withDuration duration: TimeInterval = 1.0, withDelay delay: TimeInterval = 0, completionHandler:@escaping (Bool) -> ()) {
         UIView.animate(withDuration: duration, delay: delay, options: [], animations: {
             self.alpha = 1.0
         }) { (finished) in
@@ -170,7 +170,7 @@ extension UIView {
      
      - parameter duration: custom animation duration
      */
-    func fadeOut(withDuration duration: TimeInterval = 1.0, withDelay delay: TimeInterval = 0, completionHandler:@escaping (Bool) -> ()) {
+    public func fadeOut(withDuration duration: TimeInterval = 1.0, withDelay delay: TimeInterval = 0, completionHandler:@escaping (Bool) -> ()) {
         UIView.animate(withDuration: duration, delay: delay, options: [], animations: {
             self.alpha = 0.0
         }) { (finished) in
@@ -183,7 +183,7 @@ extension UIView {
      
      :param: x CGFloat
      */
-    func setX(x:CGFloat) {
+    public func setX(x:CGFloat) {
         var frame:CGRect = self.frame
         frame.origin.x = x
         self.frame = frame
@@ -194,7 +194,7 @@ extension UIView {
      :param: y CGFloat
      by DaRk-_-D0G
      */
-    func setY(y:CGFloat) {
+    public func setY(y:CGFloat) {
         var frame:CGRect = self.frame
         frame.origin.y = y
         self.frame = frame
@@ -204,7 +204,7 @@ extension UIView {
 
      :param: width CGFloat
      */
-    func setWidth(width:CGFloat) {
+    public func setWidth(width:CGFloat) {
         var frame:CGRect = self.frame
         frame.size.width = width
         self.frame = frame
@@ -214,7 +214,7 @@ extension UIView {
 
      :param: height CGFloat
      */
-    func setHeight(height:CGFloat) {
+    public func setHeight(height:CGFloat) {
         var frame:CGRect = self.frame
         frame.size.height = height
         self.frame = frame
@@ -223,7 +223,7 @@ extension UIView {
 
 extension UIImage {
     //Extension Required by RoundedButton to create UIImage from UIColor
-    class func imageWithColor(color: UIColor) -> UIImage {
+    class public func imageWithColor(color: UIColor) -> UIImage {
         let rect: CGRect = CGRect(origin: .zero, size: CGSize(width: 1, height: 1))
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), false, 1.0)
         color.setFill()
@@ -234,7 +234,7 @@ extension UIImage {
     }
     
     /// Creates a circular outline image.
-    class func outlinedEllipse(size: CGSize, color: UIColor, lineWidth: CGFloat = 1.0) -> UIImage? {
+    class public func outlinedEllipse(size: CGSize, color: UIColor, lineWidth: CGFloat = 1.0) -> UIImage? {
         
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
         guard let context = UIGraphicsGetCurrentContext() else {
@@ -254,7 +254,7 @@ extension UIImage {
         return image
     }
     
-    func resizeImage(newWidth: CGFloat) -> UIImage {
+    public func resizeImage(newWidth: CGFloat) -> UIImage {
         
         let scale = newWidth / self.size.width
         let newHeight = self.size.height * scale
@@ -266,7 +266,7 @@ extension UIImage {
         return newImage!
     }
     
-    func decodeBase64ToImage(stringBase64:String) -> UIImage {
+    public func decodeBase64ToImage(stringBase64:String) -> UIImage {
         let imageData = Data(base64Encoded: stringBase64, options: .ignoreUnknownCharacters)
         return UIImage(data: imageData!)!
     }
@@ -274,7 +274,7 @@ extension UIImage {
 
 extension UIImageView {
     
-    func changeColorOfImage( _ color: UIColor, image: NSString ) -> UIImageView {
+    public func changeColorOfImage( _ color: UIColor, image: NSString ) -> UIImageView {
         
         let origImage   = UIImage(named: image as String);
         let tintedImage = origImage?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
@@ -283,7 +283,7 @@ extension UIImageView {
         return self
     }
     
-    func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit, completion:@escaping (Bool?)->()) -> () {
+    public func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit, completion:@escaping (Bool?)->()) -> () {
         contentMode = mode
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard
@@ -302,7 +302,7 @@ extension UIImageView {
     // EXAMPLE USAGE
     // imageView.downloadedFrom(link: "http://www.apple.com/euro/ios/ios8/a/generic/images/og.png")
     
-    func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit, completion:@escaping (Bool?)->()) -> () {
+    public func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit, completion:@escaping (Bool?)->()) -> () {
         guard let url = URL(string: link) else { return }
         downloadedFrom(url: url, contentMode: mode) { (success) in
             completion(true)
@@ -320,7 +320,7 @@ extension UILabel {
         
     }
     
-    func lineNumbers() -> Int{
+    public func lineNumbers() -> Int{
         let textSize = CGSize(width: self.frame.size.width, height: CGFloat(Float.infinity))
         let rHeight = lroundf(Float(self.sizeThatFits(textSize).height))
         let charSize = lroundf(Float(self.font.lineHeight))
@@ -362,7 +362,7 @@ extension NSMutableAttributedString {
     //    // *** Set Attributed String to your label ***
     //    label.attributedText = attributedString;
     
-    @discardableResult func bold(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil) -> NSMutableAttributedString {
+    @discardableResult public func bold(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil) -> NSMutableAttributedString {
         var attrs:[NSAttributedStringKey:AnyObject] = [NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
         if color != nil {
             attrs[NSAttributedStringKey.foregroundColor] = color
@@ -372,7 +372,7 @@ extension NSMutableAttributedString {
         return self
     }
     
-    @discardableResult func underline(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil) -> NSMutableAttributedString {
+    @discardableResult public func underline(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil) -> NSMutableAttributedString {
         var attrs:[NSAttributedStringKey:AnyObject] = [NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue as AnyObject, NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
         if color != nil {
             attrs[NSAttributedStringKey.foregroundColor] = color
@@ -382,14 +382,14 @@ extension NSMutableAttributedString {
         return self
     }
     
-    @discardableResult func linkTouch(_ text:String, url: String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor = UIColor.blue) -> NSMutableAttributedString {
+    @discardableResult public func linkTouch(_ text:String, url: String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor = UIColor.blue) -> NSMutableAttributedString {
         let linkTerms:[NSAttributedStringKey:AnyObject]  = [NSAttributedStringKey.link: NSURL(string: url)!, NSAttributedStringKey.foregroundColor: color, NSAttributedStringKey.font: UIFont(name: fontName, size: size)!]
         let linkString = NSMutableAttributedString(string: "\(text)", attributes:linkTerms)
         self.append(linkString)
         return self
     }
     
-    @discardableResult func normal(_ text:String)->NSMutableAttributedString {
+    @discardableResult public func normal(_ text:String)->NSMutableAttributedString {
         let normal =  NSAttributedString(string: text)
         self.append(normal)
         return self
@@ -405,14 +405,14 @@ extension NSMutableAttributedString {
         return false
     }
     
-    func height(withConstrainedWidth width: CGFloat) -> CGFloat {
+    public func height(withConstrainedWidth width: CGFloat) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundingBox = boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
         
         return ceil(boundingBox.height)
     }
     
-    func width(withConstrainedHeight height: CGFloat) -> CGFloat {
+    public func width(withConstrainedHeight height: CGFloat) -> CGFloat {
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
         let boundingBox = boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
         
@@ -443,7 +443,7 @@ extension UIButton {
 
 extension UITabBarController {
     
-    func setBadges(badgeValues: [Int]) {
+    public func setBadges(badgeValues: [Int]) {
 
         for view in self.tabBar.subviews {
             if view is CustomTabBadge {
@@ -458,7 +458,7 @@ extension UITabBarController {
         }
     }
 
-    func addBadge(index: Int, value: Int, color: UIColor, font: UIFont) {
+    public func addBadge(index: Int, value: Int, color: UIColor, font: UIFont) {
         let badgeView = CustomTabBadge()
 
         badgeView.clipsToBounds = true
@@ -479,7 +479,7 @@ extension UITabBarController {
     }
     
     // Positioning
-    func positionBadges() {
+    public func positionBadges() {
         
         var tabbarButtons = self.tabBar.subviews.filter { (view: UIView) -> Bool in
             return view.isUserInteractionEnabled // only UITabBarButton are userInteractionEnabled
@@ -495,7 +495,7 @@ extension UITabBarController {
         }
     }
     
-    func positionBadge(badgeView: UIView, items: [UIView], index: Int) {
+    public func positionBadge(badgeView: UIView, items: [UIView], index: Int) {
         
         let itemView = items[index]
         let center = itemView.center
@@ -510,7 +510,7 @@ extension UITabBarController {
 }
 
 extension UIColor{
-    func hexStringToUIColor( _ hex: String) -> UIColor {
+    public func hexStringToUIColor( _ hex: String) -> UIColor {
         
         let hexString:NSString = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) as NSString
         let scanner            = Scanner(string: hexString as String)
@@ -554,7 +554,7 @@ extension String {
         return defaultTimeZoneStr;
     }
     
-    func nsRange(from range: Range<String.Index>) -> NSRange? {
+    public func nsRange(from range: Range<String.Index>) -> NSRange? {
         let utf16view = self.utf16
         if let from = range.lowerBound.samePosition(in: utf16view), let to = range.upperBound.samePosition(in: utf16view) {
             return NSMakeRange(utf16view.distance(from: utf16view.startIndex, to: from), utf16view.distance(from: from, to: to))
@@ -580,7 +580,7 @@ extension String {
 //        //print("digest: \(digest)")
 //    }
     
-    func randomString(length: Int) -> String {
+    public func randomString(length: Int) -> String {
         
         let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         let len = UInt32(letters.length)
@@ -596,7 +596,7 @@ extension String {
         return randomString
     }
     
-    func stringFromTimeInterval(_ interval:TimeInterval) -> NSString {
+    public func stringFromTimeInterval(_ interval:TimeInterval) -> NSString {
         
         let ti = NSInteger(interval)
         
@@ -609,7 +609,7 @@ extension String {
         return NSString(format: "%0.2d:%0.2d:%0.2d.%0.3d",hours,minutes,seconds,ms)
     }
     
-    func dateTimeToString( _ dateTime: Date, withHour: Bool = false, returnOnlyTime:Bool = false ) -> String {
+    public func dateTimeToString( _ dateTime: Date, withHour: Bool = false, returnOnlyTime:Bool = false ) -> String {
         
         let dateformatter = DateFormatter()
         dateformatter.timeZone = TimeZone(abbreviation: "GMT")
@@ -621,7 +621,7 @@ extension String {
         return dateformatter.string(from: dateTime)
     }
     
-    func dateTimeToStringBR( _ dateTime: Date, withHour:Bool = false ) -> String {
+    public func dateTimeToStringBR( _ dateTime: Date, withHour:Bool = false ) -> String {
         
         let dateformatter = DateFormatter()
         dateformatter.timeZone = TimeZone(abbreviation: "GMT")
@@ -638,7 +638,7 @@ extension String {
     //
     //    }
     
-    func dateDataBaseConverter(fromFormat:String = "dd/MM/yyyy", toFormat: String = "yyyy-MM-dd") -> String{
+    public func dateDataBaseConverter(fromFormat:String = "dd/MM/yyyy", toFormat: String = "yyyy-MM-dd") -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
         dateFormatter.dateFormat = fromFormat
@@ -657,21 +657,21 @@ extension String {
         return first.uppercased() + String(dropFirst())
     }
     
-    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
+    public func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
         
         return ceil(boundingBox.height)
     }
     
-    func width(withConstraintedHeight height: CGFloat, font: UIFont) -> CGFloat {
+    public func width(withConstraintedHeight height: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
         let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
         
         return ceil(boundingBox.width)
     }
     
-    func encodeImageToBase64(refImage: UIImage) -> String{
+    public func encodeImageToBase64(refImage: UIImage) -> String{
         let jpegCompressionQuality: CGFloat = 0.6
         if let base64String = UIImageJPEGRepresentation(refImage, jpegCompressionQuality){
             let strBase64 = base64String.base64EncodedString(options: .endLineWithLineFeed)
@@ -680,7 +680,7 @@ extension String {
         return ""
     }
     
-    func exponentize(str: String) -> String {
+    public func exponentize(str: String) -> String {
         
         let supers = [
             "1": "\u{00B9}",
@@ -724,7 +724,7 @@ extension String {
      */
     // Example
     // let str = "This is a long string".truncate(10, trailing: "...") // "This is a ..."
-    func truncate(length: Int, trailing: String = "…") -> String {
+    public func truncate(length: Int, trailing: String = "…") -> String {
         if self.count > length {
             return String(self.prefix(length)) + trailing
         } else {
@@ -759,13 +759,13 @@ extension String {
         return html2AttributedString?.string ?? ""
     }
     
-    func dictionaryToStringJSON(dict:[String:Any]) -> String {
+    public func dictionaryToStringJSON(dict:[String:Any]) -> String {
         let jsonData = try! JSONSerialization.data(withJSONObject: dict, options: JSONSerialization.WritingOptions.prettyPrinted)
         let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
         return jsonString
     }
     
-    func JSONStringToDictionary() -> [String:Any]? {
+    public func JSONStringToDictionary() -> [String:Any]? {
         if let data = self.data(using: .utf8) {
             let jsonString = try? JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
             return jsonString
@@ -774,7 +774,7 @@ extension String {
         }
     }
     
-    func convertFloatToBRL(value: Float) -> String{
+    public func convertFloatToBRL(value: Float) -> String{
         
         let currencyFormatter = NumberFormatter()
         currencyFormatter.usesGroupingSeparator = true
@@ -811,7 +811,7 @@ extension NSAttributedString {
 
 extension NSString {
     
-    func randomAlphaNumericString(_ length: Int = 8) -> String {
+    public func randomAlphaNumericString(_ length: Int = 8) -> String {
         
         let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         let allowedCharsCount = UInt32(allowedChars.count)
@@ -826,7 +826,7 @@ extension NSString {
         return randomString
     }
     
-    func removeCurrencyBRFormat(_ string:NSString) -> NSString {
+    public func removeCurrencyBRFormat(_ string:NSString) -> NSString {
         
         //let string       = "4567,89"
         var toArray         = string.components(separatedBy: "R$ ")
@@ -839,7 +839,7 @@ extension NSString {
         return backToString as NSString
     }
     
-    func createDirectory(_ directoryName: NSString) -> Bool {
+    public func createDirectory(_ directoryName: NSString) -> Bool {
         
         let documentsPath = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         let logsPath = documentsPath.appendingPathComponent(directoryName as String)
@@ -858,7 +858,7 @@ extension NSString {
 }
 
 extension UITableViewCell {
-    func prepareDisclosureIndicator() {
+    public func prepareDisclosureIndicator() {
         for case let button as UIButton in subviews {
             let image = button.backgroundImage(for: .normal)?.withRenderingMode(.
                 alwaysTemplate)
@@ -869,7 +869,7 @@ extension UITableViewCell {
 
 extension FileManager {
     
-    func createDirectory(_ directoryName: String) -> URL? {
+    public func createDirectory(_ directoryName: String) -> URL? {
         let fileManager = FileManager.default
         if let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
             let filePath = documentDirectory.appendingPathComponent(directoryName)
@@ -887,7 +887,7 @@ extension FileManager {
         }
     }
     
-    func saveFileToDirectory( _ sourceURL: URL, toPathURL: URL ) -> Bool {
+    public func saveFileToDirectory( _ sourceURL: URL, toPathURL: URL ) -> Bool {
         
         do {
             try FileManager.default.moveItem(at: sourceURL, to: toPathURL)
@@ -898,7 +898,7 @@ extension FileManager {
         }
     }
     
-    func saveImageToDirectory( _ imageWithPath : String, imagem : UIImage ) -> Bool {
+    public func saveImageToDirectory( _ imageWithPath : String, imagem : UIImage ) -> Bool {
         
         let data = UIImagePNGRepresentation(imagem)
         
@@ -914,13 +914,13 @@ extension FileManager {
         }
     }
     
-    func retrieveFile( _ directoryAndFile: String ) -> URL {
+    public func retrieveFile( _ directoryAndFile: String ) -> URL {
         let documentsPath = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         let logsPath = documentsPath.appendingPathComponent(directoryAndFile)
         return logsPath
     }
     
-    func removeFile( _ directoryAndFile: String ) -> Bool {
+    public func removeFile( _ directoryAndFile: String ) -> Bool {
         do {
             try self.removeItem(atPath: directoryAndFile)
             return true
@@ -931,7 +931,7 @@ extension FileManager {
         }
     }
     
-    func retrieveAllFilesFromDirectory(directoryName: String) -> [String]? {
+    public func retrieveAllFilesFromDirectory(directoryName: String) -> [String]? {
         let fileMngr = FileManager.default;
         let docs = fileMngr.urls(for: .documentDirectory, in: .userDomainMask)[0].path
         do {
@@ -957,13 +957,13 @@ extension FileManager {
         //        return try? fileMngr.contentsOfDirectory(atPath:"\(docs)/\(directoryName)")
     }
     
-    func directoryExistsAtPath(_ path: String) -> Bool {
+    public func directoryExistsAtPath(_ path: String) -> Bool {
         var isDirectory = ObjCBool(true)
         let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
         return exists && isDirectory.boolValue
     }
     
-    func convertToURL(path:String)-> URL?{
+    public func convertToURL(path:String)-> URL?{
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path
         do {
             _ = try FileManager.default.contentsOfDirectory(atPath: "\(docs)/\(path)")
@@ -977,7 +977,7 @@ extension FileManager {
 
 extension Date {
     
-    func stringToDateTime( _ dateTime: String = "", formatted : String = "yyyy-MM-dd", withTime:Bool = false ) -> Date{
+    public func stringToDateTime( _ dateTime: String = "", formatted : String = "yyyy-MM-dd", withTime:Bool = false ) -> Date{
         var dateArray = dateTime.split{$0 == "/"}.map(String.init)
         var hour = [String]()
         var convertedDate = ""
@@ -996,7 +996,7 @@ extension Date {
         return dateFormatter.date(from: convertedDate)!
     }
     
-    func stringToDate( _ date: String = "2010-10-10", formatted : String = "yyyy-MM-dd" ) -> Date{
+    public func stringToDate( _ date: String = "2010-10-10", formatted : String = "yyyy-MM-dd" ) -> Date{
         let dateArray = date.split{$0 == "/"}.map(String.init)
         var convertedDate = ""
         if dateArray.count > 1 {
@@ -1011,7 +1011,7 @@ extension Date {
     }
     
     /// Returns a Date with the specified days added to the one it is called with
-    func add(years: Int = 0, months: Int = 0, days: Int = 0, hours: Int = 0, minutes: Int = 0, seconds: Int = 0) -> Date {
+    public func add(years: Int = 0, months: Int = 0, days: Int = 0, hours: Int = 0, minutes: Int = 0, seconds: Int = 0) -> Date {
         var targetDay: Date
         targetDay = Calendar.current.date(byAdding: .year, value: years, to: self)!
         targetDay = Calendar.current.date(byAdding: .month, value: months, to: targetDay)!
@@ -1023,7 +1023,7 @@ extension Date {
     }
     
     /// Returns a Date with the specified days subtracted from the one it is called with
-    func subtract(years: Int = 0, months: Int = 0, days: Int = 0, hours: Int = 0, minutes: Int = 0, seconds: Int = 0) -> Date {
+    public func subtract(years: Int = 0, months: Int = 0, days: Int = 0, hours: Int = 0, minutes: Int = 0, seconds: Int = 0) -> Date {
         let inverseYears = -1 * years
         let inverseMonths = -1 * months
         let inverseDays = -1 * days
@@ -1033,7 +1033,7 @@ extension Date {
         return add(years: inverseYears, months: inverseMonths, days: inverseDays, hours: inverseHours, minutes: inverseMinutes, seconds: inverseSeconds)
     }
     
-    func returnSunday(fromDate: Date) -> Date? {
+    public func returnSunday(fromDate: Date) -> Date? {
         let gregorian = Calendar(identifier: .gregorian)
         if let sunday = gregorian.date(from: gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: fromDate)){
             //print(gregorian.date(byAdding: .day, value: 6, to: sunday)!)
@@ -1041,14 +1041,14 @@ extension Date {
         }else{ return nil }
     }
     
-    func getMonthName() -> String {
+    public func getMonthName() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"
         let strMonth = dateFormatter.string(from: self)
         return strMonth
     }
     
-    func getDayNumber() -> String {
+    public func getDayNumber() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd"
         let strDay = dateFormatter.string(from: self)
@@ -1057,7 +1057,7 @@ extension Date {
 }
 
 extension UITableView {
-    func reloadDataWithCompletion(_ completion: @escaping ()->()) {
+    public func reloadDataWithCompletion(_ completion: @escaping ()->()) {
         UIView.animate(withDuration: 0, animations: {
             self.reloadData()
         }, completion: { finished in
@@ -1121,7 +1121,7 @@ public extension UIDevice {
 
 //MARK: - UIResponder
 extension UIResponder {
-    func getParentViewController() -> UIViewController? {
+    public func getParentViewController() -> UIViewController? {
         if self.next is UIViewController {
             return self.next as? UIViewController
         } else {

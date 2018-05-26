@@ -21,7 +21,7 @@
  
 
 import XCTest
-@testable import LCEssentials
+//@testable import LCEssential
 
 class LCEssentialsTests: XCTestCase {
     

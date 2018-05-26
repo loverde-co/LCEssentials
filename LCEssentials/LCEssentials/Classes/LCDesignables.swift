@@ -25,21 +25,21 @@ import UIKit
 
 @IBDesignable
 //MARK: UIView
-class Circle: UIView {
+open class Circle: UIView {
     
-    @IBInspectable var mainColor: UIColor = UIColor.blue {
+    @IBInspectable open var mainColor: UIColor = UIColor.blue {
         didSet { print("mainColor was set here") }
     }
-    @IBInspectable var borderColor: UIColor = UIColor.orange {
+    @IBInspectable open var borderColor: UIColor = UIColor.orange {
         didSet { print("bColor was set here") }
     }
-    @IBInspectable var ringThickness: CGFloat = 4 {
+    @IBInspectable open var ringThickness: CGFloat = 4 {
         didSet { print("ringThickness was set here") }
     }
     
-    @IBInspectable var isSelected: Bool = true
+    @IBInspectable open var isSelected: Bool = true
     
-    override func draw(_ rect: CGRect) {
+    override open func draw(_ rect: CGRect) {
         let dotPath = UIBezierPath(ovalIn: rect)
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = dotPath.cgPath
@@ -48,7 +48,7 @@ class Circle: UIView {
         
         if (isSelected) { drawRingFittingInsideView(rect: rect) }
     }
-    override func layoutSubviews(){
+    override open func layoutSubviews(){
         layer.cornerRadius = bounds.size.width/2;
     }
     
@@ -65,7 +65,7 @@ class Circle: UIView {
     }
 }
 
-@IBDesignable class DottedLine: UIView {
+@IBDesignable open class DottedLine: UIView {
     
     @IBInspectable
     public var lineColor: UIColor = UIColor.black
@@ -89,11 +89,11 @@ class Circle: UIView {
         initBackgroundColor()
     }
     
-    override public func prepareForInterfaceBuilder() {
+    override open func prepareForInterfaceBuilder() {
         initBackgroundColor()
     }
     
-    override public func draw(_ rect: CGRect) {
+    override open func draw(_ rect: CGRect) {
         
         let path = UIBezierPath()
         path.lineWidth = lineWidth
@@ -109,7 +109,7 @@ class Circle: UIView {
         path.stroke()
     }
     
-    func initBackgroundColor() {
+    open func initBackgroundColor() {
         if backgroundColor == nil {
             backgroundColor = UIColor.clear
         }
@@ -291,12 +291,12 @@ open class CustomUIButtom: UIButton {
     
 }
 
-@IBDesignable class CheckBoxButton: UIButton {
+@IBDesignable open class CheckBoxButton: UIButton {
     // Images
-    var onImage: UIImage!
-    var offImage: UIImage!
+    open var onImage: UIImage!
+    open var offImage: UIImage!
     
-    var CheckedImage: String! {
+    open var CheckedImage: String! {
         didSet {
             if CheckedImage != nil {
                 onImage = UIImage(named: CheckedImage)! as UIImage
@@ -306,7 +306,7 @@ open class CustomUIButtom: UIButton {
         }
     }
     
-    var UncheckedImage: String! {
+    open var UncheckedImage: String! {
         didSet {
             if UncheckedImage != nil {
                 offImage = UIImage(named: UncheckedImage)! as UIImage
@@ -317,7 +317,7 @@ open class CustomUIButtom: UIButton {
     }
     
     // Bool property
-    var isChecked: Bool = false {
+    open var isChecked: Bool = false {
         didSet{
             if isChecked == true {
                 self.setImage(onImage, for: UIControlState.normal)
@@ -327,12 +327,12 @@ open class CustomUIButtom: UIButton {
         }
     }
     
-    override func awakeFromNib() {
+    override open func awakeFromNib() {
         self.addTarget(self, action:#selector(buttonClicked(sender:)), for: UIControlEvents.touchUpInside)
         self.isChecked = false
     }
     
-    @objc func buttonClicked(sender: UIButton) {
+    @objc open func buttonClicked(sender: UIButton) {
         if sender == self {
             isChecked = !isChecked
         }
@@ -341,12 +341,12 @@ open class CustomUIButtom: UIButton {
 
 
 
-@IBDesignable class RadioNotifButton: UIButton {
+@IBDesignable open class RadioNotifButton: UIButton {
     // Images
-    var onImage: UIImage!
-    var offImage: UIImage!
+    open var onImage: UIImage!
+    open var offImage: UIImage!
     
-    var CheckedImage: String! {
+    open var CheckedImage: String! {
         didSet {
             if CheckedImage != nil {
                 onImage = UIImage(named: CheckedImage)! as UIImage
@@ -356,7 +356,7 @@ open class CustomUIButtom: UIButton {
         }
     }
     
-    var UncheckedImage: String! {
+    open var UncheckedImage: String! {
         didSet {
             if UncheckedImage != nil {
                 offImage = UIImage(named: UncheckedImage)! as UIImage
@@ -366,7 +366,7 @@ open class CustomUIButtom: UIButton {
         }
     }
     // Bool property
-    var isChecked: Bool = false {
+    open var isChecked: Bool = false {
         didSet{
             if isChecked == true {
                 self.setImage(onImage, for: UIControlState.normal)
@@ -376,12 +376,12 @@ open class CustomUIButtom: UIButton {
         }
     }
     
-    override func awakeFromNib() {
+    override open func awakeFromNib() {
         self.addTarget(self, action:#selector(buttonClicked(sender:)), for: UIControlEvents.touchUpInside)
         self.isChecked = false
     }
     
-    @objc func buttonClicked(sender: UIButton) {
+    @objc open func buttonClicked(sender: UIButton) {
         if sender == self {
             isChecked = !isChecked
         }
@@ -389,12 +389,12 @@ open class CustomUIButtom: UIButton {
 }
 //MARK: - UITextField
 
-@IBDesignable class CustomUITextField : UITextField {
+@IBDesignable open class CustomUITextField : UITextField {
     
     private var color: UIColor?
     private var width: CGFloat = 0.0
     
-    @IBInspectable var setBorderTop : Bool = false {
+    @IBInspectable open var setBorderTop : Bool = false {
         didSet {
             let border = CALayer()
             border.backgroundColor = self.color?.cgColor
@@ -403,7 +403,7 @@ open class CustomUIButtom: UIButton {
             
         }
     }
-    @IBInspectable var setBorderBottom : Bool = false {
+    @IBInspectable open var setBorderBottom : Bool = false {
         didSet {
             let border = CALayer()
             border.backgroundColor = self.color?.cgColor
@@ -412,7 +412,7 @@ open class CustomUIButtom: UIButton {
             
         }
     }
-    @IBInspectable var setBorderLeft : Bool = false {
+    @IBInspectable open var setBorderLeft : Bool = false {
         didSet {
             let border = CALayer()
             border.backgroundColor = self.color?.cgColor
@@ -421,7 +421,7 @@ open class CustomUIButtom: UIButton {
             
         }
     }
-    @IBInspectable var setBorderRight : Bool = false {
+    @IBInspectable open var setBorderRight : Bool = false {
         didSet {
             let border = CALayer()
             border.backgroundColor = self.color?.cgColor
@@ -430,39 +430,39 @@ open class CustomUIButtom: UIButton {
             
         }
     }
-    @IBInspectable var setBorderWidth: CGFloat = 0.0 {
+    @IBInspectable open var setBorderWidth: CGFloat = 0.0 {
         didSet {
             self.width = setBorderWidth
         }
     }
-    @IBInspectable var setBorderColor: UIColor! {
+    @IBInspectable open var setBorderColor: UIColor! {
         didSet {
             self.color = setBorderColor
         }
     }
     
-    @IBInspectable var paddingLeft: CGFloat = 0
-    @IBInspectable var paddingRight: CGFloat = 0
-    @IBInspectable var paddingTop: CGFloat = 0
-    @IBInspectable var paddingBottom: CGFloat = 0
+    @IBInspectable open var paddingLeft: CGFloat = 0
+    @IBInspectable open var paddingRight: CGFloat = 0
+    @IBInspectable open var paddingTop: CGFloat = 0
+    @IBInspectable open var paddingBottom: CGFloat = 0
     
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
+    override open func textRect(forBounds bounds: CGRect) -> CGRect {
         return CGRect(x: bounds.origin.x + paddingLeft, y: bounds.origin.y + paddingTop, width: bounds.size.width - paddingLeft - paddingRight, height: bounds.size.height - paddingTop - paddingBottom)
     }
     
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
         return textRect(forBounds: bounds)
     }
 }
 //MARK: UIView
-@IBDesignable class CustomUIView : UIView {
+@IBDesignable open class CustomUIView : UIView {
     
     private var color: UIColor?
     private var width: CGFloat = 0.0
     private var gradientColorTop: UIColor?
     private var gradientColorBottom: UIColor?
     
-    @IBInspectable var setBorderTop : Bool = false {
+    @IBInspectable open var setBorderTop : Bool = false {
         didSet {
             let border = CALayer()
             border.backgroundColor = self.color?.cgColor
@@ -471,7 +471,7 @@ open class CustomUIButtom: UIButton {
             
         }
     }
-    @IBInspectable var setBorderBottom : Bool = false {
+    @IBInspectable open var setBorderBottom : Bool = false {
         didSet {
             let border = CALayer()
             border.backgroundColor = self.color?.cgColor
@@ -480,7 +480,7 @@ open class CustomUIButtom: UIButton {
             
         }
     }
-    @IBInspectable var setBorderLeft : Bool = false {
+    @IBInspectable open var setBorderLeft : Bool = false {
         didSet {
             let border = CALayer()
             border.backgroundColor = self.color?.cgColor
@@ -489,7 +489,7 @@ open class CustomUIButtom: UIButton {
             
         }
     }
-    @IBInspectable var setBorderRight : Bool = false {
+    @IBInspectable open var setBorderRight : Bool = false {
         didSet {
             let border = CALayer()
             border.backgroundColor = self.color?.cgColor
@@ -497,18 +497,18 @@ open class CustomUIButtom: UIButton {
             self.layer.addSublayer(border)
         }
     }
-    @IBInspectable var cornerRadius: CGFloat = 0 {
+    @IBInspectable open var cornerRadius: CGFloat = 0 {
         didSet {
             layer.cornerRadius = cornerRadius
         }
     }
     
-    @IBInspectable var setBorderWidth: CGFloat = 0.0 {
+    @IBInspectable open var setBorderWidth: CGFloat = 0.0 {
         didSet {
             self.width = setBorderWidth
         }
     }
-    @IBInspectable var setBorderColor: UIColor! {
+    @IBInspectable open var setBorderColor: UIColor! {
         didSet {
             self.color = setBorderColor
         }
@@ -538,7 +538,7 @@ open class CustomUIButtom: UIButton {
     //        }
     //    }
     //
-    override func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         
         layer.cornerRadius = cornerRadius
@@ -572,7 +572,7 @@ open class CustomUIButtom: UIButton {
     //        self.layer.insertSublayer(gradient, at: 0)
     //    }
     
-    @IBInspectable var shadow: Bool {
+    @IBInspectable open var shadow: Bool {
         get {
             return layer.shadowOpacity > 0.0
         }
@@ -584,7 +584,7 @@ open class CustomUIButtom: UIButton {
     }
     
     
-    func addShadow(shadowColor: CGColor = UIColor.black.cgColor,
+    open func addShadow(shadowColor: CGColor = UIColor.black.cgColor,
                    shadowOffset: CGSize = CGSize(width: 1.0, height: 2.0),
                    shadowOpacity: Float = 0.4,
                    shadowRadius: CGFloat = 3.0) {
@@ -596,18 +596,18 @@ open class CustomUIButtom: UIButton {
 }
 
 //MARK: - UIPageControll
-@IBDesignable class CustomUIPageControl: UIPageControl {
+@IBDesignable open class CustomUIPageControl: UIPageControl {
     
     private var color: UIColor!
     private var size: CGFloat! // 7.0 is great for border
     
-    @IBInspectable var borderColor: UIColor! {
+    @IBInspectable open var borderColor: UIColor! {
         didSet {
             self.color = borderColor
         }
     }
     
-    @IBInspectable var borderSize: CGFloat = 0.0 {
+    @IBInspectable open var borderSize: CGFloat = 0.0 {
         didSet {
             if borderSize > 0 {
                 self.size = borderSize
@@ -619,12 +619,12 @@ open class CustomUIButtom: UIButton {
 }
 
 //MARK: - UILabel
-@IBDesignable class CustomTabBadge: UILabel {
+@IBDesignable open class CustomTabBadge: UILabel {
     
 }
 
-@IBDesignable class CustomUILabel: UILabel {
-    override func drawText(in rect: CGRect) {
+@IBDesignable open class CustomUILabel: UILabel {
+    override open func drawText(in rect: CGRect) {
         if let stringText = text {
             let stringTextAsNSString = stringText as NSString
             let labelStringSize = stringTextAsNSString.boundingRect(with: CGSize(width: self.frame.width,height: CGFloat.greatestFiniteMagnitude),
@@ -636,13 +636,13 @@ open class CustomUIButtom: UIButton {
             super.drawText(in: rect)
         }
     }
-    override func prepareForInterfaceBuilder() {
+    override open func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         layer.borderWidth = 1
         layer.borderColor = UIColor.black.cgColor
     }
     
-    @IBInspectable var strikeThroughString: String = "" {
+    @IBInspectable open var strikeThroughString: String = "" {
         didSet {
             self.attributedText = makeStrikeThorugh(string: self.text! as NSString, term: (strikeThroughString as NSString))
         }
