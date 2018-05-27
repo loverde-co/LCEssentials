@@ -23,6 +23,7 @@
 import Foundation
 import UIKit
 import AVFoundation
+//import CommonCrypto
 
 
 precedencegroup PowerPrecedence { higherThan: MultiplicationPrecedence }
@@ -46,7 +47,9 @@ public struct Defaults {
     public let DEVICE_IS_SIMULATOR = false
     #endif
     static let DEVICE_NAME: String = UIDevice().modelName
-    public let OLDER_DEVICES: Bool = (DEVICE_NAME == "iPhone 5" || DEVICE_NAME == "iPhone 5c" || DEVICE_NAME == "iPhone 5s" || DEVICE_NAME == "iPhone 4" || DEVICE_NAME == "iPhone 4s") ? true : false
+    public var OLDER_DEVICES: Bool {
+        return !(Defaults.DEVICE_NAME == "iPhone 5" || Defaults.DEVICE_NAME == "iPhone 5c" || Defaults.DEVICE_NAME == "iPhone 5s" || Defaults.DEVICE_NAME == "iPhone 4" || Defaults.DEVICE_NAME == "iPhone 4s")
+    }
 
     public init(){}
     
