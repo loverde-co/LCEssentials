@@ -56,7 +56,7 @@ public class DatePickerViewController: UIViewController {
         datePicker.datePickerMode = setDatePickerMode
     }
     
-    static func instantiate() -> DatePickerViewController {
+    static public func instantiate() -> DatePickerViewController {
         let storyboard = UIStoryboard(name: "PickerViews", bundle: nil)
         let datePicker = storyboard.instantiateViewController(withIdentifier: "idDatePickerViewController") as! DatePickerViewController
         return datePicker

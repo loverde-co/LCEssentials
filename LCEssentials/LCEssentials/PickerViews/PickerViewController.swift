@@ -57,7 +57,7 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         self.setSelectedRow = self.arrayParams[0]["row"] as! Int
     }
     
-    static func instantiate() -> PickerViewController {
+    static public func instantiate() -> PickerViewController {
         let storyboard = UIStoryboard(name: "PickerViews", bundle: nil)
         let datePicker = storyboard.instantiateViewController(withIdentifier: "idPickerViewController") as! PickerViewController
         return datePicker
