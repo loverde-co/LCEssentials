@@ -30,7 +30,7 @@ import UIKit
 
 public class DatePickerViewController: UIViewController {
     
-    var delegate: DatePickerViewControllerDelegate!
+    public var delegate: DatePickerViewControllerDelegate!
     
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var btConfirm: UIButton!
@@ -39,21 +39,35 @@ public class DatePickerViewController: UIViewController {
     @IBOutlet weak var borderTop: UIView!
     @IBOutlet weak var borderBottom: UIView!
     
-    var setDatePickerMode: UIDatePickerMode = .date
-    var setLocale: String = "pt_BR"
-    var setFormat: String = "dd/MM/yyyy"
-    var setHeight: CGFloat = 214
-    var setWidth: CGFloat = 375
-    var setDistanceFromBottom: CGFloat = 0
-    var isHidden: Bool = true
-    var setBorderTopColor: UIColor = UIColor.darkGray
-    var setBorderBottomColor: UIColor = UIColor.darkGray
+    public var setDatePickerMode: UIDatePickerMode = .date
+    public var setLocale: String = "pt_BR"
+    public var setFormat: String = "dd/MM/yyyy"
+    public var setHeight: CGFloat = 214
+    public var setWidth: CGFloat = 375
+    public var setDistanceFromBottom: CGFloat = 0
+    public var isHidden: Bool = true
+    public var setBorderTopColor: UIColor = UIColor.darkGray
+    public var setBorderBottomColor: UIColor = UIColor.darkGray
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         
         datePicker.locale = Locale(identifier: setLocale)
         datePicker.datePickerMode = setDatePickerMode
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    class func `init`() -> DatePickerViewController {
+        let storyboard = UIStoryboard(name: "Picker", bundle: nil)
+        let datePicker = storyboard.instantiateViewController(withIdentifier: "idDatePickerViewController") as! DatePickerViewController
+        return datePicker
     }
     
     override public func didReceiveMemoryWarning() {

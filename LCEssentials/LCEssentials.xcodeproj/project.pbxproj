@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		B121545320C6FAFF008D62AB /* ReachabilityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121545220C6FAFE008D62AB /* ReachabilityHelper.swift */; };
 		B1AD43FB20B200A600FAA190 /* LCEssentials.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1AD43F120B200A600FAA190 /* LCEssentials.framework */; };
 		B1AD440020B200A600FAA190 /* LCEssentialsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AD43FF20B200A600FAA190 /* LCEssentialsTests.swift */; };
 		B1AD440220B200A600FAA190 /* LCEssentials.h in Headers */ = {isa = PBXBuildFile; fileRef = B1AD43F420B200A600FAA190 /* LCEssentials.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -50,6 +51,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B121545220C6FAFE008D62AB /* ReachabilityHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityHelper.swift; sourceTree = "<group>"; };
 		B1AD43F120B200A600FAA190 /* LCEssentials.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LCEssentials.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1AD43F420B200A600FAA190 /* LCEssentials.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LCEssentials.h; sourceTree = "<group>"; };
 		B1AD43F520B200A600FAA190 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				B1AD440C20B203B200FAA190 /* LCDefaults.swift */,
 				B1AD440E20B20E2F00FAA190 /* LCDesignables.swift */,
 				B1AD446420B4C32500FAA190 /* LCSingleton.swift */,
+				B121545220C6FAFE008D62AB /* ReachabilityHelper.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 				B1AD446D20B4C49B00FAA190 /* DatePickerViewController.swift in Sources */,
 				B1AD446520B4C32500FAA190 /* LCSingleton.swift in Sources */,
 				B1AD446B20B4C46C00FAA190 /* PickerViewController.swift in Sources */,
+				B121545320C6FAFF008D62AB /* ReachabilityHelper.swift in Sources */,
 				B1AD440D20B203B200FAA190 /* LCDefaults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

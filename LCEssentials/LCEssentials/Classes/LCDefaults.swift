@@ -46,9 +46,9 @@ public struct Defaults {
     #else
     public let DEVICE_IS_SIMULATOR = false
     #endif
-    static let DEVICE_NAME: String = UIDevice().modelName
+    public let DEVICE_NAME: String = UIDevice().modelName
     public var OLDER_DEVICES: Bool {
-        return !(Defaults.DEVICE_NAME == "iPhone 5" || Defaults.DEVICE_NAME == "iPhone 5c" || Defaults.DEVICE_NAME == "iPhone 5s" || Defaults.DEVICE_NAME == "iPhone 4" || Defaults.DEVICE_NAME == "iPhone 4s")
+        return !(Defaults().DEVICE_NAME == "iPhone 5" || Defaults().DEVICE_NAME == "iPhone 5c" || Defaults().DEVICE_NAME == "iPhone 5s" || Defaults().DEVICE_NAME == "iPhone 4" || Defaults().DEVICE_NAME == "iPhone 4s")
     }
 
     public init(){}
@@ -273,6 +273,14 @@ extension UIImage {
         let imageData = Data(base64Encoded: stringBase64, options: .ignoreUnknownCharacters)
         return UIImage(data: imageData!)!
     }
+    
+    convenience public init(view: UIView) {
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.layer.render(in:UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        self.init(cgImage: image!.cgImage!)
+    }
 }
 
 extension UIImageView {
@@ -309,6 +317,15 @@ extension UIImageView {
         guard let url = URL(string: link) else { return }
         downloadedFrom(url: url, contentMode: mode) { (success) in
             completion(true)
+        }
+    }
+    
+    @IBInspectable open var imageColor: UIColor! {
+        set {
+            super.tintColor = newValue
+        }
+        get {
+            return super.tintColor
         }
     }
 }
@@ -1066,6 +1083,32 @@ extension UITableView {
         }, completion: { finished in
             completion()
         })
+    }
+}
+
+extension UserDefaults {
+    
+    public enum UserDefaultsKeys: String {
+        case isLoggedIn
+        case isFirstTimeOnApp
+    }
+    
+    public func setIsLoggedIn(value: Bool) {
+        set(value, forKey: UserDefaultsKeys.isLoggedIn.rawValue)
+        synchronize()
+    }
+    
+    public func setIsFirstTimeOnApp(value: Bool) {
+        set(value, forKey: UserDefaultsKeys.isFirstTimeOnApp.rawValue)
+        synchronize()
+    }
+    
+    public func isLoggedIn() -> Bool {
+        return bool(forKey: UserDefaultsKeys.isLoggedIn.rawValue)
+    }
+    
+    public func isFirstTimeOnApp() -> Bool {
+        return bool(forKey: UserDefaultsKeys.isFirstTimeOnApp.rawValue)
     }
 }
 

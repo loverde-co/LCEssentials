@@ -57,6 +57,20 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         self.setSelectedRow = self.arrayParams[0]["row"] as! Int
     }
     
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    class func `init`() -> PickerViewController {
+        let storyboard = UIStoryboard(name: "Picker", bundle: nil)
+        let datePicker = storyboard.instantiateViewController(withIdentifier: "idPickerViewController") as! PickerViewController
+        return datePicker
+    }
+    
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
