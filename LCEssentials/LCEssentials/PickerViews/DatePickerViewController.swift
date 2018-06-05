@@ -56,16 +56,8 @@ public class DatePickerViewController: UIViewController {
         datePicker.datePickerMode = setDatePickerMode
     }
     
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-    
-    class func `init`() -> DatePickerViewController {
-        let storyboard = UIStoryboard(name: "Picker", bundle: nil)
+    static func instantiate() -> DatePickerViewController {
+        let storyboard = UIStoryboard(name: "PickerViews", bundle: nil)
         let datePicker = storyboard.instantiateViewController(withIdentifier: "idDatePickerViewController") as! DatePickerViewController
         return datePicker
     }

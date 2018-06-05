@@ -62,6 +62,7 @@ public struct Defaults {
                 if(completion != nil){ completion!(); }
             }
         }
+        
     }
     
     //MARK: - Set Root View Controller
