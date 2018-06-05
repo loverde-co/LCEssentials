@@ -41,11 +41,11 @@ public struct Defaults {
     public let DEFAULT_ERROR_CODE = -99
     public let DEFAULT_ERROR_MSG = "Error Unknow"
     public let IS_PROD = false
-    #if targetEnvironment(simulator)
-    public let DEVICE_IS_SIMULATOR = true
-    #else
-    public let DEVICE_IS_SIMULATOR = false
-    #endif
+//    #if targetEnvironment(simulator)
+//    public let DEVICE_IS_SIMULATOR = true
+//    #else
+//    public let DEVICE_IS_SIMULATOR = false
+//    #endif
     public let DEVICE_NAME: String = UIDevice().modelName
     public var OLDER_DEVICES: Bool {
         return !(Defaults().DEVICE_NAME == "iPhone 5" || Defaults().DEVICE_NAME == "iPhone 5c" || Defaults().DEVICE_NAME == "iPhone 5s" || Defaults().DEVICE_NAME == "iPhone 4" || Defaults().DEVICE_NAME == "iPhone 4s")
@@ -1123,12 +1123,12 @@ public extension UIDevice {
             guard let value = element.value as? Int8 , value != 0 else { return identifier }
             return identifier + String(UnicodeScalar(UInt8(value)))
         }
-        if Defaults().DEVICE_IS_SIMULATOR {
+        #if targetEnvironment(simulator)
             // this neat trick is found at http://kelan.io/2015/easier-getenv-in-swift/
             if let dir = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
                 identifier = dir
             }
-        }
+        #endif
         
         switch identifier {
         case "iPod5,1":                                 return "iPod Touch 5"
