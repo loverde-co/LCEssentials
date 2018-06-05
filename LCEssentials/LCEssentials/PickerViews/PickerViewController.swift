@@ -58,7 +58,7 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     }
     
     static public func instantiate() -> PickerViewController {
-        let storyboard = UIStoryboard(name: "PickerViews", bundle: nil)
+        let storyboard = UIStoryboard(name: "PickerViews", bundle: Bundle(for: PickerViewController.self))
         let datePicker = storyboard.instantiateViewController(withIdentifier: "idPickerViewController") as! PickerViewController
         return datePicker
     }
