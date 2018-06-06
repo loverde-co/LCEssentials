@@ -47,8 +47,8 @@ MyCustomViewController: UIViewController, PickerViewControllerDelegate {
 	
 	override func viewDidLoad(){
 		super.viewDidLoad()
-		//Use Defaults LCEssentials to instance it
-        self.pickerViewController = Defaults.shared.instanceViewController("PickerViews", withIdentifier: "idPickerViewController") as! PickerViewController
+		//Use this custom instantiate
+        self.pickerViewController = PickerViewController.instantiate()
         self.pickerViewController.arrayParams = [["title":"Title Of Picker 01", "row": 0],
                                                    ["title":"Title Of Picker 02", "row": 1],
                                                    ["title":"Title Of Picker 03", "row": 2]]
@@ -59,6 +59,10 @@ MyCustomViewController: UIViewController, PickerViewControllerDelegate {
 	func showPicker(){
 	    self.pickerViewController.show()
 	}
+	
+	// You can use multiple instance of it!
+	// So, on delegate methods, check the instance
+	// and work with it
 	
 	//MARK: - PickerController Delegate
     func pickerViewController(_ picker: PickerViewController, didConfirm selectedString: String, selectedValue: Int) {

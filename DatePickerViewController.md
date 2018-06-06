@@ -47,8 +47,8 @@ MyCustomViewController: UIViewController, DatePickerViewControllerDelegate {
 	
 	override func viewDidLoad(){
 		super.viewDidLoad()
-		//Use Defaults LCEssentials to instance it
-        self.pickerViewController = Defaults.shared.instanceViewController("PickerViews", withIdentifier: "idDatePickerViewController") as! DatePickerViewController
+		//Use this custom instantiate
+        self.pickerViewController = DatePickerViewController.instantiate()
         self.pickerViewController.setWidth = self.view.frame.size.width
         self.pickerViewController.delegate = self
         //For hour
@@ -59,6 +59,11 @@ MyCustomViewController: UIViewController, DatePickerViewControllerDelegate {
 	func showPicker(){
 	    self.pickerViewController.show()
 	}
+	
+	
+	// You can use multiple instance of it!
+	// So, on delegate methods, check the instance
+	// and work with it
 	
 	//MARK: - DatePickerController Delegate
     func datePickerViewController(didConfirm picker: DatePickerViewController, withValue: String) {
