@@ -22,23 +22,23 @@
 
 import UIKit
 
-@objc public protocol LCMessagesDelegate {
-    @objc optional func messages(didTapOnMessage: LCMessages)
+@objc public protocol LCEMessagesDelegate {
+    @objc optional func messages(didTapOnMessage: LCEMessages)
 }
 
-public enum LCMessagesDirection {
+public enum LCEMessagesDirection {
     case top
     case bottom
 }
 
-public enum LCMessagesDuration: Double {
+public enum LCEMessagesDuration: Double {
     case forever = 0
     case twoSec = 2
     case fiveSecs = 5
     case eightSecs = 8
 }
 
-public class LCMessages: UIViewController {
+public class LCEMessages: UIViewController {
     
     @IBOutlet private var lblBody: UILabel!
     @IBOutlet private var iconImage: UIImageView!
@@ -67,15 +67,15 @@ public class LCMessages: UIViewController {
             self.setDistanceFromBottom = newValue
         }
     }
-    public var delegate: LCMessagesDelegate?
+    public var delegate: LCEMessagesDelegate?
     public var setTitleColor: UIColor = UIColor.white
     public var setBodyColor: UIColor = UIColor.white
     public var setBackgroundColor: UIColor = UIColor.cyan
     public var loadingColor: UIColor = UIColor.white
     public var setAnimationDuration: TimeInterval = 0.5
     public var setAnimationDelay: TimeInterval = 0.0
-    public var setDirection: LCMessagesDirection = .bottom
-    public var setDuration: LCMessagesDuration = .fiveSecs
+    public var setDirection: LCEMessagesDirection = .bottom
+    public var setDuration: LCEMessagesDuration = .fiveSecs
     public var isHidden: Bool = true
     public var tapToDismiss: Bool = true
     public var setHeight: CGFloat {
@@ -95,9 +95,9 @@ public class LCMessages: UIViewController {
         }
     }
     
-    static public func instantiate() -> LCMessages {
-        let storyboard = UIStoryboard(name: "LCMessages", bundle: Bundle(for: LCMessages.self))
-        let controller = storyboard.instantiateViewController(withIdentifier: "idLCMessages") as! LCMessages
+    static public func instantiate() -> LCEMessages {
+        let storyboard = UIStoryboard(name: "LCEMessages", bundle: Bundle(for: LCEMessages.self))
+        let controller = storyboard.instantiateViewController(withIdentifier: "idLCEMessages") as! LCEMessages
         return controller
     }
     

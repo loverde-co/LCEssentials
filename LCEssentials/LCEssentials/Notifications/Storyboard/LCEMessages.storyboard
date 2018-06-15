@@ -13,7 +13,7 @@
         <!--Messages-->
         <scene sceneID="5Z2-Lh-fe9">
             <objects>
-                <viewController storyboardIdentifier="idLCMessages" id="pe2-rh-Ilr" customClass="LCMessages" customModule="LCEssentials" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="idLCEMessages" id="pe2-rh-Ilr" customClass="LCEMessages" customModule="LCEssentials" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0lH-tB-0dJ"/>
                         <viewControllerLayoutGuide type="bottom" id="rCw-8L-Mpj"/>
@@ -92,11 +92,11 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="70"/>
                     <connections>
-                        <outlet property="activity" destination="CdU-ud-sCX" id="a6f-Tj-XaW"/>
-                        <outlet property="btClose" destination="LNI-55-R8r" id="hvW-4U-bkY"/>
-                        <outlet property="iconActivityConstraints" destination="bg1-Sx-Jlu" id="QQK-sY-4aY"/>
-                        <outlet property="iconImage" destination="5gO-TT-Hg6" id="FxU-Be-YIe"/>
-                        <outlet property="lblBody" destination="c8L-Gy-3Mi" id="hpo-NN-bqs"/>
+                        <outlet property="activity" destination="CdU-ud-sCX" id="dch-eT-TPx"/>
+                        <outlet property="btClose" destination="LNI-55-R8r" id="Em6-QS-5Ro"/>
+                        <outlet property="iconActivityConstraints" destination="Ktx-7c-YEZ" id="wOZ-HT-m1O"/>
+                        <outlet property="iconImage" destination="5gO-TT-Hg6" id="fKM-qi-TLR"/>
+                        <outlet property="lblBody" destination="c8L-Gy-3Mi" id="Ehs-U4-Ofi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jGa-QM-eDC" userLabel="First Responder" sceneMemberID="firstResponder"/>
