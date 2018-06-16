@@ -22,29 +22,30 @@
 
 import UIKit
 
-@objc public protocol LCEMessagesDelegate {
+@objc protocol LCEMessagesDelegate {
     @objc optional func messages(didTapOnMessage: LCEMessages)
 }
 
-public enum LCEMessagesDirection {
+enum LCEMessagesDirection {
     case top
     case bottom
 }
 
-public enum LCEMessagesDuration: Double {
+enum LCEMessagesDuration: Double {
     case forever = 0
     case twoSec = 2
     case fiveSecs = 5
     case eightSecs = 8
 }
 
-public class LCEMessages: UIViewController {
+class LCEMessages: UIViewController {
     
     @IBOutlet private var lblBody: UILabel!
     @IBOutlet private var iconImage: UIImageView!
     @IBOutlet private var iconActivityConstraints: NSLayoutConstraint!
     @IBOutlet private var activity: UIActivityIndicatorView!
     @IBOutlet private var btClose: UIButton!
+    private var tapedToHide: Bool = false
     private var rootViewController = UIApplication.shared.keyWindow?.rootViewController!
     private var referenceView: UIViewController!
     private var isKeyboardObservAdded: Bool = false
@@ -64,21 +65,20 @@ public class LCEMessages: UIViewController {
             return newDistance
         }
         set{
-            self.setDistanceFromBottom = newValue
         }
     }
-    public var delegate: LCEMessagesDelegate?
-    public var setTitleColor: UIColor = UIColor.white
-    public var setBodyColor: UIColor = UIColor.white
-    public var setBackgroundColor: UIColor = UIColor.cyan
-    public var loadingColor: UIColor = UIColor.white
-    public var setAnimationDuration: TimeInterval = 0.5
-    public var setAnimationDelay: TimeInterval = 0.0
-    public var setDirection: LCEMessagesDirection = .bottom
-    public var setDuration: LCEMessagesDuration = .fiveSecs
-    public var isHidden: Bool = true
-    public var tapToDismiss: Bool = true
-    public var setHeight: CGFloat {
+    var delegate: LCEMessagesDelegate?
+    var setTitleColor: UIColor = UIColor.white
+    var setBodyColor: UIColor = UIColor.white
+    var setBackgroundColor: UIColor = UIColor.cyan
+    var loadingColor: UIColor = UIColor.white
+    var setAnimationDuration: TimeInterval = 0.5
+    var setAnimationDelay: TimeInterval = 0.0
+    var setDirection: LCEMessagesDirection = .bottom
+    var setDuration: LCEMessagesDuration = .fiveSecs
+    var isHidden: Bool = true
+    var tapToDismiss: Bool = true
+    var setHeight: CGFloat {
         get{
             return 70
         }
@@ -86,7 +86,7 @@ public class LCEMessages: UIViewController {
             self.setHeight = newValue
         }
     }
-    public var setWidth: CGFloat {
+    var setWidth: CGFloat {
         get{
             return (UIApplication.shared.keyWindow?.bounds.width)!
         }
@@ -101,20 +101,20 @@ public class LCEMessages: UIViewController {
         return controller
     }
     
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         if !isKeyboardObservAdded {
             addObserverForKeyboard()
         }
     }
     
-    override public func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.view.frame.origin.y = setDirection == .top ? (self.setDistanceFromBottom - self.setHeight) : ( self.view.frame.origin.y == 0 ? (referenceView.view.frame.height - setDistanceFromBottom) : self.view.frame.origin.y + self.view.frame.size.height )
+        self.view.frame.origin.y = setDirection == .top ? (self.setDistanceFromBottom - self.setHeight) : ( self.view.frame.origin.y == 0 ? (referenceView.view.frame.height - setDistanceFromBottom) : originY )
         originY = self.view.frame.origin.y
     }
     
-    override public func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -123,18 +123,20 @@ public class LCEMessages: UIViewController {
         if self.delegate is UIViewController {
             if showInView != nil {
                 referenceView = showInView!.getParentViewController()
+                var newReference: UIViewController = referenceView
                 if referenceView.navigationController != nil && setDirection == .top {
                     if (referenceView.navigationController?.isNavigationBarHidden)! {
                         setDistanceFromBottom = 0
                     }else{
                         setDistanceFromBottom = (referenceView.navigationController?.navigationBar.frame.height)!
+                        newReference = referenceView.navigationController!
                     }
                 }
                 self.view.removeFromSuperview()
                 self.view.frame = CGRect(x: 0, y: originY , width: setWidth, height: setHeight)
                 self.view.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
                 self.view.autoresizesSubviews = true
-                referenceView.view.addSubview(self.view)
+                newReference.view.addSubview(self.view)
                 self.view.layer.zPosition = 1
             }else{
                 DispatchQueue.main.async {
@@ -167,53 +169,58 @@ public class LCEMessages: UIViewController {
             lblBody.textColor = setBodyColor
         }
         self.view.backgroundColor = setBackgroundColor
+        self.tapedToHide = false
+        
         if isHidden {
             anitamete()
         }
     }
     
-    public func dismiss(){
+    func dismiss(){
         hidde()
     }
     
     private func hidde(){
         if setDirection == .bottom {
-            toBottom()
+            toBottom(completion: nil)
         }else{
-            toUp()
+            toUp(completion: nil)
         }
         isHidden = true
     }
     
     private func anitamete(){
         if setDirection == .bottom {
-            toUp()
+            toUp(completion: nil)
         }else{
-            toBottom()
+            toBottom(completion: nil)
         }
         isHidden = false
     }
     
-    private func toUp(){
+    private func toUp(completion:(()->Void)?){
         UIView.animate(withDuration: setAnimationDuration, delay: setAnimationDelay, options: [.curveEaseIn],
                        animations: {
                         self.view.frame.origin.y -= self.setHeight
                         self.view.layoutIfNeeded()
         }, completion: {(_ completed: Bool) -> Void in
+            completion?()
             if self.setDirection == .top {
                 self.view.removeFromSuperview()
-                self.view.frame.origin.y = 0
+                self.view.frame.origin.y = self.originY
             }else{
                 if self.setDuration != .forever {
                     Defaults().backgroundThread(delay: self.setDuration.rawValue, completion: {
-                        self.hidde()
+                        if !self.tapedToHide {
+                            self.hidde()
+                        }
                     })
                 }
             }
         })
     }
     
-    private func toBottom(){
+    private func toBottom(completion:(()->Void)?){
         UIView.animate(withDuration: setAnimationDuration, delay: setAnimationDelay, options: [.curveLinear],
                        animations: {
                         self.view.frame.origin.y += self.setDirection == .top ? (self.view.frame.origin.y * -1) : self.setHeight
@@ -221,19 +228,24 @@ public class LCEMessages: UIViewController {
         },  completion: {(_ completed: Bool) -> Void in
             if self.setDirection == .bottom {
                 self.view.removeFromSuperview()
-                self.view.frame.origin.y = 0
+                self.view.frame.origin.y = self.originY
             }else{
                 if self.setDuration != .forever {
                     Defaults().backgroundThread(delay: self.setDuration.rawValue, completion: {
-                        self.hidde()
+                        if !self.tapedToHide {
+                            self.hidde()
+                        }
                     })
                 }
             }
         })
     }
     
-    @IBAction public func tappedOnMessage(_ sender: Any){
-        if tapToDismiss { hidde() }
+    @IBAction func tappedOnMessage(_ sender: Any){
+        if tapToDismiss {
+            tapedToHide = true
+            hidde()
+        }
         if delegate != nil { delegate?.messages?(didTapOnMessage: self) }
     }
     
@@ -244,7 +256,6 @@ public class LCEMessages: UIViewController {
     }
     
     @objc private func keyboardWasShown(notification: NSNotification){
-        //print("LCMessages VAI EXIBIR TECLADO")
         var info = notification.userInfo!
         let keyboardSize = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
         if self.setDirection == .bottom {
@@ -254,15 +265,16 @@ public class LCEMessages: UIViewController {
             }else{
                 reference = self.delegate as! UIViewController
             }
-            self.view.frame.origin = CGPoint(x: 0, y: (reference.view.frame.size.height) - (keyboardSize!.height + self.setHeight ) )
+            self.view.frame.origin = CGPoint(x: 0, y: (reference.view.frame.size.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) ))
+            originY = (reference.view.frame.size.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) )
         }
     }
     
     @objc private func keyboardWillBeHidden(notification: NSNotification){
-        //print("LCMessages VAI ESCONDER TECLADO")
-        if !isHidden && self.setDirection == .bottom {
+        if self.setDirection == .bottom && (self.delegate is UIViewController) && isKeyboardObservAdded {
             UIView.animate(withDuration: 1) {
-                self.view.frame.origin = CGPoint(x: 0, y: self.referenceView.view.frame.size.height - self.setHeight )
+                self.view.frame.origin = CGPoint(x: 0, y: (self.delegate as! UIViewController).view.frame.size.height - ( self.isHidden ? 0 : self.setHeight) )
+                self.originY = (self.delegate as! UIViewController).view.frame.size.height - ( self.isHidden ? 0 : self.setHeight)
             }
         }
     }
