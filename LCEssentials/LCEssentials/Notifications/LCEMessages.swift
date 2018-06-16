@@ -22,23 +22,23 @@
 
 import UIKit
 
-@objc protocol LCEMessagesDelegate {
+@objc public protocol LCEMessagesDelegate {
     @objc optional func messages(didTapOnMessage: LCEMessages)
 }
 
-enum LCEMessagesDirection {
+public enum LCEMessagesDirection {
     case top
     case bottom
 }
 
-enum LCEMessagesDuration: Double {
+public enum LCEMessagesDuration: Double {
     case forever = 0
     case twoSec = 2
     case fiveSecs = 5
     case eightSecs = 8
 }
 
-class LCEMessages: UIViewController {
+public class LCEMessages: UIViewController {
     
     @IBOutlet private var lblBody: UILabel!
     @IBOutlet private var iconImage: UIImageView!
@@ -67,18 +67,18 @@ class LCEMessages: UIViewController {
         set{
         }
     }
-    var delegate: LCEMessagesDelegate?
-    var setTitleColor: UIColor = UIColor.white
-    var setBodyColor: UIColor = UIColor.white
-    var setBackgroundColor: UIColor = UIColor.cyan
-    var loadingColor: UIColor = UIColor.white
-    var setAnimationDuration: TimeInterval = 0.5
-    var setAnimationDelay: TimeInterval = 0.0
-    var setDirection: LCEMessagesDirection = .bottom
-    var setDuration: LCEMessagesDuration = .fiveSecs
-    var isHidden: Bool = true
-    var tapToDismiss: Bool = true
-    var setHeight: CGFloat {
+    public var delegate: LCEMessagesDelegate?
+    public var setTitleColor: UIColor = UIColor.white
+    public var setBodyColor: UIColor = UIColor.white
+    public var setBackgroundColor: UIColor = UIColor.cyan
+    public var loadingColor: UIColor = UIColor.white
+    public var setAnimationDuration: TimeInterval = 0.5
+    public var setAnimationDelay: TimeInterval = 0.0
+    public var setDirection: LCEMessagesDirection = .bottom
+    public var setDuration: LCEMessagesDuration = .fiveSecs
+    public var isHidden: Bool = true
+    public var tapToDismiss: Bool = true
+    public var setHeight: CGFloat {
         get{
             return 70
         }
@@ -86,7 +86,7 @@ class LCEMessages: UIViewController {
             self.setHeight = newValue
         }
     }
-    var setWidth: CGFloat {
+    public var setWidth: CGFloat {
         get{
             return (UIApplication.shared.keyWindow?.bounds.width)!
         }
@@ -101,20 +101,20 @@ class LCEMessages: UIViewController {
         return controller
     }
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         if !isKeyboardObservAdded {
             addObserverForKeyboard()
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.view.frame.origin.y = setDirection == .top ? (self.setDistanceFromBottom - self.setHeight) : ( self.view.frame.origin.y == 0 ? (referenceView.view.frame.height - setDistanceFromBottom) : originY )
         originY = self.view.frame.origin.y
     }
     
-    override func didReceiveMemoryWarning() {
+    override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -176,7 +176,7 @@ class LCEMessages: UIViewController {
         }
     }
     
-    func dismiss(){
+    public func dismiss(){
         hidde()
     }
     
