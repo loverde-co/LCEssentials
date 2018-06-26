@@ -57,8 +57,6 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         super.viewDidLoad()
         self.pickerView.selectRow(self.setSelectedRow, inComponent: 0, animated: true)
         self.setSelectedRow = self.arrayParams[0]["row"] as! Int
-        btCancel.titleLabel?.text = setCancelTitleButton
-        btConfirm.titleLabel?.text = setConfirmTitleButton
     }
     
     static public func instantiate() -> PickerViewController {
@@ -77,6 +75,8 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         view.removeFromSuperview()
         borderTop.backgroundColor = setBorderTopColor
         borderBottom.backgroundColor = setBorderBottomColor
+        btCancel.titleLabel?.text = setCancelTitleButton
+        btConfirm.titleLabel?.text = setConfirmTitleButton
         var controller: UIViewController!
         if delegate is UIViewController {
             controller = delegate as! UIViewController

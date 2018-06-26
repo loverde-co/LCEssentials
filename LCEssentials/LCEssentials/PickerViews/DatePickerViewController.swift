@@ -56,8 +56,6 @@ public class DatePickerViewController: UIViewController {
         
         datePicker.locale = Locale(identifier: setLocale)
         datePicker.datePickerMode = setDatePickerMode
-        btCancel.titleLabel?.text = setCancelTitleButton
-        btConfirm.titleLabel?.text = setConfirmTitleButton
     }
     
     static public func instantiate() -> DatePickerViewController {
@@ -77,6 +75,8 @@ public class DatePickerViewController: UIViewController {
         view.removeFromSuperview()
         borderTop.backgroundColor = setBorderTopColor
         borderBottom.backgroundColor = setBorderBottomColor
+        btCancel.titleLabel?.text = setCancelTitleButton
+        btConfirm.titleLabel?.text = setConfirmTitleButton
         if delegate is UIViewController {
             let controller = delegate as! UIViewController
             view.frame = CGRect(x: 0, y: ( controller.view.bounds.height - setDistanceFromBottom ), width: setWidth, height: setHeight)

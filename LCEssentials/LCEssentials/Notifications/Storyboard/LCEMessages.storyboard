@@ -33,7 +33,7 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tIz-eB-Jf8">
                                 <rect key="frame" x="119.5" y="0.0" width="30" height="70"/>
                                 <subviews>
-                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warningIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="5gO-TT-Hg6">
+                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alert.png" translatesAutoresizingMaskIntoConstraints="NO" id="5gO-TT-Hg6">
                                         <rect key="frame" x="0.0" y="0.0" width="20" height="70"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="20" id="Ktx-7c-YEZ"/>
@@ -108,6 +108,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="warningIcon.png" width="16" height="16"/>
+        <image name="alert.png" width="24" height="24"/>
     </resources>
 </document>
