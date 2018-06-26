@@ -37,24 +37,28 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     @IBOutlet weak var borderTop: UIView!
     @IBOutlet weak var borderBottom: UIView!
     
-    var arrayParams: [[String:Any]] = [[String:Any]]()
-    var setSelectedRow: Int = 0
-    var setSelectedBGColor: UIColor = UIColor.white
-    var setFontName: String = "Helvetica"
-    var setFontSize: CGFloat = 24
-    var setHeight: CGFloat = 214
-    var setWidth: CGFloat = 375
-    var setDistanceFromBottom: CGFloat = 0
-    var isHidden: Bool = true
-    var setBorderTopColor: UIColor = UIColor.darkGray
-    var setBorderBottomColor: UIColor = UIColor.darkGray
+    public var arrayParams: [[String:Any]] = [[String:Any]]()
+    public var setSelectedRow: Int = 0
+    public var setSelectedBGColor: UIColor = UIColor.white
+    public var setFontName: String = "Helvetica"
+    public var setFontSize: CGFloat = 24
+    public var setHeight: CGFloat = 214
+    public var setWidth: CGFloat = 375
+    public var setDistanceFromBottom: CGFloat = 0
+    public var isHidden: Bool = true
+    public var setBorderTopColor: UIColor = UIColor.darkGray
+    public var setBorderBottomColor: UIColor = UIColor.darkGray
+    public var setConfirmTitleButton: String = "Done"
+    public var setCancelTitleButton: String = "Cancel"
     
-    var delegate : PickerViewControllerDelegate!
+    public var delegate : PickerViewControllerDelegate!
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.pickerView.selectRow(self.setSelectedRow, inComponent: 0, animated: true)
         self.setSelectedRow = self.arrayParams[0]["row"] as! Int
+        btCancel.titleLabel?.text = setCancelTitleButton
+        btConfirm.titleLabel?.text = setConfirmTitleButton
     }
     
     static public func instantiate() -> PickerViewController {

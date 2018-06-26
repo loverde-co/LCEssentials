@@ -48,12 +48,16 @@ public class DatePickerViewController: UIViewController {
     public var isHidden: Bool = true
     public var setBorderTopColor: UIColor = UIColor.darkGray
     public var setBorderBottomColor: UIColor = UIColor.darkGray
+    public var setConfirmTitleButton: String = "Done"
+    public var setCancelTitleButton: String = "Cancel"
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         
         datePicker.locale = Locale(identifier: setLocale)
         datePicker.datePickerMode = setDatePickerMode
+        btCancel.titleLabel?.text = setCancelTitleButton
+        btConfirm.titleLabel?.text = setConfirmTitleButton
     }
     
     static public func instantiate() -> DatePickerViewController {

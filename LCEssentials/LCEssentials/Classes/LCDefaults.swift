@@ -32,11 +32,18 @@ func ^^ (radix: Float, power: Float) -> Float {
     return Float(pow(Double(radix), Double(power)))
 }
 
+//MARK: - Append Dictionary
+func += <K, V> (left: inout [K:V], right: [K:V]) {
+    for (k, v) in right {
+        left[k] = v
+    }
+}
+
 public enum EnumBorderSide {
     case top, bottom, left, right
 }
 
-public struct Defaults {
+public struct LCEssentials {
     public let DEFAULT_ERROR_DOMAIN = "LoverdeCoErrorDomain"
     public let DEFAULT_ERROR_CODE = -99
     public let DEFAULT_ERROR_MSG = "Error Unknow"
@@ -48,7 +55,7 @@ public struct Defaults {
 //    #endif
     public let DEVICE_NAME: String = UIDevice().modelName
     public var OLDER_DEVICES: Bool {
-        return !(Defaults().DEVICE_NAME == "iPhone 5" || Defaults().DEVICE_NAME == "iPhone 5c" || Defaults().DEVICE_NAME == "iPhone 5s" || Defaults().DEVICE_NAME == "iPhone 4" || Defaults().DEVICE_NAME == "iPhone 4s")
+        return !(LCEssentials().DEVICE_NAME == "iPhone 5" || LCEssentials().DEVICE_NAME == "iPhone 5c" || LCEssentials().DEVICE_NAME == "iPhone 5s" || LCEssentials().DEVICE_NAME == "iPhone 4" || LCEssentials().DEVICE_NAME == "iPhone 4s")
     }
 
     public init(){}

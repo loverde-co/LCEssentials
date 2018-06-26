@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'LCEssentials'
-  s.version          = '0.1.22'
+  s.version          = '0.1.23'
   s.summary          = 'This is a repository of essential scripts written in Swift for Loverde Co.'
  
   s.description      = <<-DESC
@@ -15,5 +15,5 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
   s.platform         = :ios, '9.0'
   s.ios.deployment_target = '10.0'
   s.source_files     = 'LCEssentials/LCEssentials/Classes/*.{swift}', 'LCEssentials/LCEssentials/PickerViews/*.{swift}', 'LCEssentials/LCEssentials/Notifications/*.{swift}'
-  s.resources        = ['LCEssentials/LCEssentials/PickerViews/Storyboards/*.{storyboard}', 'LCEssentials/LCEssentials/Notifications/Storyboard/*.{storyboard}']
+  s.resources        = ['LCEssentials/LCEssentials/PickerViews/Storyboards/*.{storyboard}', 'LCEssentials/LCEssentials/Notifications/Storyboard/*.{storyboard}', 'LCEssentials/LCEssentials/Notifications/Storyboard/*.{png}']
 end

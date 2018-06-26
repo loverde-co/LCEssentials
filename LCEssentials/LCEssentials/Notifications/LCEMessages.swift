@@ -210,7 +210,7 @@ public class LCEMessages: UIViewController {
                 self.view.frame.origin.y = self.originY
             }else{
                 if self.setDuration != .forever {
-                    Defaults().backgroundThread(delay: self.setDuration.rawValue, completion: {
+                    LCEssentials().backgroundThread(delay: self.setDuration.rawValue, completion: {
                         if !self.tapedToHide {
                             self.hidde()
                         }
@@ -231,7 +231,7 @@ public class LCEMessages: UIViewController {
                 self.view.frame.origin.y = self.originY
             }else{
                 if self.setDuration != .forever {
-                    Defaults().backgroundThread(delay: self.setDuration.rawValue, completion: {
+                    LCEssentials().backgroundThread(delay: self.setDuration.rawValue, completion: {
                         if !self.tapedToHide {
                             self.hidde()
                         }
