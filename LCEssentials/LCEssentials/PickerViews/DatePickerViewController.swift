@@ -76,7 +76,9 @@ public class DatePickerViewController: UIViewController {
         borderTop.backgroundColor = setBorderTopColor
         borderBottom.backgroundColor = setBorderBottomColor
         btCancel.titleLabel?.text = setCancelTitleButton
+        btCancel.sizeToFit()
         btConfirm.titleLabel?.text = setConfirmTitleButton
+        btConfirm.sizeToFit()
         if delegate is UIViewController {
             let controller = delegate as! UIViewController
             view.frame = CGRect(x: 0, y: ( controller.view.bounds.height - setDistanceFromBottom ), width: setWidth, height: setHeight)
