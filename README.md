@@ -41,7 +41,7 @@ import LCEssentials
 * Background Trhead  
 
 ```swift
-Defaults().backgroundThread(delay: 0.6, background: {
+LCEssentials().backgroundThread(delay: 0.6, background: {
             //Do something im background
         }) {
             //When finish, update UI
