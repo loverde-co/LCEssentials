@@ -75,9 +75,9 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         view.removeFromSuperview()
         borderTop.backgroundColor = setBorderTopColor
         borderBottom.backgroundColor = setBorderBottomColor
-        btCancel.titleLabel?.text = setCancelTitleButton
+        btCancel.setTitle(setCancelTitleButton, for: .normal)
         btCancel.sizeToFit()
-        btConfirm.titleLabel?.text = setConfirmTitleButton
+        btConfirm.setTitle(setConfirmTitleButton, for: .normal)
         btConfirm.sizeToFit()
         var controller: UIViewController!
         if delegate is UIViewController {

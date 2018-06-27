@@ -75,9 +75,9 @@ public class DatePickerViewController: UIViewController {
         view.removeFromSuperview()
         borderTop.backgroundColor = setBorderTopColor
         borderBottom.backgroundColor = setBorderBottomColor
-        btCancel.titleLabel?.text = setCancelTitleButton
+        btCancel.setTitle(setCancelTitleButton, for: .normal)
         btCancel.sizeToFit()
-        btConfirm.titleLabel?.text = setConfirmTitleButton
+        btConfirm.setTitle(setConfirmTitleButton, for: .normal)
         btConfirm.sizeToFit()
         if delegate is UIViewController {
             let controller = delegate as! UIViewController
