@@ -97,7 +97,7 @@
                     <connections>
                         <outlet property="activity" destination="CdU-ud-sCX" id="dch-eT-TPx"/>
                         <outlet property="btClose" destination="LNI-55-R8r" id="Em6-QS-5Ro"/>
-                        <outlet property="iconActivityConstraints" destination="Ktx-7c-YEZ" id="wOZ-HT-m1O"/>
+                        <outlet property="iconActivityConstraints" destination="bg1-Sx-Jlu" id="p6l-cm-mNE"/>
                         <outlet property="iconImage" destination="5gO-TT-Hg6" id="fKM-qi-TLR"/>
                         <outlet property="lblBody" destination="c8L-Gy-3Mi" id="Ehs-U4-Ofi"/>
                     </connections>
