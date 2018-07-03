@@ -45,6 +45,9 @@ public class LCEMessages: UIViewController {
     @IBOutlet private var iconActivityConstraints: NSLayoutConstraint!
     @IBOutlet private var activity: UIActivityIndicatorView!
     @IBOutlet private var btClose: UIButton!
+    private var fontName: String = "Helvetica Neue"
+    private var fontSize: CGFloat = 12
+    private var fontColor: UIColor = .white
     private var tapedToHide: Bool = false
     private var rootViewController = UIApplication.shared.keyWindow?.rootViewController!
     private var referenceView: UIViewController!
@@ -68,8 +71,6 @@ public class LCEMessages: UIViewController {
         }
     }
     public var delegate: LCEMessagesDelegate?
-    public var setTitleColor: UIColor = UIColor.white
-    public var setBodyColor: UIColor = UIColor.white
     public var setBackgroundColor: UIColor = UIColor.cyan
     public var loadingColor: UIColor = UIColor.white
     public var setAnimationDuration: TimeInterval = 0.5
@@ -166,7 +167,8 @@ public class LCEMessages: UIViewController {
         if withBody != nil {
             lblBody.isHidden = false
             lblBody.text = withBody!
-            lblBody.textColor = setBodyColor
+            lblBody.font = UIFont(name: fontName, size: fontSize)
+            lblBody.textColor = fontColor
         }
         self.view.backgroundColor = setBackgroundColor
         self.tapedToHide = false
@@ -174,6 +176,12 @@ public class LCEMessages: UIViewController {
         if isHidden {
             anitamete()
         }
+    }
+
+    public func setFont(name: String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil){
+        fontColor = color != nil ? color! : fontColor
+        fontSize = size
+        fontName = name
     }
     
     public func dismiss(){
