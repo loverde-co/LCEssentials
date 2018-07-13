@@ -260,6 +260,20 @@ public extension String {
             return nil
         }
     }
+    //MARK: - Currency formatters alternative
+    //    let price = 1.99
+    //
+    //    print(Formatter.currency.locale)  // "en_US (current)\n"
+    //    print(price.currency)             // "$1.99\n"
+    //
+    //    Formatter.currency.locale = Locale(identifier: "pt_BR")
+    //    print(price.currency)  // "R$1,99\n"
+    //
+    //    Formatter.currency.locale = Locale(identifier: "en_UK")
+    //    print(price.currency)  // "£1.99\n"
+    //
+    //    print(price.currencyBR)  // "R$1,99\n"
+    //    print(price.currencyUS)  // "$1.99\n"
 
     public func convertFloatToBRL(value: Float) -> String{
 
@@ -269,9 +283,43 @@ public extension String {
         // localize to your grouping and decimal separator
         currencyFormatter.locale = NSLocale.current
         let priceString = currencyFormatter.string(from: NSNumber(value: value))
-
         return priceString!
     }
+    
+    public func convertToCurrencyFormatt(value: Float) -> String?{
+        let currencyFormatter = NumberFormatter()
+        currencyFormatter.usesGroupingSeparator = true
+        currencyFormatter.numberStyle = NumberFormatter.Style.currency
+        // localize to your grouping and decimal separator
+        currencyFormatter.locale = NSLocale.current
+        
+        if let amountString = currencyFormatter.string(from: NSNumber(value: value)) {
+            // check if it has default space like EUR
+            let hasSpace = amountString.rangeOfCharacter(from: .whitespaces) != nil
+            
+            if let indexOfSymbol = amountString.index(of: Character(currencyFormatter.currencySymbol)) {
+                if amountString.startIndex == indexOfSymbol {
+                    currencyFormatter.paddingPosition = .afterPrefix
+                } else {
+                    currencyFormatter.paddingPosition = .beforeSuffix
+                }
+            }
+            if !hasSpace {
+                currencyFormatter.formatWidth = amountString.count + 1
+                currencyFormatter.paddingCharacter = " "
+            }
+        } else {
+            print("Error while making amount string from given amount: \(value)")
+            return nil
+        }
+        
+        if let finalAmountString = currencyFormatter.string(from: NSNumber(value: value)) {
+            return finalAmountString
+        } else {
+            return nil
+        }
+    }
+    
     public func toURL() -> NSURL? {
         return NSURL(string: self)
     }
@@ -302,5 +350,12 @@ public extension String {
             }
         }
         return result
+    }
+    func stringByAddingPercentEncodingForRFC3986() -> String {
+        let allowedQueryParamAndKey =  CharacterSet(charactersIn: ";/?:@&=+$, ").inverted
+        return addingPercentEncoding(withAllowedCharacters: allowedQueryParamAndKey)!
+    }
+    var removingWhitespacesAndNewlines: String {
+        return components(separatedBy: .whitespacesAndNewlines).joined(separator: "")
     }
 }

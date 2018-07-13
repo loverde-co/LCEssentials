@@ -129,6 +129,16 @@ public struct LCEssentials {
     public func printLog(section:String, description:String){
         print("\n\n[\(section)] \(description)")
     }
+    
+    public static func printInfo(title: String, msg: String){
+        print("💭 INFO: \(title): \(msg)")
+    }
+    public static func printWarn(title: String, msg: String){
+        print("⚠️ WARN: \(title): \(msg)")
+    }
+    public static func printError(title: String, msg: String){
+        print("🚫 ERROR: \(title): \(msg)")
+    }
 }
 
 
