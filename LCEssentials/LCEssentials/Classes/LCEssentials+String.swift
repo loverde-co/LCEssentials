@@ -274,8 +274,30 @@ public extension String {
     //
     //    print(price.currencyBR)  // "R$1,99\n"
     //    print(price.currencyUS)  // "$1.99\n"
-
-    public func convertFloatToBRL(value: Float) -> String{
+    public func removeFormatAmount() -> Double {
+        let formatter = NumberFormatter()
+        
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.numberStyle = .currency
+        formatter.currencySymbol = "$"
+        formatter.decimalSeparator = ","
+        
+        return formatter.number(from: self) as! Double? ?? 0
+    }
+    public func convertFloatToCurrency(value: Float, withSpace: Bool = false) -> String{
+        
+        let currencyFormatter = NumberFormatter()
+        currencyFormatter.usesGroupingSeparator = true
+        currencyFormatter.numberStyle = NumberFormatter.Style.currency
+        currencyFormatter.currencySymbol = withSpace ? "\(currencyFormatter.currencySymbol!) " : currencyFormatter.currencySymbol
+        // localize to your grouping and decimal separator
+        currencyFormatter.locale = NSLocale.current
+        let priceString = currencyFormatter.string(from: NSNumber(value: value))
+        return priceString!
+    }
+    
+    
+    public func convertFloatToCurrency(value: Float) -> String{
 
         let currencyFormatter = NumberFormatter()
         currencyFormatter.usesGroupingSeparator = true
