@@ -127,10 +127,18 @@ public class Reachability {
     fileprivate var previousFlags: SCNetworkReachabilityFlags?
     
     fileprivate var isRunningOnDevice: Bool = {
-        #if targetEnvironment(simulator)
-        return false
+        #if swift(>=4.1)
+            #if targetEnvironment(simulator)
+                return false
+            #else
+                return true
+            #endif
         #else
-        return true
+            #if (arch(i386) || arch(x86_64)) && os(iOS)
+                return false
+            #else
+                return true
+            #endif
         #endif
     }()
     
