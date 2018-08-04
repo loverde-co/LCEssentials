@@ -32,13 +32,21 @@ public extension UIDevice {
             guard let value = element.value as? Int8 , value != 0 else { return identifier }
             return identifier + String(UnicodeScalar(UInt8(value)))
         }
-
-        #if targetEnvironment(simulator)
-        //#if (arch(i386) || arch(x86_64)) && os(iOS)
-        // this neat trick is found at http://kelan.io/2015/easier-getenv-in-swift/
-        if let dir = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
-            identifier = dir
-        }
+        #if swift(>=4.0)
+            #if targetEnvironment(simulator)
+                //#if (arch(i386) || arch(x86_64)) && os(iOS)
+                // this neat trick is found at http://kelan.io/2015/easier-getenv-in-swift/
+                if let dir = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
+                    identifier = dir
+                }
+            #endif
+        #else
+            #if (arch(i386) || arch(x86_64)) && os(iOS)
+                // this neat trick is found at http://kelan.io/2015/easier-getenv-in-swift/
+                if let dir = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
+                    identifier = dir
+                }
+            #endif
         #endif
 
         switch identifier {
