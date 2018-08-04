@@ -32,7 +32,7 @@ public extension UIDevice {
             guard let value = element.value as? Int8 , value != 0 else { return identifier }
             return identifier + String(UnicodeScalar(UInt8(value)))
         }
-        #if swift(>=4.0)
+        #if swift(>=4.1)
             #if targetEnvironment(simulator)
                 //#if (arch(i386) || arch(x86_64)) && os(iOS)
                 // this neat trick is found at http://kelan.io/2015/easier-getenv-in-swift/
