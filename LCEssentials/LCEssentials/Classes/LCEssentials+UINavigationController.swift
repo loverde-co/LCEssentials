@@ -30,6 +30,12 @@ public extension UINavigationController {
         self.popViewController(animated: true)
         CATransaction.commit()
     }
+    public func popToRootViewControllerWithHandler(completion: @escaping ()->()) {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        self.popToRootViewController(animated: true)
+        CATransaction.commit()
+    }
     public func pushViewController(viewController: UIViewController, completion: @escaping ()->()) {
         CATransaction.begin()
         CATransaction.setCompletionBlock(completion)
