@@ -296,13 +296,13 @@ public extension String {
         return priceString!
     }
     
-    public func currencyInputFormatting(withSpace: Bool = false) -> String {
+    public func currencyInputFormatting(withSpace: Bool = false, withSymbol: Bool = true) -> String {
         
         var number: NSNumber!
         let formatter = NumberFormatter()
         formatter.usesGroupingSeparator = true
         formatter.numberStyle = NumberFormatter.Style.currency
-        formatter.currencySymbol = withSpace ? "\(formatter.currencySymbol!) " : formatter.currencySymbol
+        formatter.currencySymbol = withSymbol ? ( withSpace ? "\(formatter.currencySymbol!) " : formatter.currencySymbol ): ""
         formatter.maximumFractionDigits = 2
         formatter.minimumFractionDigits = 2
         formatter.locale = NSLocale.current
