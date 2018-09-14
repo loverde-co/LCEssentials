@@ -101,4 +101,11 @@ public extension Date {
         let strDay = dateFormatter.string(from: self)
         return strDay
     }
+    
+    public func getWeekDayName() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        let strDay = dateFormatter.string(from: self)
+        return strDay
+    }
 }
