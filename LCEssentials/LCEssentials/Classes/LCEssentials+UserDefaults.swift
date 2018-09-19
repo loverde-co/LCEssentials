@@ -46,4 +46,16 @@ public extension UserDefaults {
     public func isFirstTimeOnApp() -> Bool {
         return bool(forKey: UserDefaultsKeys.isFirstTimeOnApp.rawValue)
     }
+    
+    public func setObject(object: Any, forKey: String){
+        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: object)
+        set(encodedData, forKey: forKey)
+        synchronize()
+    }
+    
+    public func getObject<T>(forKey: String) -> T{
+        let decoded  = object(forKey: forKey) as! Data
+        let decodedGroups = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! T
+        return decodedGroups
+    }
 }
