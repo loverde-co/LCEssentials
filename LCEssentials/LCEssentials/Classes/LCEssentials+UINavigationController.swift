@@ -21,6 +21,7 @@
  
 
 import Foundation
+import QuartzCore
 
 public extension UINavigationController {
     //Same function as "popViewController", but allow us to know when this function ends

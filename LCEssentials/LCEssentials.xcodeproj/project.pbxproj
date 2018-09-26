@@ -6,20 +6,6 @@
 	objectVersion = 50;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		B1AD441020B211DF00FAA190 /* CommonCryptoModuleMap */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = B1AD441120B211DF00FAA190 /* Build configuration list for PBXAggregateTarget "CommonCryptoModuleMap" */;
-			buildPhases = (
-				B1AD441420B2120000FAA190 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = CommonCryptoModuleMap;
-			productName = CommonCryptoModuleMap;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		B121545320C6FAFF008D62AB /* ReachabilityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121545220C6FAFE008D62AB /* ReachabilityHelper.swift */; };
 		B16B59A220E27D6300DD7DF0 /* alert.png in Resources */ = {isa = PBXBuildFile; fileRef = B16B599F20E27D6200DD7DF0 /* alert.png */; };
@@ -71,13 +57,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = B1AD43F020B200A600FAA190;
 			remoteInfo = LCEssentials;
-		};
-		B1AD441520B2122800FAA190 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B1AD43E820B200A600FAA190 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B1AD441020B211DF00FAA190;
-			remoteInfo = CommonCryptoModuleMap;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -287,7 +266,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				B1AD441620B2122800FAA190 /* PBXTargetDependency */,
 			);
 			name = LCEssentials;
 			productName = LCEssentials;
@@ -329,9 +307,6 @@
 					B1AD43F920B200A600FAA190 = {
 						CreatedOnToolsVersion = 9.3.1;
 					};
-					B1AD441020B211DF00FAA190 = {
-						CreatedOnToolsVersion = 9.3.1;
-					};
 				};
 			};
 			buildConfigurationList = B1AD43EB20B200A600FAA190 /* Build configuration list for PBXProject "LCEssentials" */;
@@ -348,7 +323,6 @@
 			targets = (
 				B1AD43F020B200A600FAA190 /* LCEssentials */,
 				B1AD43F920B200A600FAA190 /* LCEssentialsTests */,
-				B1AD441020B211DF00FAA190 /* CommonCryptoModuleMap */,
 			);
 		};
 /* End PBXProject section */
@@ -374,22 +348,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		B1AD441420B2120000FAA190 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This if-statement means we'll only run the main script if the CommonCryptoModuleMap directory doesn't exist\n# Because otherwise the rest of the script causes a full recompile for anything where CommonCrypto is a dependency\n# Do a \"Clean Build Folder\" to remove this directory and trigger the rest of the script to run\nif [ -d \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap\" ]; then\necho \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap directory already exists, so skipping the rest of the script.\"\nexit 0\nfi\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap\"\ncat <<EOF > \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap/module.modulemap\"\nmodule CommonCrypto [system] {\n    header \"${SDKROOT}/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nEOF\nln -sf \"${SDKROOT}/usr/include/CommonCrypto\" \"${FRAMEWORK_DIR}/Headers\"";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B1AD43EC20B200A600FAA190 /* Sources */ = {
@@ -447,11 +405,6 @@
 			isa = PBXTargetDependency;
 			target = B1AD43F020B200A600FAA190 /* LCEssentials */;
 			targetProxy = B1AD43FC20B200A600FAA190 /* PBXContainerItemProxy */;
-		};
-		B1AD441620B2122800FAA190 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B1AD441020B211DF00FAA190 /* CommonCryptoModuleMap */;
-			targetProxy = B1AD441520B2122800FAA190 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -597,7 +550,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.loverde.LCEssentials;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -625,7 +577,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.loverde.LCEssentials;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap $(inherited)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -669,24 +620,6 @@
 			};
 			name = Release;
 		};
-		B1AD441220B211DF00FAA190 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = K4E5BZMM4V;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		B1AD441320B211DF00FAA190 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = K4E5BZMM4V;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -713,15 +646,6 @@
 			buildConfigurations = (
 				B1AD440920B200A600FAA190 /* Debug */,
 				B1AD440A20B200A600FAA190 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B1AD441120B211DF00FAA190 /* Build configuration list for PBXAggregateTarget "CommonCryptoModuleMap" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B1AD441220B211DF00FAA190 /* Debug */,
-				B1AD441320B211DF00FAA190 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

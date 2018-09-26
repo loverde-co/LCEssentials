@@ -47,15 +47,16 @@ public extension UserDefaults {
         return bool(forKey: UserDefaultsKeys.isFirstTimeOnApp.rawValue)
     }
     
-    public func setObject(object: Any, forKey: String){
-        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: object)
-        set(encodedData, forKey: forKey)
-        synchronize()
+    public func setObject<T>(object: T, forKey: String) where T: Codable{
+        if let encoded = try? JSONEncoder().encode(object) {
+            UserDefaults.standard.set(encoded, forKey: forKey)
+            UserDefaults.standard.synchronize()
+        }
     }
-    
-    public func getObject<T>(forKey: String) -> T{
-        let decoded  = object(forKey: forKey) as! Data
-        let decodedGroups = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! T
-        return decodedGroups
+    public func getObject<T>(forKey: String) -> T? where T: Codable {
+        if let userData = data(forKey: forKey) {
+            return try? JSONDecoder().decode(T.self, from: userData)
+        }
+        return nil
     }
 }

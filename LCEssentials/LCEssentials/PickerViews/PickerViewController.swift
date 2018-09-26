@@ -81,7 +81,7 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         btConfirm.sizeToFit()
         var controller: UIViewController!
         if delegate is UIViewController {
-            controller = delegate as! UIViewController
+            controller = delegate as? UIViewController
             view.frame = CGRect(x: 0, y: ( controller.view.bounds.height - setDistanceFromBottom ), width: setWidth, height: setHeight)
             view.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
             view.autoresizesSubviews = true

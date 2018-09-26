@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>CommonCryptoModuleMap.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
 		<key>LCEssentials.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -23,6 +18,11 @@
 			<true/>
 		</dict>
 		<key>B1AD43F920B200A600FAA190</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B1AD441020B211DF00FAA190</key>
 		<dict>
 			<key>primary</key>
 			<true/>

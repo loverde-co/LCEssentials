@@ -84,7 +84,7 @@ public class LCEMessages: UIViewController {
             return 70
         }
         set {
-            self.setHeight = newValue
+            //self.setHeight = newValue
         }
     }
     public var setWidth: CGFloat {
@@ -92,7 +92,7 @@ public class LCEMessages: UIViewController {
             return (UIApplication.shared.keyWindow?.bounds.width)!
         }
         set{
-            self.setWidth = newValue
+            //self.setWidth = newValue
         }
     }
     
@@ -271,7 +271,9 @@ public class LCEMessages: UIViewController {
             if self.referenceView != nil {
                 reference = self.referenceView
             }else{
-                reference = self.delegate as! UIViewController
+                if let newRef = delegate as? UIViewController {
+                    reference = newRef
+                }
             }
             self.view.frame.origin = CGPoint(x: 0, y: (reference.view.frame.size.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) ))
             originY = (reference.view.frame.size.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) )

@@ -55,7 +55,33 @@ public struct LCEssentials {
 //    #endif
     public let DEVICE_NAME: String = UIDevice().modelName
     public var OLDER_DEVICES: Bool {
-        return !(LCEssentials().DEVICE_NAME == "iPhone 5" || LCEssentials().DEVICE_NAME == "iPhone 5c" || LCEssentials().DEVICE_NAME == "iPhone 5s" || LCEssentials().DEVICE_NAME == "iPhone 4" || LCEssentials().DEVICE_NAME == "iPhone 4s")
+        return !(LCEssentials().DEVICE_NAME == "iPhone SE" || LCEssentials().DEVICE_NAME == "iPhone 5" || LCEssentials().DEVICE_NAME == "iPhone 5c" || LCEssentials().DEVICE_NAME == "iPhone 5s" || LCEssentials().DEVICE_NAME == "iPhone 4" || LCEssentials().DEVICE_NAME == "iPhone 4s")
+    }
+    
+    public static var SMALL_DEVICES: Bool {
+        var isVeryOld = true
+        if (LCEssentials().DEVICE_NAME == "iPhone SE" || LCEssentials().DEVICE_NAME == "iPhone 5" || LCEssentials().DEVICE_NAME == "iPhone 5c" || LCEssentials().DEVICE_NAME == "iPhone 5s" || LCEssentials().DEVICE_NAME == "iPhone 4" || LCEssentials().DEVICE_NAME == "iPhone 4s") {
+            isVeryOld = true
+        }else{
+            isVeryOld = false
+        }
+        return isVeryOld
+    }
+    
+    public static var BIGGER_DEVICES: Bool {
+        var isVeryOld = false
+        if (LCEssentials().DEVICE_NAME == "iPhone 6" || LCEssentials().DEVICE_NAME == "iPhone 6 Plus" || LCEssentials().DEVICE_NAME == "iPhone 6s" || LCEssentials().DEVICE_NAME == "iPhone 6s Plus" || LCEssentials().DEVICE_NAME == "iPhone 7" || LCEssentials().DEVICE_NAME == "iPhone 7 Plus" || LCEssentials().DEVICE_NAME == "iPhone 8" || LCEssentials().DEVICE_NAME == "iPhone 8 Plus") {
+            isVeryOld = true
+        }
+        return isVeryOld
+    }
+    
+    public static var X_DEVICES: Bool {
+        var isVeryOld = false
+        if (LCEssentials().DEVICE_NAME == "iPhone X" || LCEssentials().DEVICE_NAME == "iPhone XS" || LCEssentials().DEVICE_NAME == "iPhone XS Max" || LCEssentials().DEVICE_NAME == "iPhone XR") {
+            isVeryOld = true
+        }
+        return isVeryOld
     }
 
     public init(){}
@@ -126,7 +152,7 @@ public struct LCEssentials {
         }
     }
 
-    public func printLog(section:String, description:String){
+    public static func printLog(section:String, description:String){
         print("\n\n[\(section)] \(description)")
     }
     

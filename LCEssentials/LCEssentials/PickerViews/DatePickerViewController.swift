@@ -79,8 +79,9 @@ public class DatePickerViewController: UIViewController {
         btCancel.sizeToFit()
         btConfirm.setTitle(setConfirmTitleButton, for: .normal)
         btConfirm.sizeToFit()
+        var controller: UIViewController!
         if delegate is UIViewController {
-            let controller = delegate as! UIViewController
+            controller = delegate as? UIViewController
             view.frame = CGRect(x: 0, y: ( controller.view.bounds.height - setDistanceFromBottom ), width: setWidth, height: setHeight)
             view.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
             view.autoresizesSubviews = true
