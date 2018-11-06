@@ -257,14 +257,14 @@ public struct LCEssentials {
     }
     
     #if os(iOS)
-    //MARK: - LoverdeCo: Status bar visibility state.
+    ///- LoverdeCo: Status bar visibility state.
     public static var isStatusBarHidden: Bool {
         get {
             return UIApplication.shared.isStatusBarHidden
         }
-        set {
-            UIApplication.shared.isStatusBarHidden = newValue
-        }
+//        set {
+//            UIApplication.shared.isStatusBarHidden = newValue
+//        }
     }
     #endif
     
@@ -295,16 +295,16 @@ public struct LCEssentials {
     #endif
     
     #if os(iOS)
-    //MARK: - LoverdeCo: Current status bar style (if applicable).
+    ///- LoverdeCo: Current status bar style (if applicable).
     public static var statusBarStyle: UIStatusBarStyle? {
         get {
             return UIApplication.shared.statusBarStyle
         }
-        set {
-            if let style = newValue {
-                UIApplication.shared.statusBarStyle = style
-            }
-        }
+//        set {
+//            if let style = newValue {
+//                UIApplication.shared.statusBarStyle = style
+//            }
+//        }
     }
     #endif
     
