@@ -133,6 +133,24 @@ public extension String {
         dateFormatter.dateFormat = toFormat
         return  dateFormatter.string(from: date!)
     }
+    
+    /// LoverdeCo: String to Date object.
+    ///
+    /// - Parameters:
+    ///   - withFormatt: Give a input formatt as it comes in String.
+    ///   - useHour: Add or remove hour form String given date
+    ///   - Returns: Date object.
+    public func toDateFormat(withFormatt: String = "yyyy-MM-dd HH:mm:ss", useHour: Bool = false) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = NSTimeZone.default
+        dateFormatter.locale = Calendar.current.locale
+        var formatt = withFormatt
+        if useHour {
+            formatt = String(formatt.dropLast(9))
+        }
+        dateFormatter.dateFormat = formatt
+        return dateFormatter.date(from: self)
+    }
 
     public var first: String {
         return String(prefix(1))
@@ -407,5 +425,27 @@ public extension String {
     }
     var removingWhitespacesAndNewlines: String {
         return components(separatedBy: .whitespacesAndNewlines).joined(separator: "")
+    }
+    public func replaceFirst(of pattern:String,
+                             with replacement:String) -> String {
+        if let range = self.range(of: pattern){
+            return self.replacingCharacters(in: range, with: replacement)
+        }else{
+            return self
+        }
+    }
+    
+    public func replaceAll(of pattern:String,
+                           with replacement:String,
+                           options: NSRegularExpression.Options = []) -> String{
+        do{
+            let regex = try NSRegularExpression(pattern: pattern, options: [])
+            let range = NSRange(0..<self.utf16.count)
+            return regex.stringByReplacingMatches(in: self, options: [],
+                                                  range: range, withTemplate: replacement)
+        }catch{
+            NSLog("replaceAll error: \(error)")
+            return self
+        }
     }
 }

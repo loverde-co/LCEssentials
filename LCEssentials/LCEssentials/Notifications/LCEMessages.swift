@@ -34,7 +34,10 @@ public enum LCEMessagesDirection {
 public enum LCEMessagesDuration: Double {
     case forever = 0
     case twoSec = 2
+    case threeSec = 3
+    case fourSec = 4
     case fiveSecs = 5
+    case sixSecs = 6
     case eightSecs = 8
 }
 
@@ -50,6 +53,7 @@ public class LCEMessages: UIViewController {
     private var fontColor: UIColor = .white
     private var tapedToHide: Bool = false
     private var rootViewController = UIApplication.shared.keyWindow?.rootViewController!
+    private var appDelegate = UIApplication.shared.delegate
     private var referenceView: UIViewController!
     private var isKeyboardObservAdded: Bool = false
     private var originY: CGFloat {
@@ -61,11 +65,7 @@ public class LCEMessages: UIViewController {
     }
     private var setDistanceFromBottom: CGFloat {
         get {
-            var newDistance: CGFloat = 0
-            if UIDevice().modelName == "iPhone X" && setDirection == .bottom {
-                newDistance = newDistance + 50
-            }
-            return newDistance
+            return 0
         }
         set{
         }
@@ -84,7 +84,6 @@ public class LCEMessages: UIViewController {
             return 70
         }
         set {
-            //self.setHeight = newValue
         }
     }
     public var setWidth: CGFloat {
@@ -92,7 +91,6 @@ public class LCEMessages: UIViewController {
             return (UIApplication.shared.keyWindow?.bounds.width)!
         }
         set{
-            //self.setWidth = newValue
         }
     }
     
@@ -111,7 +109,8 @@ public class LCEMessages: UIViewController {
     
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.view.frame.origin.y = setDirection == .top ? (self.setDistanceFromBottom - self.setHeight) : ( self.view.frame.origin.y == 0 ? (referenceView.view.frame.height - setDistanceFromBottom) : originY )
+        let initialOriginY = setDirection == .top ? (self.setDistanceFromBottom - self.setHeight) : ( self.view.frame.origin.y == 0 ? (appDelegate?.window??.frame.height ?? 0 - setDistanceFromBottom) : originY )
+        self.view.frame.origin.y = initialOriginY
         originY = self.view.frame.origin.y
     }
     
@@ -121,9 +120,9 @@ public class LCEMessages: UIViewController {
     }
     
     public func show(withBody: String? = nil, withImage: UIImage? = nil, showLoading: Bool = false, showInView: UIView? = nil){
-        if self.delegate is UIViewController {
-            if showInView != nil {
-                referenceView = showInView!.getParentViewController()
+        if let _ = self.delegate {
+            if let onView = showInView {
+                referenceView = onView.getParentViewController()
                 var newReference: UIViewController = referenceView
                 if referenceView.navigationController != nil && setDirection == .top {
                     if (referenceView.navigationController?.isNavigationBarHidden)! {
@@ -133,17 +132,20 @@ public class LCEMessages: UIViewController {
                         newReference = referenceView.navigationController!
                     }
                 }
+                referenceView = newReference
                 self.view.removeFromSuperview()
                 self.view.frame = CGRect(x: 0, y: originY , width: setWidth, height: setHeight)
                 self.view.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
                 self.view.autoresizesSubviews = true
-                newReference.view.addSubview(self.view)
+                referenceView.view.addSubview(self.view)
                 self.view.layer.zPosition = 1
             }else{
                 DispatchQueue.main.async {
-                    self.referenceView = self.rootViewController!
-                    self.rootViewController?.view.addSubview(self.view)
-                    self.referenceView.addChildViewController(self)
+                    if let window = self.appDelegate?.window {
+                        self.referenceView = window?.rootViewController
+                        self.referenceView.view.addSubview(self.view)
+                        self.referenceView.addChildViewController(self)
+                    }
                 }
             }
         }else{
@@ -218,7 +220,7 @@ public class LCEMessages: UIViewController {
                 self.view.frame.origin.y = self.originY
             }else{
                 if self.setDuration != .forever {
-                    LCEssentials().backgroundThread(delay: self.setDuration.rawValue, completion: {
+                    LCEssentials.backgroundThread(delay: self.setDuration.rawValue, completion: {
                         if !self.tapedToHide {
                             self.hidde()
                         }
@@ -239,7 +241,7 @@ public class LCEMessages: UIViewController {
                 self.view.frame.origin.y = self.originY
             }else{
                 if self.setDuration != .forever {
-                    LCEssentials().backgroundThread(delay: self.setDuration.rawValue, completion: {
+                    LCEssentials.backgroundThread(delay: self.setDuration.rawValue, completion: {
                         if !self.tapedToHide {
                             self.hidde()
                         }
@@ -262,21 +264,18 @@ public class LCEMessages: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
+    public func removeObserverForKeyboard(){
+        isKeyboardObservAdded = false
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
     
     @objc private func keyboardWasShown(notification: NSNotification){
         var info = notification.userInfo!
         let keyboardSize = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
         if self.setDirection == .bottom {
-            var reference: UIViewController!
-            if self.referenceView != nil {
-                reference = self.referenceView
-            }else{
-                if let newRef = delegate as? UIViewController {
-                    reference = newRef
-                }
-            }
-            self.view.frame.origin = CGPoint(x: 0, y: (reference.view.frame.size.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) ))
-            originY = (reference.view.frame.size.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) )
+            self.view.frame.origin = CGPoint(x: 0, y: (self.referenceView.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) ))
+            originY = (self.referenceView.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) )
         }
     }
     
@@ -290,8 +289,6 @@ public class LCEMessages: UIViewController {
     }
     
     deinit {
-        isKeyboardObservAdded = false
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        removeObserverForKeyboard()
     }
 }

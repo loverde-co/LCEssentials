@@ -23,47 +23,22 @@ import Foundation
 import UIKit
 
 @objc public protocol LCSingletonDelegate: class {
-    @objc optional var dictParams: [String:Any]? { get set }
-    @objc optional var arrayParams: [[String:Any]]? { get set }
-    
-    @objc(updateViewController:)
-    optional func update(viewController: AnyObject)
-    
-    @objc(setParamsDictWithParams:)
-    optional func setParamsDict(params: [String:Any]?)
-    
-    @objc(setParamsArrayWithParams:)
-    optional func setParamsArray(params: [[String:Any]]?)
+    @objc optional func singleton(get object: Any, withData: Any)
+    @objc optional func singleton(set object: Any, withData: Any)
 }
 
-public class LCSingleton: UIViewController {
+public class LCSingleton: NSObject {
     public weak var delegate: LCSingletonDelegate? = nil
+    public var object: Any?
+    public var data: Any?
     
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
+    public func singleton(set object: Any, withData: Any){
+        delegate?.singleton?(get: object, withData: withData)
     }
     
-    override public func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    public func singleton(get object: Any, withData: Any){
+        self.object = object
+        self.data = withData
+        delegate?.singleton?(set: self.object!, withData: self.data!)
     }
-    
-    public func singleton(update viewController: LCSingleton){
-        self.delegate?.update!(viewController: viewController)
-    }
-    
-    public func singleton(setDictParams params: [String:Any]){
-        self.delegate?.setParamsDict!(params: params)
-    }
-    
-    public func singleton(setArrayParams params: [[String:Any]]){
-        self.delegate?.setParamsArray!(params: params)
-    }
-}
-
-
-extension LCSingleton {
-    
 }

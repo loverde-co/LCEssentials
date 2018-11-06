@@ -44,7 +44,6 @@ extension UIImageView {
                 else { return }
             DispatchQueue.main.async() { () -> Void in
                 self.image = image
-                print("Acabou ???")
                 completion(true)
             }
             }.resume()
