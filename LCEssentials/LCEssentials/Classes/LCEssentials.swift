@@ -93,7 +93,7 @@ public struct LCEssentials {
     }
     
     #if !os(macOS)
-    //MARK: - LoverdeCo: App's name (if applicable).
+    /// - LoverdeCo: App's name (if applicable).
     public static var appDisplayName: String? {
         // http://stackoverflow.com/questions/28254377/get-app-name-in-swift
         return Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String
@@ -101,28 +101,28 @@ public struct LCEssentials {
     #endif
     
     #if !os(macOS)
-    //MARK: - LoverdeCo: App's bundle ID (if applicable).
+    /// - LoverdeCo: App's bundle ID (if applicable).
     public static var appBundleID: String? {
         return Bundle.main.bundleIdentifier
     }
     #endif
     
     #if os(iOS)
-    //MARK: - LoverdeCo: StatusBar height
+    /// - LoverdeCo: StatusBar height
     public static var statusBarHeight: CGFloat {
         return UIApplication.shared.statusBarFrame.height
     }
     #endif
     
     #if !os(macOS)
-    //MARK: - LoverdeCo: App current build number (if applicable).
+    /// - LoverdeCo: App current build number (if applicable).
     public static var appBuild: String? {
         return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String
     }
     #endif
     
     #if os(iOS) || os(tvOS)
-    //MARK: - LoverdeCo: Application icon badge current number.
+    /// - LoverdeCo: Application icon badge current number.
     public static var applicationIconBadgeNumber: Int {
         get {
             return UIApplication.shared.applicationIconBadgeNumber
@@ -134,33 +134,33 @@ public struct LCEssentials {
     #endif
     
     #if !os(macOS)
-    //MARK: - LoverdeCo: App's current version (if applicable).
+    /// - LoverdeCo: App's current version (if applicable).
     public static var appVersion: String? {
         return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     }
     #endif
     
     #if os(iOS)
-    //MARK: - LoverdeCo: Current battery level.
+    /// - LoverdeCo: Current battery level.
     public static var batteryLevel: Float {
         return UIDevice.current.batteryLevel
     }
     #endif
     
     #if os(iOS) || os(tvOS)
-    //MARK: - LoverdeCo: Shared instance of current device.
+    /// - LoverdeCo: Shared instance of current device.
     public static var currentDevice: UIDevice {
         return UIDevice.current
     }
     #elseif os(watchOS)
-    //MARK: - LoverdeCo: Shared instance of current device.
+    /// - LoverdeCo: Shared instance of current device.
     public static var currentDevice: WKInterfaceDevice {
         return WKInterfaceDevice.current()
     }
     #endif
     
     #if !os(macOS)
-    //MARK: - LoverdeCo: Screen height.
+    /// - LoverdeCo: Screen height.
     public static var screenHeight: CGFloat {
         #if os(iOS) || os(tvOS)
         return UIScreen.main.bounds.height
@@ -171,14 +171,14 @@ public struct LCEssentials {
     #endif
     
     #if os(iOS)
-    //MARK: - LoverdeCo: Current orientation of device.
+    /// - LoverdeCo: Current orientation of device.
     public static var deviceOrientation: UIDeviceOrientation {
         return currentDevice.orientation
     }
     #endif
     
     #if !os(macOS)
-    //MARK: - LoverdeCo: Screen width.
+    /// - LoverdeCo: Screen width.
     public static var screenWidth: CGFloat {
         #if os(iOS) || os(tvOS)
         return UIScreen.main.bounds.width
@@ -188,7 +188,7 @@ public struct LCEssentials {
     }
     #endif
     
-    //MARK: - LoverdeCo: Check if app is running in debug mode.
+    /// - LoverdeCo: Check if app is running in debug mode.
     public static var isInDebuggingMode: Bool {
         // http://stackoverflow.com/questions/9063100/xcode-ios-how-to-determine-whether-code-is-running-in-debug-release-build
         #if DEBUG
@@ -199,7 +199,7 @@ public struct LCEssentials {
     }
     
     #if !os(macOS)
-    //MARK: - LoverdeCo: Check if app is running in TestFlight mode.
+    /// - LoverdeCo: Check if app is running in TestFlight mode.
     public static var isInTestFlight: Bool {
         // http://stackoverflow.com/questions/12431994/detect-testflight
         return Bundle.main.appStoreReceiptURL?.path.contains("sandboxReceipt") == true
@@ -207,14 +207,14 @@ public struct LCEssentials {
     #endif
     
     #if os(iOS)
-    //MARK: - LoverdeCo: Check if multitasking is supported in current device.
+    /// - LoverdeCo: Check if multitasking is supported in current device.
     public static var isMultitaskingSupported: Bool {
         return UIDevice.current.isMultitaskingSupported
     }
     #endif
     
     #if os(iOS)
-    //MARK: - LoverdeCo: Current status bar network activity indicator state.
+    /// - LoverdeCo: Current status bar network activity indicator state.
     public static var isNetworkActivityIndicatorVisible: Bool {
         get {
             return UIApplication.shared.isNetworkActivityIndicatorVisible
@@ -226,27 +226,27 @@ public struct LCEssentials {
     #endif
     
     #if os(iOS)
-    //MARK: - LoverdeCo: Check if device is iPad.
+    /// - LoverdeCo: Check if device is iPad.
     public static var isPad: Bool {
         return UIDevice.current.userInterfaceIdiom == .pad
     }
     #endif
     
     #if os(iOS)
-    //MARK: - LoverdeCo: Check if device is iPhone.
+    /// - LoverdeCo: Check if device is iPhone.
     public static var isPhone: Bool {
         return UIDevice.current.userInterfaceIdiom == .phone
     }
     #endif
     
     #if os(iOS) || os(tvOS)
-    //MARK: - LoverdeCo: Check if device is registered for remote notifications for current app (read-only).
+    /// - LoverdeCo: Check if device is registered for remote notifications for current app (read-only).
     public static var isRegisteredForRemoteNotifications: Bool {
         return UIApplication.shared.isRegisteredForRemoteNotifications
     }
     #endif
     
-    //MARK: - LoverdeCo: Check if application is running on simulator (read-only).
+    /// - LoverdeCo: Check if application is running on simulator (read-only).
     public static var isRunningOnSimulator: Bool {
         // http://stackoverflow.com/questions/24869481/detect-if-app-is-being-built-for-device-or-simulator-in-swift
         #if targetEnvironment(simulator)
@@ -269,14 +269,14 @@ public struct LCEssentials {
     #endif
     
     #if os(iOS) || os(tvOS)
-    //MARK: - LoverdeCo: Key window (read only, if applicable).
+    /// - LoverdeCo: Key window (read only, if applicable).
     public static var keyWindow: UIView? {
         return UIApplication.shared.keyWindow
     }
     #endif
     
     #if os(iOS) || os(tvOS)
-    //MARK: - LoverdeCo: Most top view controller (if applicable).
+    /// - LoverdeCo: Most top view controller (if applicable).
     public static var mostTopViewController: UIViewController? {
         get {
             return UIApplication.shared.keyWindow?.rootViewController
@@ -288,7 +288,7 @@ public struct LCEssentials {
     #endif
     
     #if os(iOS) || os(tvOS)
-    //MARK: - LoverdeCo: Shared instance UIApplication.
+    /// - LoverdeCo: Shared instance UIApplication.
     public static var sharedApplication: UIApplication {
         return UIApplication.shared
     }
@@ -309,7 +309,7 @@ public struct LCEssentials {
     #endif
     
     #if !os(macOS)
-    //MARK: - LoverdeCo: System current version (read-only).
+    /// - LoverdeCo: System current version (read-only).
     public static var systemVersion: String {
         return currentDevice.systemVersion
     }
@@ -364,7 +364,7 @@ public extension LCEssentials {
         print("🚫 ERROR: \(title): \(msg)")
     }
     
-    //MARK: - LoverdeCo: Delay function or closure call.
+    /// - LoverdeCo: Delay function or closure call.
     ///
     /// - Parameters:
     ///   - milliseconds: execute closure after the given delay.
@@ -377,7 +377,7 @@ public extension LCEssentials {
         return task
     }
     
-    //MARK: - LoverdeCo: Debounce function or closure call.
+    /// - LoverdeCo: Debounce function or closure call.
     ///
     /// - Parameters:
     ///   - millisecondsOffset: allow execution of method if it was not called since millisecondsOffset.
@@ -401,7 +401,7 @@ public extension LCEssentials {
     }
     
     #if os(iOS) || os(tvOS)
-    //MARK: - LoverdeCo: Called when user takes a screenshot
+    /// - LoverdeCo: Called when user takes a screenshot
     ///
     /// - Parameter action: a closure to run when user takes a screenshot
     public static func didTakeScreenShot(_ action: @escaping (_ notification: Notification) -> Void) {

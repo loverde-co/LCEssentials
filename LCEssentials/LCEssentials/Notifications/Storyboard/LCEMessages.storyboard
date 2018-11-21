@@ -25,6 +25,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1D6-z9-Yur" userLabel="FixLeft">
                                 <rect key="frame" x="0.0" y="0.0" width="119.5" height="70"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="25" id="Rdh-EE-4G3"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YX5-V4-DQD" userLabel="FixRight">
                                 <rect key="frame" x="255.5" y="0.0" width="119.5" height="70"/>
@@ -53,8 +56,7 @@
                                     <constraint firstItem="5gO-TT-Hg6" firstAttribute="top" secondItem="tIz-eB-Jf8" secondAttribute="top" id="Mcf-uH-s0V"/>
                                     <constraint firstAttribute="width" constant="30" id="bg1-Sx-Jlu"/>
                                     <constraint firstItem="CdU-ud-sCX" firstAttribute="leading" secondItem="tIz-eB-Jf8" secondAttribute="leading" id="gjE-YZ-ecV"/>
-                                    <constraint firstItem="CdU-ud-sCX" firstAttribute="top" secondItem="tIz-eB-Jf8" secondAttribute="top" constant="20" id="hq6-z6-svy"/>
-                                    <constraint firstAttribute="bottom" secondItem="CdU-ud-sCX" secondAttribute="bottom" constant="20" id="oaI-SA-yze"/>
+                                    <constraint firstItem="CdU-ud-sCX" firstAttribute="centerY" secondItem="tIz-eB-Jf8" secondAttribute="centerY" id="pTp-jr-0o6"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[label body text]" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8L-Gy-3Mi">

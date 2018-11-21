@@ -31,8 +31,9 @@ public extension UIColor {
         var hex:   String = hex
 
         if hex.hasPrefix("#") {
-            let index = hex.index(hex.startIndex, offsetBy: 1)
-            hex = String(hex[..<index])
+//            let index = hex.index(hex.startIndex, offsetBy: 1)
+//            hex = String(hex[..<index])
+            hex = String(hex.dropFirst())
         }
 
         let scanner = Scanner(string: hex)

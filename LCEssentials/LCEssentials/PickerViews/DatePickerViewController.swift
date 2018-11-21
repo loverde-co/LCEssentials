@@ -42,6 +42,7 @@ public class DatePickerViewController: UIViewController {
     public var setDatePickerMode: UIDatePickerMode = .date
     public var setLocale: String = "pt_BR"
     public var setFormat: String = "dd/MM/yyyy"
+    public var setSelectedDate: String?
     public var setHeight: CGFloat = 214
     public var setWidth: CGFloat = 375
     public var setDistanceFromBottom: CGFloat = 0
@@ -56,6 +57,15 @@ public class DatePickerViewController: UIViewController {
         
         datePicker.locale = Locale(identifier: setLocale)
         datePicker.datePickerMode = setDatePickerMode
+        
+        if let currDate = setSelectedDate {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat =  setFormat
+            
+            if let date = dateFormatter.date(from: currDate) {
+                datePicker.date = date
+            }
+        }
     }
     
     static public func instantiate() -> DatePickerViewController {
