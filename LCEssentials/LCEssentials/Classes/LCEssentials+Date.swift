@@ -111,23 +111,26 @@ public extension Date {
         }else{ return nil }
     }
 
-    public func getMonthName() -> String {
+    public func getMonthName(identifier: String = "") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"
+        dateFormatter.locale = identifier != "" ? Locale(identifier: identifier) : Locale.current
         let strMonth = dateFormatter.string(from: self)
         return strMonth
     }
 
-    public func getDayNumber() -> String {
+    public func getDayNumber(identifier: String = "") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd"
+        dateFormatter.locale = identifier != "" ? Locale(identifier: identifier) : Locale.current
         let strDay = dateFormatter.string(from: self)
         return strDay
     }
     
-    public func getWeekDayName() -> String {
+    public func getWeekDayName(identifier: String = "") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
+        dateFormatter.locale = identifier != "" ? Locale(identifier: identifier) : Locale.current
         let strDay = dateFormatter.string(from: self)
         return strDay
     }
