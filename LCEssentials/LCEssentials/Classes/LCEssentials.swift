@@ -474,13 +474,13 @@ extension Collection where Indices.Iterator.Element == Index {
 }
 #endif
 //MARK: - JSON Helper Codable/Decodable
-struct JSONHelper<T: Codable> {
+public struct JSONHelper<T: Codable> {
     
     /// - LoverdeCo: Decode JSON Data to Object
     ///
     /// - Parameter data: Data
     /// - returns: Object: Codable/Decodable
-    static func decode(data: Data) throws -> T {
+    public static func decode(data: Data) throws -> T {
         return try JSONDecoder().decode(T.self, from: data)
     }
     
@@ -488,7 +488,7 @@ struct JSONHelper<T: Codable> {
     ///
     /// - Parameter json: String
     /// - returns: Object: Codable/Decodable
-    static func decode(_ json: String, using encoding: String.Encoding = .utf8) throws -> T {
+    public static func decode(_ json: String, using encoding: String.Encoding = .utf8) throws -> T {
         guard let data = json.data(using: encoding) else {
             throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
         }
@@ -499,7 +499,7 @@ struct JSONHelper<T: Codable> {
     ///
     /// - Parameter url: URL
     /// - returns: Object: Codable/Decodable
-    static func decode(fromURL url: URL) throws -> T {
+    public static func decode(fromURL url: URL) throws -> T {
         return try decode(data: try! Data(contentsOf: url))
     }
     
@@ -507,7 +507,7 @@ struct JSONHelper<T: Codable> {
     ///
     /// - Parameter object: Codable/Decodable
     /// - returns: String
-    static func decode(toJSON object: T) throws -> String{
+    public static func decode(toJSON object: T) throws -> String{
         let jsonData = try! JSONEncoder().encode(object)
         guard let json = String(data: jsonData, encoding: .utf8) else{
             throw NSError(domain: "JSONEcoding", code: 0, userInfo: nil)
@@ -518,7 +518,7 @@ struct JSONHelper<T: Codable> {
     /// - LoverdeCo: Convert object to dictionary
     ///
     /// - returns: [String:Any]
-    static func objectToDictionary() -> [String:Any] {
+    public static func objectToDictionary() -> [String:Any] {
         var dict = [String:Any]()
         let otherSelf = Mirror(reflecting: T.self)
         for child in otherSelf.children {
@@ -533,7 +533,7 @@ struct JSONHelper<T: Codable> {
     ///
     /// - Parameter dict: [String:Any]
     /// - returns: Object: Codable/Decodable
-    static func dictionaryToObject(dict: [String:Any]) -> T {
+    public static func dictionaryToObject(dict: [String:Any]) -> T {
         let json = String().dictionaryToStringJSON(dict: dict)
         return try! self.decode(json)
     }
@@ -541,7 +541,7 @@ struct JSONHelper<T: Codable> {
     /// - LoverdeCo: Decode Object to JSON string
     ///
     /// - returns: String
-    static func convertToJsonStr() -> String{
+    public static func convertToJsonStr() -> String{
         let dic = self.objectToDictionary()
         return String().dictionaryToStringJSON(dict: dic)
     }
