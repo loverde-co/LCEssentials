@@ -162,6 +162,7 @@ public extension String {
         return first.uppercased() + String(dropFirst())
     }
 
+    #if os(iOS) || os(macOS)
     public func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
@@ -184,7 +185,8 @@ public extension String {
         }
         return ""
     }
-
+    #endif
+    
     public func exponentize(str: String) -> String {
 
         let supers = [

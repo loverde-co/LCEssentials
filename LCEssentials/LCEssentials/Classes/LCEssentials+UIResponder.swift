@@ -22,6 +22,7 @@
 
 import Foundation
 
+#if os(iOS) || os(macOS)
 public extension UIResponder {
     public func getParentViewController() -> UIViewController? {
         if self.next is UIViewController {
@@ -39,3 +40,5 @@ public extension UIResponder {
 //let view = UIView()
 //vc.view.addSubview(view)
 //view.getParentViewController() //provide reference to vc
+
+#endif

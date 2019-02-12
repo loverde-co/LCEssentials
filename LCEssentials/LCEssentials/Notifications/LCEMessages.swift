@@ -22,6 +22,7 @@
 
 import UIKit
 
+#if os(iOS) || os(macOS)
 @objc public protocol LCEMessagesDelegate {
     @objc optional func messages(didTapOnMessage: LCEMessages)
 }
@@ -292,3 +293,4 @@ public class LCEMessages: UIViewController {
         removeObserverForKeyboard()
     }
 }
+#endif

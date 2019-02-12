@@ -22,6 +22,7 @@
 
 import Foundation
 
+#if os(iOS) || os(macOS)
 public extension UITableView {
     public func reloadDataWithCompletion(_ completion: @escaping ()->()) {
         UIView.animate(withDuration: 0, animations: {
@@ -31,3 +32,4 @@ public extension UITableView {
         })
     }
 }
+#endif

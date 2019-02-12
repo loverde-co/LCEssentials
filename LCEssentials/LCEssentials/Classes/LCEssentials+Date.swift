@@ -142,6 +142,20 @@ public extension Date {
         return Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: self.getStartOfMonth())!
     }
     
+    public func getCorrectDateFromLocalTimezone() -> Date? {
+        let currDate = Calendar.current.dateComponents(in: .current, from: Date())
+        var secs = "\(currDate.second!)"
+        if currDate.second! < 10 {
+            secs = "0\(currDate.second!)"
+        }
+        let currDateStr = "\(currDate.year!)-\(currDate.month!)-\(currDate.day!) \(currDate.hour!):\(currDate.minute!):\( secs )"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+        let final = dateFormatter.date(from: currDateStr)
+        return final
+    }
+    
     public func returnBetweenDate(startDate: Date, endDate: Date, years:Bool = false, months:Bool = false,  days:Bool = false) -> Int {
         
         let calendar = NSCalendar.current

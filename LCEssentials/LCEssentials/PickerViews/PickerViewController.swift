@@ -22,6 +22,7 @@
 
 import UIKit
 
+#if os(iOS) || os(macOS)
 @objc public protocol PickerViewControllerDelegate {
     @objc func pickerViewController(_ picker: PickerViewController, didConfirm selectedString: String, selectedValue: Int)
     @objc func pickerViewController(didCancel picker: PickerViewController)
@@ -165,3 +166,4 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         return 34
     }
 }
+#endif

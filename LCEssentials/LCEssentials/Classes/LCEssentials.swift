@@ -23,6 +23,7 @@
 import Foundation
 import UIKit
 import AVFoundation
+import WatchKit
 //import CommonCrypto
 
 
@@ -39,6 +40,22 @@ public func += <K, V> (left: inout [K:V], right: [K:V]) {
     }
 }
 
+
+/// Loverde Co: Custom Logs
+public func printLog(section:String, description:String){
+    print("\n\n[\(section)] \(description)")
+}
+
+public func printInfo(title: String, msg: String){
+    print("💭 INFO: \(title): \(msg)")
+}
+public func printWarn(title: String, msg: String){
+    print("⚠️ WARN: \(title): \(msg)")
+}
+public func printError(title: String, msg: String){
+    print("🚫 ERROR: \(title): \(msg)")
+}
+
 public enum EnumBorderSide {
     case top, bottom, left, right
 }
@@ -47,19 +64,17 @@ public struct LCEssentials {
     public let DEFAULT_ERROR_DOMAIN = "LoverdeCoErrorDomain"
     public let DEFAULT_ERROR_CODE = -99
     public let DEFAULT_ERROR_MSG = "Error Unknow"
-    public let IS_PROD = false
-//    #if targetEnvironment(simulator)
-//    public let DEVICE_IS_SIMULATOR = true
-//    #else
-//    public let DEVICE_IS_SIMULATOR = false
-//    #endif
+    
+    #if os(iOS) || os(macOS)
     public let DEVICE_NAME: String = UIDevice().modelName
+    /// - LoverdeCo: Tell if the device is iPhone older family or descontinued
     public var OLDER_DEVICES: Bool {
         return !(LCEssentials().DEVICE_NAME == "iPhone SE" || LCEssentials().DEVICE_NAME == "iPhone 5"
             || LCEssentials().DEVICE_NAME == "iPhone 5c" || LCEssentials().DEVICE_NAME == "iPhone 5s"
             || LCEssentials().DEVICE_NAME == "iPhone 4" || LCEssentials().DEVICE_NAME == "iPhone 4s")
     }
     
+    /// - LoverdeCo: Tell if the device is iPhone family small sizes
     public static var SMALL_DEVICES: Bool {
         var isVeryOld = true
         if (LCEssentials().DEVICE_NAME == "iPhone SE" || LCEssentials().DEVICE_NAME == "iPhone 5"
@@ -72,6 +87,7 @@ public struct LCEssentials {
         return isVeryOld
     }
     
+    /// - LoverdeCo: Tell if the device is iPhone regular and plus sizes
     public static var BIGGER_DEVICES: Bool {
         var isVeryOld = false
         if (LCEssentials().DEVICE_NAME == "iPhone 6" || LCEssentials().DEVICE_NAME == "iPhone 6 Plus"
@@ -82,7 +98,7 @@ public struct LCEssentials {
         }
         return isVeryOld
     }
-    
+    /// - LoverdeCo: Tell if the device is iPhone family X
     public static var X_DEVICES: Bool {
         var isVeryOld = false
         if (LCEssentials().DEVICE_NAME == "iPhone X" || LCEssentials().DEVICE_NAME == "iPhone XS"
@@ -91,6 +107,7 @@ public struct LCEssentials {
         }
         return isVeryOld
     }
+    #endif
     
     #if !os(macOS)
     /// - LoverdeCo: App's name (if applicable).
@@ -317,6 +334,8 @@ public struct LCEssentials {
     
     public init(){}
     
+    
+    
 }
 
 // MARK: - Methods
@@ -333,6 +352,7 @@ public extension LCEssentials {
         
     }
     
+    #if os(iOS) || os(macOS)
     //MARK: - Set Root View Controller
     public static func setRootViewControllerWithAnimation(fromView from: UIView, toViewController to: UIViewController, duration: TimeInterval = 0.6, options: UIViewAnimationOptions, completion: (() -> Void)? = nil) {
         
@@ -344,25 +364,28 @@ public extension LCEssentials {
             if( completion != nil ){ completion!() }
         })
     }
+    #endif
     
+    #if os(iOS) || os(macOS)
     //MARK: - Instance View Controllers Thru Storyboard
     public static func instanceViewController(_ storyBoardName:String = "Intro", withIdentifier: String = "mainIntro" ) -> UIViewController {
         return UIStoryboard(name: storyBoardName, bundle: nil).instantiateViewController(withIdentifier: withIdentifier)
     }
+    #endif
     
-    public static func printLog(section:String, description:String){
-        print("\n\n[\(section)] \(description)")
-    }
-    
-    public static func printInfo(title: String, msg: String){
-        print("💭 INFO: \(title): \(msg)")
-    }
-    public static func printWarn(title: String, msg: String){
-        print("⚠️ WARN: \(title): \(msg)")
-    }
-    public static func printError(title: String, msg: String){
-        print("🚫 ERROR: \(title): \(msg)")
-    }
+//    public static func printLog(section:String, description:String){
+//        print("\n\n[\(section)] \(description)")
+//    }
+//
+//    public static func printInfo(title: String, msg: String){
+//        print("💭 INFO: \(title): \(msg)")
+//    }
+//    public static func printWarn(title: String, msg: String){
+//        print("⚠️ WARN: \(title): \(msg)")
+//    }
+//    public static func printError(title: String, msg: String){
+//        print("🚫 ERROR: \(title): \(msg)")
+//    }
     
     /// - LoverdeCo: Delay function or closure call.
     ///
@@ -416,9 +439,10 @@ public extension LCEssentials {
 }
 
 
+#if os(iOS) || os(macOS)
 // MARK: - Extensions
 extension UITableViewCell {
-    static var identifier: String {
+    public static var identifier: String {
         
         return "id"+String(describing: self)
     }
@@ -431,20 +455,94 @@ extension UITableViewCell {
     }
 }
 extension UIViewController {
-    static var identifier: String {
+    public static var identifier: String {
         return "id"+String(describing: self)
     }
-    static var segueID: String {
+    public static var segueID: String {
         return "idSegue"+String(describing: self)
     }
 }
 extension UICollectionReusableView {
-    static var identifier: String {
+    public static var identifier: String {
         return "id"+String(describing: self)
     }
 }
 extension Collection where Indices.Iterator.Element == Index {
     subscript (exist index: Index) -> Iterator.Element? {
         return indices.contains(index) ? self[index] : nil
+    }
+}
+#endif
+//MARK: - JSON Helper Codable/Decodable
+struct JSONHelper<T: Codable> {
+    
+    /// - LoverdeCo: Decode JSON Data to Object
+    ///
+    /// - Parameter data: Data
+    /// - returns: Object: Codable/Decodable
+    static func decode(data: Data) throws -> T {
+        return try JSONDecoder().decode(T.self, from: data)
+    }
+    
+    /// - LoverdeCo: Decode JSON String to Object
+    ///
+    /// - Parameter json: String
+    /// - returns: Object: Codable/Decodable
+    static func decode(_ json: String, using encoding: String.Encoding = .utf8) throws -> T {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        return try decode(data: data)
+    }
+    
+    /// - LoverdeCo: Decode JSON URL to Object
+    ///
+    /// - Parameter url: URL
+    /// - returns: Object: Codable/Decodable
+    static func decode(fromURL url: URL) throws -> T {
+        return try decode(data: try! Data(contentsOf: url))
+    }
+    
+    /// - LoverdeCo: Decode Object to JSON string
+    ///
+    /// - Parameter object: Codable/Decodable
+    /// - returns: String
+    static func decode(toJSON object: T) throws -> String{
+        let jsonData = try! JSONEncoder().encode(object)
+        guard let json = String(data: jsonData, encoding: .utf8) else{
+            throw NSError(domain: "JSONEcoding", code: 0, userInfo: nil)
+        }
+        return json
+    }
+    
+    /// - LoverdeCo: Convert object to dictionary
+    ///
+    /// - returns: [String:Any]
+    static func objectToDictionary() -> [String:Any] {
+        var dict = [String:Any]()
+        let otherSelf = Mirror(reflecting: T.self)
+        for child in otherSelf.children {
+            if let key = child.label {
+                dict[key] = child.value
+            }
+        }
+        return dict
+    }
+    
+    /// - LoverdeCo: convert dictionary to object
+    ///
+    /// - Parameter dict: [String:Any]
+    /// - returns: Object: Codable/Decodable
+    static func dictionaryToObject(dict: [String:Any]) -> T {
+        let json = String().dictionaryToStringJSON(dict: dict)
+        return try! self.decode(json)
+    }
+    
+    /// - LoverdeCo: Decode Object to JSON string
+    ///
+    /// - returns: String
+    static func convertToJsonStr() -> String{
+        let dic = self.objectToDictionary()
+        return String().dictionaryToStringJSON(dict: dic)
     }
 }

@@ -21,8 +21,10 @@
  POSSIBILITY OF SUCH DAMAGE.
  */
 
-import SystemConfiguration
 import Foundation
+
+#if os(iOS) || os(macOS)
+import SystemConfiguration
 
 public enum ReachabilityError: Error {
     case FailedToCreateWithAddress(sockaddr_in)
@@ -325,3 +327,4 @@ fileprivate extension Reachability {
         }
     }
 }
+#endif

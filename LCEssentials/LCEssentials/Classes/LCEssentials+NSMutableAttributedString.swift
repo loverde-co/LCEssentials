@@ -22,9 +22,10 @@
 
 import Foundation
 
+#if os(iOS) || os(macOS)
 public extension NSMutableAttributedString {
     @discardableResult func customize(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil, lineSpace: CGFloat? = nil) -> NSMutableAttributedString {
-        var attrs:[NSAttributedStringKey:AnyObject] = [NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
+        var attrs:[NSAttributedStringKey:Any] = [NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
         if color != nil {
             attrs[NSAttributedStringKey.foregroundColor] = color
         }
@@ -35,7 +36,8 @@ public extension NSMutableAttributedString {
         }
 
         let customStr = NSMutableAttributedString(string:"\(text)", attributes:attrs)
-        self.append(customStr)
+        self.addAttributes(attrs, range: String().nsRange(from: text.range(of: text)!)!)
+        //self.append(customStr)
         return self
     }
 
@@ -54,30 +56,41 @@ public extension NSMutableAttributedString {
     //    label.attributedText = attributedString;
 
     @discardableResult public func bold(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil) -> NSMutableAttributedString {
-        var attrs:[NSAttributedStringKey:AnyObject] = [NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
+        var attrs:[NSAttributedStringKey:Any] = [NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
         if color != nil {
             attrs[NSAttributedStringKey.foregroundColor] = color
         }
         let boldString = NSMutableAttributedString(string:"\(text)", attributes:attrs)
-        self.append(boldString)
+        self.addAttributes(attrs, range: String().nsRange(from: text.range(of: text)!)!)
+        //self.append(boldString)
         return self
     }
 
     @discardableResult public func underline(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil) -> NSMutableAttributedString {
-        var attrs:[NSAttributedStringKey:AnyObject] = [NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue as AnyObject, NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
+        var attrs:[NSAttributedStringKey:Any] = [NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue as AnyObject, NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
         if color != nil {
             attrs[NSAttributedStringKey.foregroundColor] = color
         }
         let underString = NSMutableAttributedString(string: "\(text)", attributes:attrs)
-        self.append(underString)
+        self.addAttributes(attrs, range: String().nsRange(from: text.range(of: text)!)!)
+        //self.append(underString)
         return self
     }
 
     @discardableResult public func linkTouch(_ text:String, url: String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor = UIColor.blue) -> NSMutableAttributedString {
-        let linkTerms:[NSAttributedStringKey:AnyObject]  = [NSAttributedStringKey.link: NSURL(string: url)!, NSAttributedStringKey.foregroundColor: color, NSAttributedStringKey.font: UIFont(name: fontName, size: size)!]
+        let linkTerms:[NSAttributedStringKey: Any]  = [NSAttributedStringKey.link: NSURL(string: url)!,
+                                                            NSAttributedStringKey.foregroundColor: color,
+                                                            NSAttributedStringKey.underlineColor: color,
+                                                            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
+                                                            NSAttributedStringKey.font: UIFont(name: fontName, size: size)!]
         let linkString = NSMutableAttributedString(string: "\(text)", attributes:linkTerms)
-        self.append(linkString)
+        self.setAttributes(linkTerms, range: String().nsRange(from: text.range(of: text)!)!)
+        //self.append(linkString)
         return self
+    }
+    
+    public func makeAttributted(){
+        self.append(self)
     }
 
     @discardableResult public func normal(_ text:String)->NSMutableAttributedString {
@@ -127,3 +140,4 @@ public extension NSMutableAttributedString {
 //    // adjust more attributedString properties
 //    // Dont open here, cause crash
 //}
+#endif

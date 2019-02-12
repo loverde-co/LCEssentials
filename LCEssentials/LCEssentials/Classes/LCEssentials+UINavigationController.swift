@@ -21,6 +21,7 @@
  
 
 import Foundation
+#if os(iOS) || os(macOS)
 import QuartzCore
 
 public extension UINavigationController {
@@ -44,3 +45,4 @@ public extension UINavigationController {
         CATransaction.commit()
     }
 }
+#endif

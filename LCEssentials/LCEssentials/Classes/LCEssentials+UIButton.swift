@@ -22,7 +22,9 @@
 
 import Foundation
 
+#if os(iOS) || os(macOS)
 public extension UIButton {
 
 
 }
+#endif

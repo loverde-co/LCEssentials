@@ -23,6 +23,7 @@
 import Foundation
 import UIKit
 
+#if os(iOS) || os(macOS)
 @IBDesignable
 //MARK: UIView
 open class Circle: UIView {
@@ -166,6 +167,14 @@ open class Circle: UIView {
 //MARK: UIButton
 @IBDesignable
 open class CustomUIButtom: UIButton {
+    
+    @IBInspectable open var name: String? {
+//        didSet {
+//            accessibilityLabel = name
+//        }
+        get{ return accessibilityLabel }
+        set{ accessibilityLabel = name }
+    }
     
     @IBInspectable open var borderWidth: CGFloat = 0 {
         didSet {
@@ -793,3 +802,4 @@ open class StarsRating: UIView {
     }
     
 }
+#endif

@@ -22,6 +22,7 @@
 
 import Foundation
 
+#if os(iOS) || os(macOS)
 public extension UILabel {
     func boldSubstring(search:String){
 
@@ -35,3 +36,4 @@ public extension UILabel {
         return lineCount
     }
 }
+#endif

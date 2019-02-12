@@ -29,7 +29,7 @@ public extension NSAttributedString {
     //let attributedString = NSAttributedString(html: ""<html><body> Some html string </body></html>"")
     //myLabel.attributedText = attributedString
 
-    internal convenience init?(html: String) {
+    public convenience init?(html: String) {
         guard let data = html.data(using: String.Encoding.utf8, allowLossyConversion: false) else {
             return nil
         }

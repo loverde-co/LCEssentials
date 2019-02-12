@@ -22,6 +22,7 @@
 
 import Foundation
 
+#if os(iOS) || os(macOS)
 public extension UIView {
     public func addBorder(_ sides: [EnumBorderSide], color: UIColor, width: CGFloat) {
         let border = CALayer()
@@ -53,6 +54,21 @@ public extension UIView {
             self.layer.addSublayer(layer)
         }
         return ["path":dotPath,"layer":layer]
+    }
+    
+    public func addShadow(shadowView: UIView, shadowWidth: CGFloat, shadowHeight: CGFloat){
+        let shadow = UIViewWithShadow()
+        self.addSubview(shadowView)
+        
+        // Auto layout code using anchors (iOS9+)
+        // set witdh and height constraints if necessary
+        shadow.translatesAutoresizingMaskIntoConstraints = false
+        let horizontalConstraint = shadow.centerXAnchor.constraint(equalTo: shadowView.centerXAnchor)
+        let verticalConstraint = shadow.centerYAnchor.constraint(equalTo: shadowView.centerYAnchor)
+        let widthConstraint = shadow.widthAnchor.constraint(equalToConstant: self.frame.size.width - shadowWidth)
+        let heightConstraint = shadow.heightAnchor.constraint(equalToConstant: shadowView.frame.size.height - shadowHeight)
+        NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, heightConstraint])
+        self.bringSubview(toFront: shadowView)
     }
 
     /**
@@ -122,4 +138,42 @@ public extension UIView {
         frame.size.height = height
         self.frame = frame
     }
+    
+    // - LoverdeCo: Add radius to view
+    //
+    //
+    public func setRadius(top: Bool, bottom: Bool, radius: CGFloat = 8){
+        var maskCorns: CACornerMask = []
+        var path: UIBezierPath!
+        if top && bottom {
+            maskCorns = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+            path = UIBezierPath(roundedRect: (self.bounds),
+                                byRoundingCorners: [.topRight, .topLeft, .bottomLeft, .bottomRight],
+                                cornerRadii: CGSize(width: radius, height: radius))
+        }else if top && !bottom {
+            maskCorns = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            path = UIBezierPath(roundedRect: (self.bounds),
+                                byRoundingCorners: [.topRight, .topLeft],
+                                cornerRadii: CGSize(width: radius, height: radius))
+        }else if bottom && !top {
+            maskCorns = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+            path = UIBezierPath(roundedRect: (self.bounds),
+                                byRoundingCorners: [.bottomLeft, .bottomRight],
+                                cornerRadii: CGSize(width: radius, height: radius))
+            
+        }
+        if #available(iOS 11.0, *) {
+            self.clipsToBounds = true
+            self.layer.cornerRadius = radius
+            self.layer.maskedCorners = maskCorns
+        } else {
+            self.clipsToBounds = true
+            let maskLayer = CAShapeLayer()
+            
+            maskLayer.path = path.cgPath
+            self.layer.mask = maskLayer
+        }
+    }
 }
+#endif
+

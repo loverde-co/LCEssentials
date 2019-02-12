@@ -21,7 +21,7 @@
  
 
 import Foundation
-
+#if os(iOS) || os(macOS)
 extension UITabBarController {
 
     public func setBadges(badgeValues: [Int]) {
@@ -89,3 +89,4 @@ extension UITabBarController {
         tabBar.bringSubview(toFront: badgeView)
     }
 }
+#endif

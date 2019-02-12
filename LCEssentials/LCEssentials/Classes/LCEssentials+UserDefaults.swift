@@ -59,4 +59,31 @@ public extension UserDefaults {
         }
         return nil
     }
+    
+    public func saveObject<T>(object: T, forKey: String) where T: Codable {
+        let json = try! JSONHelper<T>.decode(toJSON: object)
+        DispatchQueue.main.async {
+            self.set(json, forKey: forKey)
+            self.synchronize()
+        }
+    }
+    
+    public func getSavedObject<T>(forKey: String) -> T? where T: Codable {
+        if let dict = object(forKey: forKey) as? String {
+            let obj = try! JSONHelper<T>.decode(dict)
+            return obj
+        }
+        return nil
+    }
+    
+    public func removeSavedObject(forKey: String) -> Bool {
+        if let _ = object(forKey: forKey) as? String {
+            DispatchQueue.main.async {
+                self.removeObject(forKey: forKey)
+                self.synchronize()
+            }
+            return true
+        }
+        return false
+    }
 }

@@ -53,6 +53,7 @@ public extension FileManager {
         }
     }
 
+    #if os(iOS) || os(macOS)
     public func saveImageToDirectory( _ imageWithPath : String, imagem : UIImage ) -> Bool {
 
         let data = UIImagePNGRepresentation(imagem)
@@ -68,6 +69,7 @@ public extension FileManager {
             return false
         }
     }
+    #endif
 
     public func retrieveFile( _ directoryAndFile: String ) -> URL {
         let documentsPath = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])

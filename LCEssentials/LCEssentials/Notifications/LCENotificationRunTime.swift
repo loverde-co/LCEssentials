@@ -22,6 +22,7 @@
 
 import UIKit
 
+#if os(iOS) || os(macOS)
 @objc public protocol LCENotifiactionRunTimeDelegate {
     @objc optional func messages(didTapOnMessage: LCENotificationRunTime, withData: Any?)
     @objc optional func messages(didSwipeOnMessage: LCENotificationRunTime, withData: Any?)
@@ -146,3 +147,4 @@ extension LCENotificationRunTime: UIGestureRecognizerDelegate {
     
 }
 
+#endif

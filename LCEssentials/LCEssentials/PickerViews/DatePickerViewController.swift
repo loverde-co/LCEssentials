@@ -22,6 +22,7 @@
 
 import UIKit
 
+#if os(iOS) || os(macOS)
 @objc public protocol DatePickerViewControllerDelegate {
     @objc func datePickerViewController(didConfirm picker: DatePickerViewController, withValue: String)
     @objc func datePickerViewController(didCancel picker: DatePickerViewController)
@@ -137,3 +138,4 @@ public class DatePickerViewController: UIViewController {
         delegate.datePickerViewController(didEndScrollPicker: self, withValue: formatter.string(from: datePicker.date))
     }
 }
+#endif

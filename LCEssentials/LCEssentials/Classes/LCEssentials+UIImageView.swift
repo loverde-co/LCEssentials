@@ -22,6 +22,7 @@
 
 import Foundation
 
+#if os(iOS) || os(macOS)
 extension UIImageView {
 
     public func changeColorOfImage( _ color: UIColor, image: NSString ) -> UIImageView {
@@ -67,3 +68,4 @@ extension UIImageView {
         }
     }
 }
+#endif

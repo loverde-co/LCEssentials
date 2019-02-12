@@ -21,6 +21,7 @@
  
 
 import Foundation
+#if os(iOS) || os(macOS)
 import UIKit
 
 public func insertBlurView (view: UIView, style: UIBlurEffectStyle) -> UIVisualEffectView {
@@ -32,3 +33,49 @@ public func insertBlurView (view: UIView, style: UIBlurEffectStyle) -> UIVisualE
     view.insertSubview(blurEffectView, at: 0)
     return blurEffectView
 }
+
+public class UIViewWithShadow: CustomUIView {
+    private var shadowLayer: CAShapeLayer!
+    //internal var cornerRadius: CGFloat = 25.0
+    private var fillColor: UIColor = .white // the color applied to the shadowLayer, rather than the view's backgroundColor
+    
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if shadowLayer == nil {
+            shadowLayer = CAShapeLayer()
+            
+            shadowLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath
+            shadowLayer.fillColor = fillColor.cgColor
+            
+            shadowLayer.shadowColor = UIColor.black.cgColor
+            shadowLayer.shadowPath = shadowLayer.path
+            shadowLayer.shadowOffset = CGSize(width: 0.2, height: 2.0)
+            shadowLayer.shadowOpacity = 0.8
+            shadowLayer.shadowRadius = 2
+            layer.masksToBounds = false
+            layer.insertSublayer(shadowLayer, at: 0)
+        }
+    }
+    
+//    public func addShadowTo(shadowView: UIView, shadowWidth: CGFloat, shadowHeight: CGFloat){
+//        let shadow = UIViewWithShadow()
+//        let parent = shadowView.getParentViewController()
+//        if let viewController = parent {
+//            viewController.view.addSubview(shadowView)
+//
+//            // Auto layout code using anchors (iOS9+)
+//            // set witdh and height constraints if necessary
+//            shadow.translatesAutoresizingMaskIntoConstraints = false
+//            let horizontalConstraint = shadow.centerXAnchor.constraint(equalTo: shadowView.centerXAnchor)
+//            let verticalConstraint = shadow.centerYAnchor.constraint(equalTo: shadowView.centerYAnchor)
+//            let widthConstraint = shadow.widthAnchor.constraint(equalToConstant: viewController.view.frame.size.width - shadowWidth)
+//            let heightConstraint = shadow.heightAnchor.constraint(equalToConstant: shadowView.frame.size.height - shadowHeight)
+//            NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, heightConstraint])
+//            viewController.view.bringSubview(toFront: shadowView)
+//        }else{
+//            fatalError("Ops! There is no ViewController setted")
+//        }
+//    }
+}
+#endif

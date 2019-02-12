@@ -22,6 +22,7 @@
 
 import Foundation
 
+#if os(iOS) || os(macOS)
 public extension UIColor {
     convenience init(hex: String) {
         var red:   CGFloat = 0.0
@@ -67,3 +68,4 @@ public extension UIColor {
         self.init(red:red, green:green, blue:blue, alpha:alpha)
     }
 }
+#endif

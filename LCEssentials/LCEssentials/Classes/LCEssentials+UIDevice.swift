@@ -22,6 +22,7 @@
 
 import Foundation
 
+#if os(iOS) || os(macOS)
 public extension UIDevice {
 
     public var modelName: String {
@@ -93,3 +94,4 @@ public extension UIDevice {
         }
     }
 }
+#endif

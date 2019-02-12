@@ -22,6 +22,7 @@
 
 import Foundation
 
+#if os(iOS) || os(macOS)
 public extension UIImage {
     //Extension Required by RoundedButton to create UIImage from UIColor
     class public func imageWithColor(color: UIColor) -> UIImage {
@@ -80,3 +81,4 @@ public extension UIImage {
         self.init(cgImage: image!.cgImage!)
     }
 }
+#endif
