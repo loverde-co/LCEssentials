@@ -28,7 +28,7 @@ import CoreLocation
 import MapKit
 import Contacts
 
-@objc protocol LocationDelegate: class {
+@objc public protocol LocationDelegate: class {
     
     @objc(manager: region:)
     optional func location(manager: CLLocationManager, didStartMonitoringFor region: CLRegion)
@@ -49,7 +49,7 @@ import Contacts
     optional func location(manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus)
 }
 
-struct Address {
+public struct Address {
     var completeAddress: String!
     var country: String!
     var state: String!
@@ -67,12 +67,12 @@ struct Address {
     }
 }
 
-class Location: NSObject, CLLocationManagerDelegate {
+open class Location: NSObject, CLLocationManagerDelegate {
     
     private var locationManager = CLLocationManager()
-    public weak var delegate: LocationDelegate!
-    public var address: Address!
-    public var allAddress: [Address] = [Address]()
+    weak var delegate: LocationDelegate!
+    var address: Address!
+    var allAddress: [Address] = [Address]()
     public var location: CLLocation?
     static var permited: Bool = false
     static let shared = Location()
@@ -87,7 +87,7 @@ class Location: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    func requestPermissions(completion:@escaping ((Bool)->Void)){
+    public func requestPermissions(completion:@escaping ((Bool)->Void)){
         let status = CLLocationManager.authorizationStatus()
         if status == CLAuthorizationStatus.denied || status == CLAuthorizationStatus.notDetermined {
             //locationManager.requestAlwaysAuthorization()
@@ -143,13 +143,13 @@ class Location: NSObject, CLLocationManagerDelegate {
                     }else{
                         address.street = ""
                     }
-                    var zipCodeFinal = ""
+                    //var zipCodeFinal = ""
                     
-//                    if let zipFinal = places.subThoroughfare {
-//                        zipCodeFinal = "-"+zipFinal
-//                    }
+                    //                    if let zipFinal = places.subThoroughfare {
+                    //                        zipCodeFinal = "-"+zipFinal
+                    //                    }
                     if let postalCode = places.postalCode {
-                        address.zipCode = postalCode+zipCodeFinal
+                        address.zipCode = postalCode //+zipCodeFinal
                     }else{
                         address.zipCode = ""
                     }
@@ -191,14 +191,25 @@ class Location: NSObject, CLLocationManagerDelegate {
                 CNPostalAddressPostalCodeKey: address,
                 CNPostalAddressISOCountryCodeKey: isoCountryCode
             ]
-
-            geoCoder.geocodeAddressDictionary(params) { (placemarks, error) in
-                guard let founded = placemarks, let location = founded.first?.location else {
-                    let error = NSError(domain: LCEssentials().DEFAULT_ERROR_DOMAIN, code: LCEssentials().DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "Endereço não encontrado." ])
-                    completion(nil, error)
-                    return
+            
+            geoCoder.geocodeAddressString(address) { (placemarks, error) in
+                if let locais = placemarks {
+                    guard let location = locais.first?.location else {
+                        let error = NSError(domain: LCEssentials().DEFAULT_ERROR_DOMAIN, code: LCEssentials().DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "Endereço não encontrado." ])
+                        completion(nil, error)
+                        return
+                    }
+                    completion(location, nil)
+                }else{
+                    geoCoder.geocodeAddressDictionary(params) { (placemarks, error) in
+                        guard let founded = placemarks, let location = founded.first?.location else {
+                            let error = NSError(domain: LCEssentials().DEFAULT_ERROR_DOMAIN, code: LCEssentials().DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "Endereço não encontrado." ])
+                            completion(nil, error)
+                            return
+                        }
+                        completion(location, nil)
+                    }
                 }
-                completion(location, nil)
             }
         }
     }
@@ -206,7 +217,7 @@ class Location: NSObject, CLLocationManagerDelegate {
     func alertaLocal(){
         if delegate is UIViewController {
             let controller = delegate as! UIViewController
-            let alert = UIAlertController(title: "Settings", message: "Para acessar seu GPS, precisa liberar o acesso nas configurações.", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Settings", message: "Para acessar seu GPS, precisa liberar o acesso nas configurações.", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Vamos lá!", style: .cancel, handler: { action in
                 UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
             }))
@@ -215,7 +226,7 @@ class Location: NSObject, CLLocationManagerDelegate {
         }
     }
     
-    static func openLocationOnMap(lat: Double, lon: Double, sourceName: String?, destinationName: String?){
+    public static func openLocationOnMap(lat: Double, lon: Double, sourceName: String?, destinationName: String?){
         let coordinates = CLLocationCoordinate2DMake(lat, lon)
         var array = [MKMapItem]()
         let destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)))
@@ -236,26 +247,26 @@ class Location: NSObject, CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
     }
     
-    func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
+    open func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
         if delegate != nil { delegate.location?(manager: manager, didStartMonitoringFor: region) }
     }
     
-    func locationManagerDidPauseLocationUpdates(_ manager: CLLocationManager) {
+    open func locationManagerDidPauseLocationUpdates(_ manager: CLLocationManager) {
         if delegate != nil { delegate.location?(managerDidPauseLocationUpdates: manager) }
     }
     
-    func locationManagerDidResumeLocationUpdates(_ manager: CLLocationManager) {
+    open func locationManagerDidResumeLocationUpdates(_ manager: CLLocationManager) {
         if delegate != nil { delegate.location?(managerDidResumeLocationUpdates: manager) }
     }
     
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    open func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         locationManager.stopUpdatingLocation()
         printError(title: "LOCATION", msg: "ERROR: \(error.localizedDescription)")
         //alertaLocal()
         if delegate != nil { delegate.location?(manager: manager, didFailWithError: error) }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    open func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let located = locations.first {
             self.location = located
             Location.shared.location = located
@@ -264,7 +275,7 @@ class Location: NSObject, CLLocationManagerDelegate {
         if delegate != nil { delegate.location?(manager: manager, didUpdateLocations: locations) }
     }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    open func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == CLAuthorizationStatus.denied || status == CLAuthorizationStatus.notDetermined {
             Location.permited = false
         }else{
@@ -272,7 +283,7 @@ class Location: NSObject, CLLocationManagerDelegate {
             locationManager.startUpdatingLocation()
             //Location.shared.location = locationManager.location
         }
-        printInfo(title: "LOCATION", msg: "MUDEI A AUTORIZACAO! \(Location.permited)")
+        //printInfo(title: "LOCATION", msg: "MUDEI A AUTORIZACAO! \(Location.permited)")
         if delegate != nil { delegate.location?(manager: manager, didChangeAuthorization: status) }
     }
     deinit {
