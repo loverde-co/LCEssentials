@@ -71,13 +71,13 @@ open class Location: NSObject, CLLocationManagerDelegate {
     
     private var locationManager = CLLocationManager()
     weak var delegate: LocationDelegate!
-    var address: Address!
-    var allAddress: [Address] = [Address]()
+    public var address: Address!
+    public var allAddress: [Address] = [Address]()
     public var location: CLLocation?
-    static var permited: Bool = false
-    static let shared = Location()
+    public static var permited: Bool = false
+    public static let shared = Location()
     
-    override init() {
+    override public init() {
         super.init()
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self

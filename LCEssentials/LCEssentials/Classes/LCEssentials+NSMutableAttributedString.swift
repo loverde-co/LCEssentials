@@ -35,7 +35,7 @@ public extension NSMutableAttributedString {
             attrs[NSAttributedStringKey.paragraphStyle] = paragraphStyle
         }
 
-        let customStr = NSMutableAttributedString(string:"\(text)", attributes:attrs)
+        //let customStr = NSMutableAttributedString(string:"\(text)", attributes:attrs)
         self.addAttributes(attrs, range: String().nsRange(from: text.range(of: text)!)!)
         //self.append(customStr)
         return self
@@ -60,7 +60,7 @@ public extension NSMutableAttributedString {
         if color != nil {
             attrs[NSAttributedStringKey.foregroundColor] = color
         }
-        let boldString = NSMutableAttributedString(string:"\(text)", attributes:attrs)
+        //let boldString = NSMutableAttributedString(string:"\(text)", attributes:attrs)
         self.addAttributes(attrs, range: String().nsRange(from: text.range(of: text)!)!)
         //self.append(boldString)
         return self
@@ -71,7 +71,7 @@ public extension NSMutableAttributedString {
         if color != nil {
             attrs[NSAttributedStringKey.foregroundColor] = color
         }
-        let underString = NSMutableAttributedString(string: "\(text)", attributes:attrs)
+        //let underString = NSMutableAttributedString(string: "\(text)", attributes:attrs)
         self.addAttributes(attrs, range: String().nsRange(from: text.range(of: text)!)!)
         //self.append(underString)
         return self
@@ -83,7 +83,7 @@ public extension NSMutableAttributedString {
                                                             NSAttributedStringKey.underlineColor: color,
                                                             NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
                                                             NSAttributedStringKey.font: UIFont(name: fontName, size: size)!]
-        let linkString = NSMutableAttributedString(string: "\(text)", attributes:linkTerms)
+        //let linkString = NSMutableAttributedString(string: "\(text)", attributes:linkTerms)
         self.setAttributes(linkTerms, range: String().nsRange(from: text.range(of: text)!)!)
         //self.append(linkString)
         return self
