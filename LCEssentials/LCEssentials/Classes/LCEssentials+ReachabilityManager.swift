@@ -33,10 +33,10 @@ public protocol NetworkStatusListener : class {
 /// Ate the end of this class we put some examples
 public class ReachabilityManager: NSObject {
     
-    static let shared = ReachabilityManager()
+    public static let shared = ReachabilityManager()
     
     // 3. Boolean to track network reachability
-    var isNetworkAvailable : Bool {
+    public var isNetworkAvailable : Bool {
         return reachabilityStatus != .none
     }
     
@@ -52,7 +52,7 @@ public class ReachabilityManager: NSObject {
     /// Called whenever there is a change in NetworkReachibility Status
     ///
     /// — parameter notification: Notification with the Reachability instance
-    @objc func reachabilityChanged(notification: Notification) {
+    @objc public func reachabilityChanged(notification: Notification) {
         let reachability = notification.object as! Reachability
         switch reachability.connection {
         case .none:
@@ -71,7 +71,7 @@ public class ReachabilityManager: NSObject {
     
     
     /// Starts monitoring the network availability status
-    func startMonitoring() {
+    public func startMonitoring() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.reachabilityChanged),
                                                name: Notification.Name.reachabilityChanged,
@@ -84,7 +84,7 @@ public class ReachabilityManager: NSObject {
     }
     
     /// Stops monitoring the network availability status
-    func stopMonitoring(){
+    public func stopMonitoring(){
         reachability.stopNotifier()
         NotificationCenter.default.removeObserver(self, name: Notification.Name.reachabilityChanged,
                                                   object: reachability)
