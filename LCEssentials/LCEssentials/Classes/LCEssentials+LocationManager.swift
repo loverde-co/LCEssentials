@@ -70,7 +70,7 @@ public struct Address {
 open class Location: NSObject, CLLocationManagerDelegate {
     
     private var locationManager = CLLocationManager()
-    weak var delegate: LocationDelegate!
+    public weak var delegate: LocationDelegate!
     public var address: Address!
     public var allAddress: [Address] = [Address]()
     public var location: CLLocation?
