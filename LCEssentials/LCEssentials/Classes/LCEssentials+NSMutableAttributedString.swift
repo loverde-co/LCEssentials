@@ -23,8 +23,12 @@
 import Foundation
 
 #if os(iOS) || os(macOS)
+public enum AttributtedAlignment {
+    case center, left, right
+}
+
 public extension NSMutableAttributedString {
-    @discardableResult func customize(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil, lineSpace: CGFloat? = nil) -> NSMutableAttributedString {
+    @discardableResult func customize(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil, lineSpace: CGFloat? = nil, alignment: AttributtedAlignment? = nil) -> NSMutableAttributedString {
         var attrs:[NSAttributedStringKey:Any] = [NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
         if color != nil {
             attrs[NSAttributedStringKey.foregroundColor] = color
@@ -34,26 +38,25 @@ public extension NSMutableAttributedString {
             paragraphStyle.lineSpacing = lineSpace!
             attrs[NSAttributedStringKey.paragraphStyle] = paragraphStyle
         }
+        
+        if let alignment = alignment {
+            let paragraph = NSMutableParagraphStyle()
+            switch alignment {
+                case .center:
+                    paragraph.alignment = .center
+                case .left:
+                    paragraph.alignment = .left
+                case .right:
+                    paragraph.alignment = .right
+            }
+            attrs[NSAttributedStringKey.paragraphStyle] = paragraph
+        }
 
         //let customStr = NSMutableAttributedString(string:"\(text)", attributes:attrs)
-        self.addAttributes(attrs, range: String().nsRange(from: text.range(of: text)!)!)
+        self.addAttributes(attrs, range: self.mutableString.range(of: text))
         //self.append(customStr)
         return self
     }
-
-    //    let attributedString = NSMutableAttributedString(string: "Your text")
-    //
-    //    // *** Create instance of `NSMutableParagraphStyle`
-    //    let paragraphStyle = NSMutableParagraphStyle()
-    //
-    //    // *** set LineSpacing property in points ***
-    //    paragraphStyle.lineSpacing = 2 // Whatever line spacing you want in points
-    //
-    //    // *** Apply attribute to string ***
-    //    attributedString.addAttribute(NSParagraphStyleAttributeName, value:paragraphStyle, range:NSMakeRange(0, attributedString.length))
-    //
-    //    // *** Set Attributed String to your label ***
-    //    label.attributedText = attributedString;
 
     @discardableResult public func bold(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil) -> NSMutableAttributedString {
         var attrs:[NSAttributedStringKey:Any] = [NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
@@ -61,7 +64,7 @@ public extension NSMutableAttributedString {
             attrs[NSAttributedStringKey.foregroundColor] = color
         }
         //let boldString = NSMutableAttributedString(string:"\(text)", attributes:attrs)
-        self.addAttributes(attrs, range: String().nsRange(from: text.range(of: text)!)!)
+        self.addAttributes(attrs, range: self.mutableString.range(of: text))
         //self.append(boldString)
         return self
     }
@@ -72,7 +75,7 @@ public extension NSMutableAttributedString {
             attrs[NSAttributedStringKey.foregroundColor] = color
         }
         //let underString = NSMutableAttributedString(string: "\(text)", attributes:attrs)
-        self.addAttributes(attrs, range: String().nsRange(from: text.range(of: text)!)!)
+        self.addAttributes(attrs, range: self.mutableString.range(of: text))
         //self.append(underString)
         return self
     }
@@ -84,7 +87,7 @@ public extension NSMutableAttributedString {
                                                             NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
                                                             NSAttributedStringKey.font: UIFont(name: fontName, size: size)!]
         //let linkString = NSMutableAttributedString(string: "\(text)", attributes:linkTerms)
-        self.setAttributes(linkTerms, range: String().nsRange(from: text.range(of: text)!)!)
+        self.setAttributes(linkTerms, range: self.mutableString.range(of: text))
         //self.append(linkString)
         return self
     }
@@ -95,7 +98,7 @@ public extension NSMutableAttributedString {
             attrs[NSAttributedStringKey.foregroundColor] = color
         }
         //let underString = NSMutableAttributedString(string: "\(text)", attributes:attrs)
-        self.addAttributes(attrs, range: String().nsRange(from: text.range(of: text)!)!)
+        self.addAttributes(attrs, range: self.mutableString.range(of: text))
         //self.append(underString)
         return self
     }
