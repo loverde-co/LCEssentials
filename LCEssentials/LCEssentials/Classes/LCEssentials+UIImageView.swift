@@ -42,7 +42,7 @@ extension UIImageView {
                 let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
                 let data = data, error == nil,
                 let image = UIImage(data: data)
-                else { return }
+                else { completion(false); return }
             DispatchQueue.main.async() { () -> Void in
                 self.image = image
                 completion(true)
@@ -53,7 +53,7 @@ extension UIImageView {
     // imageView.downloadedFrom(link: "http://www.apple.com/euro/ios/ios8/a/generic/images/og.png")
 
     public func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit, completion:@escaping (Bool?)->()) -> () {
-        guard let url = URL(string: link) else { return }
+        guard let url = URL(string: link) else { completion(false); return }
         downloadedFrom(url: url, contentMode: mode) { (success) in
             completion(true)
         }
