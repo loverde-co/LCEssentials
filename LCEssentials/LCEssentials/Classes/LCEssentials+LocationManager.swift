@@ -50,17 +50,17 @@ import Contacts
 }
 
 public struct Address {
-    var completeAddress: String!
-    var country: String!
-    var state: String!
-    var city: String!
-    var neightboor: String!
-    var street: String!
-    var zipCode: String!
-    var rangeNumbers: String!
-    var latitude: String!
-    var longitude: String!
-    var addresses: [Address]!
+    public var completeAddress: String!
+    public var country: String!
+    public var state: String!
+    public var city: String!
+    public var neightboor: String!
+    public var street: String!
+    public var zipCode: String!
+    public var rangeNumbers: String!
+    public var latitude: String!
+    public var longitude: String!
+    public var addresses: [Address]!
     
     init(){
         
@@ -281,7 +281,7 @@ open class Location: NSObject, CLLocationManagerDelegate {
         }else{
             Location.permited = true
             locationManager.startUpdatingLocation()
-            //Location.shared.location = locationManager.location
+            Location.shared.location = locationManager.location
         }
         //printInfo(title: "LOCATION", msg: "MUDEI A AUTORIZACAO! \(Location.permited)")
         if delegate != nil { delegate.location?(manager: manager, didChangeAuthorization: status) }
