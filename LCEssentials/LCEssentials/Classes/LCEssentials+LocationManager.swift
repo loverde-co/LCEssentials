@@ -75,6 +75,7 @@ open class Location: NSObject, CLLocationManagerDelegate {
     public var allAddress: [Address] = [Address]()
     public var location: CLLocation?
     public static var permited: Bool = false
+    public static var unknown: Bool = false
     public static let shared = Location()
     
     override public init() {
@@ -278,7 +279,11 @@ open class Location: NSObject, CLLocationManagerDelegate {
     open func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == CLAuthorizationStatus.denied || status == CLAuthorizationStatus.notDetermined {
             Location.permited = false
+            if status == CLAuthorizationStatus.notDetermined {
+                Location.unknown = true
+            }
         }else{
+            Location.unknown = false
             Location.permited = true
             locationManager.startUpdatingLocation()
             Location.shared.location = locationManager.location
