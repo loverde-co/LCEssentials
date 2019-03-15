@@ -51,7 +51,9 @@ public class DatePickerViewController: UIViewController {
     public var setBorderTopColor: UIColor = UIColor.darkGray
     public var setBorderBottomColor: UIColor = UIColor.darkGray
     public var setConfirmTitleButton: String = "Done"
+    public var setConfirmButtonTitleColor: UIColor = UIColor.init(red: 88/255, green: 88/255, blue: 90/255, alpha: 1)
     public var setCancelTitleButton: String = "Cancel"
+    public var setCancelButtonTitleColor: UIColor = UIColor.init(red: 170/255, green: 170/255, blue: 170/255, alpha: 1)
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +92,8 @@ public class DatePickerViewController: UIViewController {
         btCancel.sizeToFit()
         btConfirm.setTitle(setConfirmTitleButton, for: .normal)
         btConfirm.sizeToFit()
+        btConfirm.setTitleColor(setConfirmButtonTitleColor, for: .normal)
+        btCancel.setTitleColor(setCancelButtonTitleColor, for: .normal)
         var controller: UIViewController!
         if delegate is UIViewController {
             controller = delegate as? UIViewController
