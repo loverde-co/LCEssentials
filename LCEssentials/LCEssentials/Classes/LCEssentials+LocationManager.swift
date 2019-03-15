@@ -94,8 +94,10 @@ open class Location: NSObject, CLLocationManagerDelegate {
             //locationManager.requestAlwaysAuthorization()
             locationManager.requestWhenInUseAuthorization()
             Location.permited = false
+            Location.unknown = status == CLAuthorizationStatus.notDetermined ? true : false
             completion(false)
         }else{
+            Location.unknown = false
             Location.permited = true
             completion(true)
         }
