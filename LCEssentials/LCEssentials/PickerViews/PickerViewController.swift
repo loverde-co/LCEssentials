@@ -82,8 +82,8 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         btCancel.sizeToFit()
         btConfirm.setTitle(setConfirmTitleButton, for: .normal)
         btConfirm.sizeToFit()
-        btConfirm.setTitleColor(setConfirmButtonTitleColor, for: .normal)
-        btCancel.setTitleColor(setCancelButtonTitleColor, for: .normal)
+        //btConfirm.setTitleColor(setConfirmButtonTitleColor, for: .normal)
+        //btCancel.setTitleColor(setCancelButtonTitleColor, for: .normal)
         var controller: UIViewController!
         if delegate is UIViewController {
             controller = delegate as? UIViewController
