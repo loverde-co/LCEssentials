@@ -388,12 +388,12 @@ open class CustomUIButtom: UIButton {
 
 @IBDesignable open class UIButtonCheckBox: UIButton {
     
-    @IBInspectable public var imageForChecked: UIImage? {
+    @IBInspectable var imageForChecked: UIImage? {
         didSet {
             guard let _ = imageForChecked else{ fatalError("Ops! Missing Enabled Image!") }
         }
     }
-    @IBInspectable public var imageForUnchecked: UIImage? {
+    @IBInspectable var imageForUnchecked: UIImage? {
         didSet {
             guard let _ = imageForUnchecked else{ fatalError("Ops! Missing Enabled Image!") }
         }

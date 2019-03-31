@@ -24,7 +24,7 @@ import Foundation
 
 #if os(iOS) || os(macOS)
 public extension UIView {
-    public func addBorder(_ sides: [EnumBorderSide], color: UIColor, width: CGFloat) {
+    func addBorder(_ sides: [EnumBorderSide], color: UIColor, width: CGFloat) {
         let border = CALayer()
         border.backgroundColor = color.cgColor
         for side in sides
@@ -44,7 +44,7 @@ public extension UIView {
         }
     }
 
-    public func drawCircle(inCoord x: CGFloat, y: CGFloat, with radius: CGFloat, strokeColor:UIColor = UIColor.red, fillColor:UIColor = UIColor.gray, isEmpty: Bool = false) -> [String:Any] {
+    func drawCircle(inCoord x: CGFloat, y: CGFloat, with radius: CGFloat, strokeColor:UIColor = UIColor.red, fillColor:UIColor = UIColor.gray, isEmpty: Bool = false) -> [String:Any] {
         let dotPath = UIBezierPath(ovalIn: CGRect(x: x,y: y, width: radius, height: radius))
         let layer = CAShapeLayer()
         if !isEmpty {
@@ -56,7 +56,7 @@ public extension UIView {
         return ["path":dotPath,"layer":layer]
     }
     
-    public func addShadow(shadowView: UIView, shadowWidth: CGFloat, shadowHeight: CGFloat){
+    func addShadow(shadowView: UIView, shadowWidth: CGFloat, shadowHeight: CGFloat){
         let shadow = UIViewWithShadow()
         self.addSubview(shadowView)
         
@@ -76,7 +76,7 @@ public extension UIView {
 
      - parameter duration: custom animation duration
      */
-    public func fadeIn(withDuration duration: TimeInterval = 1.0, withDelay delay: TimeInterval = 0, completionHandler:@escaping (Bool) -> ()) {
+    func fadeIn(withDuration duration: TimeInterval = 1.0, withDelay delay: TimeInterval = 0, completionHandler:@escaping (Bool) -> ()) {
         UIView.animate(withDuration: duration, delay: delay, options: [], animations: {
             self.alpha = 1.0
         }) { (finished) in
@@ -89,7 +89,7 @@ public extension UIView {
 
      - parameter duration: custom animation duration
      */
-    public func fadeOut(withDuration duration: TimeInterval = 1.0, withDelay delay: TimeInterval = 0, completionHandler:@escaping (Bool) -> ()) {
+    func fadeOut(withDuration duration: TimeInterval = 1.0, withDelay delay: TimeInterval = 0, completionHandler:@escaping (Bool) -> ()) {
         UIView.animate(withDuration: duration, delay: delay, options: [], animations: {
             self.alpha = 0.0
         }) { (finished) in
@@ -102,7 +102,7 @@ public extension UIView {
 
      :param: x CGFloat
      */
-    public func setX(x:CGFloat) {
+    func setX(x:CGFloat) {
         var frame:CGRect = self.frame
         frame.origin.x = x
         self.frame = frame
@@ -113,7 +113,7 @@ public extension UIView {
      :param: y CGFloat
      by DaRk-_-D0G
      */
-    public func setY(y:CGFloat) {
+    func setY(y:CGFloat) {
         var frame:CGRect = self.frame
         frame.origin.y = y
         self.frame = frame
@@ -123,7 +123,7 @@ public extension UIView {
 
      :param: width CGFloat
      */
-    public func setWidth(width:CGFloat) {
+    func setWidth(width:CGFloat) {
         var frame:CGRect = self.frame
         frame.size.width = width
         self.frame = frame
@@ -133,7 +133,7 @@ public extension UIView {
 
      :param: height CGFloat
      */
-    public func setHeight(height:CGFloat) {
+    func setHeight(height:CGFloat) {
         var frame:CGRect = self.frame
         frame.size.height = height
         self.frame = frame
@@ -142,7 +142,7 @@ public extension UIView {
     // - LoverdeCo: Add radius to view
     //
     //
-    public func setRadius(top: Bool, bottom: Bool, radius: CGFloat = 8){
+    func setRadius(top: Bool, bottom: Bool, radius: CGFloat = 8){
         var maskCorns: CACornerMask = []
         var path: UIBezierPath!
         if top && bottom {

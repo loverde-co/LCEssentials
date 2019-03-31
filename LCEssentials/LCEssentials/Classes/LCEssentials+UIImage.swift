@@ -25,7 +25,7 @@ import Foundation
 #if os(iOS) || os(macOS)
 public extension UIImage {
     //Extension Required by RoundedButton to create UIImage from UIColor
-    class public func imageWithColor(color: UIColor) -> UIImage {
+    class func imageWithColor(color: UIColor) -> UIImage {
         let rect: CGRect = CGRect(origin: .zero, size: CGSize(width: 1, height: 1))
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), false, 1.0)
         color.setFill()
@@ -36,7 +36,7 @@ public extension UIImage {
     }
 
     /// Creates a circular outline image.
-    class public func outlinedEllipse(size: CGSize, color: UIColor, lineWidth: CGFloat = 1.0) -> UIImage? {
+    class func outlinedEllipse(size: CGSize, color: UIColor, lineWidth: CGFloat = 1.0) -> UIImage? {
 
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
         guard let context = UIGraphicsGetCurrentContext() else {
@@ -56,7 +56,7 @@ public extension UIImage {
         return image
     }
 
-    public func resizeImage(newWidth: CGFloat) -> UIImage {
+    func resizeImage(newWidth: CGFloat) -> UIImage {
 
         let scale = newWidth / self.size.width
         let newHeight = self.size.height * scale
@@ -68,12 +68,12 @@ public extension UIImage {
         return newImage!
     }
 
-    public func decodeBase64ToImage(stringBase64:String) -> UIImage {
+    func decodeBase64ToImage(stringBase64:String) -> UIImage {
         let imageData = Data(base64Encoded: stringBase64, options: .ignoreUnknownCharacters)
         return UIImage(data: imageData!)!
     }
 
-    convenience public init(view: UIView) {
+    convenience init(view: UIView) {
         UIGraphicsBeginImageContext(view.frame.size)
         view.layer.render(in:UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()

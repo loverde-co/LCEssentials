@@ -26,19 +26,19 @@ import QuartzCore
 
 public extension UINavigationController {
     //Same function as "popViewController", but allow us to know when this function ends
-    public func popViewControllerWithHandler(completion: @escaping ()->()) {
+    func popViewControllerWithHandler(completion: @escaping ()->()) {
         CATransaction.begin()
         CATransaction.setCompletionBlock(completion)
         self.popViewController(animated: true)
         CATransaction.commit()
     }
-    public func popToRootViewControllerWithHandler(completion: @escaping ()->()) {
+    func popToRootViewControllerWithHandler(completion: @escaping ()->()) {
         CATransaction.begin()
         CATransaction.setCompletionBlock(completion)
         self.popToRootViewController(animated: true)
         CATransaction.commit()
     }
-    public func pushViewController(viewController: UIViewController, completion: @escaping ()->()) {
+    func pushViewController(viewController: UIViewController, completion: @escaping ()->()) {
         CATransaction.begin()
         CATransaction.setCompletionBlock(completion)
         self.pushViewController(viewController, animated: true)

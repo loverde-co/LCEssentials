@@ -30,7 +30,7 @@ public extension Date {
         let value: Int?
     }
     
-    public func stringToDateTime( _ dateTime: String = "", formatted : String = "yyyy-MM-dd", withTime:Bool = false ) -> Date{
+    func stringToDateTime( _ dateTime: String = "", formatted : String = "yyyy-MM-dd", withTime:Bool = false ) -> Date{
         var dateArray = dateTime.split{$0 == "/"}.map(String.init)
         var hour = [String]()
         var convertedDate = ""
@@ -49,7 +49,7 @@ public extension Date {
         return dateFormatter.date(from: convertedDate)!
     }
 
-    public func stringToDate( _ date: String = "2010-10-10", formatted : String = "yyyy-MM-dd" ) -> Date{
+    func stringToDate( _ date: String = "2010-10-10", formatted : String = "yyyy-MM-dd" ) -> Date{
         let dateArray = date.split{$0 == "/"}.map(String.init)
         var convertedDate = date
         if dateArray.count > 1 {
@@ -68,7 +68,7 @@ public extension Date {
     ///   - withFormatt: Give a input formatt to any formatt you want.
     ///   - useHour: Keep or remove hour form given date
     ///   - Returns: String object.
-    public func toStringFormatt(formattTo: String = "yyyy-MM-dd HH:mm:ss", useHour: Bool = false) -> String? {
+    func toStringFormatt(formattTo: String = "yyyy-MM-dd HH:mm:ss", useHour: Bool = false) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = NSTimeZone.default
         dateFormatter.locale = Calendar.current.locale
@@ -81,7 +81,7 @@ public extension Date {
     }
 
     /// Returns a Date with the specified days added to the one it is called with
-    public func add(years: Int = 0, months: Int = 0, days: Int = 0, hours: Int = 0, minutes: Int = 0, seconds: Int = 0) -> Date {
+    func add(years: Int = 0, months: Int = 0, days: Int = 0, hours: Int = 0, minutes: Int = 0, seconds: Int = 0) -> Date {
         var targetDay: Date
         targetDay = Calendar.current.date(byAdding: .year, value: years, to: self)!
         targetDay = Calendar.current.date(byAdding: .month, value: months, to: targetDay)!
@@ -93,7 +93,7 @@ public extension Date {
     }
 
     /// Returns a Date with the specified days subtracted from the one it is called with
-    public func subtract(years: Int = 0, months: Int = 0, days: Int = 0, hours: Int = 0, minutes: Int = 0, seconds: Int = 0) -> Date {
+    func subtract(years: Int = 0, months: Int = 0, days: Int = 0, hours: Int = 0, minutes: Int = 0, seconds: Int = 0) -> Date {
         let inverseYears = -1 * years
         let inverseMonths = -1 * months
         let inverseDays = -1 * days
@@ -103,7 +103,7 @@ public extension Date {
         return add(years: inverseYears, months: inverseMonths, days: inverseDays, hours: inverseHours, minutes: inverseMinutes, seconds: inverseSeconds)
     }
 
-    public func returnSunday(fromDate: Date) -> Date? {
+    func returnSunday(fromDate: Date) -> Date? {
         let gregorian = Calendar(identifier: .gregorian)
         if let sunday = gregorian.date(from: gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: fromDate)){
             //print(gregorian.date(byAdding: .day, value: 6, to: sunday)!)
@@ -111,7 +111,7 @@ public extension Date {
         }else{ return nil }
     }
 
-    public func getMonthName(identifier: String = "") -> String {
+    func getMonthName(identifier: String = "") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"
         dateFormatter.locale = identifier != "" ? Locale(identifier: identifier) : Locale.current
@@ -119,7 +119,7 @@ public extension Date {
         return strMonth
     }
 
-    public func getDayNumber(identifier: String = "") -> String {
+    func getDayNumber(identifier: String = "") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd"
         dateFormatter.locale = identifier != "" ? Locale(identifier: identifier) : Locale.current
@@ -127,22 +127,22 @@ public extension Date {
         return strDay
     }
     
-    public func getWeekDayName(identifier: String = "") -> String {
+    func getWeekDayName(identifier: String = "") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
         dateFormatter.locale = identifier != "" ? Locale(identifier: identifier) : Locale.current
         let strDay = dateFormatter.string(from: self)
         return strDay
     }
-    public func getStartOfMonth() -> Date {
+    func getStartOfMonth() -> Date {
         return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: self)))!
     }
     
-    public func getEndOfMonth() -> Date {
+    func getEndOfMonth() -> Date {
         return Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: self.getStartOfMonth())!
     }
     
-    public func getCorrectDateFromLocalTimezone() -> Date? {
+    func getCorrectDateFromLocalTimezone() -> Date? {
         let currDate = Calendar.current.dateComponents(in: .current, from: Date())
         var secs = "\(currDate.second!)"
         if currDate.second! < 10 {
@@ -156,7 +156,7 @@ public extension Date {
         return final
     }
     
-    public func returnBetweenDate(startDate: Date, endDate: Date, years:Bool = false, months:Bool = false,  days:Bool = false) -> Int {
+    func returnBetweenDate(startDate: Date, endDate: Date, years:Bool = false, months:Bool = false,  days:Bool = false) -> Int {
         
         let calendar = NSCalendar.current
         
@@ -194,7 +194,7 @@ public extension Date {
         ]
     }
     
-    public func timeAgo(numericDates: Bool = false) -> String {
+    func timeAgo(numericDates: Bool = false) -> String {
         for item in items {
             switch (item.value, numericDates) {
             case let (.some(step), _) where step == 0:

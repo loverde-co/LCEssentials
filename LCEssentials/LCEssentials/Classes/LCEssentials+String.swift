@@ -24,7 +24,7 @@ import Foundation
 
 public extension String {
 
-    public var isEmailValid: Bool {
+    var isEmailValid: Bool {
         do {
             let regex = try NSRegularExpression(pattern: "(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])", options: .caseInsensitive)
             return regex.firstMatch(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, self.count)) != nil
@@ -32,7 +32,7 @@ public extension String {
             return false
         }
     }
-    public var currentTimeZone : String {
+    var currentTimeZone : String {
         let date = NSDate();
         let formatter = DateFormatter();
         formatter.dateFormat = "ZZZ";
@@ -41,7 +41,7 @@ public extension String {
         return defaultTimeZoneStr;
     }
 
-    public func nsRange(from range: Range<String.Index>) -> NSRange? {
+    func nsRange(from range: Range<String.Index>) -> NSRange? {
         let utf16view = self.utf16
         if let from = range.lowerBound.samePosition(in: utf16view), let to = range.upperBound.samePosition(in: utf16view) {
             return NSMakeRange(utf16view.distance(from: utf16view.startIndex, to: from), utf16view.distance(from: from, to: to))
@@ -67,7 +67,7 @@ public extension String {
     //        //print("digest: \(digest)")
     //    }
 
-    public func randomString(length: Int) -> String {
+    func randomString(length: Int) -> String {
 
         let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         let len = UInt32(letters.length)
@@ -83,7 +83,7 @@ public extension String {
         return randomString
     }
 
-    public func stringFromTimeInterval(_ interval:TimeInterval) -> NSString {
+    func stringFromTimeInterval(_ interval:TimeInterval) -> NSString {
 
         let ti = NSInteger(interval)
 
@@ -96,7 +96,7 @@ public extension String {
         return NSString(format: "%0.2d:%0.2d:%0.2d.%0.3d",hours,minutes,seconds,ms)
     }
 
-    public func dateTimeToString( _ dateTime: Date, withHour: Bool = false, returnOnlyTime:Bool = false ) -> String {
+    func dateTimeToString( _ dateTime: Date, withHour: Bool = false, returnOnlyTime:Bool = false ) -> String {
 
         let dateformatter = DateFormatter()
         dateformatter.timeZone = TimeZone(abbreviation: "GMT")
@@ -108,7 +108,7 @@ public extension String {
         return dateformatter.string(from: dateTime)
     }
 
-    public func dateTimeToStringBR( _ dateTime: Date, withHour:Bool = false ) -> String {
+    func dateTimeToStringBR( _ dateTime: Date, withHour:Bool = false ) -> String {
 
         let dateformatter = DateFormatter()
         dateformatter.timeZone = TimeZone(abbreviation: "GMT")
@@ -125,7 +125,7 @@ public extension String {
     //
     //    }
 
-    public func dateDataBaseConverter(fromFormat:String = "dd/MM/yyyy", toFormat: String = "yyyy-MM-dd") -> String{
+    func dateDataBaseConverter(fromFormat:String = "dd/MM/yyyy", toFormat: String = "yyyy-MM-dd") -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
         dateFormatter.dateFormat = fromFormat
@@ -140,7 +140,7 @@ public extension String {
     ///   - withFormatt: Give a input formatt as it comes in String.
     ///   - useHour: Add or remove hour form String given date
     ///   - Returns: Date object.
-    public func toDateFormat(withFormatt: String = "yyyy-MM-dd HH:mm:ss", useHour: Bool = false) -> Date? {
+    func toDateFormat(withFormatt: String = "yyyy-MM-dd HH:mm:ss", useHour: Bool = false) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = NSTimeZone.default
         dateFormatter.locale = Calendar.current.locale
@@ -152,32 +152,32 @@ public extension String {
         return dateFormatter.date(from: self)
     }
 
-    public var first: String {
+    var first: String {
         return String(prefix(1))
     }
-    public var last: String {
+    var last: String {
         return String(suffix(1))
     }
-    public var uppercaseFirst: String {
+    var uppercaseFirst: String {
         return first.uppercased() + String(dropFirst())
     }
 
     #if os(iOS) || os(macOS)
-    public func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
+    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
 
         return ceil(boundingBox.height)
     }
 
-    public func width(withConstraintedHeight height: CGFloat, font: UIFont) -> CGFloat {
+    func width(withConstraintedHeight height: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
         let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
 
         return ceil(boundingBox.width)
     }
 
-    public func encodeImageToBase64(refImage: UIImage) -> String{
+    func encodeImageToBase64(refImage: UIImage) -> String{
         let jpegCompressionQuality: CGFloat = 0.6
         if let base64String = UIImageJPEGRepresentation(refImage, jpegCompressionQuality){
             let strBase64 = base64String.base64EncodedString(options: .endLineWithLineFeed)
@@ -187,7 +187,7 @@ public extension String {
     }
     #endif
     
-    public func exponentize(str: String) -> String {
+    func exponentize(str: String) -> String {
 
         let supers = [
             "1": "\u{00B9}",
@@ -231,14 +231,14 @@ public extension String {
      */
     // Example
     // let str = "This is a long string".truncate(10, trailing: "...") // "This is a ..."
-    public func truncate(length: Int, trailing: String = "…") -> String {
+    func truncate(length: Int, trailing: String = "…") -> String {
         if self.count > length {
             return String(self.prefix(length)) + trailing
         } else {
             return self
         }
     }
-    public func replacing(range: CountableClosedRange<Int>, with replacementString: String) -> String {
+    func replacing(range: CountableClosedRange<Int>, with replacementString: String) -> String {
         let start = index(startIndex, offsetBy: range.lowerBound)
         let end   = index(start, offsetBy: range.count)
         return self.replacingCharacters(in: start ..< end, with: replacementString)
@@ -247,7 +247,7 @@ public extension String {
     //
     //Usage Example: label.text = yourString.html2String
     //
-    public var html2AttributedString: NSAttributedString? {
+    var html2AttributedString: NSAttributedString? {
         guard
             let data = data(using: String.Encoding.utf8)
             else { return nil }
@@ -262,17 +262,17 @@ public extension String {
             return  nil
         }
     }
-    public var html2String: String {
+    var html2String: String {
         return html2AttributedString?.string ?? ""
     }
 
-    public func dictionaryToStringJSON(dict:[String:Any]) -> String {
+    func dictionaryToStringJSON(dict:[String:Any]) -> String {
         let jsonData = try! JSONSerialization.data(withJSONObject: dict, options: JSONSerialization.WritingOptions.prettyPrinted)
         let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
         return jsonString
     }
 
-    public func JSONStringToDictionary() -> [String:Any]? {
+    func JSONStringToDictionary() -> [String:Any]? {
         if let data = self.data(using: .utf8) {
             let jsonString = try? JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
             return jsonString
@@ -294,7 +294,7 @@ public extension String {
     //
     //    print(price.currencyBR)  // "R$1,99\n"
     //    print(price.currencyUS)  // "$1.99\n"
-    public func removeFormatAmount() -> Double {
+    func removeFormatAmount() -> Double {
         let formatter = NumberFormatter()
         
         formatter.locale = Locale(identifier: "en_US")
@@ -304,7 +304,7 @@ public extension String {
         
         return formatter.number(from: self) as! Double? ?? 0
     }
-    public func convertFloatToCurrency(value: Float, withSpace: Bool = false) -> String{
+    func convertFloatToCurrency(value: Float, withSpace: Bool = false) -> String{
         
         let currencyFormatter = NumberFormatter()
         currencyFormatter.usesGroupingSeparator = true
@@ -316,7 +316,7 @@ public extension String {
         return priceString!
     }
     
-    public func currencyInputFormatting(withSpace: Bool = false, withSymbol: Bool = true) -> String {
+    func currencyInputFormatting(withSpace: Bool = false, withSymbol: Bool = true) -> String {
         
         var number: NSNumber!
         let formatter = NumberFormatter()
@@ -345,7 +345,7 @@ public extension String {
     }
     
     
-    public func convertFloatToCurrency(value: Float) -> String{
+    func convertFloatToCurrency(value: Float) -> String{
 
         let currencyFormatter = NumberFormatter()
         currencyFormatter.usesGroupingSeparator = true
@@ -356,7 +356,7 @@ public extension String {
         return priceString!
     }
     
-    public func convertToCurrencyFormatt(value: Float) -> String?{
+    func convertToCurrencyFormatt(value: Float) -> String?{
         let currencyFormatter = NumberFormatter()
         currencyFormatter.usesGroupingSeparator = true
         currencyFormatter.numberStyle = NumberFormatter.Style.currency
@@ -390,7 +390,7 @@ public extension String {
         }
     }
     
-    public func toURL() -> NSURL? {
+    func toURL() -> NSURL? {
         return NSURL(string: self)
     }
     func textWithoutFormat() -> String {
@@ -428,7 +428,7 @@ public extension String {
     var removingWhitespacesAndNewlines: String {
         return components(separatedBy: .whitespacesAndNewlines).joined(separator: "")
     }
-    public func replaceFirst(of pattern:String,
+    func replaceFirst(of pattern:String,
                              with replacement:String) -> String {
         if let range = self.range(of: pattern){
             return self.replacingCharacters(in: range, with: replacement)
@@ -437,7 +437,7 @@ public extension String {
         }
     }
     
-    public func replaceAll(of pattern:String,
+    func replaceAll(of pattern:String,
                            with replacement:String,
                            options: NSRegularExpression.Options = []) -> String{
         do{

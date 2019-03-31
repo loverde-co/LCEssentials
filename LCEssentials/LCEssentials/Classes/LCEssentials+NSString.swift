@@ -24,7 +24,7 @@ import Foundation
 
 public extension NSString {
 
-    public func randomAlphaNumericString(_ length: Int = 8) -> String {
+    func randomAlphaNumericString(_ length: Int = 8) -> String {
 
         let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         let allowedCharsCount = UInt32(allowedChars.count)
@@ -39,7 +39,7 @@ public extension NSString {
         return randomString
     }
 
-    public func removeCurrencyBRFormat(_ string:NSString) -> NSString {
+    func removeCurrencyBRFormat(_ string:NSString) -> NSString {
 
         //let string       = "4567,89"
         var toArray         = string.components(separatedBy: "R$ ")
@@ -52,7 +52,7 @@ public extension NSString {
         return backToString as NSString
     }
 
-    public func createDirectory(_ directoryName: NSString) -> Bool {
+    func createDirectory(_ directoryName: NSString) -> Bool {
 
         let documentsPath = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         let logsPath = documentsPath.appendingPathComponent(directoryName as String)

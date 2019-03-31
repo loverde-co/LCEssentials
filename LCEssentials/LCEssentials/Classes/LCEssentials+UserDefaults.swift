@@ -24,43 +24,43 @@ import Foundation
 
 public extension UserDefaults {
 
-    public enum UserDefaultsKeys: String {
+    enum UserDefaultsKeys: String {
         case isLoggedIn
         case isFirstTimeOnApp
     }
 
-    public func setIsLoggedIn(value: Bool) {
+    func setIsLoggedIn(value: Bool) {
         set(value, forKey: UserDefaultsKeys.isLoggedIn.rawValue)
         synchronize()
     }
 
-    public func setIsFirstTimeOnApp(value: Bool) {
+    func setIsFirstTimeOnApp(value: Bool) {
         set(value, forKey: UserDefaultsKeys.isFirstTimeOnApp.rawValue)
         synchronize()
     }
 
-    public func isLoggedIn() -> Bool {
+    func isLoggedIn() -> Bool {
         return bool(forKey: UserDefaultsKeys.isLoggedIn.rawValue)
     }
 
-    public func isFirstTimeOnApp() -> Bool {
+    func isFirstTimeOnApp() -> Bool {
         return bool(forKey: UserDefaultsKeys.isFirstTimeOnApp.rawValue)
     }
     
-    public func setObject<T>(object: T, forKey: String) where T: Codable{
+    func setObject<T>(object: T, forKey: String) where T: Codable{
         if let encoded = try? JSONEncoder().encode(object) {
             UserDefaults.standard.set(encoded, forKey: forKey)
             UserDefaults.standard.synchronize()
         }
     }
-    public func getObject<T>(forKey: String) -> T? where T: Codable {
+    func getObject<T>(forKey: String) -> T? where T: Codable {
         if let userData = data(forKey: forKey) {
             return try? JSONDecoder().decode(T.self, from: userData)
         }
         return nil
     }
     
-    public func saveObject<T>(object: T, forKey: String) where T: Codable {
+    func saveObject<T>(object: T, forKey: String) where T: Codable {
         let json = try! JSONHelper<T>.decode(toJSON: object)
         DispatchQueue.main.async {
             self.set(json, forKey: forKey)
@@ -68,7 +68,7 @@ public extension UserDefaults {
         }
     }
     
-    public func getSavedObject<T>(forKey: String) -> T? where T: Codable {
+    func getSavedObject<T>(forKey: String) -> T? where T: Codable {
         if let dict = object(forKey: forKey) as? String {
             let obj = try! JSONHelper<T>.decode(dict)
             return obj
@@ -76,7 +76,7 @@ public extension UserDefaults {
         return nil
     }
     
-    public func removeSavedObject(forKey: String) -> Bool {
+    func removeSavedObject(forKey: String) -> Bool {
         if let _ = object(forKey: forKey) as? String {
             DispatchQueue.main.async {
                 self.removeObject(forKey: forKey)

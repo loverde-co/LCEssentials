@@ -23,7 +23,7 @@
 import Foundation
 
 public extension Array where Element : Equatable {
-    public var unique: [Element] {
+    var unique: [Element] {
         var uniqueValues: [Element] = []
         forEach { item in
             if !uniqueValues.contains(item) {

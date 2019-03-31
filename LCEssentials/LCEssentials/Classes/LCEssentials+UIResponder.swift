@@ -24,7 +24,7 @@ import Foundation
 
 #if os(iOS) || os(macOS)
 public extension UIResponder {
-    public func getParentViewController() -> UIViewController? {
+    func getParentViewController() -> UIViewController? {
         if self.next is UIViewController {
             return self.next as? UIViewController
         } else {

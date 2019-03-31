@@ -58,7 +58,7 @@ public extension NSMutableAttributedString {
         return self
     }
 
-    @discardableResult public func bold(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil) -> NSMutableAttributedString {
+    @discardableResult func bold(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil) -> NSMutableAttributedString {
         var attrs:[NSAttributedStringKey:Any] = [NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
         if color != nil {
             attrs[NSAttributedStringKey.foregroundColor] = color
@@ -69,7 +69,7 @@ public extension NSMutableAttributedString {
         return self
     }
 
-    @discardableResult public func underline(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil) -> NSMutableAttributedString {
+    @discardableResult func underline(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil) -> NSMutableAttributedString {
         var attrs:[NSAttributedStringKey:Any] = [NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue as AnyObject, NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
         if color != nil {
             attrs[NSAttributedStringKey.foregroundColor] = color
@@ -80,7 +80,7 @@ public extension NSMutableAttributedString {
         return self
     }
 
-    @discardableResult public func linkTouch(_ text:String, url: String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor = UIColor.blue) -> NSMutableAttributedString {
+    @discardableResult func linkTouch(_ text:String, url: String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor = UIColor.blue) -> NSMutableAttributedString {
         let linkTerms:[NSAttributedStringKey: Any]  = [NSAttributedStringKey.link: NSURL(string: url)!,
                                                             NSAttributedStringKey.foregroundColor: color,
                                                             NSAttributedStringKey.underlineColor: color,
@@ -92,7 +92,7 @@ public extension NSMutableAttributedString {
         return self
     }
     
-    @discardableResult public func supperscript(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil, offset: CGFloat) -> NSMutableAttributedString {
+    @discardableResult func supperscript(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil, offset: CGFloat) -> NSMutableAttributedString {
         var attrs:[NSAttributedStringKey:Any] = [NSAttributedStringKey.baselineOffset: offset, NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
         if color != nil {
             attrs[NSAttributedStringKey.foregroundColor] = color
@@ -103,17 +103,17 @@ public extension NSMutableAttributedString {
         return self
     }
     
-    public func makeAttributted(){
+    func makeAttributted(){
         self.append(self)
     }
 
-    @discardableResult public func normal(_ text:String)->NSMutableAttributedString {
+    @discardableResult func normal(_ text:String)->NSMutableAttributedString {
         let normal =  NSAttributedString(string: text)
         self.append(normal)
         return self
     }
 
-    public func setAsLink(textToFind:String, linkURL:String) -> Bool {
+    func setAsLink(textToFind:String, linkURL:String) -> Bool {
 
         let foundRange = self.mutableString.range(of: textToFind)
         if foundRange.location != NSNotFound {
@@ -123,14 +123,14 @@ public extension NSMutableAttributedString {
         return false
     }
 
-    public func height(withConstrainedWidth width: CGFloat) -> CGFloat {
+    func height(withConstrainedWidth width: CGFloat) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundingBox = boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
 
         return ceil(boundingBox.height)
     }
 
-    public func width(withConstrainedHeight height: CGFloat) -> CGFloat {
+    func width(withConstrainedHeight height: CGFloat) -> CGFloat {
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
         let boundingBox = boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, context: nil)
 

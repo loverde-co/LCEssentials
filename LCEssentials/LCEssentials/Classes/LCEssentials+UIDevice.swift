@@ -25,7 +25,7 @@ import Foundation
 #if os(iOS) || os(macOS)
 public extension UIDevice {
 
-    public var modelName: String {
+    var modelName: String {
         var systemInfo = utsname()
         uname(&systemInfo)
         let machineMirror = Mirror(reflecting: systemInfo.machine)
@@ -36,13 +36,6 @@ public extension UIDevice {
         #if swift(>=4.1)
             #if targetEnvironment(simulator)
                 //#if (arch(i386) || arch(x86_64)) && os(iOS)
-                // this neat trick is found at http://kelan.io/2015/easier-getenv-in-swift/
-                if let dir = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
-                    identifier = dir
-                }
-            #endif
-        #else
-            #if (arch(i386) || arch(x86_64)) && os(iOS)
                 // this neat trick is found at http://kelan.io/2015/easier-getenv-in-swift/
                 if let dir = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
                     identifier = dir

@@ -342,7 +342,7 @@ public struct LCEssentials {
 public extension LCEssentials {
     
     // MARK: - Background Thread
-    public static func backgroundThread(delay: Double = 0.0, background: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
+    static func backgroundThread(delay: Double = 0.0, background: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
         DispatchQueue.global().async {
             background?()
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
@@ -354,7 +354,7 @@ public extension LCEssentials {
     
     #if os(iOS) || os(macOS)
     //MARK: - Set Root View Controller
-    public static func setRootViewControllerWithAnimation(fromView from: UIView, toViewController to: UIViewController, duration: TimeInterval = 0.6, options: UIViewAnimationOptions, completion: (() -> Void)? = nil) {
+    static func setRootViewControllerWithAnimation(fromView from: UIView, toViewController to: UIViewController, duration: TimeInterval = 0.6, options: UIViewAnimationOptions, completion: (() -> Void)? = nil) {
         
         let appDelegate = UIApplication.shared.delegate
         
@@ -368,7 +368,7 @@ public extension LCEssentials {
     
     #if os(iOS) || os(macOS)
     //MARK: - Instance View Controllers Thru Storyboard
-    public static func instanceViewController(_ storyBoardName:String = "Intro", withIdentifier: String = "mainIntro" ) -> UIViewController {
+    static func instanceViewController(_ storyBoardName:String = "Intro", withIdentifier: String = "mainIntro" ) -> UIViewController {
         return UIStoryboard(name: storyBoardName, bundle: nil).instantiateViewController(withIdentifier: withIdentifier)
     }
     #endif
@@ -394,7 +394,7 @@ public extension LCEssentials {
     ///   - queue: a queue that completion closure should be executed on (default is DispatchQueue.main).
     ///   - completion: closure to be executed after delay.
     ///   - Returns: DispatchWorkItem task. You can call .cancel() on it to cancel delayed execution.
-    @discardableResult public static func delay(milliseconds: Double, queue: DispatchQueue = .main, completion: @escaping () -> Void) -> DispatchWorkItem {
+    @discardableResult static func delay(milliseconds: Double, queue: DispatchQueue = .main, completion: @escaping () -> Void) -> DispatchWorkItem {
         let task = DispatchWorkItem { completion() }
         queue.asyncAfter(deadline: .now() + (milliseconds/1000), execute: task)
         return task
@@ -406,7 +406,7 @@ public extension LCEssentials {
     ///   - millisecondsOffset: allow execution of method if it was not called since millisecondsOffset.
     ///   - queue: a queue that action closure should be executed on (default is DispatchQueue.main).
     ///   - action: closure to be executed in a debounced way.
-    public static func debounce(millisecondsDelay: Int, queue: DispatchQueue = .main, action: @escaping (() -> Void)) -> () -> Void {
+    static func debounce(millisecondsDelay: Int, queue: DispatchQueue = .main, action: @escaping (() -> Void)) -> () -> Void {
         // http://stackoverflow.com/questions/27116684/how-can-i-debounce-a-method-call
         var lastFireTime = DispatchTime.now()
         let dispatchDelay = DispatchTimeInterval.milliseconds(millisecondsDelay)
@@ -427,7 +427,7 @@ public extension LCEssentials {
     /// - LoverdeCo: Called when user takes a screenshot
     ///
     /// - Parameter action: a closure to run when user takes a screenshot
-    public static func didTakeScreenShot(_ action: @escaping (_ notification: Notification) -> Void) {
+    static func didTakeScreenShot(_ action: @escaping (_ notification: Notification) -> Void) {
         // http://stackoverflow.com/questions/13484516/ios-detection-of-screenshot
         _ = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationUserDidTakeScreenshot,
                                                    object: nil,

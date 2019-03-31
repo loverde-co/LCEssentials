@@ -24,7 +24,7 @@ import Foundation
 
 public extension FileManager {
 
-    public func createDirectory(_ directoryName: String) -> URL? {
+    func createDirectory(_ directoryName: String) -> URL? {
         let fileManager = FileManager.default
         if let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
             let filePath = documentDirectory.appendingPathComponent(directoryName)
@@ -42,7 +42,7 @@ public extension FileManager {
         }
     }
 
-    public func saveFileToDirectory( _ sourceURL: URL, toPathURL: URL ) -> Bool {
+    func saveFileToDirectory( _ sourceURL: URL, toPathURL: URL ) -> Bool {
 
         do {
             try FileManager.default.moveItem(at: sourceURL, to: toPathURL)
@@ -54,7 +54,7 @@ public extension FileManager {
     }
 
     #if os(iOS) || os(macOS)
-    public func saveImageToDirectory( _ imageWithPath : String, imagem : UIImage ) -> Bool {
+    func saveImageToDirectory( _ imageWithPath : String, imagem : UIImage ) -> Bool {
 
         let data = UIImagePNGRepresentation(imagem)
 
@@ -71,13 +71,13 @@ public extension FileManager {
     }
     #endif
 
-    public func retrieveFile( _ directoryAndFile: String ) -> URL {
+    func retrieveFile( _ directoryAndFile: String ) -> URL {
         let documentsPath = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         let logsPath = documentsPath.appendingPathComponent(directoryAndFile)
         return logsPath
     }
 
-    public func removeFile( _ directoryAndFile: String ) -> Bool {
+    func removeFile( _ directoryAndFile: String ) -> Bool {
         do {
             try self.removeItem(atPath: directoryAndFile)
             return true
@@ -88,7 +88,7 @@ public extension FileManager {
         }
     }
 
-    public func retrieveAllFilesFromDirectory(directoryName: String) -> [String]? {
+    func retrieveAllFilesFromDirectory(directoryName: String) -> [String]? {
         let fileMngr = FileManager.default;
         let docs = fileMngr.urls(for: .documentDirectory, in: .userDomainMask)[0].path
         do {
@@ -114,13 +114,13 @@ public extension FileManager {
         //        return try? fileMngr.contentsOfDirectory(atPath:"\(docs)/\(directoryName)")
     }
 
-    public func directoryExistsAtPath(_ path: String) -> Bool {
+    func directoryExistsAtPath(_ path: String) -> Bool {
         var isDirectory = ObjCBool(true)
         let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
         return exists && isDirectory.boolValue
     }
 
-    public func convertToURL(path:String)-> URL?{
+    func convertToURL(path:String)-> URL?{
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path
         do {
             _ = try FileManager.default.contentsOfDirectory(atPath: "\(docs)/\(path)")
