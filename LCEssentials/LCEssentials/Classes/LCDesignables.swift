@@ -386,6 +386,41 @@ open class CustomUIButtom: UIButton {
 }
 
 
+@IBDesignable open class UIButtonCheckBox: UIButton {
+    
+    @IBInspectable public var imageForChecked: UIImage? {
+        didSet {
+            guard let _ = imageForChecked else{ fatalError("Ops! Missing Enabled Image!") }
+        }
+    }
+    @IBInspectable public var imageForUnchecked: UIImage? {
+        didSet {
+            guard let _ = imageForUnchecked else{ fatalError("Ops! Missing Enabled Image!") }
+        }
+    }
+    
+    open var isChecked: Bool = false {
+        didSet {
+            if isChecked {
+                self.setImage(imageForChecked, for: .normal)
+            }else{
+                self.setImage(imageForUnchecked, for: .normal)
+            }
+        }
+    }
+    
+    override open func awakeFromNib() {
+        self.addTarget(self, action:#selector(buttonClicked(sender:)), for: UIControlEvents.touchUpInside)
+        self.isChecked = false
+    }
+    
+    @objc open func buttonClicked(sender: UIButton) {
+        if sender == self {
+            isChecked = !isChecked
+        }
+    }
+}
+
 
 @IBDesignable open class RadioNotifButton: UIButton {
     // Images
