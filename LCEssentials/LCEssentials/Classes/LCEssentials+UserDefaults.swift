@@ -53,9 +53,9 @@ public extension UserDefaults {
             UserDefaults.standard.synchronize()
         }
     }
-    func getObject<T: Codable>(forKey: String) -> T? {
+    func getObject<T: Codable>(_ type: T.Type, forKey: String) -> T? {
         if let userData = data(forKey: forKey) {
-            return try? JSONDecoder().decode(T.self, from: userData)
+            return try? JSONDecoder().decode(type, from: userData)
         }
         return nil
     }
@@ -68,7 +68,7 @@ public extension UserDefaults {
         }
     }
     
-    func getSavedObject<T: Codable>(forKey: String) -> T?{
+    func getSavedObject<T: Codable>(_ type: T.Type, forKey: String) -> T?{
         if let dict = object(forKey: forKey) as? String {
             let obj = try! JSONHelper<T>.decode(dict)
             return obj
