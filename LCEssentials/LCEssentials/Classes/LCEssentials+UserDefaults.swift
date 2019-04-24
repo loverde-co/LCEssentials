@@ -47,20 +47,20 @@ public extension UserDefaults {
         return bool(forKey: UserDefaultsKeys.isFirstTimeOnApp.rawValue)
     }
     
-    func setObject<T>(object: T, forKey: String) where T: Codable{
+    func setObject<T: Codable>(object: T, forKey: String){
         if let encoded = try? JSONEncoder().encode(object) {
             UserDefaults.standard.set(encoded, forKey: forKey)
             UserDefaults.standard.synchronize()
         }
     }
-    func getObject<T>(forKey: String) -> T? where T: Codable {
+    func getObject<T: Codable>(forKey: String) -> T? {
         if let userData = data(forKey: forKey) {
             return try? JSONDecoder().decode(T.self, from: userData)
         }
         return nil
     }
     
-    func saveObject<T>(object: T, forKey: String) where T: Codable {
+    func saveObject<T: Codable>(object: T, forKey: String) {
         let json = try! JSONHelper<T>.decode(toJSON: object)
         DispatchQueue.main.async {
             self.set(json, forKey: forKey)
@@ -68,7 +68,7 @@ public extension UserDefaults {
         }
     }
     
-    func getSavedObject<T>(forKey: String) -> T? where T: Codable {
+    func getSavedObject<T: Codable>(forKey: String) -> T?{
         if let dict = object(forKey: forKey) as? String {
             let obj = try! JSONHelper<T>.decode(dict)
             return obj
