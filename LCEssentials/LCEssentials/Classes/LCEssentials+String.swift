@@ -49,6 +49,14 @@ public extension String {
         return nil
     }
 
+    mutating func insertAtIndexEnd(string:String, ind:Int) {
+        self.insert(contentsOf: string, at:self.index(self.endIndex, offsetBy: ind) )
+    }
+    
+    mutating func insertAtIndexStart(string:String, ind:Int) {
+        self.insert(contentsOf: string, at:self.index(self.endIndex, offsetBy: ind) )
+    }
+    
 
     //    func md5(_ string: String) -> String {
     //        var digest = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
@@ -294,15 +302,16 @@ public extension String {
     //
     //    print(price.currencyBR)  // "R$1,99\n"
     //    print(price.currencyUS)  // "$1.99\n"
-    func removeFormatAmount() -> Double {
-        let formatter = NumberFormatter()
+    func removeFormatAmount() -> Float {
+        let textValue   = self //"$1.200,33"
+        let nonDigits   = CharacterSet(charactersIn: "01234456789").inverted
+        let digitGroups = textValue.components(separatedBy:nonDigits).filter{!$0.isEmpty}
+        let textNumber  = digitGroups.dropLast().joined(separator:"")
+            + ( digitGroups.last!.count == 2
+                && digitGroups.count > 1 ? "." : "" )
+            + digitGroups.last!
         
-        formatter.locale = Locale(identifier: "en_US")
-        formatter.numberStyle = .currency
-        formatter.currencySymbol = "$"
-        formatter.decimalSeparator = ","
-        
-        return formatter.number(from: self) as! Double? ?? 0
+        return Float(textNumber)!
     }
     func convertFloatToCurrency(value: Float, withSpace: Bool = false) -> String{
         

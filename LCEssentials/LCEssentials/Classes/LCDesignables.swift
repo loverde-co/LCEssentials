@@ -676,6 +676,47 @@ open class CustomUIButtom: UIButton {
     }
 }
 
+//MARK: - UIImageView
+let imageCache = NSCache<NSString, UIImage>()
+@IBDesignable open class UIImageViewCustom: UIImageView {
+    
+    open var imageUrlString: String?
+    
+    open func loadImageUsingUrlString(urlString: String, defaultImage: UIImage?) {
+        
+        imageUrlString = urlString
+        
+        guard let url = URL(string: urlString) else { return }
+        
+        image = defaultImage
+        
+        if let imageFromCache = imageCache.object(forKey: urlString as NSString) {
+            self.image = imageFromCache
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url, completionHandler: { (data, respones, error) in
+            
+            if error != nil {
+                print(error ?? "")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                guard let imageToCache = UIImage(data: data!) else { return }
+                
+                if self.imageUrlString == urlString {
+                    self.image = imageToCache
+                }
+                
+                imageCache.setObject(imageToCache, forKey: urlString as NSString)
+            }
+            
+        }).resume()
+    }
+}
+
+
 //MARK: - UIPageControll
 @IBDesignable open class CustomUIPageControl: UIPageControl {
     
