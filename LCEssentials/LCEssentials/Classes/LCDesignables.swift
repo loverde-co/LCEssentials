@@ -682,23 +682,23 @@ let imageCache = NSCache<NSString, UIImage>()
     
     open var imageUrlString: String?
     
-    open func loadImageUsingUrlString(urlString: String, defaultImage: UIImage?) {
+    open func loadImageUsingUrlString(urlString: String, defaultImage: UIImage?, completion:@escaping(UIImageViewCustom?, Error?)->()) {
         
         imageUrlString = urlString
-        
-        guard let url = URL(string: urlString) else { return }
+        let error = NSError(domain: LCEssentials().DEFAULT_ERROR_DOMAIN, code: LCEssentials().DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "URL is wrong format." ])
+        guard let url = URL(string: urlString) else { completion(nil, error); return }
         
         image = defaultImage
         
         if let imageFromCache = imageCache.object(forKey: urlString as NSString) {
             self.image = imageFromCache
+            completion(self, nil)
             return
         }
         
         URLSession.shared.dataTask(with: url, completionHandler: { (data, respones, error) in
-            
             if error != nil {
-                print(error ?? "")
+                completion(nil, error)
                 return
             }
             
@@ -710,6 +710,7 @@ let imageCache = NSCache<NSString, UIImage>()
                 }
                 
                 imageCache.setObject(imageToCache, forKey: urlString as NSString)
+                completion(self, nil)
             }
             
         }).resume()
