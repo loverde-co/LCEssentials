@@ -90,10 +90,17 @@ public struct LCEssentials {
     /// - LoverdeCo: Tell if the device is iPhone regular and plus sizes
     public static var BIGGER_DEVICES: Bool {
         var isVeryOld = false
-        if (LCEssentials().DEVICE_NAME == "iPhone 6" || LCEssentials().DEVICE_NAME == "iPhone 6 Plus"
-            || LCEssentials().DEVICE_NAME == "iPhone 6s" || LCEssentials().DEVICE_NAME == "iPhone 6s Plus"
-            || LCEssentials().DEVICE_NAME == "iPhone 7" || LCEssentials().DEVICE_NAME == "iPhone 7 Plus"
-            || LCEssentials().DEVICE_NAME == "iPhone 8" || LCEssentials().DEVICE_NAME == "iPhone 8 Plus") {
+        if (LCEssentials().DEVICE_NAME == "iPhone 6s Plus" || LCEssentials().DEVICE_NAME == "iPhone 7 Plus" || LCEssentials().DEVICE_NAME == "iPhone 8 Plus") {
+            isVeryOld = true
+        }
+        return isVeryOld
+    }
+    
+    /// - LoverdeCo: Tell if the device is iPhone regular and plus sizes
+    public static var REGULAR_DEVICES: Bool {
+        var isVeryOld = false
+        if (LCEssentials().DEVICE_NAME == "iPhone 6" || LCEssentials().DEVICE_NAME == "iPhone 6s"
+            || LCEssentials().DEVICE_NAME == "iPhone 7" || LCEssentials().DEVICE_NAME == "iPhone 8") {
             isVeryOld = true
         }
         return isVeryOld
