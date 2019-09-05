@@ -14,6 +14,8 @@
 		B16B59A320E27D6300DD7DF0 /* alert@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B16B59A020E27D6300DD7DF0 /* alert@3x.png */; };
 		B16B59A420E27D6300DD7DF0 /* alert@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B16B59A120E27D6300DD7DF0 /* alert@2x.png */; };
 		B16FACBA20EEB34B00C340E4 /* LCEssentials+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16FACB920EEB34B00C340E4 /* LCEssentials+URL.swift */; };
+		B182093D232177DE0098101C /* LCEssentials+UIPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B182093C232177DD0098101C /* LCEssentials+UIPickerView.swift */; };
+		B182093F232186A90098101C /* LCEssentials+UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B182093E232186A90098101C /* LCEssentials+UICollectionView.swift */; };
 		B1AD43FB20B200A600FAA190 /* LCEssentials.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1AD43F120B200A600FAA190 /* LCEssentials.framework */; };
 		B1AD440020B200A600FAA190 /* LCEssentialsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AD43FF20B200A600FAA190 /* LCEssentialsTests.swift */; };
 		B1AD440220B200A600FAA190 /* LCEssentials.h in Headers */ = {isa = PBXBuildFile; fileRef = B1AD43F420B200A600FAA190 /* LCEssentials.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -73,6 +75,8 @@
 		B16B59A020E27D6300DD7DF0 /* alert@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert@3x.png"; sourceTree = "<group>"; };
 		B16B59A120E27D6300DD7DF0 /* alert@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert@2x.png"; sourceTree = "<group>"; };
 		B16FACB920EEB34B00C340E4 /* LCEssentials+URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+URL.swift"; sourceTree = "<group>"; };
+		B182093C232177DD0098101C /* LCEssentials+UIPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UIPickerView.swift"; sourceTree = "<group>"; };
+		B182093E232186A90098101C /* LCEssentials+UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UICollectionView.swift"; sourceTree = "<group>"; };
 		B1AD43F120B200A600FAA190 /* LCEssentials.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LCEssentials.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1AD43F420B200A600FAA190 /* LCEssentials.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LCEssentials.h; sourceTree = "<group>"; };
 		B1AD43F520B200A600FAA190 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -203,6 +207,7 @@
 				B1FC4D9820E802EA003CAAFC /* LCEssentials+FileManager.swift */,
 				B1FC4D9A20E80410003CAAFC /* LCEssentials+Date.swift */,
 				B1FC4D9C20E80447003CAAFC /* LCEssentials+UITableView.swift */,
+				B182093E232186A90098101C /* LCEssentials+UICollectionView.swift */,
 				B1FC4D9E20E80463003CAAFC /* LCEssentials+UserDefaults.swift */,
 				B1FC4DA020E80490003CAAFC /* LCEssentials+UIDevice.swift */,
 				B1FC4DA220E804BD003CAAFC /* LCEssentials+UIResponder.swift */,
@@ -226,6 +231,7 @@
 		B1AD446920B4C41C00FAA190 /* PickerViews */ = {
 			isa = PBXGroup;
 			children = (
+				B182093C232177DD0098101C /* LCEssentials+UIPickerView.swift */,
 				B19453B920B5C5C500A451B4 /* Storyboards */,
 				B1AD446A20B4C46C00FAA190 /* PickerViewController.swift */,
 				B1AD446C20B4C49B00FAA190 /* DatePickerViewController.swift */,
@@ -376,6 +382,7 @@
 				B1FC4D9B20E80410003CAAFC /* LCEssentials+Date.swift in Sources */,
 				B1FC4D8320E7FF47003CAAFC /* LCEssentials+NSString.swift in Sources */,
 				B1FC4DA320E804BD003CAAFC /* LCEssentials+UIResponder.swift in Sources */,
+				B182093D232177DE0098101C /* LCEssentials+UIPickerView.swift in Sources */,
 				B1FC4D8D20E801B1003CAAFC /* LCEssentials+UIView.swift in Sources */,
 				B1AD440F20B20E2F00FAA190 /* LCDesignables.swift in Sources */,
 				B1F4900020F9289200633BA8 /* LCEssentials+Locale.swift in Sources */,
@@ -403,6 +410,7 @@
 				B1BBC6D321F612720038775B /* LCEssentials+LocationManager.swift in Sources */,
 				B1FCF65320CEE29D009F2354 /* LCEMessages.swift in Sources */,
 				B1FC4D9920E802EA003CAAFC /* LCEssentials+FileManager.swift in Sources */,
+				B182093F232186A90098101C /* LCEssentials+UICollectionView.swift in Sources */,
 				B1AD440D20B203B200FAA190 /* LCEssentials.swift in Sources */,
 				B1FC4D7D20E7F9E5003CAAFC /* LCEffx.swift in Sources */,
 				B1FC4D9D20E80448003CAAFC /* LCEssentials+UITableView.swift in Sources */,

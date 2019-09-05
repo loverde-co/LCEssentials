@@ -43,6 +43,47 @@ public extension UIView {
             self.layer.addSublayer(border)
         }
     }
+    func addCustomRoundCorners(topLeft: Bool = false, topRight: Bool = false, bottomLeft:Bool = false, bottomRight:Bool = false, radius: CGFloat = 8){
+        var maskCorns: CACornerMask = []
+        var path: UIBezierPath = UIBezierPath(roundedRect: (self.bounds), byRoundingCorners: [], cornerRadii: CGSize(width: radius, height: radius))
+        var rectCorners: UIRectCorner = []
+        if topLeft && topRight && bottomLeft && bottomRight {
+            maskCorns = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+            path = UIBezierPath(roundedRect: (self.bounds),
+                                byRoundingCorners: [.topRight, .topLeft, .bottomLeft, .bottomRight],
+                                cornerRadii: CGSize(width: radius, height: radius))
+        }else{
+            if topRight {
+                maskCorns.insert(.layerMaxXMinYCorner)
+                rectCorners.insert(.topRight)
+            }
+            if topLeft {
+                maskCorns.insert(.layerMinXMinYCorner)
+                rectCorners.insert(.topLeft)
+            }
+            if bottomLeft {
+                maskCorns.insert(.layerMinXMaxYCorner)
+                rectCorners.insert(.bottomLeft)
+            }
+            if bottomRight {
+                maskCorns.insert(.layerMaxXMaxYCorner)
+                rectCorners.insert(.bottomRight)
+            }
+            let newPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: rectCorners, cornerRadii: CGSize(width: radius, height: radius))
+            path.append(newPath)
+        }
+        if #available(iOS 11.0, *) {
+            self.clipsToBounds = true
+            self.layer.cornerRadius = radius
+            self.layer.maskedCorners = maskCorns
+        } else {
+            self.clipsToBounds = true
+            let maskLayer = CAShapeLayer()
+            
+            maskLayer.path = path.cgPath
+            self.layer.mask = maskLayer
+        }
+    }
 
     func drawCircle(inCoord x: CGFloat, y: CGFloat, with radius: CGFloat, strokeColor:UIColor = UIColor.red, fillColor:UIColor = UIColor.gray, isEmpty: Bool = false) -> [String:Any] {
         let dotPath = UIBezierPath(ovalIn: CGRect(x: x,y: y, width: radius, height: radius))

@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:LCEssentials/Classes/LCEssentials+UIPickerView.swift">
+   </FileRef>
+   <FileRef
       location = "container:LCEssentials.xcodeproj">
    </FileRef>
 </Workspace>
