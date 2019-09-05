@@ -22,6 +22,7 @@
 
 import UIKit
 
+#if os(iOS) || os(macOS)
 @objc public protocol LCEssentialsPickerViewControllerDelegate {
     @objc func pickerViewController(_ picker: LCEssentialsPickerViewController, didSelectRow row: Int, inComponent component: Int)
     @objc func pickerViewController(didDone picker: LCEssentialsPickerViewController, didSelectRow row: Int, inComponent component: Int)
@@ -207,3 +208,4 @@ public class LCEssentialsPickerViewController: UIViewController, UIPickerViewDel
         return delegate.pickerViewController(self, rowHeightForComponent: component)
     }
 }
+#endif
