@@ -23,7 +23,9 @@
 import Foundation
 import UIKit
 import AVFoundation
+#if os(watchOS)
 import WatchKit
+#endif
 //import CommonCrypto
 
 
