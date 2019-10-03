@@ -111,7 +111,8 @@ public struct LCEssentials {
     public static var X_DEVICES: Bool {
         var isVeryOld = false
         if (LCEssentials().DEVICE_NAME == "iPhone X" || LCEssentials().DEVICE_NAME == "iPhone XS"
-            || LCEssentials().DEVICE_NAME == "iPhone XS Max" || LCEssentials().DEVICE_NAME == "iPhone XR") {
+            || LCEssentials().DEVICE_NAME == "iPhone XS Max" || LCEssentials().DEVICE_NAME == "iPhone XR"
+            || LCEssentials().DEVICE_NAME == "iPhone 11" || LCEssentials().DEVICE_NAME == "iPhone 11 Pro" || LCEssentials().DEVICE_NAME == "iPhone 11 Pro Max") {
             isVeryOld = true
         }
         return isVeryOld
