@@ -89,7 +89,7 @@ public struct LCEssentials {
         return isVeryOld
     }
     
-    /// - LoverdeCo: Tell if the device is iPhone regular and plus sizes
+    /// - LoverdeCo: Tell if the device is iPhone  plus sizes
     public static var BIGGER_DEVICES: Bool {
         var isVeryOld = false
         if (LCEssentials().DEVICE_NAME == "iPhone 6s Plus" || LCEssentials().DEVICE_NAME == "iPhone 7 Plus" || LCEssentials().DEVICE_NAME == "iPhone 8 Plus") {
@@ -98,7 +98,7 @@ public struct LCEssentials {
         return isVeryOld
     }
     
-    /// - LoverdeCo: Tell if the device is iPhone regular and plus sizes
+    /// - LoverdeCo: Tell if the device is iPhone regular sizes
     public static var REGULAR_DEVICES: Bool {
         var isVeryOld = false
         if (LCEssentials().DEVICE_NAME == "iPhone 6" || LCEssentials().DEVICE_NAME == "iPhone 6s"
@@ -383,20 +383,6 @@ public extension LCEssentials {
     }
     #endif
     
-//    public static func printLog(section:String, description:String){
-//        print("\n\n[\(section)] \(description)")
-//    }
-//
-//    public static func printInfo(title: String, msg: String){
-//        print("💭 INFO: \(title): \(msg)")
-//    }
-//    public static func printWarn(title: String, msg: String){
-//        print("⚠️ WARN: \(title): \(msg)")
-//    }
-//    public static func printError(title: String, msg: String){
-//        print("🚫 ERROR: \(title): \(msg)")
-//    }
-    
     /// - LoverdeCo: Delay function or closure call.
     ///
     /// - Parameters:
@@ -470,6 +456,11 @@ extension UIViewController {
     }
     public static var segueID: String {
         return "idSegue"+String(describing: self)
+    }
+    static public func instantiate<T: UIViewController>(storyBoard: String) -> T {
+        let storyboard = UIStoryboard(name: storyBoard, bundle: Bundle(for: T.self))
+        let controller = storyboard.instantiateViewController(withIdentifier: T.identifier) as! T
+        return controller
     }
 }
 extension UICollectionReusableView {

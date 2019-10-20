@@ -272,7 +272,7 @@ public class LCEMessages: UIViewController {
     }
     
     @objc private func keyboardWasShown(notification: NSNotification){
-        var info = notification.userInfo!
+        let info = notification.userInfo!
         let keyboardSize = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
         if self.setDirection == .bottom {
             self.view.frame.origin = CGPoint(x: 0, y: (self.referenceView.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) ))

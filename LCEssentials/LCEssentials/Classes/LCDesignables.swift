@@ -31,9 +31,6 @@ open class Circle: UIView {
     @IBInspectable open var mainColor: UIColor = UIColor.blue {
         didSet { print("mainColor was set here") }
     }
-    @IBInspectable open var borderColor: UIColor = UIColor.orange {
-        didSet { print("bColor was set here") }
-    }
     @IBInspectable open var ringThickness: CGFloat = 4 {
         didSet { print("ringThickness was set here") }
     }
@@ -60,7 +57,7 @@ open class Circle: UIView {
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = circlePath.cgPath
         shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.strokeColor = borderColor.cgColor
+        shapeLayer.strokeColor = borderColor?.cgColor
         shapeLayer.lineWidth = ringThickness
         layer.addSublayer(shapeLayer)
     }
@@ -202,27 +199,19 @@ open class Circle: UIView {
 
 
 //MARK: UIButton
+@available(*, deprecated, renamed: "UIButtonCustom")
+@IBDesignable open class CustomUIButtom: UIButton {
+}
+
 @IBDesignable
-open class CustomUIButtom: UIButton {
+open class UIButtonCustom: UIButton {
     
     @IBInspectable open var name: String? {
 //        didSet {
 //            accessibilityLabel = name
 //        }
         get{ return accessibilityLabel }
-        set{ accessibilityLabel = name }
-    }
-    
-    @IBInspectable open var borderWidth: CGFloat = 0 {
-        didSet {
-            layer.borderWidth = borderWidth
-        }
-    }
-    
-    @IBInspectable open var cornerRadius: CGFloat = 0 {
-        didSet {
-            layer.cornerRadius = cornerRadius
-        }
+        set{ accessibilityLabel = newValue }
     }
     
     //Normal state bg and border
@@ -469,11 +458,12 @@ open class CustomUIButtom: UIButton {
     }
 }
 //MARK: - UITextField
-
+@available(*, deprecated, renamed: "UITextFieldCustom")
 @IBDesignable open class CustomUITextField : UITextField {
+}
+@IBDesignable open class UITextFieldCustom : UITextField {
     
     private var color: UIColor?
-    private var width: CGFloat = 0.0
     
     @IBInspectable open var setBorderTop : Bool = false {
         didSet {
@@ -536,10 +526,12 @@ open class CustomUIButtom: UIButton {
     }
 }
 //MARK: UIView
+@available(*, deprecated, renamed: "UIViewCustom")
 @IBDesignable open class CustomUIView : UIView {
+}
+@IBDesignable open class UIViewCustom : UIView {
     
     private var color: UIColor?
-    private var width: CGFloat = 0.0
     private var gradientColorTop: UIColor?
     private var gradientColorBottom: UIColor?
     
@@ -576,11 +568,6 @@ open class CustomUIButtom: UIButton {
             border.backgroundColor = self.color?.cgColor
             border.frame = CGRect(x: self.frame.size.width - self.width, y: 0, width: width, height: self.frame.size.height)
             self.layer.addSublayer(border)
-        }
-    }
-    @IBInspectable open var cornerRadius: CGFloat = 0 {
-        didSet {
-            layer.cornerRadius = cornerRadius
         }
     }
     
@@ -719,12 +706,15 @@ let imageCache = NSCache<NSString, UIImage>()
 
 
 //MARK: - UIPageControll
+@available(*, deprecated, renamed: "UIPageControlCustom")
 @IBDesignable open class CustomUIPageControl: UIPageControl {
+}
+@IBDesignable open class UIPageControlCustom: UIPageControl {
     
     private var color: UIColor!
-    private var size: CGFloat! // 7.0 is great for border
+    private var selfSize: CGFloat! // 7.0 is great for border
     
-    @IBInspectable open var borderColor: UIColor! {
+    @IBInspectable open override var borderColor: UIColor! {
         didSet {
             self.color = borderColor
         }
@@ -733,8 +723,8 @@ let imageCache = NSCache<NSString, UIImage>()
     @IBInspectable open var borderSize: CGFloat = 0.0 {
         didSet {
             if borderSize > 0 {
-                self.size = borderSize
-                let image = UIImage.outlinedEllipse(size: CGSize(width: self.size, height: self.size), color: self.color)
+                self.selfSize = borderSize
+                let image = UIImage.outlinedEllipse(size: CGSize(width: self.selfSize, height: self.selfSize), color: self.color)
                 self.pageIndicatorTintColor = UIColor.init(patternImage: image!)
             }
         }
@@ -746,7 +736,10 @@ let imageCache = NSCache<NSString, UIImage>()
     
 }
 
+@available(*, deprecated, renamed: "UILabelCustom")
 @IBDesignable open class CustomUILabel: UILabel {
+}
+@IBDesignable open class UILabelCustom: UILabel {
     override open func drawText(in rect: CGRect) {
         if let stringText = text {
             let stringTextAsNSString = stringText as NSString
@@ -830,7 +823,7 @@ open class StarsRating: UIView {
     fileprivate var buttonSize : Int {
         return Int(self.frame.height)
     }
-    fileprivate var width : Int {
+    public var selfWidth : Int {
         return (buttonSize + spacing) * maxRating
     }
     
@@ -871,7 +864,7 @@ open class StarsRating: UIView {
     }
     
     override open var intrinsicContentSize : CGSize {
-        return CGSize(width: width, height: buttonSize)
+        return CGSize(width: selfWidth, height: buttonSize)
     }
     
     func updateButtonSelectionStates() {
@@ -899,7 +892,7 @@ open class StarsRating: UIView {
         if let touch = touches.first {
             let position = touch.location(in: self)
             
-            if position.x > -50 && position.x < CGFloat(width + 50) {
+            if position.x > -50 && position.x < CGFloat(selfWidth + 50) {
                 ratingButtonSelected(position)
             }
         }

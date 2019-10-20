@@ -216,7 +216,185 @@ public extension UIView {
         }
     }
     
+    /// Loverde Co: Border color of view; also inspectable from Storyboard.
+    @IBInspectable var borderColor: UIColor? {
+        get {
+            guard let color = layer.borderColor else { return nil }
+            return UIColor(cgColor: color)
+        }
+        set {
+            guard let color = newValue else {
+                layer.borderColor = nil
+                return
+            }
+            // Fix React-Native conflict issue
+            guard String(describing: type(of: color)) != "__NSCFType" else { return }
+            layer.borderColor = color.cgColor
+        }
+    }
+
+    /// Loverde Co: Border width of view; also inspectable from Storyboard.
+    @IBInspectable var borderWidth: CGFloat {
+        get {
+            return layer.borderWidth
+        }
+        set {
+            layer.borderWidth = newValue
+        }
+    }
+
+    /// Loverde Co: Corner radius of view; also inspectable from Storyboard.
+    @IBInspectable var cornerRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        set {
+            layer.masksToBounds = true
+            layer.cornerRadius = abs(CGFloat(Int(newValue * 100)) / 100)
+        }
+    }
+
+    /// Loverde Co: Height of view.
+    var height: CGFloat {
+        get {
+            return frame.size.height
+        }
+        set {
+            frame.size.height = newValue
+        }
+    }
+
+    /// Loverde Co: Check if view is in RTL format.
+    var isRightToLeft: Bool {
+        if #available(iOS 10.0, *, tvOS 10.0, *) {
+            return effectiveUserInterfaceLayoutDirection == .rightToLeft
+        } else {
+            return false
+        }
+    }
+
+    /// Loverde Co: Take screenshot of view (if applicable).
+    var screenshot: UIImage? {
+        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, 0)
+        defer {
+            UIGraphicsEndImageContext()
+        }
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        layer.render(in: context)
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+
+    /// Loverde Co: Shadow color of view; also inspectable from Storyboard.
+    @IBInspectable var shadowColor: UIColor? {
+        get {
+            guard let color = layer.shadowColor else { return nil }
+            return UIColor(cgColor: color)
+        }
+        set {
+            layer.shadowColor = newValue?.cgColor
+        }
+    }
+
+    /// Loverde Co: Shadow offset of view; also inspectable from Storyboard.
+    @IBInspectable var shadowOffset: CGSize {
+        get {
+            return layer.shadowOffset
+        }
+        set {
+            layer.shadowOffset = newValue
+        }
+    }
+
+    /// Loverde Co: Shadow opacity of view; also inspectable from Storyboard.
+    @IBInspectable var shadowOpacity: Float {
+        get {
+            return layer.shadowOpacity
+        }
+        set {
+            layer.shadowOpacity = newValue
+        }
+    }
+
+    /// Loverde Co: Shadow radius of view; also inspectable from Storyboard.
+    @IBInspectable var shadowRadius: CGFloat {
+        get {
+            return layer.shadowRadius
+        }
+        set {
+            layer.shadowRadius = newValue
+        }
+    }
+
+    /// Loverde Co: Size of view.
+    var size: CGSize {
+        get {
+            return frame.size
+        }
+        set {
+            width = newValue.width
+            height = newValue.height
+        }
+    }
+
+    /// Loverde Co: Get view's parent view controller
+    var parentViewController: UIViewController? {
+        weak var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder!.next
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
+
+    /// Loverde Co: Width of view.
+    var width: CGFloat {
+        get {
+            return frame.size.width
+        }
+        set {
+            frame.size.width = newValue
+        }
+    }
+
+    // swiftlint:disable identifier_name
+    /// Loverde Co: x origin of view.
+    var x: CGFloat {
+        get {
+            return frame.origin.x
+        }
+        set {
+            frame.origin.x = newValue
+        }
+    }
+    // swiftlint:enable identifier_name
+    // swiftlint:disable identifier_name
+    /// Loverde Co: y origin of view.
+    var y: CGFloat {
+        get {
+            return frame.origin.y
+        }
+        set {
+            frame.origin.y = newValue
+        }
+    }
     
+    /// Loverde Co: transform UIView to UIImage
+    func asImage() -> UIImage {
+        if #available(iOS 10.0, *) {
+            let renderer = UIGraphicsImageRenderer(bounds: bounds)
+            return renderer.image { rendererContext in
+                layer.render(in: rendererContext.cgContext)
+            }
+        } else {
+            UIGraphicsBeginImageContext(self.frame.size)
+            self.layer.render(in:UIGraphicsGetCurrentContext()!)
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return UIImage(cgImage: image!.cgImage!)
+        }
+    }
 }
 #endif
 
