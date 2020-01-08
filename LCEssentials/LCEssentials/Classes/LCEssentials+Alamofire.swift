@@ -24,7 +24,134 @@ import UIKit
 import Alamofire
 
 struct API {
-    static let defaultError = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN, code: LCEssentials.DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "Unknown error" ])
+    static let defaultError = NSError(domain: LCEssentials().DEFAULT_ERROR_DOMAIN, code: LCEssentials().DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "Unknown error" ])
     static var persistConnectionDelay: Double = 3
-    static let headers: HTTPHeaders = ["Accept": "application/json"]
+    static var headers: HTTPHeaders = ["Accept": "application/json"]
+    static var defaultParams: [String:Any]!
+    
+    static func processRequest(requestResponse: DataResponse<Any>, withAction: String, withDictParams: [String:Any]?, jsonEncoding: Bool = false, debug:Bool, persistConnection:Bool, completions: @escaping(Any?, NSError?)->()){
+        if debug { printLog(section: "API \((requestResponse.request?.httpMethod)!) - RESPONSE", description: (NSString(data: (requestResponse.request?.httpBody)!, encoding: String.Encoding.utf8.rawValue)!) as String) }
+        switch (requestResponse.result) {
+        case .success:
+            if debug { printInfo(title: "API \((requestResponse.request?.httpMethod)!) - RESPONSE SUCCESS", msg: "URI: \(withAction) - RESPONSE: \(requestResponse.debugDescription)") }
+            let json = String().dictionaryToStringJSON(dict: (requestResponse.result.value as! [String:Any]))
+            completions(json, nil)
+            break
+        case .failure(let error):
+            if debug { printError(title: "API \((requestResponse.request?.httpMethod)!) - RESPONSE ERROR", msg: "URI: \(withAction) - RESPONSE: \(requestResponse.debugDescription)") }
+            if error._code == NSURLErrorTimedOut {
+                if debug { printError(title: "API \((requestResponse.request?.httpMethod)!) - RESPONSE ERROR TIMEOUT", msg: "URI: \(withAction) - RESPONSE: \(requestResponse.debugDescription)") }
+            }
+            if error._code == NSURLErrorNotConnectedToInternet {
+                if debug { printError(title: "API \((requestResponse.request?.httpMethod)!) - RESPONSE ERROR NO INTERNET", msg: "URI: \(withAction) - RESPONSE: \(requestResponse.debugDescription)") }
+            }
+            if error._code == NSURLErrorNetworkConnectionLost {
+                if debug { printError(title: "API \((requestResponse.request?.httpMethod)!) - RESPONSE ERROR CONNECTION LOST", msg: "URI: \(withAction) - RESPONSE: \(requestResponse.debugDescription)") }
+            }
+            if error._code == NSURLErrorCancelledReasonUserForceQuitApplication {
+                if debug { printError(title: "API \((requestResponse.request?.httpMethod)!) - RESPONSE ERROR APP QUIT", msg: "URI: \(withAction) - RESPONSE: \(requestResponse.debugDescription)") }
+            }
+            if error._code == NSURLErrorCancelledReasonBackgroundUpdatesDisabled {
+                if debug { printError(title: "API \((requestResponse.request?.httpMethod)!) - RESPONSE ERROR BG DISABLED", msg: "URI: \(withAction) - RESPONSE: \(requestResponse.debugDescription)") }
+            }
+            if error._code == NSURLErrorBackgroundSessionWasDisconnected {
+                if debug { printError(title: "API \((requestResponse.request?.httpMethod)!) - RESPONSE ERROR BG SESSION DISCONNECTED", msg: "URI: \(withAction) - RESPONSE: \(requestResponse.debugDescription)") }
+            }
+            
+            completions(nil, requestResponse.result.error! as NSError)
+            
+            break
+        }
+    }
+}
+
+
+extension API {
+    //MARK: - POST
+    func post(withAction: String, withDictParams: [String:Any]?, jsonEncoding: Bool = false, debug:Bool = true, persistConnection:Bool = false, showStringParseError: Bool = false, completions: @escaping(Any?)->()?){
+        let manager: SessionManager = {
+            let configuration = URLSessionConfiguration.default
+            configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+            return SessionManager(configuration: configuration)
+        }()
+        //
+        //
+        var newParams = API.defaultParams
+        if let params = withDictParams {
+            newParams! += params
+        }
+        //
+        //-- SHOW PARSE ERROR --//
+        if showStringParseError {
+            manager.request(withAction, method: HTTPMethod.post, parameters: newParams, encoding: (jsonEncoding ? JSONEncoding.default : URLEncoding.httpBody), headers: API.headers).responseString { (response) in
+                printInfo(title: "POST", msg: response.debugDescription)
+            }
+        }
+        //
+        // -- DO THE REQUEST -- //
+        //
+        manager.request(withAction, method: HTTPMethod.post, parameters: newParams, encoding: (jsonEncoding ? JSONEncoding.default : URLEncoding.httpBody), headers: API.headers).responseJSON { (response) in
+            API.processRequest(requestResponse: response, withAction: withAction, withDictParams: newParams, debug: debug, persistConnection: persistConnection, completions: { (AnyThing, backError) in
+                if backError != nil {
+                    print("\n\n[API POST - REQUEST - \( persistConnection ? "VAI" : "NAO VAI" ) - REMOTMAR A CONEXAO]\n\n")
+                    if persistConnection {
+                        LCEssentials.backgroundThread(delay: API.persistConnectionDelay, background: nil, completion: {
+                            self.post(withAction: withAction, withDictParams: newParams, debug: debug, persistConnection: persistConnection, completions: { (Anything) in
+                                completions(Anything)
+                            })
+                        })
+                    }else{
+                        completions(response.result.error)
+                    }
+                }else{
+                    completions(response.result.value)
+                }
+            })
+            manager.session.invalidateAndCancel()
+        }
+    }
+    
+    //MARK: - GET
+    func get(withAction: String, withDictParams: [String:Any]?, debug:Bool = true, persistConnection:Bool = false, showStringParseError: Bool = false, completions: @escaping(Any?)->()?){
+        let manager: SessionManager = {
+            let configuration = URLSessionConfiguration.default
+            configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+            return SessionManager(configuration: configuration)
+        }()
+        //
+        //
+        var newParams = API.defaultParams
+        if let params = withDictParams {
+            newParams! += params
+        }
+        //
+        //-- SHOW PARSE ERROR --//
+        if showStringParseError {
+            manager.request(withAction, method: HTTPMethod.get, parameters: newParams, headers: API.headers).responseString { (response) in
+                printInfo(title: "GET", msg: response.debugDescription)
+            }
+        }
+        //
+        // -- DO THE REQUEST -- //
+        //
+        manager.request(withAction, method: HTTPMethod.get, parameters: newParams, headers: API.headers).responseJSON { (response) in
+            API.processRequest(requestResponse: response, withAction: withAction, withDictParams: newParams, debug: debug, persistConnection: persistConnection, completions: { (AnyThing, backError) in
+                if backError != nil {
+                    print("\n\n[API POST - REQUEST - \( persistConnection ? "VAI" : "NAO VAI" ) - REMOTMAR A CONEXAO]\n\n")
+                    if persistConnection {
+                        LCEssentials.backgroundThread(delay: API.persistConnectionDelay, background: nil, completion: {
+                            self.post(withAction: withAction, withDictParams: newParams, debug: debug, persistConnection: persistConnection, completions: { (Anything) in
+                                completions(Anything)
+                            })
+                        })
+                    }else{
+                        completions(response.result.error)
+                    }
+                }else{
+                    completions(response.result.value)
+                }
+            })
+            manager.session.invalidateAndCancel()
+        }
+    }
 }

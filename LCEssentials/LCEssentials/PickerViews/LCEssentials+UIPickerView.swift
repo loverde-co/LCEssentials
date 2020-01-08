@@ -77,9 +77,7 @@ public class LCEssentialsPickerViewController: UIViewController, UIPickerViewDel
     }
     
     static public func instantiate() -> LCEssentialsPickerViewController {
-        let storyboard = UIStoryboard(name: "PickerViews", bundle: Bundle(for: LCEssentialsPickerViewController.self))
-        let datePicker = storyboard.instantiateViewController(withIdentifier: LCEssentialsPickerViewController.identifier) as! LCEssentialsPickerViewController
-        return datePicker
+        return LCEssentialsPickerViewController.instantiate(storyBoard: "PickerViews", identifier: LCEssentialsPickerViewController.identifier)
     }
     
     override public func didReceiveMemoryWarning() {

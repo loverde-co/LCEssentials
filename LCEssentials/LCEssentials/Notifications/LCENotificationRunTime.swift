@@ -77,9 +77,7 @@ public class LCENotificationRunTime: UIViewController {
 extension LCENotificationRunTime {
     
     static public func instantiate() -> LCENotificationRunTime {
-        let storyboard = UIStoryboard(name: "LCENotificationRunTime", bundle: Bundle(for: LCENotificationRunTime.self))
-        let controller = storyboard.instantiateViewController(withIdentifier: "idLCENotificationRunTime") as! LCENotificationRunTime
-        return controller
+        return LCENotificationRunTime.instantiate(storyBoard: "LCENotificationRunTime", identifier: LCENotificationRunTime.identifier)
     }
     
     public func show(){

@@ -10,6 +10,9 @@
 		B1084B662191F38D00035AD4 /* LCENotificationRunTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1084B652191F38D00035AD4 /* LCENotificationRunTime.swift */; };
 		B1084B682191F52E00035AD4 /* LCENotificationRunTime.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1084B672191F52E00035AD4 /* LCENotificationRunTime.storyboard */; };
 		B121545320C6FAFF008D62AB /* ReachabilityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B121545220C6FAFE008D62AB /* ReachabilityHelper.swift */; };
+		B15F690A23C69CA7002D7557 /* LCEssentials+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15F690723C69CA6002D7557 /* LCEssentials+Alamofire.swift */; };
+		B15F690B23C69CA7002D7557 /* LCEssentials+Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15F690823C69CA6002D7557 /* LCEssentials+Float.swift */; };
+		B15F690C23C69CA7002D7557 /* LCEssentials+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15F690923C69CA7002D7557 /* LCEssentials+UIViewController.swift */; };
 		B16B59A220E27D6300DD7DF0 /* alert.png in Resources */ = {isa = PBXBuildFile; fileRef = B16B599F20E27D6200DD7DF0 /* alert.png */; };
 		B16B59A320E27D6300DD7DF0 /* alert@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B16B59A020E27D6300DD7DF0 /* alert@3x.png */; };
 		B16B59A420E27D6300DD7DF0 /* alert@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B16B59A120E27D6300DD7DF0 /* alert@2x.png */; };
@@ -71,6 +74,9 @@
 		B1084B652191F38D00035AD4 /* LCENotificationRunTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCENotificationRunTime.swift; sourceTree = "<group>"; };
 		B1084B672191F52E00035AD4 /* LCENotificationRunTime.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LCENotificationRunTime.storyboard; sourceTree = "<group>"; };
 		B121545220C6FAFE008D62AB /* ReachabilityHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityHelper.swift; sourceTree = "<group>"; };
+		B15F690723C69CA6002D7557 /* LCEssentials+Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Alamofire.swift"; sourceTree = "<group>"; };
+		B15F690823C69CA6002D7557 /* LCEssentials+Float.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Float.swift"; sourceTree = "<group>"; };
+		B15F690923C69CA7002D7557 /* LCEssentials+UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UIViewController.swift"; sourceTree = "<group>"; };
 		B16B599F20E27D6200DD7DF0 /* alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alert.png; sourceTree = "<group>"; };
 		B16B59A020E27D6300DD7DF0 /* alert@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert@3x.png"; sourceTree = "<group>"; };
 		B16B59A120E27D6300DD7DF0 /* alert@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert@2x.png"; sourceTree = "<group>"; };
@@ -190,6 +196,9 @@
 		B1AD440B20B2037500FAA190 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B15F690723C69CA6002D7557 /* LCEssentials+Alamofire.swift */,
+				B15F690823C69CA6002D7557 /* LCEssentials+Float.swift */,
+				B15F690923C69CA7002D7557 /* LCEssentials+UIViewController.swift */,
 				B1C943DA21CFD28C0097F261 /* GifHelper.swift */,
 				B1AD440C20B203B200FAA190 /* LCEssentials.swift */,
 				B1FC4D7E20E7FEB3003CAAFC /* LCEssentials+String.swift */,
@@ -382,8 +391,10 @@
 				B1FC4D9B20E80410003CAAFC /* LCEssentials+Date.swift in Sources */,
 				B1FC4D8320E7FF47003CAAFC /* LCEssentials+NSString.swift in Sources */,
 				B1FC4DA320E804BD003CAAFC /* LCEssentials+UIResponder.swift in Sources */,
+				B15F690C23C69CA7002D7557 /* LCEssentials+UIViewController.swift in Sources */,
 				B182093D232177DE0098101C /* LCEssentials+UIPickerView.swift in Sources */,
 				B1FC4D8D20E801B1003CAAFC /* LCEssentials+UIView.swift in Sources */,
+				B15F690B23C69CA7002D7557 /* LCEssentials+Float.swift in Sources */,
 				B1AD440F20B20E2F00FAA190 /* LCDesignables.swift in Sources */,
 				B1F4900020F9289200633BA8 /* LCEssentials+Locale.swift in Sources */,
 				B1FC4DA520E804D7003CAAFC /* LCEssentials+Array.swift in Sources */,
@@ -404,6 +415,7 @@
 				B1FC4DA120E80491003CAAFC /* LCEssentials+UIDevice.swift in Sources */,
 				B1F4900620F9295F00633BA8 /* LCEssentials+Numeric.swift in Sources */,
 				B1FC4D8520E80098003CAAFC /* LCEssentials+UIColor.swift in Sources */,
+				B15F690A23C69CA7002D7557 /* LCEssentials+Alamofire.swift in Sources */,
 				B121545320C6FAFF008D62AB /* ReachabilityHelper.swift in Sources */,
 				B1FC4D8920E80108003CAAFC /* LCEssentials+UILabel.swift in Sources */,
 				B1F4900220F928BF00633BA8 /* LCEssentials+NumberFormatter.swift in Sources */,

@@ -96,9 +96,7 @@ public class LCEMessages: UIViewController {
     }
     
     static public func instantiate() -> LCEMessages {
-        let storyboard = UIStoryboard(name: "LCEMessages", bundle: Bundle(for: LCEMessages.self))
-        let controller = storyboard.instantiateViewController(withIdentifier: "idLCEMessages") as! LCEMessages
-        return controller
+        return LCEMessages.instantiate(storyBoard: "LCEMessages", identifier: LCEMessages.identifier)
     }
     
     override public func viewDidLoad() {
