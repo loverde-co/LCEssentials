@@ -351,6 +351,37 @@ public struct LCEssentials {
 // MARK: - Methods
 public extension LCEssentials {
     
+    #if os(iOS) || os(macOS)
+    /// - LoverdeCo: add collectionView Flow Layout config
+    ///
+    func setupCollectionView(collectionView: UICollectionView, spacings: CGFloat = 0, direction: UICollectionView.ScrollDirection = .horizontal, edgesInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), allowMulpleSelection: Bool = false){
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = edgesInset
+        layout.minimumInteritemSpacing = spacings
+        layout.minimumLineSpacing = spacings
+        layout.scrollDirection = direction
+        collectionView.collectionViewLayout = layout
+        collectionView.allowsMultipleSelection = allowMulpleSelection
+    }
+    /// - LoverdeCo: Share link with message
+    ///
+    /// - Parameters:
+    ///   - message: String with message you whant to send
+    ///   - url: String with url you want to share
+    func shareApp(message:String = "", url: String){
+        let textToShare = message
+        let root = UIApplication.shared.keyWindow?.rootViewController
+        if let myWebsite = NSURL(string: url) {
+            let objectsToShare = [textToShare, myWebsite] as [Any]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            
+            activityVC.popoverPresentationController?.sourceView = root?.view
+            root?.modalPresentationStyle = .fullScreen
+            root?.present(activityVC, animated: true, completion: nil)
+        }
+    }
+    #endif
+    
     // MARK: - Background Thread
     static func backgroundThread(delay: Double = 0.0, background: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
         DispatchQueue.global().async {
@@ -450,19 +481,6 @@ extension UITableViewCell {
         }
     }
 }
-extension UIViewController {
-    public static var identifier: String {
-        return "id"+String(describing: self)
-    }
-    public static var segueID: String {
-        return "idSegue"+String(describing: self)
-    }
-    static public func instantiate<T: UIViewController>(storyBoard: String) -> T {
-        let storyboard = UIStoryboard(name: storyBoard, bundle: Bundle(for: T.self))
-        let controller = storyboard.instantiateViewController(withIdentifier: T.identifier) as! T
-        return controller
-    }
-}
 extension UICollectionReusableView {
     public static var identifier: String {
         return "id"+String(describing: self)
@@ -474,6 +492,32 @@ extension Collection where Indices.Iterator.Element == Index {
     }
 }
 #endif
+//MARK: - Codables convertions
+extension Encodable {
+    subscript(key: String) -> Any? {
+        return dictionary[key]
+    }
+    var dictionary: [String: Any] {
+        return (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(self))) as? [String: Any] ?? [:]
+    }
+    var json: String {
+        return String().dictionaryToStringJSON(dict: self.dictionary)
+    }
+}
+
+extension Dictionary where Key == String, Value == Any {
+    
+    /// - LoverdeCo: Convert Dictonary to Object
+    ///
+    /// - returns: Object: Codable/Decodable
+    public static func toObjetct<T: Codable>() -> T {
+        let jsonData = try! JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted)
+        let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
+        let output: T = try! JSONHelper.decode(jsonString)
+        return output
+    }
+}
+
 //MARK: - JSON Helper Codable/Decodable
 public struct JSONHelper<T: Codable> {
     
@@ -519,6 +563,8 @@ public struct JSONHelper<T: Codable> {
     /// - LoverdeCo: Convert object to dictionary
     ///
     /// - returns: [String:Any]
+    
+    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
     public static func objectToDictionary() -> [String:Any] {
         var dict = [String:Any]()
         let otherSelf = Mirror(reflecting: T.self)
@@ -534,6 +580,8 @@ public struct JSONHelper<T: Codable> {
     ///
     /// - Parameter dict: [String:Any]
     /// - returns: Object: Codable/Decodable
+    
+    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
     public static func dictionaryToObject(dict: [String:Any]) -> T {
         let json = String().dictionaryToStringJSON(dict: dict)
         return try! self.decode(json)
@@ -542,6 +590,8 @@ public struct JSONHelper<T: Codable> {
     /// - LoverdeCo: Decode Object to JSON string
     ///
     /// - returns: String
+    
+    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
     public static func convertToJsonStr() -> String{
         let dic = self.objectToDictionary()
         return String().dictionaryToStringJSON(dict: dic)

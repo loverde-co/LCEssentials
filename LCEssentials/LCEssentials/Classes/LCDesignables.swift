@@ -1,4 +1,4 @@
-//  
+//
 // Copyright (c) 2018 Loverde Co.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -31,6 +31,9 @@ open class Circle: UIView {
     @IBInspectable open var mainColor: UIColor = UIColor.blue {
         didSet { print("mainColor was set here") }
     }
+//    @IBInspectable open var borderColor: UIColor = UIColor.orange {
+//        didSet { print("bColor was set here") }
+//    }
     @IBInspectable open var ringThickness: CGFloat = 4 {
         didSet { print("ringThickness was set here") }
     }
@@ -199,12 +202,8 @@ open class Circle: UIView {
 
 
 //MARK: UIButton
-@available(*, deprecated, renamed: "UIButtonCustom")
-@IBDesignable open class CustomUIButtom: UIButton {
-}
-
 @IBDesignable
-open class UIButtonCustom: UIButton {
+open class UIButtomCustom: UIButton {
     
     @IBInspectable open var name: String? {
 //        didSet {
@@ -213,6 +212,18 @@ open class UIButtonCustom: UIButton {
         get{ return accessibilityLabel }
         set{ accessibilityLabel = newValue }
     }
+    
+//    @IBInspectable open var borderWidth: CGFloat = 0 {
+//        didSet {
+//            layer.borderWidth = borderWidth
+//        }
+//    }
+    
+//    @IBInspectable open var cornerRadius: CGFloat = 0 {
+//        didSet {
+//            layer.cornerRadius = cornerRadius
+//        }
+//    }
     
     //Normal state bg and border
     @IBInspectable open var normalBorderColor: UIColor? {
@@ -458,12 +469,11 @@ open class UIButtonCustom: UIButton {
     }
 }
 //MARK: - UITextField
-@available(*, deprecated, renamed: "UITextFieldCustom")
-@IBDesignable open class CustomUITextField : UITextField {
-}
+
 @IBDesignable open class UITextFieldCustom : UITextField {
     
     private var color: UIColor?
+    private var width: CGFloat = 0.0
     
     @IBInspectable open var setBorderTop : Bool = false {
         didSet {
@@ -526,12 +536,10 @@ open class UIButtonCustom: UIButton {
     }
 }
 //MARK: UIView
-@available(*, deprecated, renamed: "UIViewCustom")
 @IBDesignable open class CustomUIView : UIView {
-}
-@IBDesignable open class UIViewCustom : UIView {
     
     private var color: UIColor?
+    private var width: CGFloat = 0.0
     private var gradientColorTop: UIColor?
     private var gradientColorBottom: UIColor?
     
@@ -570,6 +578,11 @@ open class UIButtonCustom: UIButton {
             self.layer.addSublayer(border)
         }
     }
+//    @IBInspectable open var cornerRadius: CGFloat = 0 {
+//        didSet {
+//            layer.cornerRadius = cornerRadius
+//        }
+//    }
     
     @IBInspectable open var setBorderWidth: CGFloat = 0.0 {
         didSet {
@@ -687,32 +700,28 @@ let imageCache = NSCache<NSString, UIImage>()
             if error != nil {
                 completion(nil, error)
                 return
-            }
-            
-            DispatchQueue.main.async {
-                guard let imageToCache = UIImage(data: data!) else { return }
-                
-                if self.imageUrlString == urlString {
-                    self.image = imageToCache
+            }else{
+                DispatchQueue.main.async {
+                    guard let imageToCache = UIImage(data: data!) else { return }
+                    
+                    if self.imageUrlString == urlString {
+                        self.image = imageToCache
+                    }
+                    
+                    imageCache.setObject(imageToCache, forKey: urlString as NSString)
+                    completion(self, nil)
                 }
-                
-                imageCache.setObject(imageToCache, forKey: urlString as NSString)
-                completion(self, nil)
             }
-            
         }).resume()
     }
 }
 
 
 //MARK: - UIPageControll
-@available(*, deprecated, renamed: "UIPageControlCustom")
-@IBDesignable open class CustomUIPageControl: UIPageControl {
-}
 @IBDesignable open class UIPageControlCustom: UIPageControl {
     
     private var color: UIColor!
-    private var selfSize: CGFloat! // 7.0 is great for border
+    private var size: CGFloat! // 7.0 is great for border
     
     @IBInspectable open override var borderColor: UIColor! {
         didSet {
@@ -723,8 +732,8 @@ let imageCache = NSCache<NSString, UIImage>()
     @IBInspectable open var borderSize: CGFloat = 0.0 {
         didSet {
             if borderSize > 0 {
-                self.selfSize = borderSize
-                let image = UIImage.outlinedEllipse(size: CGSize(width: self.selfSize, height: self.selfSize), color: self.color)
+                self.size = borderSize
+                let image = UIImage.outlinedEllipse(size: CGSize(width: self.size, height: self.size), color: self.color)
                 self.pageIndicatorTintColor = UIColor.init(patternImage: image!)
             }
         }
@@ -736,10 +745,7 @@ let imageCache = NSCache<NSString, UIImage>()
     
 }
 
-@available(*, deprecated, renamed: "UILabelCustom")
 @IBDesignable open class CustomUILabel: UILabel {
-}
-@IBDesignable open class UILabelCustom: UILabel {
     override open func drawText(in rect: CGRect) {
         if let stringText = text {
             let stringTextAsNSString = stringText as NSString
@@ -823,7 +829,7 @@ open class StarsRating: UIView {
     fileprivate var buttonSize : Int {
         return Int(self.frame.height)
     }
-    public var selfWidth : Int {
+    fileprivate var width : Int {
         return (buttonSize + spacing) * maxRating
     }
     
@@ -864,7 +870,7 @@ open class StarsRating: UIView {
     }
     
     override open var intrinsicContentSize : CGSize {
-        return CGSize(width: selfWidth, height: buttonSize)
+        return CGSize(width: width, height: buttonSize)
     }
     
     func updateButtonSelectionStates() {
@@ -892,7 +898,7 @@ open class StarsRating: UIView {
         if let touch = touches.first {
             let position = touch.location(in: self)
             
-            if position.x > -50 && position.x < CGFloat(selfWidth + 50) {
+            if position.x > -50 && position.x < CGFloat(width + 50) {
                 ratingButtonSelected(position)
             }
         }

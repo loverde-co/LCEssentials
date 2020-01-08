@@ -79,6 +79,18 @@ public extension Date {
         dateFormatter.dateFormat = formatt
         return dateFormatter.string(from: self)
     }
+    
+    /// LoverdeCo: Date to BR formatt in String object.
+    ///
+    /// - Parameters:
+    ///   - withHour: Keep or remove hour form given date
+    ///   - Returns: String object.
+    func convertToStringBRFormatt(_ withHour:Bool = false ) -> String {
+        let dateformatter = DateFormatter()
+        dateformatter.timeZone = TimeZone(abbreviation: "GMT")
+        dateformatter.dateFormat = "dd/MM/yyyy\( withHour ? " HH:mm:ss" : "" )"
+        return dateformatter.string(from: self)
+    }
 
     /// Returns a Date with the specified days added to the one it is called with
     func add(years: Int = 0, months: Int = 0, days: Int = 0, hours: Int = 0, minutes: Int = 0, seconds: Int = 0) -> Date {

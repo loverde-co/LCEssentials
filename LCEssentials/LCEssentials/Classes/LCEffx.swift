@@ -34,7 +34,7 @@ public func insertBlurView (view: UIView, style: UIBlurEffectStyle) -> UIVisualE
     return blurEffectView
 }
 
-public class UIViewWithShadow: UIViewCustom {
+public class UIViewWithShadow: CustomUIView {
     private var shadowLayer: CAShapeLayer!
     //internal var cornerRadius: CGFloat = 25.0
     private var fillColor: UIColor = .white // the color applied to the shadowLayer, rather than the view's backgroundColor

@@ -255,14 +255,14 @@ public extension UIView {
     }
 
     /// Loverde Co: Height of view.
-    var height: CGFloat {
-        get {
-            return frame.size.height
-        }
-        set {
-            frame.size.height = newValue
-        }
-    }
+//    var height: CGFloat {
+//        get {
+//            return frame.size.height
+//        }
+//        set {
+//            frame.size.height = newValue
+//        }
+//    }
 
     /// Loverde Co: Check if view is in RTL format.
     var isRightToLeft: Bool {
@@ -322,61 +322,6 @@ public extension UIView {
         }
         set {
             layer.shadowRadius = newValue
-        }
-    }
-
-    /// Loverde Co: Size of view.
-    var size: CGSize {
-        get {
-            return frame.size
-        }
-        set {
-            width = newValue.width
-            height = newValue.height
-        }
-    }
-
-    /// Loverde Co: Get view's parent view controller
-    var parentViewController: UIViewController? {
-        weak var parentResponder: UIResponder? = self
-        while parentResponder != nil {
-            parentResponder = parentResponder!.next
-            if let viewController = parentResponder as? UIViewController {
-                return viewController
-            }
-        }
-        return nil
-    }
-
-    /// Loverde Co: Width of view.
-    var width: CGFloat {
-        get {
-            return frame.size.width
-        }
-        set {
-            frame.size.width = newValue
-        }
-    }
-
-    // swiftlint:disable identifier_name
-    /// Loverde Co: x origin of view.
-    var x: CGFloat {
-        get {
-            return frame.origin.x
-        }
-        set {
-            frame.origin.x = newValue
-        }
-    }
-    // swiftlint:enable identifier_name
-    // swiftlint:disable identifier_name
-    /// Loverde Co: y origin of view.
-    var y: CGFloat {
-        get {
-            return frame.origin.y
-        }
-        set {
-            frame.origin.y = newValue
         }
     }
     

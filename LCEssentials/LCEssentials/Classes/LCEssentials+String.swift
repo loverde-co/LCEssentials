@@ -158,7 +158,20 @@ public extension String {
 
         return NSString(format: "%0.2d:%0.2d:%0.2d.%0.3d",hours,minutes,seconds,ms)
     }
-
+    
+    /// LoverdeCo: String to Date object.
+    ///
+    /// - Parameters:
+    ///   - receivedFormatt: Give a input formatt as it comes in String.
+    ///   - Returns: Date object.
+    func convertToDate(receivedFormatt: String = "yyyy-MM-dd HH:mm:ss") -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.date(from: self)
+    }
+    
+    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
     func dateTimeToString( _ dateTime: Date, withHour: Bool = false, returnOnlyTime:Bool = false ) -> String {
 
         let dateformatter = DateFormatter()
@@ -170,24 +183,13 @@ public extension String {
         }
         return dateformatter.string(from: dateTime)
     }
-
-    func dateTimeToStringBR( _ dateTime: Date, withHour:Bool = false ) -> String {
-
-        let dateformatter = DateFormatter()
-        dateformatter.timeZone = TimeZone(abbreviation: "GMT")
-
-        dateformatter.dateFormat = "dd/MM/yyyy\( withHour ? " HH:mm:ss" : "" )"
-
-        return dateformatter.string(from: dateTime)
-    }
-
-    //    func stringFromDate(withDate date: Date, zeroHour no: Bool = false){
-    //        let dateformatter = DateFormatter()
-    //        dateformatter.timeZone = TimeZone(abbreviation: "UTC")
-    //        dateformatter.dateFormat = "yyyy-MM-dd\( withHour ? " HH:mm:ss" : "" )"
-    //
-    //    }
-
+    
+    /// LoverdeCo: String BR formatted to String object.
+    ///
+    /// - Parameters:
+    ///   - fromFormat: Give a input formatt as it comes in String.
+    ///   - toFormat: to DataBase SQL formatt
+    ///   - Returns: String.
     func dateDataBaseConverter(fromFormat:String = "dd/MM/yyyy", toFormat: String = "yyyy-MM-dd") -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "GMT")

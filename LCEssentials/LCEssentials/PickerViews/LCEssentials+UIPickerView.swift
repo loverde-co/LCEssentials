@@ -37,21 +37,14 @@ import UIKit
 public class LCEssentialsPickerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var pickerView: UIPickerView!
-    @IBOutlet weak var pickerViewFirst: UIPickerView!
-    @IBOutlet weak var pickerViewSec: UIPickerView!
+    @IBOutlet private var viewPicker: UIView!
     @IBOutlet weak var btConfirm: UIButton!
     @IBOutlet weak var btCancel: UIButton!
     @IBOutlet weak var barView: UIView!
     @IBOutlet weak var borderTop: UIView!
     @IBOutlet weak var borderBottom: UIView!
-    @IBOutlet weak var lblFirstTitle: UILabel!
-    @IBOutlet weak var lblSecTitle: UILabel!
-    @IBOutlet weak var lblTitleConstraints: NSLayoutConstraint!
     
-    public var arrayParamsFirst: [[String:Any]] = [[String:Any]]()
-    public var arrayParamsSec: [[String:Any]] = [[String:Any]]()
-    public var setSelectedRowFirst: Int = 0
-    public var setSelectedRowSec: Int = 0
+    public var setSelectedRowIndex: Int = 0
     public var setSelectedBGColor: UIColor = UIColor.white
     public var setFontName: String = "Helvetica"
     public var setFontSize: CGFloat = 24
@@ -79,24 +72,7 @@ public class LCEssentialsPickerViewController: UIViewController, UIPickerViewDel
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        if !arrayParamsFirst.isEmpty && !arrayParamsSec.isEmpty {
-            self.pickerView.selectRow(setSelectedRowFirst, inComponent: 0, animated: true)
-            self.setSelectedRowFirst = self.arrayParamsFirst[0]["row"] as! Int
-            self.pickerView.selectRow(setSelectedRowSec, inComponent: 1, animated: true)
-            self.setSelectedRowSec = self.arrayParamsSec[0]["row"] as! Int
-        }else{
-            self.pickerView.selectRow(setSelectedRowFirst, inComponent: 0, animated: true)
-            self.setSelectedRowFirst = self.arrayParamsFirst[0]["row"] as! Int
-        }
-        if let colum02 = setColumSecTitleStr {
-            lblTitleConstraints.constant = setColumFirstFontSize + 10
-            self.lblFirstTitle.text = setColumFirstTitleStr
-            self.lblSecTitle.text = colum02
-            self.lblFirstTitle.font = UIFont(name: setColumFirstFontName, size: setColumFirstFontSize)
-            self.lblSecTitle.font = UIFont(name: setColumSecFontName, size: setColumSecFontSize)
-        }else{
-            lblTitleConstraints.constant = 0
-        }
+        self.pickerView.selectRow(setSelectedRowIndex, inComponent: 0, animated: true)
         
     }
     
@@ -113,7 +89,7 @@ public class LCEssentialsPickerViewController: UIViewController, UIPickerViewDel
     
     //MARK: - Methods
     public func show(){
-        view.removeFromSuperview()
+        //viewPicker.removeFromSuperview()
         borderTop.backgroundColor = setBorderTopColor
         borderBottom.backgroundColor = setBorderBottomColor
         barView.backgroundColor = setBarBackgroundColor
@@ -126,14 +102,15 @@ public class LCEssentialsPickerViewController: UIViewController, UIPickerViewDel
         var controller: UIViewController!
         if delegate is UIViewController {
             controller = delegate as? UIViewController
-            view.frame = CGRect(x: 0, y: ( controller.view.bounds.height - setDistanceFromBottom ), width: setWidth, height: setHeight)
-            view.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
-            view.autoresizesSubviews = true
-            controller.view.addSubview(view)
+            viewPicker.frame = CGRect(x: 0, y: ( controller.view.bounds.height - setDistanceFromBottom ), width: setWidth, height: setHeight)
+            viewPicker.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
+            viewPicker.autoresizesSubviews = true
+            controller.modalPresentationStyle = .overCurrentContext
+            controller.present(self, animated: true, completion: nil)
             UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear],
                            animations: {
-                            self.view.center.y -= self.view.bounds.height
-                            self.view.layoutIfNeeded()
+                            self.viewPicker.center.y -= self.view.bounds.height
+                            self.viewPicker.layoutIfNeeded()
             }, completion: { (completed) in
                 self.isHidden = false
             })
@@ -145,24 +122,19 @@ public class LCEssentialsPickerViewController: UIViewController, UIPickerViewDel
     public func hidde(){
         UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear],
                        animations: {
-                        self.view.center.y += self.view.bounds.height
-                        self.view.layoutIfNeeded()
+                        self.viewPicker.center.y += self.view.bounds.height
+                        self.viewPicker.layoutIfNeeded()
         }, completion: { (completed) in
             self.isHidden = true
-            self.view.removeFromSuperview()
+            //self.viewPicker.removeFromSuperview()
+            let controller = self.delegate as? UIViewController
+            controller?.dismiss(animated: true, completion: nil)
         })
     }
     
     @IBAction func done(_ sender: Any){
-        let rowFirst = pickerView.selectedRow(inComponent: 0)
-        delegate.pickerViewController(self, didSelectRow: rowFirst, inComponent: 0)
-        delegate.pickerViewController(didDone: self, didSelectRow: rowFirst, inComponent: 0)
-        if !arrayParamsSec.isEmpty {
-            let rowSec = pickerView.selectedRow(inComponent: 1)
-            delegate.pickerViewController(self, didSelectRow: rowSec, inComponent: 1)
-            delegate.pickerViewController(didDone: self, didSelectRow: rowSec, inComponent: 1)
-        }
         hidde()
+        delegate.pickerViewController(didDone: self, didSelectRow: self.pickerView.selectedRow(inComponent: 0), inComponent: 0)
     }
     
     @IBAction func cancel(_ sender: Any){
@@ -187,16 +159,9 @@ public class LCEssentialsPickerViewController: UIViewController, UIPickerViewDel
     public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         if let delgado = delegate.pickerViewController?(self, viewForRow: row, forComponent: component, reusing: view) {
             return delgado
+        }else{
+            return UIView()
         }
-        var pickerLabel: UILabel? = (view as? UILabel)
-        if pickerLabel == nil {
-            pickerLabel = UILabel()
-            pickerLabel?.font = UIFont(name: setFontName, size: setFontSize)
-            pickerLabel?.textAlignment = .center
-        }
-        pickerLabel?.text = self.arrayParamsFirst[row]["title"] as? String
-        pickerLabel?.textColor = setFontColor
-        return pickerLabel!
     }
     
     @available(iOS 2.0, *)
