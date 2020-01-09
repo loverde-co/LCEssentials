@@ -50,18 +50,18 @@ MyCustomViewController: UIViewController, PickerViewControllerDelegate {
 		super.viewDidLoad()
 		//Use this custom instantiate
         
-        pickerController.setSelectedRowIndex = 0
-        pickerController.delegate = self
-        pickerController.setWidth = self.view.bounds.width
-        pickerController.setDistanceFromBottom = 50
-        pickerController.setFontSize = 20
-        pickerController.setFontColor = .black
+        	pickerController.setSelectedRowIndex = 0
+        	pickerController.delegate = self
+        	pickerController.setWidth = self.view.bounds.width
+        	pickerController.setDistanceFromBottom = 50
+        	pickerController.setFontSize = 20
+        	pickerController.setFontColor = .black
 	}
 	
 	func showPicker(){
-	    if pickerController.isHidden {
-            pickerController.show()
-        }
+		if pickerController.isHidden {
+            		pickerController.show()
+        	}
 	}
 	
 	// You can use multiple instance of it!
