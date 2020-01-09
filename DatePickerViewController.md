@@ -41,31 +41,31 @@ import LCEssentials
 * DatePickerViewController  
 
 ```swift
-MyCustomViewController: UIViewController, DatePickerViewControllerDelegate {
+class MyCustomViewController: UIViewController, DatePickerViewControllerDelegate {
 
-	//Use this custom instantiate
+   //Use this custom instantiate
    let datePickerController: DatePickerViewController = DatePickerViewController.instantiate()
 	
-	override func viewDidLoad(){
-		super.viewDidLoad()
-        datePickerController.delegate = self
-        //For hour
-        datePickerController.setDatePickerMode = .time
-        datePickerController.setFormat = "HH:mm"
-	}
+    override func viewDidLoad(){
+       super.viewDidLoad()
+       datePickerController.delegate = self
+       //For hour
+       datePickerController.setDatePickerMode = .time
+       datePickerController.setFormat = "HH:mm"
+    }
 	
-	func showPicker(){
-	    if datePickerController.isHidden {
-            datePickerController.show()
-        }
-	}
+    func showPicker(){
+       if datePickerController.isHidden {
+           datePickerController.show()
+       }
+    }
 	
 	
-	// You can use multiple instance of it!
-	// So, on delegate methods, check the instance
-	// and work with it
+    // You can use multiple instance of it!
+    // So, on delegate methods, check the instance
+    // and work with it
 	
-	//MARK: - DatePickerController Delegate
+    //MARK: - DatePickerController Delegate
     func datePickerViewController(didConfirm picker: DatePickerViewController, withValue: String) {
         if picker == self.datePickerController {
             //Do something with the date value in String or
