@@ -25,9 +25,152 @@ import LCEssentials
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var tableView: UITableView!
+    lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom"]
+    
+    let pickerController: PickerViewController = PickerViewController.instantiate()
+    lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
+    
+    let datePickerController: DatePickerViewController = DatePickerViewController.instantiate()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
+        tableView.reloadData()
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
     }
 }
 
+
+extension ViewController {
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            // Do your thang here!
+            self.view.endEditing(true)
+        }
+        sender.cancelsTouchesInView = false
+    }
+    
+    //MARK: - Set Picker Controller
+    func openPickerController(){
+        pickerController.setSelectedRowIndex = 0
+        pickerController.delegate = self
+        pickerController.setWidth = self.view.bounds.width
+        pickerController.setDistanceFromBottom = 50
+        pickerController.setFontSize = 20
+        pickerController.setFontColor = .black
+        if pickerController.isHidden {
+            pickerController.show()
+        }
+    }
+    
+    //MARK: - Set Picker Controller
+    func openDatePickerController(){
+        datePickerController.delegate = self
+        datePickerController.setWidth = self.view.bounds.width
+        datePickerController.setDistanceFromBottom = 50
+        if datePickerController.isHidden {
+            datePickerController.show()
+        }
+    }
+    
+    //MARK: - Messages Alert
+    func openMessageAlert(){
+        let message = LCEMessages.instantiate()
+        message.delegate = self
+        message.addObserverForKeyboard()
+        message.setDirection = .bottom
+        message.setDuration = .fiveSecs
+        message.tapToDismiss = true
+        message.setBackgroundColor = .darkGray
+        message.show(message: "Testing message bottom with loading", withImage: nil, showLoading: true)
+    }
+}
+
+//MARK: - Messages Delegate
+extension ViewController: LCEMessagesDelegate {
+    func messages(didTapOnMessage: LCEMessages) {
+        
+    }
+}
+
+
+//MARK: - TableView Delegate
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 1:
+            openDatePickerController()
+        case 2:
+            openMessageAlert()
+        default:
+            openPickerController()
+            break;
+        }
+        return
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.content.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+        return 60
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
+        cell.textLabel?.text = self.content[indexPath.row]
+        return cell
+    }
+}
+
+//MARK: - Picker Controller Delegate
+extension ViewController: PickerViewControllerDelegate {
+    func pickerViewController(_ picker: PickerViewController, didSelectRow row: Int, inComponent component: Int) {
+        
+    }
+    
+    func pickerViewController(didDone picker: PickerViewController, didSelectRow row: Int, inComponent component: Int) {
+        printInfo(title: "PICKER", msg: pickerParams[row]["title"] as! String)
+    }
+    
+    func pickerViewController(didCancel picker: PickerViewController) {
+        
+    }
+    
+    func pickerViewController(numberOfComponents inPicker: PickerViewController) -> Int {
+        return 1
+    }
+    
+    func pickerViewController(_ picker: PickerViewController, rowHeightForComponent component: Int) -> CGFloat {
+        return 30
+    }
+    
+    func pickerViewController(_ picker: PickerViewController, numberOfRowsInComponent component: Int) -> Int {
+        return pickerParams.count
+    }
+    
+    func pickerViewController(_ picker: PickerViewController, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerParams[row]["title"] as? String
+    }
+}
+
+//MARK: - Picker Controller Delegate
+extension ViewController: DatePickerViewControllerDelegate {
+    func datePickerViewController(didConfirm picker: DatePickerViewController, withValue: String) {
+        printInfo(title: "Date Picker", msg: withValue)
+    }
+    
+    func datePickerViewController(didCancel picker: DatePickerViewController) {
+        
+    }
+    
+    func datePickerViewController(didEndScrollPicker picker: DatePickerViewController, withValue: String) {
+        printInfo(title: "Date Picker - Scroll to date", msg: withValue)
+    }
+    
+    
+}

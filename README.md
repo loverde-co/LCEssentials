@@ -2,7 +2,7 @@
 ![](loverde_company_logo_full.png)  
 Loverde Co. Essentials Swift Scripts
 ----
-> Writen in Swift 4 - XCode 9.3.1
+> Writen in Swift 4.2 - XCode 11.3
 > 
 > iOS 10.+
 > 
@@ -16,7 +16,7 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
 - [x] Pop To View Controller with animation
 - [x] Stars Rating Designable
 - [x] Many others usefull Designables
-- [ ] Create a XCode Proj example with all features
+- [x] Create a XCode Proj example with all features
 
 
 Installation
@@ -41,7 +41,7 @@ import LCEssentials
 * Background Trhead  
 
 ```swift
-LCEssentials().backgroundThread(delay: 0.6, background: {
+LCEssentials.backgroundThread(delay: 0.6, background: {
             //Do something im background
         }) {
             //When finish, update UI

@@ -2,7 +2,7 @@
 ![](loverde_company_logo_full.png)  
 Custom PickerView for Loverde Co. Essentials Swift Scripts
 ----
-> Writen in Swift 4 - XCode 9.3.1
+> Writen in Swift 4.2 - XCode 11.3
 > 
 > iOS 10.+
 > 
@@ -14,7 +14,7 @@ This is a repository of my custom PickerView! This plugin is simple and ready to
 - [x] Custom Picker View
 - [x] Can change color of almost everything
 - [x] Animation Bottom to Top only :(
-- [ ] Create a XCode Proj example
+- [x] Create a XCode Proj example
 
 
 Installation
@@ -43,21 +43,25 @@ import LCEssentials
 ```swift
 MyCustomViewController: UIViewController, PickerViewControllerDelegate {
 	
-	var pickerViewController: PickerViewController!
+       let pickerController: PickerViewController = PickerViewControllerinstantiate()
+       lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
 	
 	override func viewDidLoad(){
 		super.viewDidLoad()
 		//Use this custom instantiate
-        self.pickerViewController = PickerViewController.instantiate()
-        self.pickerViewController.arrayParams = [["title":"Title Of Picker 01", "row": 0],
-                                                   ["title":"Title Of Picker 02", "row": 1],
-                                                   ["title":"Title Of Picker 03", "row": 2]]
-        self.pickerViewController.setWidth = self.view.frame.size.width
-        self.pickerViewController.delegate = self
+        
+        pickerController.setSelectedRowIndex = 0
+        pickerController.delegate = self
+        pickerController.setWidth = self.view.bounds.width
+        pickerController.setDistanceFromBottom = 50
+        pickerController.setFontSize = 20
+        pickerController.setFontColor = .black
 	}
 	
 	func showPicker(){
-	    self.pickerViewController.show()
+	    if pickerController.isHidden {
+            pickerController.show()
+        }
 	}
 	
 	// You can use multiple instance of it!
@@ -65,22 +69,32 @@ MyCustomViewController: UIViewController, PickerViewControllerDelegate {
 	// and work with it
 	
 	//MARK: - PickerController Delegate
-    func pickerViewController(_ picker: PickerViewController, didConfirm selectedString: String, selectedValue: Int) {
-        if picker == self.pickerViewController {
-            //Grab Selected String an Value Int
-        }
+    func pickerViewController(_ picker: PickerViewController, didSelectRow row: Int, inComponent component: Int) {
+        
+    }
+    
+    func pickerViewController(didDone picker: PickerViewController, didSelectRow row: Int, inComponent component: Int) {
+        printInfo(title: "PICKER", msg: pickerParams[row]["title"] as! String)
     }
     
     func pickerViewController(didCancel picker: PickerViewController) {
-    	if picker == self.pickerViewController {
-            //Do something when canceled
-        }
+        
     }
     
-    func pickerViewController(_ picker: PickerViewController, didEndScrollPicker SelectedString: String, SelectedValue: Int) {
-    	if picker == self.pickerViewController {
-            //Grab String an Value Int on every scroll ended
-        }
+    func pickerViewController(numberOfComponents inPicker: PickerViewController) -> Int {
+        return 1
+    }
+    
+    func pickerViewController(_ picker: PickerViewController, rowHeightForComponent component: Int) -> CGFloat {
+        return 30
+    }
+    
+    func pickerViewController(_ picker: PickerViewController, numberOfRowsInComponent component: Int) -> Int {
+        return pickerParams.count
+    }
+    
+    func pickerViewController(_ picker: PickerViewController, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerParams[row]["title"] as? String
     }
 }
 ```

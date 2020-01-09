@@ -2,7 +2,7 @@
 ![](loverde_company_logo_full.png)  
 Custom DatePicker for Loverde Co. Essentials Swift Scripts
 ----
-> Writen in Swift 4 - XCode 9.3.1
+> Writen in Swift 4.2 - XCode 11.3
 > 
 > iOS 10.+
 > 
@@ -14,7 +14,7 @@ This is a repository of my custom PickerView! This plugin is simple and ready to
 - [x] Custom DatePicker View
 - [x] Can change color of almost everything
 - [x] Animation Bottom to Top only :(
-- [ ] Create a XCode Proj example
+- [x] Create a XCode Proj example
 
 
 Installation
@@ -42,22 +42,22 @@ import LCEssentials
 
 ```swift
 MyCustomViewController: UIViewController, DatePickerViewControllerDelegate {
-	
-	var pickerViewController: DatePickerViewController!
+
+	//Use this custom instantiate
+   let datePickerController: DatePickerViewController = DatePickerViewController.instantiate()
 	
 	override func viewDidLoad(){
 		super.viewDidLoad()
-		//Use this custom instantiate
-        self.pickerViewController = DatePickerViewController.instantiate()
-        self.pickerViewController.setWidth = self.view.frame.size.width
-        self.pickerViewController.delegate = self
+        datePickerController.delegate = self
         //For hour
-        self.horaPickerController.setDatePickerMode = .time
-        self.horaPickerController.setFormat = "HH:mm"
+        datePickerController.setDatePickerMode = .time
+        datePickerController.setFormat = "HH:mm"
 	}
 	
 	func showPicker(){
-	    self.pickerViewController.show()
+	    if datePickerController.isHidden {
+            datePickerController.show()
+        }
 	}
 	
 	
@@ -67,7 +67,7 @@ MyCustomViewController: UIViewController, DatePickerViewControllerDelegate {
 	
 	//MARK: - DatePickerController Delegate
     func datePickerViewController(didConfirm picker: DatePickerViewController, withValue: String) {
-        if picker == self.dataPickerController {
+        if picker == self.datePickerController {
             //Do something with the date value in String or
             //grab picker.date for Date object
         }

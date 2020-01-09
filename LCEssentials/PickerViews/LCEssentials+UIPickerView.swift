@@ -23,26 +23,26 @@
 import UIKit
 
 #if os(iOS) || os(macOS)
-@objc public protocol LCEssentialsPickerViewControllerDelegate {
-    @objc func pickerViewController(_ picker: LCEssentialsPickerViewController, didSelectRow row: Int, inComponent component: Int)
-    @objc func pickerViewController(didDone picker: LCEssentialsPickerViewController, didSelectRow row: Int, inComponent component: Int)
-    @objc func pickerViewController(didCancel picker: LCEssentialsPickerViewController)
-    @objc func pickerViewController(numberOfComponents inPicker: LCEssentialsPickerViewController) -> Int
-    @objc func pickerViewController(_ picker: LCEssentialsPickerViewController, rowHeightForComponent component: Int) -> CGFloat
-    @objc func pickerViewController(_ picker: LCEssentialsPickerViewController, numberOfRowsInComponent component: Int) -> Int
-    @objc func pickerViewController(_ picker: LCEssentialsPickerViewController, titleForRow row: Int, forComponent component: Int) -> String?
-    @objc optional func pickerViewController(_ picker: LCEssentialsPickerViewController, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
+@objc public protocol PickerViewControllerDelegate {
+    @objc func pickerViewController(_ picker: PickerViewController, didSelectRow row: Int, inComponent component: Int)
+    @objc func pickerViewController(didDone picker: PickerViewController, didSelectRow row: Int, inComponent component: Int)
+    @objc func pickerViewController(didCancel picker: PickerViewController)
+    @objc func pickerViewController(numberOfComponents inPicker: PickerViewController) -> Int
+    @objc func pickerViewController(_ picker: PickerViewController, rowHeightForComponent component: Int) -> CGFloat
+    @objc func pickerViewController(_ picker: PickerViewController, numberOfRowsInComponent component: Int) -> Int
+    @objc func pickerViewController(_ picker: PickerViewController, titleForRow row: Int, forComponent component: Int) -> String?
+    @objc optional func pickerViewController(_ picker: PickerViewController, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
 }
 
-public class LCEssentialsPickerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet var pickerView: UIPickerView!
     @IBOutlet private var viewPicker: UIView!
-    @IBOutlet weak var btConfirm: UIButton!
-    @IBOutlet weak var btCancel: UIButton!
-    @IBOutlet weak var barView: UIView!
-    @IBOutlet weak var borderTop: UIView!
-    @IBOutlet weak var borderBottom: UIView!
+    @IBOutlet var btConfirm: UIButton!
+    @IBOutlet var btCancel: UIButton!
+    @IBOutlet var barView: UIView!
+    @IBOutlet var borderTop: UIView!
+    @IBOutlet var borderBottom: UIView!
     
     public var setSelectedRowIndex: Int = 0
     public var setSelectedBGColor: UIColor = UIColor.white
@@ -68,16 +68,22 @@ public class LCEssentialsPickerViewController: UIViewController, UIPickerViewDel
     public var setColumSecFontName: String = "Helvetica"
     public var setColumSecFontSize: CGFloat = 18
     
-    public var delegate : LCEssentialsPickerViewControllerDelegate!
+    public var delegate : PickerViewControllerDelegate!
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.pickerView.selectRow(setSelectedRowIndex, inComponent: 0, animated: true)
         
+        self.viewPicker.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.setWidth, height: self.setHeight)
+        self.viewPicker.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
+        self.viewPicker.autoresizesSubviews = true
+        
     }
     
-    static public func instantiate() -> LCEssentialsPickerViewController {
-        return LCEssentialsPickerViewController.instantiate(storyBoard: "PickerViews", identifier: LCEssentialsPickerViewController.identifier)
+    static public func instantiate() -> PickerViewController {
+        let instance:PickerViewController = PickerViewController.instantiate(storyBoard: "PickerViews")
+        instance.loadView()
+        return instance
     }
     
     override public func didReceiveMemoryWarning() {
@@ -97,21 +103,21 @@ public class LCEssentialsPickerViewController: UIViewController, UIPickerViewDel
         btConfirm.sizeToFit()
         btConfirm.setTitleColor(setConfirmTitleColor, for: .normal)
         btCancel.setTitleColor(setCancelTitleColor, for: .normal)
+        pickerView.reloadAllComponents()
         var controller: UIViewController!
         if delegate is UIViewController {
             controller = delegate as? UIViewController
-            viewPicker.frame = CGRect(x: 0, y: ( controller.view.bounds.height - setDistanceFromBottom ), width: setWidth, height: setHeight)
-            viewPicker.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
-            viewPicker.autoresizesSubviews = true
-            controller.modalPresentationStyle = .overCurrentContext
+            //controller.modalPresentationStyle = .overCurrentContext
             controller.present(self, animated: true, completion: nil)
-            UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear],
-                           animations: {
-                            self.viewPicker.center.y -= self.view.bounds.height
-                            self.viewPicker.layoutIfNeeded()
-            }, completion: { (completed) in
-                self.isHidden = false
-            })
+            LCEssentials.backgroundThread(delay: 0.3) {
+                UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear],
+                               animations: {
+                                self.viewPicker.center.y -= self.viewPicker.bounds.height
+                                self.viewPicker.layoutIfNeeded()
+                }, completion: { (completed) in
+                    self.isHidden = false
+                })
+            }
         }else{
             fatalError("Ops! Missing delegate!")
         }
@@ -124,7 +130,6 @@ public class LCEssentialsPickerViewController: UIViewController, UIPickerViewDel
                         self.viewPicker.layoutIfNeeded()
         }, completion: { (completed) in
             self.isHidden = true
-            //self.viewPicker.removeFromSuperview()
             let controller = self.delegate as? UIViewController
             controller?.dismiss(animated: true, completion: nil)
         })
@@ -154,13 +159,21 @@ public class LCEssentialsPickerViewController: UIViewController, UIPickerViewDel
         return delegate.pickerViewController(self, titleForRow: row, forComponent: component)
     }
     
-    public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        if let delgado = delegate.pickerViewController?(self, viewForRow: row, forComponent: component, reusing: view) {
-            return delgado
-        }else{
-            return UIView()
-        }
-    }
+//    public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+//        if let delgado = delegate.pickerViewController?(self, viewForRow: row, forComponent: component, reusing: view) {
+//            return delgado
+//        }
+//
+//        var pickerLabel: UILabel? = (view as? UILabel)
+//        if pickerLabel == nil {
+//            pickerLabel = UILabel()
+//            pickerLabel?.font = UIFont(name: setFontName, size: setFontSize)
+//            pickerLabel?.textAlignment = .center
+//        }
+//        pickerLabel?.text = pickerLabel?.text
+//        pickerLabel?.textColor = setFontColor
+//        return pickerLabel!
+//    }
     
     @available(iOS 2.0, *)
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
