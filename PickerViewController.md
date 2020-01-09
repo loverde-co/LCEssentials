@@ -41,27 +41,27 @@ import LCEssentials
 * PickerViewController  
 
 ```swift
-MyCustomViewController: UIViewController, PickerViewControllerDelegate {
+class MyCustomViewController: UIViewController, PickerViewControllerDelegate {
 	
-       let pickerController: PickerViewController = PickerViewControllerinstantiate()
-       lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
+    let pickerController: PickerViewController = PickerViewControllerinstantiate()
+    lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
 	
-	override func viewDidLoad(){
-	    super.viewDidLoad()
-	    //Use this custom instantiate
-        
-            pickerController.setSelectedRowIndex = 0
-            pickerController.delegate = self
-            pickerController.setWidth = self.view.bounds.width
-            pickerController.setDistanceFromBottom = 50
-            pickerController.setFontSize = 20
-            pickerController.setFontColor = .black
+    override func viewDidLoad(){
+		super.viewDidLoad()
+		
+    	//Use this custom instantiate
+    	pickerController.setSelectedRowIndex = 0
+    	pickerController.delegate = self
+    	pickerController.setWidth = self.view.bounds.width
+    	pickerController.setDistanceFromBottom = 50
+    	pickerController.setFontSize = 20
+    	pickerController.setFontColor = .black
 	}
 	
 	func showPicker(){
 	    if pickerController.isHidden {
-                pickerController.show()
-            }
+        	pickerController.show()
+        }
 	}
 	
     // You can use multiple instance of it!
