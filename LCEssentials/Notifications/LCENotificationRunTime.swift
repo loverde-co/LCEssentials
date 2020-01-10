@@ -62,10 +62,6 @@ public class LCENotificationRunTime: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        rootView = UIApplication.shared.keyWindow?.subviews.last
-        self.view.frame.origin.y = self.view.frame.origin.y - setHeight
-        self.view.addGestureRecognizer(swipeUp)
-        self.view.addGestureRecognizer(tap)
     }
     
     override public func viewWillAppear(_ animated: Bool) {
@@ -84,6 +80,10 @@ extension LCENotificationRunTime {
     
     public func show(){
         self.isHidden = true
+        rootView = UIApplication.shared.keyWindow?.subviews.last
+        self.view.frame.origin.y = self.view.frame.origin.y - setHeight
+        self.view.addGestureRecognizer(swipeUp)
+        self.view.addGestureRecognizer(tap)
         self.view.layer.removeAllAnimations()
         self.view.removeFromSuperview()
         self.view.frame = CGRect(x: 0, y: -self.setHeight, width: self.view.frame.size.width, height: self.setHeight)

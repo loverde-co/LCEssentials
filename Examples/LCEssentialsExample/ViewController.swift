@@ -26,7 +26,7 @@ import LCEssentials
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom"]
+    lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom", 3: "Open Notifications Runtime"]
     
     let pickerController: PickerViewController = PickerViewController.instantiate()
     lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
@@ -38,6 +38,17 @@ class ViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
         tableView.reloadData()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
+        
+        pickerController.setSelectedRowIndex = 0
+        pickerController.delegate = self
+        pickerController.setWidth = self.view.bounds.width
+        pickerController.setDistanceFromBottom = 50
+        pickerController.setFontSize = 20
+        pickerController.setFontColor = .black
+        
+        datePickerController.delegate = self
+        datePickerController.setWidth = self.view.bounds.width
+        datePickerController.setDistanceFromBottom = 50
     }
 }
 
@@ -53,12 +64,6 @@ extension ViewController {
     
     //MARK: - Set Picker Controller
     func openPickerController(){
-        pickerController.setSelectedRowIndex = 0
-        pickerController.delegate = self
-        pickerController.setWidth = self.view.bounds.width
-        pickerController.setDistanceFromBottom = 50
-        pickerController.setFontSize = 20
-        pickerController.setFontColor = .black
         if pickerController.isHidden {
             pickerController.show()
         }
@@ -66,12 +71,19 @@ extension ViewController {
     
     //MARK: - Set Picker Controller
     func openDatePickerController(){
-        datePickerController.delegate = self
-        datePickerController.setWidth = self.view.bounds.width
-        datePickerController.setDistanceFromBottom = 50
         if datePickerController.isHidden {
             datePickerController.show()
         }
+    }
+    
+    //MARK: - Set Picker Controller
+    func openNotificationRuntime(){
+        let notif = LCENotificationRunTime.instantiate()
+        notif.delegate = self
+        notif.anyData = nil //If you need grab any data to handler on Delegate
+        notif.setDesc = "Description on received message"
+        notif.setTitle = "Title on received message"
+        notif.show()
     }
     
     //MARK: - Messages Alert
@@ -94,6 +106,15 @@ extension ViewController: LCEMessagesDelegate {
     }
 }
 
+extension ViewController: LCENotifiactionRunTimeDelegate {
+    func messages(didTapOnMessage: LCENotificationRunTime, withData: Any?) {
+        printInfo(title: "TAPPED ON NOTIFICATION RUNTIME", msg: "")
+    }
+    func messages(didSwipeOnMessage: LCENotificationRunTime, withData: Any?) {
+        printInfo(title: "SWIPPED NOTIFICATION RUNTIME", msg: "")
+    }
+}
+
 
 //MARK: - TableView Delegate
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -104,6 +125,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             openDatePickerController()
         case 2:
             openMessageAlert()
+        case 3:
+            openNotificationRuntime()
         default:
             openPickerController()
             break;
