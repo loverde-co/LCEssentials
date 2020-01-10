@@ -330,13 +330,15 @@ public extension String {
     var html2String: String {
         return html2AttributedString?.string ?? ""
     }
-
+    
+    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
     func dictionaryToStringJSON(dict:[String:Any]) -> String {
         let jsonData = try! JSONSerialization.data(withJSONObject: dict, options: JSONSerialization.WritingOptions.prettyPrinted)
         let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
         return jsonString
     }
-
+    
+    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
     func JSONStringToDictionary() -> [String:Any]? {
         if let data = self.data(using: .utf8) {
             let jsonString = try? JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]

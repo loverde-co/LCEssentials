@@ -38,20 +38,23 @@ class ViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
         tableView.reloadData()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
+
         
+        //MARK: - Set Picker Controller
         pickerController.setSelectedRowIndex = 0
         pickerController.delegate = self
         pickerController.setWidth = self.view.bounds.width
         pickerController.setDistanceFromBottom = 50
         pickerController.setFontSize = 20
         pickerController.setFontColor = .black
+
         
+        //MARK: - Set Date Picker Controller
         datePickerController.delegate = self
         datePickerController.setWidth = self.view.bounds.width
         datePickerController.setDistanceFromBottom = 50
     }
 }
-
 
 extension ViewController {
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
@@ -61,15 +64,15 @@ extension ViewController {
         }
         sender.cancelsTouchesInView = false
     }
-    
-    //MARK: - Set Picker Controller
+
+    //MARK: - Open Picker Controller
     func openPickerController(){
         if pickerController.isHidden {
             pickerController.show()
         }
     }
-    
-    //MARK: - Set Picker Controller
+
+    //MARK: - Open Date Picker Controller
     func openDatePickerController(){
         if datePickerController.isHidden {
             datePickerController.show()
@@ -106,6 +109,7 @@ extension ViewController: LCEMessagesDelegate {
     }
 }
 
+//MARK: - Notification Runtime Delegate
 extension ViewController: LCENotifiactionRunTimeDelegate {
     func messages(didTapOnMessage: LCENotificationRunTime, withData: Any?) {
         printInfo(title: "TAPPED ON NOTIFICATION RUNTIME", msg: "")
@@ -181,7 +185,7 @@ extension ViewController: PickerViewControllerDelegate {
     }
 }
 
-//MARK: - Picker Controller Delegate
+//MARK: - Date Picker Controller Delegate
 extension ViewController: DatePickerViewControllerDelegate {
     func datePickerViewController(didConfirm picker: DatePickerViewController, withValue: String) {
         printInfo(title: "Date Picker", msg: withValue)
@@ -194,6 +198,4 @@ extension ViewController: DatePickerViewControllerDelegate {
     func datePickerViewController(didEndScrollPicker picker: DatePickerViewController, withValue: String) {
         printInfo(title: "Date Picker - Scroll to date", msg: withValue)
     }
-    
-    
 }

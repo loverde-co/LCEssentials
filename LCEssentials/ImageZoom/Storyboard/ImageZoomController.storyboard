@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Image Zoom Controller-->
+        <scene sceneID="qZD-O2-N9X">
+            <objects>
+                <viewController storyboardIdentifier="idAkinViewImagesVC" modalPresentationStyle="overFullScreen" id="nTh-bG-g2y" customClass="ImageZoomController" customModule="LCEssentials" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NvN-0P-qwq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view clipsSubviews="YES" alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C9e-Rg-YD3">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JRc-HB-wnX">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qja-2E-Mv7">
+                                        <rect key="frame" x="20" y="309" width="374" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="vG6-wS-Iic"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Qja-2E-Mv7" firstAttribute="centerY" secondItem="JRc-HB-wnX" secondAttribute="centerY" id="F2Y-S2-oBH"/>
+                                    <constraint firstAttribute="trailing" secondItem="Qja-2E-Mv7" secondAttribute="trailing" constant="20" id="SAS-Fu-4jm"/>
+                                    <constraint firstItem="Qja-2E-Mv7" firstAttribute="leading" secondItem="JRc-HB-wnX" secondAttribute="leading" constant="20" id="ZTq-v0-r2n"/>
+                                    <constraint firstItem="Qja-2E-Mv7" firstAttribute="centerX" secondItem="JRc-HB-wnX" secondAttribute="centerX" id="cBm-th-tc6"/>
+                                    <constraint firstItem="Qja-2E-Mv7" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JRc-HB-wnX" secondAttribute="top" constant="20" id="rb4-qV-UiP"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Qja-2E-Mv7" secondAttribute="bottom" constant="20" id="xX3-OP-rRp"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="nTh-bG-g2y" id="ezQ-SX-PIl"/>
+                                </connections>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dix-l3-hnw">
+                                <rect key="frame" x="20" y="44" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="5tW-VR-pXe"/>
+                                    <constraint firstAttribute="width" constant="50" id="oDi-pH-qfq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="xmark" catalog="system"/>
+                                <connections>
+                                    <action selector="close" destination="nTh-bG-g2y" eventType="touchUpInside" id="ZpY-jW-nrV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="C9e-Rg-YD3" firstAttribute="top" secondItem="NvN-0P-qwq" secondAttribute="top" id="1hQ-sy-Szn"/>
+                            <constraint firstItem="Dix-l3-hnw" firstAttribute="leading" secondItem="YVs-a8-sbh" secondAttribute="leading" constant="20" id="2B3-4l-KPC"/>
+                            <constraint firstAttribute="bottom" secondItem="C9e-Rg-YD3" secondAttribute="bottom" id="Nez-JJ-jGm"/>
+                            <constraint firstItem="Dix-l3-hnw" firstAttribute="top" secondItem="YVs-a8-sbh" secondAttribute="top" id="Q0W-x0-Hmg"/>
+                            <constraint firstItem="JRc-HB-wnX" firstAttribute="top" secondItem="YVs-a8-sbh" secondAttribute="top" id="auf-J9-Ky6"/>
+                            <constraint firstItem="YVs-a8-sbh" firstAttribute="bottom" secondItem="JRc-HB-wnX" secondAttribute="bottom" id="dTx-fg-dnF"/>
+                            <constraint firstItem="YVs-a8-sbh" firstAttribute="trailing" secondItem="JRc-HB-wnX" secondAttribute="trailing" id="lID-QK-2VH"/>
+                            <constraint firstItem="C9e-Rg-YD3" firstAttribute="leading" secondItem="YVs-a8-sbh" secondAttribute="leading" id="u4g-oG-shQ"/>
+                            <constraint firstItem="YVs-a8-sbh" firstAttribute="trailing" secondItem="C9e-Rg-YD3" secondAttribute="trailing" id="xc2-e9-h0W"/>
+                            <constraint firstItem="JRc-HB-wnX" firstAttribute="leading" secondItem="YVs-a8-sbh" secondAttribute="leading" id="zwu-J6-dvB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="YVs-a8-sbh"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <connections>
+                        <outlet property="img" destination="Qja-2E-Mv7" id="bUg-gI-TdR"/>
+                        <outlet property="scrollView" destination="JRc-HB-wnX" id="Cm0-6s-F1J"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vyl-Ov-pb8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-171.01449275362319" y="39.508928571428569"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="xmark" catalog="system" width="64" height="56"/>
+    </resources>
+</document>

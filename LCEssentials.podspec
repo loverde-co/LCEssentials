@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'LCEssentials'
-  s.version          = '0.3.1'
+  s.version          = '0.3.2'
   s.summary          = 'This is a repository of essential scripts written in Swift for Loverde Co.'
  
   s.description      = <<-DESC
@@ -17,7 +17,7 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
   s.platform         = :watchos, '4.0'
   s.ios.deployment_target = '10.0'
   s.watchos.deployment_target = '5.0'
-  s.ios.source_files     = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/PickerViews/*.{swift}', 'LCEssentials/Notifications/*.{swift}'
+  s.ios.source_files     = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/PickerViews/*.{swift}', 'LCEssentials/Notifications/*.{swift}', 'LCEssentials/ImageZoom/*.{swift}'
   s.watchos.source_files     = 'LCEssentials/Classes/*.{swift}'
-  s.ios.resources        = ['LCEssentials/PickerViews/Storyboards/*.{storyboard}', 'LCEssentials/Notifications/Storyboard/*.{storyboard}', 'LCEssentials/Notifications/Storyboard/*.{png}']
+  s.ios.resources        = ['LCEssentials/PickerViews/Storyboards/*.{storyboard}', 'LCEssentials/Notifications/Storyboard/*.{storyboard}', 'LCEssentials/Notifications/Storyboard/*.{png}', 'LCEssentials/ImageZoom/Storyboard/*.{storyboard}']
 end

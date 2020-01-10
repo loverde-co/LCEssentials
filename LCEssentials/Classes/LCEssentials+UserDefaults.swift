@@ -47,31 +47,15 @@ public extension UserDefaults {
         return bool(forKey: UserDefaultsKeys.isFirstTimeOnApp.rawValue)
     }
     
-    func setObject<T: Codable>(object: T, forKey: String){
+    func setObject<T: Encodable>(object: T, forKey: String){
         if let encoded = try? JSONEncoder().encode(object) {
             UserDefaults.standard.set(encoded, forKey: forKey)
             UserDefaults.standard.synchronize()
         }
     }
-    func getObject<T: Codable>(_ type: T.Type, forKey: String) -> T? {
+    func getObject<T: Decodable>(_ type: T.Type, forKey: String) -> T? {
         if let userData = data(forKey: forKey) {
             return try? JSONDecoder().decode(type, from: userData)
-        }
-        return nil
-    }
-    
-    func saveObject<T: Codable>(object: T, forKey: String) {
-        let json = try! JSONHelper<T>.decode(toJSON: object)
-        DispatchQueue.main.async {
-            self.set(json, forKey: forKey)
-            self.synchronize()
-        }
-    }
-    
-    func getSavedObject<T: Codable>(_ type: T.Type, forKey: String) -> T?{
-        if let dict = object(forKey: forKey) as? String {
-            let obj = try! JSONHelper<T>.decode(dict)
-            return obj
         }
         return nil
     }

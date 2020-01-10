@@ -29,12 +29,14 @@
     "source_files": [
       "LCEssentials/Classes/*.{swift}",
       "LCEssentials/PickerViews/*.{swift}",
-      "LCEssentials/Notifications/*.{swift}"
+      "LCEssentials/Notifications/*.{swift}",
+      "LCEssentials/ImageZoom/*.{swift}"
     ],
     "resources": [
       "LCEssentials/PickerViews/Storyboards/*.{storyboard}",
       "LCEssentials/Notifications/Storyboard/*.{storyboard}",
-      "LCEssentials/Notifications/Storyboard/*.{png}"
+      "LCEssentials/Notifications/Storyboard/*.{png}",
+      "LCEssentials/ImageZoom/Storyboard/*.{storyboard}"
     ]
   },
   "watchos": {

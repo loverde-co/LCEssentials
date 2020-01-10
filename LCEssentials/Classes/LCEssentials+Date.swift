@@ -30,6 +30,7 @@ public extension Date {
         let value: Int?
     }
     
+    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
     func stringToDateTime( _ dateTime: String = "", formatted : String = "yyyy-MM-dd", withTime:Bool = false ) -> Date{
         var dateArray = dateTime.split{$0 == "/"}.map(String.init)
         var hour = [String]()
@@ -48,7 +49,8 @@ public extension Date {
         dateFormatter.dateFormat = "\(formatted)\( withTime ? " HH:mm:ss" : "" )"
         return dateFormatter.date(from: convertedDate)!
     }
-
+    
+    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
     func stringToDate( _ date: String = "2010-10-10", formatted : String = "yyyy-MM-dd" ) -> Date{
         let dateArray = date.split{$0 == "/"}.map(String.init)
         var convertedDate = date

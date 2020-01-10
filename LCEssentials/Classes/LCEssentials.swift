@@ -501,20 +501,28 @@ extension Encodable {
         return (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(self))) as? [String: Any] ?? [:]
     }
     var json: String {
-        return String().dictionaryToStringJSON(dict: self.dictionary)
+        return self.dictionary.toJSON()
     }
 }
 
-extension Dictionary where Key == String, Value == Any {
-    
+extension Dictionary {
+
     /// - LoverdeCo: Convert Dictonary to Object
     ///
     /// - returns: Object: Codable/Decodable
-    public static func toObjetct<T: Codable>() -> T {
+    public func toObjetct<T: Codable>() -> T {
         let jsonData = try! JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted)
         let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
         let output: T = try! JSONHelper.decode(jsonString)
         return output
+    }
+//    public func convertToObject<T: Decodable>() throws -> T {
+//        return try JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: self, options: []))
+//    }
+    public func toJSON() -> String {
+        let jsonData = try! JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted)
+        let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
+        return jsonString
     }
 }
 
