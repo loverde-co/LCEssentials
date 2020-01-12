@@ -35,13 +35,6 @@ func ^^ (radix: Float, power: Float) -> Float {
     return Float(pow(Double(radix), Double(power)))
 }
 
-//MARK: - Append Dictionary
-public func += <K, V> (left: inout [K:V], right: [K:V]) {
-    for (k, v) in right {
-        left[k] = v
-    }
-}
-
 
 /// Loverde Co: Custom Logs
 public func printLog(section:String, description:String){
@@ -492,39 +485,6 @@ extension Collection where Indices.Iterator.Element == Index {
     }
 }
 #endif
-//MARK: - Codables convertions
-extension Encodable {
-    subscript(key: String) -> Any? {
-        return dictionary[key]
-    }
-    var dictionary: [String: Any] {
-        return (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(self))) as? [String: Any] ?? [:]
-    }
-    var json: String {
-        return self.dictionary.toJSON()
-    }
-}
-
-extension Dictionary {
-
-    /// - LoverdeCo: Convert Dictonary to Object
-    ///
-    /// - returns: Object: Codable/Decodable
-    public func toObjetct<T: Codable>() -> T {
-        let jsonData = try! JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted)
-        let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
-        let output: T = try! JSONHelper.decode(jsonString)
-        return output
-    }
-//    public func convertToObject<T: Decodable>() throws -> T {
-//        return try JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: self, options: []))
-//    }
-    public func toJSON() -> String {
-        let jsonData = try! JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted)
-        let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
-        return jsonString
-    }
-}
 
 //MARK: - JSON Helper Codable/Decodable
 public struct JSONHelper<T: Codable> {

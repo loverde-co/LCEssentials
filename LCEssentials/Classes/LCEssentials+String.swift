@@ -1,5 +1,5 @@
 //  
-// Copyright (c) 2018 Loverde Co.
+// Copyright (c) 2018 SwifterSwift.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,59 @@
 import Foundation
 
 public extension String {
+    /// SwifterSwift: Check if string is a valid URL.
+    ///
+    ///        "https://google.com".isValidUrl -> true
+    ///
+    var isValidUrl: Bool {
+        return URL(string: self) != nil
+    }
 
+    #if canImport(Foundation)
+    /// SwifterSwift: Check if string is a valid https URL.
+    ///
+    ///        "https://google.com".isValidHttpsUrl -> true
+    ///
+    var isValidHttpsUrl: Bool {
+        guard let url = URL(string: self) else { return false }
+        return url.scheme == "https"
+    }
+    #endif
+
+    #if canImport(Foundation)
+    /// SwifterSwift: Check if string is a valid http URL.
+    ///
+    ///        "http://google.com".isValidHttpUrl -> true
+    ///
+    var isValidHttpUrl: Bool {
+        guard let url = URL(string: self) else { return false }
+        return url.scheme == "http"
+    }
+    #endif
+    
+    /// SwifterSwift.: Readable string from a URL string.
+    ///
+    ///        "it's%20easy%20to%20decode%20strings".urlDecoded -> "it's easy to decode strings"
+    ///
+    var urlDecoded: String {
+        return removingPercentEncoding ?? self
+    }
+    
+    /// SwifterSwift.: URL escaped string.
+    ///
+    ///        "it's easy to encode strings".urlEncoded -> "it's%20easy%20to%20encode%20strings"
+    ///
+    var urlEncoded: String {
+        return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+    }
+    /// SwifterSwift.: String without spaces and new lines.
+    ///
+    ///        "   \n Swifter   \n  Swift  ".withoutSpacesAndNewLines -> "SwifterSwift"
+    ///
+    var withoutSpacesAndNewLines: String {
+        return replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\n", with: "")
+    }
+    
     var isEmailValid: Bool {
         do {
             let regex = try NSRegularExpression(pattern: "(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])", options: .caseInsensitive)
@@ -63,6 +115,88 @@ public extension String {
         return temp1 == d1 && temp2 == d2
     }
 
+    #if canImport(Foundation)
+    /// SwifterSwift: Check if string is a valid Swift number. Note: In North America, "." is the decimal separator, while in many parts of Europe "," is used,
+    ///
+    ///        "123".isNumeric -> true
+    ///     "1.3".isNumeric -> true (en_US)
+    ///     "1,3".isNumeric -> true (fr_FR)
+    ///        "abc".isNumeric -> false
+    ///
+    var isNumeric: Bool {
+        let scanner = Scanner(string: self)
+        scanner.locale = NSLocale.current
+        #if os(Linux) || targetEnvironment(macCatalyst)
+        return scanner.scanDecimal() != nil && scanner.isAtEnd
+        #else
+        return scanner.scanDecimal(nil) && scanner.isAtEnd
+        #endif
+    }
+    #endif
+    /// SwifterSwift.: Bool value from string (if applicable).
+    ///
+    ///        "1".bool -> true
+    ///        "False".bool -> false
+    ///        "Hello".bool = nil
+    ///
+    var bool: Bool? {
+        let selfLowercased = trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        switch selfLowercased {
+        case "true", "yes", "1":
+            return true
+        case "false", "no", "0":
+            return false
+        default:
+            return nil
+        }
+    }
+
+    /// SwifterSwift: Check if string contains one or more emojis.
+    ///
+    ///        "Hello 😀".containEmoji -> true
+    ///
+    var containEmoji: Bool {
+        // http://stackoverflow.com/questions/30757193/find-out-if-character-in-string-is-emoji
+        for scalar in unicodeScalars {
+            switch scalar.value {
+            case 0x1F600...0x1F64F, // Emoticons
+            0x1F300...0x1F5FF, // Misc Symbols and Pictographs
+            0x1F680...0x1F6FF, // Transport and Map
+            0x1F1E6...0x1F1FF, // Regional country flags
+            0x2600...0x26FF, // Misc symbols
+            0x2700...0x27BF, // Dingbats
+            0xE0020...0xE007F, // Tags
+            0xFE00...0xFE0F, // Variation Selectors
+            0x1F900...0x1F9FF, // Supplemental Symbols and Pictographs
+            127000...127600, // Various asian characters
+            65024...65039, // Variation selector
+            9100...9300, // Misc items
+            8400...8447: // Combining Diacritical Marks for Symbols
+                return true
+            default:
+                continue
+            }
+        }
+        return false
+    }
+
+    /// SwifterSwift.: Lorem ipsum string of given length.
+    ///
+    /// - Parameter length: number of characters to limit lorem ipsum to (default is 445 - full lorem ipsum).
+    /// - Returns: Lorem ipsum dolor sit amet... string.
+    static func loremIpsum(ofLength length: Int = 445) -> String {
+        guard length > 0 else { return "" }
+
+        // https://www.lipsum.com/
+        let loremIpsum = """
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        """
+        if loremIpsum.count > length {
+            return String(loremIpsum[loremIpsum.startIndex..<loremIpsum.index(loremIpsum.startIndex, offsetBy: length)])
+        }
+        return loremIpsum
+    }
+
     func onlyNumbers() -> String {
         guard !isEmpty else { return "" }
         return replacingOccurrences(of: "\\D",
@@ -85,6 +219,51 @@ public extension String {
         let dv1 = digitCalculator(numbers.prefix(12))
         let dv2 = digitCalculator(numbers.prefix(13))
         return dv1 == numbers[12] && dv2 == numbers[13]
+    }
+
+    /// SwifterSwift.: Returns a string by padding to fit the length parameter size with another string in the start.
+    ///
+    ///   "hue".paddingStart(10) -> "       hue"
+    ///   "hue".paddingStart(10, with: "br") -> "brbrbrbhue"
+    ///
+    /// - Parameter length: The target length to pad.
+    /// - Parameter string: Pad string. Default is " ".
+    /// - Returns: The string with the padding on the start.
+    func paddingStart(_ length: Int, with string: String = " ") -> String {
+        guard count < length else { return self }
+
+        let padLength = length - count
+        if padLength < string.count {
+            return string[string.startIndex..<string.index(string.startIndex, offsetBy: padLength)] + self
+        } else {
+            var padding = string
+            while padding.count < padLength {
+                padding.append(string)
+            }
+            return padding[padding.startIndex..<padding.index(padding.startIndex, offsetBy: padLength)] + self
+        }
+    }
+    /// SwifterSwift.: Returns a string by padding to fit the length parameter size with another string in the end.
+    ///
+    ///   "hue".paddingEnd(10) -> "hue       "
+    ///   "hue".paddingEnd(10, with: "br") -> "huebrbrbrb"
+    ///
+    /// - Parameter length: The target length to pad.
+    /// - Parameter string: Pad string. Default is " ".
+    /// - Returns: The string with the padding on the end.
+    func paddingEnd(_ length: Int, with string: String = " ") -> String {
+        guard count < length else { return self }
+
+        let padLength = length - count
+        if padLength < string.count {
+            return self + string[string.startIndex..<string.index(string.startIndex, offsetBy: padLength)]
+        } else {
+            var padding = string
+            while padding.count < padLength {
+                padding.append(string)
+            }
+            return self + padding[padding.startIndex..<padding.index(padding.startIndex, offsetBy: padLength)]
+        }
     }
     
     var currentTimeZone : String {
@@ -110,6 +289,32 @@ public extension String {
     
     mutating func insertAtIndexStart(string:String, ind:Int) {
         self.insert(contentsOf: string, at:self.index(self.endIndex, offsetBy: ind) )
+    }
+    /// SwifterSwift.: Convert URL string to readable string.
+    ///
+    ///        var str = "it's%20easy%20to%20decode%20strings"
+    ///        str.urlDecode()
+    ///        print(str) // prints "it's easy to decode strings"
+    ///
+    @discardableResult
+    mutating func urlDecode() -> String {
+        if let decoded = removingPercentEncoding {
+            self = decoded
+        }
+        return self
+    }
+    /// SwifterSwift: Escape string.
+    ///
+    ///        var str = "it's easy to encode strings"
+    ///        str.urlEncode()
+    ///        print(str) // prints "it's%20easy%20to%20encode%20strings"
+    ///
+    @discardableResult
+    mutating func urlEncode() -> String {
+        if let encoded = addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
+            self = encoded
+        }
+        return self
     }
     
 
@@ -286,23 +491,39 @@ public extension String {
         }
         return newStr
     }
-    /**
-     Truncates the string to the specified length number of characters and appends an optional trailing string if longer.
 
-     - Parameter length: A `String`.
-     - Parameter trailing: A `String` that will be appended after the truncation.
-
-     - Returns: A `String` object.
-     */
-    // Example
-    // let str = "This is a long string".truncate(10, trailing: "...") // "This is a ..."
-    func truncate(length: Int, trailing: String = "…") -> String {
-        if self.count > length {
-            return String(self.prefix(length)) + trailing
-        } else {
-            return self
+    /// SwifterSwift.: Truncate string (cut it to a given number of characters).
+    ///
+    ///        var str = "This is a very long sentence"
+    ///        str.truncate(toLength: 14)
+    ///        print(str) // prints "This is a very..."
+    ///
+    /// - Parameters:
+    ///   - toLength: maximum number of characters before cutting.
+    ///   - trailing: string to add at the end of truncated string (default is "...").
+    @discardableResult
+    mutating func truncate(toLength length: Int, trailing: String? = "...") -> String {
+        guard length > 0 else { return self }
+        if count > length {
+            self = self[startIndex..<index(startIndex, offsetBy: length)] + (trailing ?? "")
         }
+        return self
     }
+
+    /// SwifterSwift.: Truncated string (limited to a given number of characters).
+    ///
+    ///        "This is a very long sentence".truncated(toLength: 14) -> "This is a very..."
+    ///        "Short sentence".truncated(toLength: 14) -> "Short sentence"
+    ///
+    /// - Parameters:
+    ///   - toLength: maximum number of characters before cutting.
+    ///   - trailing: string to add at the end of truncated string.
+    /// - Returns: truncated string (this is an extr...).
+    func truncated(toLength length: Int, trailing: String? = "...") -> String {
+        guard 1..<count ~= length else { return self }
+        return self[startIndex..<index(startIndex, offsetBy: length)] + (trailing ?? "")
+    }
+    
     func replacing(range: CountableClosedRange<Int>, with replacementString: String) -> String {
         let start = index(startIndex, offsetBy: range.lowerBound)
         let end   = index(start, offsetBy: range.count)
@@ -461,6 +682,107 @@ public extension String {
     func toURL() -> NSURL? {
         return NSURL(string: self)
     }
+    /// SwifterSwift.: Float value from string (if applicable).
+    ///
+    /// - Parameter locale: Locale (default is Locale.current)
+    /// - Returns: Optional Float value from given string.
+    func float(locale: Locale = .current) -> Float? {
+        let formatter = NumberFormatter()
+        formatter.locale = locale
+        formatter.allowsFloats = true
+        return formatter.number(from: self)?.floatValue
+    }
+    /// SwifterSwift.: Double value from string (if applicable).
+    ///
+    /// - Parameter locale: Locale (default is Locale.current)
+    /// - Returns: Optional Double value from given string.
+    func double(locale: Locale = .current) -> Double? {
+        let formatter = NumberFormatter()
+        formatter.locale = locale
+        formatter.allowsFloats = true
+        return formatter.number(from: self)?.doubleValue
+    }
+    /// SwifterSwift.: Returns a localized string, with an optional comment for translators.
+    ///
+    ///        "Hello world".localized -> Hallo Welt
+    ///
+    func localized(comment: String = "") -> String {
+        return NSLocalizedString(self, comment: comment)
+    }
+
+    /// SwifterSwift: First character of string (if applicable).
+    ///
+    ///        "Hello".firstCharacterAsString -> Optional("H")
+    ///        "".firstCharacterAsString -> nil
+    ///
+    var firstCharacterAsString: String? {
+        guard let first = first else { return nil }
+        return String(first)
+    }
+
+    /// SwifterSwift: Last character of string (if applicable).
+    ///
+    ///        "Hello".lastCharacterAsString -> Optional("o")
+    ///        "".lastCharacterAsString -> nil
+    ///
+    var lastCharacterAsString: String? {
+        guard let last = last else { return nil }
+        return String(last)
+    }
+    /// SwifterSwift.: Transforms the string into a slug string.
+    ///
+    ///        "Swift is amazing".toSlug() -> "swift-is-amazing"
+    ///
+    /// - Returns: The string in slug format.
+    func toSlug() -> String {
+        let lowercased = self.lowercased()
+        let latinized = lowercased.folding(options: .diacriticInsensitive, locale: Locale.current)
+        let withDashes = latinized.replacingOccurrences(of: " ", with: "-")
+
+        let alphanumerics = NSCharacterSet.alphanumerics
+        var filtered = withDashes.filter {
+            guard String($0) != "-" else { return true }
+            guard String($0) != "&" else { return true }
+            return String($0).rangeOfCharacter(from: alphanumerics) != nil
+        }
+
+        while filtered.lastCharacterAsString == "-" {
+            filtered = String(filtered.dropLast())
+        }
+
+        while filtered.firstCharacterAsString == "-" {
+            filtered = String(filtered.dropFirst())
+        }
+
+        return filtered.replacingOccurrences(of: "--", with: "-")
+    }
+    /// SwifterSwift.: Check if string contains one or more instance of substring.
+    ///
+    ///        "Hello World!".contain("O") -> false
+    ///        "Hello World!".contain("o", caseSensitive: false) -> true
+    ///
+    /// - Parameters:
+    ///   - string: substring to search for.
+    ///   - caseSensitive: set true for case sensitive search (default is true).
+    /// - Returns: true if string contains one or more instance of substring.
+    func contains(_ string: String, caseSensitive: Bool = true) -> Bool {
+        if !caseSensitive {
+            return range(of: string, options: .caseInsensitive) != nil
+        }
+        return range(of: string) != nil
+    }
+    /// SwifterSwift.: Removes spaces and new lines in beginning and end of string.
+    ///
+    ///        var str = "  \n Hello World \n\n\n"
+    ///        str.trim()
+    ///        print(str) // prints "Hello World"
+    ///
+    @discardableResult
+    mutating func trim() -> String {
+        self = trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        return self
+    }
+    
     func textWithoutFormat() -> String {
         return (self
             .replacingOccurrences(of: "+", with: "")

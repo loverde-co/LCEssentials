@@ -67,10 +67,21 @@ public extension UIImage {
 
         return newImage!
     }
-
+    
+    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
     func decodeBase64ToImage(stringBase64:String) -> UIImage {
         let imageData = Data(base64Encoded: stringBase64, options: .ignoreUnknownCharacters)
         return UIImage(data: imageData!)!
+    }
+
+    /// SwifterSwift: Create a new image from a base 64 string.
+    ///
+    /// - Parameters:
+    ///   - base64String: a base-64 `String`, representing the image
+    ///   - scale: The scale factor to assume when interpreting the image data created from the base-64 string. Applying a scale factor of 1.0 results in an image whose size matches the pixel-based dimensions of the image. Applying a different scale factor changes the size of the image as reported by the `size` property.
+    convenience init?(base64String: String, scale: CGFloat = 1.0) {
+        guard let data = Data(base64Encoded: base64String) else { return nil }
+        self.init(data: data, scale: scale)
     }
 
     convenience init(view: UIView) {
