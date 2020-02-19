@@ -86,6 +86,7 @@ extension ViewController {
         notif.anyData = nil //If you need grab any data to handler on Delegate
         notif.setDesc = "Description on received message"
         notif.setTitle = "Title on received message"
+        notif.setHeight = LCEssentials.X_DEVICES ? 130 : 100
         notif.show()
     }
     

@@ -63,6 +63,7 @@
 		A513321E72C7298A95562C598C87D1A4 /* LCEssentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20AB889BA4AD39854F511B350309A2A9 /* LCEssentials.swift */; };
 		A880CD49AA06446F7197D46E25E2D9B5 /* LCEssentials+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBEE7F0B62E9E3AABF015266ADE271E /* LCEssentials+UIImage.swift */; };
 		AFC64B1097F7355FF423D6A73E9C7210 /* TaskDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C759635F88377BD7E2DEDE04C23C62 /* TaskDelegate.swift */; };
+		B12F606523D7A30400A5F3BD /* LCEssentials+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12F606423D7A30400A5F3BD /* LCEssentials+Data.swift */; };
 		B145183123CA6F5F00E92856 /* LCEssentials+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B145183023CA6F5F00E92856 /* LCEssentials+Dictionary.swift */; };
 		B145183323CA6F6D00E92856 /* LCEssentials+Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = B145183223CA6F6D00E92856 /* LCEssentials+Bool.swift */; };
 		B145183523CA6FAF00E92856 /* LCEssentials+EncodableDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B145183423CA6FAF00E92856 /* LCEssentials+EncodableDecodable.swift */; };
@@ -185,6 +186,7 @@
 		AE15F4847C4BE0C93FE743C28DE20123 /* LCEssentials+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Alamofire.swift"; sourceTree = "<group>"; };
 		AFF7F7716086D54E6308EE52C8227B87 /* DispatchQueue+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Alamofire.swift"; path = "Source/DispatchQueue+Alamofire.swift"; sourceTree = "<group>"; };
 		B06639F7A76DB8A9D0D0E41CDD7A6684 /* Notifications.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Notifications.swift; path = Source/Notifications.swift; sourceTree = "<group>"; };
+		B12F606423D7A30400A5F3BD /* LCEssentials+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Data.swift"; sourceTree = "<group>"; };
 		B145183023CA6F5F00E92856 /* LCEssentials+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Dictionary.swift"; sourceTree = "<group>"; };
 		B145183223CA6F6D00E92856 /* LCEssentials+Bool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Bool.swift"; sourceTree = "<group>"; };
 		B145183423CA6FAF00E92856 /* LCEssentials+EncodableDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+EncodableDecodable.swift"; sourceTree = "<group>"; };
@@ -468,6 +470,7 @@
 				B145183023CA6F5F00E92856 /* LCEssentials+Dictionary.swift */,
 				B145183223CA6F6D00E92856 /* LCEssentials+Bool.swift */,
 				B145183623CB6BE200E92856 /* LCEssentials+UIStackView.swift */,
+				B12F606423D7A30400A5F3BD /* LCEssentials+Data.swift */,
 			);
 			name = Classes;
 			path = LCEssentials/Classes;
@@ -733,6 +736,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B12F606523D7A30400A5F3BD /* LCEssentials+Data.swift in Sources */,
 				2294DF76D10AE6D0473E7BAF18286B77 /* DatePickerViewController.swift in Sources */,
 				E2C176FBF94886F2D7B9DB673A751D02 /* GifHelper.swift in Sources */,
 				F52B25F8C73943CDBF77F6D1A38F61F2 /* ImageZoom.swift in Sources */,
