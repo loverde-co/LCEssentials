@@ -25,9 +25,9 @@ import Alamofire
 
 public struct API {
     static let defaultError = NSError(domain: LCEssentials().DEFAULT_ERROR_DOMAIN, code: LCEssentials().DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "Unknown error" ])
-    static var persistConnectionDelay: Double = 3
-    static var headers: HTTPHeaders = ["Accept": "application/json"]
-    static var defaultParams: [String:Any]!
+    public static var persistConnectionDelay: Double = 3
+    public static var headers: HTTPHeaders = ["Accept": "application/json"]
+    public static var defaultParams: [String:Any]!
     
     static func processRequest(requestResponse: DataResponse<Any>, withAction: String, withDictParams: [String:Any]?, jsonEncoding: Bool = false, debug:Bool, persistConnection:Bool, completions: @escaping(Any?, NSError?)->()){
         if debug { printLog(section: "API \((requestResponse.request?.httpMethod)!) - RESPONSE", description: (NSString(data: (requestResponse.request?.httpBody)!, encoding: String.Encoding.utf8.rawValue)!) as String) }
