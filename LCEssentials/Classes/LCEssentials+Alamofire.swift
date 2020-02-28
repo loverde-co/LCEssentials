@@ -21,6 +21,7 @@
  
 
 import UIKit
+#if os(iOS)
 import Alamofire
 
 public struct API {
@@ -29,12 +30,12 @@ public struct API {
     public static var headers: HTTPHeaders = ["Accept": "application/json"]
     public static var defaultParams: [String:Any]!
     
-    static func processRequest(requestResponse: DataResponse<Any>, withAction: String, withDictParams: [String:Any]?, jsonEncoding: Bool = false, debug:Bool, persistConnection:Bool, completions: @escaping(Any?, NSError?)->()){
+    static func processRequest(requestResponse: AFDataResponse<Any>, withAction: String, withDictParams: [String:Any]?, jsonEncoding: Bool = false, debug:Bool, persistConnection:Bool, completions: @escaping(Any?, NSError?)->()){
         if debug { printLog(section: "API \((requestResponse.request?.httpMethod)!) - RESPONSE", description: (NSString(data: (requestResponse.request?.httpBody)!, encoding: String.Encoding.utf8.rawValue)!) as String) }
         switch (requestResponse.result) {
         case .success:
             if debug { printInfo(title: "API \((requestResponse.request?.httpMethod)!) - RESPONSE SUCCESS", msg: "URI: \(withAction) - RESPONSE: \(requestResponse.debugDescription)") }
-            let json = (requestResponse.result.value as! [String: Any]).toJSON()
+            let json = (requestResponse.value as! [String: Any]).toJSON()
             completions(json, nil)
             break
         case .failure(let error):
@@ -58,7 +59,7 @@ public struct API {
                 if debug { printError(title: "API \((requestResponse.request?.httpMethod)!) - RESPONSE ERROR BG SESSION DISCONNECTED", msg: "URI: \(withAction) - RESPONSE: \(requestResponse.debugDescription)") }
             }
             
-            completions(nil, requestResponse.result.error! as NSError)
+            completions(nil, requestResponse.error! as NSError)
             
             break
         }
@@ -70,10 +71,10 @@ extension API {
     //MARK: - POST
     public static func post(withAction: String, withDictParams: [String:Any]?, jsonEncoding: Bool = false, debug:Bool = true, persistConnection:Bool = false, showStringParseError: Bool = false, completions: ((Any?) -> Void)? = nil){
         
-        let manager: SessionManager = {
+        let manager: Session = {
             let configuration = URLSessionConfiguration.default
             configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
-            return SessionManager(configuration: configuration)
+            return Session(configuration: configuration)
         }()
         //
         //
@@ -102,10 +103,10 @@ extension API {
                             })
                         })
                     }else{
-                        completions?(response.result.error)
+                        completions?(response.error)
                     }
                 }else{
-                    completions?(response.result.value)
+                    completions?(response.value)
                 }
             })
             manager.session.invalidateAndCancel()
@@ -114,10 +115,10 @@ extension API {
     
     //MARK: - GET
     public static func get(withAction: String, withDictParams: [String:Any]?, debug:Bool = true, persistConnection:Bool = false, showStringParseError: Bool = false, completions: ((Any?) -> Void)? = nil){
-        let manager: SessionManager = {
+        let manager: Session = {
             let configuration = URLSessionConfiguration.default
             configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
-            return SessionManager(configuration: configuration)
+            return Session(configuration: configuration)
         }()
         //
         //
@@ -146,13 +147,14 @@ extension API {
                             })
                         })
                     }else{
-                        completions?(response.result.error)
+                        completions?(response.error)
                     }
                 }else{
-                    completions?(response.result.value)
+                    completions?(response.value)
                 }
             })
             manager.session.invalidateAndCancel()
         }
     }
 }
+#endif

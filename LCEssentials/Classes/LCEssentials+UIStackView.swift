@@ -22,6 +22,7 @@
 
 import Foundation
 import UIKit
+#if os(iOS)
 
 // MARK: - Initializers
 @available(iOS 9.0, *)
@@ -68,3 +69,4 @@ public extension UIStackView {
     }
 
 }
+#endif
