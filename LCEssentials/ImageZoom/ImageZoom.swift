@@ -54,6 +54,12 @@ import UIKit
         }
     }
     
+    static public func instantiate() -> ImageZoomController {
+        let instance: ImageZoomController = ImageZoomController.instantiate(storyBoard: "ImageZoomController", identifier: ImageZoomController.identifier)
+        instance.loadView()
+        return instance
+    }
+    
     private func scrollViewDidZoom(_ scrollView: UIScrollView) {
         delegate?.imageZoomController?(controller: self, didZoom: self.setImage)
     }
