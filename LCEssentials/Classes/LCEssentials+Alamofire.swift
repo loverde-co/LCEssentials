@@ -31,7 +31,7 @@ public struct API {
     public static var defaultParams: [String:Any]!
     
     static func processRequest(requestResponse: AFDataResponse<Any>, withAction: String, withDictParams: [String:Any]?, jsonEncoding: Bool = false, debug:Bool, persistConnection:Bool, completions: @escaping(Any?, NSError?)->()){
-        if debug { printLog(section: "API \((requestResponse.request?.httpMethod)!) - RESPONSE", description: (NSString(data: (requestResponse.request?.httpBody)!, encoding: String.Encoding.utf8.rawValue)!) as String) }
+        if debug { printLog(section: "API \((requestResponse.request?.httpMethod)!) - RESPONSE", description: (NSString(data: requestResponse.request?.httpBody ?? Data(), encoding: String.Encoding.utf8.rawValue)!) as String) }
         switch (requestResponse.result) {
         case .success:
             if debug { printInfo(title: "API \((requestResponse.request?.httpMethod)!) - RESPONSE SUCCESS", msg: "URI: \(withAction) - RESPONSE: \(requestResponse.debugDescription)") }

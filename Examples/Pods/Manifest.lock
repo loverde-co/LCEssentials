@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (5.0.2)
-  - LCEssentials (0.3.3):
+  - LCEssentials (0.3.4):
     - Alamofire
 
 DEPENDENCIES:
@@ -17,7 +17,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 3ba7a4db18b4f62c4a1c0e1cb39d7f3d52e10ada
-  LCEssentials: 9187f5f941fb01ee5937bb5f4db8e84931cc29ef
+  LCEssentials: 1016c04608e6877cbc336a2bc9a360b5861305c7
 
 PODFILE CHECKSUM: 5cc32ba05ffad8e1bd1bd7b630348bd5ad8012e8
 
