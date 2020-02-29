@@ -31,8 +31,8 @@ import UIKit
 
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
-    var setImage: UIImage!
-    var addGestureToDismiss: Bool = true
+    public var setImage: UIImage!
+    public var addGestureToDismiss: Bool = true
     public var delegate : ImageZoomControllerDelegate?
     
     private var minimumVelocityToHide: CGFloat = 1500
