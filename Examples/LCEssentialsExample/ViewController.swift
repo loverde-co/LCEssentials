@@ -53,6 +53,20 @@ class ViewController: UIViewController {
         datePickerController.delegate = self
         datePickerController.setWidth = self.view.bounds.width
         datePickerController.setDistanceFromBottom = 50
+        
+        API.headers = ["Authorization": "Client-ID 1ceddedc03a5d71"]
+        API.get(withAction: "https://api.imgur.com/3/gallery/search/?q=cats", withDictParams: nil, debug: true) { (result) in
+            if result is Error {
+                printError(title: "RESULT", msg: (result as! Error).localizedDescription)
+            }else{
+                if let json = result as? String {
+                    printInfo(title: "RESULT", msg: json)
+                }else{
+                    printInfo(title: "", msg: result.debugDescription)
+                }
+                //completion(result)
+            }
+        }
     }
 }
 
