@@ -35,8 +35,9 @@ public struct API {
         switch (requestResponse.result) {
         case .success:
             if debug { printInfo(title: "API \((requestResponse.request?.httpMethod)!) - RESPONSE SUCCESS", msg: "URI: \(withAction) - RESPONSE: \(requestResponse.debugDescription)") }
-            let json = (requestResponse.value as! [String: Any]).toJSON()
-            completions(json, nil)
+            //let json = (requestResponse.value as! [String: Any]).toJSON()
+            let dict = requestResponse.value as! [String: Any]
+            completions(dict, nil)
             break
         case .failure(let error):
             if debug { printError(title: "API \((requestResponse.request?.httpMethod)!) - RESPONSE ERROR", msg: "URI: \(withAction) - RESPONSE: \(requestResponse.debugDescription)") }
