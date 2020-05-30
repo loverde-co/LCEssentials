@@ -76,6 +76,16 @@ public extension String {
         return replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\n", with: "")
     }
     
+    /// Loverde Co.: Replace Dictionaryes parameters to URL String.
+    @discardableResult
+    func replaceURL(_ withDict: [String:Any]) -> String {
+        var strOutput = self
+        for (key, Value) in withDict {
+            strOutput = strOutput.replaceFirst(of: "{\(key)}", with: "\(Value)")
+        }
+        return strOutput
+    }
+    
     var isEmailValid: Bool {
         do {
             let regex = try NSRegularExpression(pattern: "(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])", options: .caseInsensitive)
@@ -334,6 +344,61 @@ public extension String {
     //        //let digest = md5(string:"Hello")
     //        //print("digest: \(digest)")
     //    }
+    
+    /// Verifica se o texto equivale a verdadeiro ou falso.
+    func validateBolean(text:String?, comparingBoolean:Bool = true) ->Bool{
+
+        guard text != nil else {
+            return false
+        }
+
+        if(comparingBoolean)
+        {
+            if (text!.uppercased() == "TRUE") {return true}
+            if (text!.uppercased() == "YES") {return true}
+            if (text!.uppercased() == "ON") {return true}
+            if (text!.uppercased() == "ONLINE") {return true}
+            if (text!.uppercased() == "ENABLE") {return true}
+            if (text!.uppercased() == "ACTIVATED") {return true}
+            if (text!.uppercased() == "ONE") {return true}
+            //
+            if (text!.uppercased() == "VERDADEIRO") {return true}
+            if (text!.uppercased() == "SIM") {return true}
+            if (text!.uppercased() == "LIGADO") {return true}
+            if (text!.uppercased() == "ATIVO") {return true}
+            if (text!.uppercased() == "ATIVADO") {return true}
+            if (text!.uppercased() == "HABILITADO") {return true}
+            if (text!.uppercased() == "UM") {return true}
+            //
+            if (text!.uppercased() == "1") {return true}
+            if (text!.uppercased() == "T") {return true}
+            if (text!.uppercased() == "Y") {return true}
+            if (text!.uppercased() == "S") {return true}
+        }
+        else
+        {
+            if (text!.uppercased() == "FALSE") {return true}
+            if (text!.uppercased() == "NO") {return true}
+            if (text!.uppercased() == "OFF") {return true}
+            if (text!.uppercased() == "OFFLINE") {return true}
+            if (text!.uppercased() == "DISABLED") {return true}
+            if (text!.uppercased() == "DEACTIVATED") {return true}
+            if (text!.uppercased() == "ZERO") {return true}
+            //
+            if (text!.uppercased() == "FALSO") {return true}
+            if (text!.uppercased() == "NÃO") {return true}
+            if (text!.uppercased() == "NAO") {return true}
+            if (text!.uppercased() == "DESLIGADO") {return true}
+            if (text!.uppercased() == "DESATIVADO") {return true}
+            if (text!.uppercased() == "DESABILITADO") {return true}
+            //
+            if (text!.uppercased() == "0") {return true}
+            if (text!.uppercased() == "F") {return true}
+            if (text!.uppercased() == "N") {return true}
+        }
+
+        return false;
+    }
 
     func randomString(length: Int) -> String {
 

@@ -39,6 +39,17 @@ class ViewController: UIViewController {
         tableView.reloadData()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
 
+        API.url = "https://api.github.com/users/{user}"
+        API.connect(["user": "loverde-co"] as [String:Any], .get) { (result) in
+            switch result {
+            case .failure(let error):
+                print("Deu ruim \(error.localizedDescription)")
+                break
+            case .success(let json):
+                print("JSON STRING ===> "+(json as! String))
+                break
+            }
+        }
         
         //MARK: - Set Picker Controller
         pickerController.setSelectedRowIndex = 0

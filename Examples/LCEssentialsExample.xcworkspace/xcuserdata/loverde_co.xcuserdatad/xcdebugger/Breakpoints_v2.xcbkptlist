@@ -14,8 +14,8 @@
             filePath = "LCEssentialsExample/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,8 +62,8 @@
             filePath = "LCEssentialsExample/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
             landmarkName = "datePickerViewController(didCancel:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -158,8 +158,8 @@
             filePath = "LCEssentialsExample/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "tableView(_:numberOfRowsInSection:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -174,8 +174,8 @@
             filePath = "LCEssentialsExample/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "openMessageAlert()"
             landmarkType = "7">
          </BreakpointContent>
@@ -206,8 +206,8 @@
             filePath = "../LCEssentials/Classes/LCEssentials+Alamofire.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
             landmarkName = "get(withAction:withDictParams:debug:persistConnection:showStringParseError:completions:)"
             landmarkType = "7">
             <Locations>
@@ -254,8 +254,8 @@
             filePath = "../LCEssentials/Classes/LCEssentials+Alamofire.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
             landmarkName = "processRequest(requestResponse:withAction:withDictParams:jsonEncoding:debug:persistConnection:completions:)"
             landmarkType = "7">
             <Locations>
@@ -302,8 +302,8 @@
             filePath = "../LCEssentials/Classes/LCEssentials+Alamofire.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
             landmarkName = "processRequest(requestResponse:withAction:withDictParams:jsonEncoding:debug:persistConnection:completions:)"
             landmarkType = "7">
             <Locations>
@@ -365,8 +365,8 @@
             filePath = "../LCEssentials/Classes/LCEssentials+Alamofire.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
             landmarkName = "get(withAction:withDictParams:debug:persistConnection:showStringParseError:completions:)"
             landmarkType = "7">
          </BreakpointContent>
