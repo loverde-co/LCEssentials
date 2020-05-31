@@ -183,7 +183,7 @@ open class Location: NSObject, CLLocationManagerDelegate {
             
             geoCoder.geocodePostalAddress(postalAddress) { (placemarks, error) in
                 guard let founded = placemarks, let location = founded.first?.location else {
-                    let error = NSError(domain: LCEssentials().DEFAULT_ERROR_DOMAIN, code: LCEssentials().DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "Endereço não encontrado." ])
+                    let error = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN, code: LCEssentials.DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "Endereço não encontrado." ])
                     completion(nil, error)
                     return
                 }
@@ -198,7 +198,7 @@ open class Location: NSObject, CLLocationManagerDelegate {
             geoCoder.geocodeAddressString(address) { (placemarks, error) in
                 if let locais = placemarks {
                     guard let location = locais.first?.location else {
-                        let error = NSError(domain: LCEssentials().DEFAULT_ERROR_DOMAIN, code: LCEssentials().DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "Endereço não encontrado." ])
+                        let error = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN, code: LCEssentials.DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "Endereço não encontrado." ])
                         completion(nil, error)
                         return
                     }
@@ -206,7 +206,7 @@ open class Location: NSObject, CLLocationManagerDelegate {
                 }else{
                     geoCoder.geocodeAddressDictionary(params) { (placemarks, error) in
                         guard let founded = placemarks, let location = founded.first?.location else {
-                            let error = NSError(domain: LCEssentials().DEFAULT_ERROR_DOMAIN, code: LCEssentials().DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "Endereço não encontrado." ])
+                            let error = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN, code: LCEssentials.DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "Endereço não encontrado." ])
                             completion(nil, error)
                             return
                         }

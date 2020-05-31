@@ -5,8 +5,8 @@ def shared_pods
   # project 'Examples/LCEssentials.xcodeproj'
 
   # - Swift Essentials
-  pod 'Alamofire'
   pod 'LCEssentials', :path => '../'
+  # pod 'Alamofire' - for dependency
 end
 
 target 'LCEssentialsExample' do

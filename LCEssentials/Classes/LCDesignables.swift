@@ -578,11 +578,7 @@ open class UIButtomCustom: UIButton {
             self.layer.addSublayer(border)
         }
     }
-//    @IBInspectable open var cornerRadius: CGFloat = 0 {
-//        didSet {
-//            layer.cornerRadius = cornerRadius
-//        }
-//    }
+    
     
     @IBInspectable open var setBorderWidth: CGFloat = 0.0 {
         didSet {
@@ -594,31 +590,6 @@ open class UIButtomCustom: UIButton {
             self.color = setBorderColor
         }
     }
-    
-    //    @IBInspectable var gradientFirstColor: UIColor! {
-    //        didSet {
-    //            self.gradientColorTop = gradientFirstColor
-    //        }
-    //    }
-    //
-    //    @IBInspectable var gradientSecondColor: UIColor! {
-    //        didSet {
-    //            self.gradientColorBottom = gradientSecondColor
-    //        }
-    //    }
-    //
-    //    @IBInspectable var transparentFirstColor: Bool! {
-    //        didSet {
-    //            self.gradientColorTop? = gradientFirstColor.withAlphaComponent(0)
-    //        }
-    //    }
-    //
-    //    @IBInspectable var transparentSecondColor: Bool! {
-    //        didSet {
-    //            self.gradientColorBottom? = gradientSecondColor.withAlphaComponent(0)
-    //        }
-    //    }
-    //
     override open func layoutSubviews() {
         super.layoutSubviews()
         
@@ -632,26 +603,6 @@ open class UIButtomCustom: UIButton {
         //            self.addGradient()
         //        }
     }
-    //
-    //    func addGradient(){
-    //        let gradient = CAGradientLayer()
-    //        let color01: UIColor!
-    //        let color02: UIColor!
-    //        gradient.frame = self.bounds
-    //        if transparentFirstColor {
-    //            color01 = self.gradientColorTop?.withAlphaComponent(0)
-    //        }else{
-    //            color01 = self.gradientColorTop
-    //        }
-    //        if transparentSecondColor {
-    //            color02 = self.gradientColorBottom?.withAlphaComponent(0)
-    //        }else{
-    //            color02 = self.gradientColorBottom
-    //        }
-    //        gradient.colors = [color01.cgColor, color02.cgColor]
-    //
-    //        self.layer.insertSublayer(gradient, at: 0)
-    //    }
     
     @IBInspectable open var shadow: Bool {
         get {
@@ -674,6 +625,45 @@ open class UIButtomCustom: UIButton {
         layer.shadowOpacity = shadowOpacity
         layer.shadowRadius = shadowRadius
     }
+    
+    open override class var layerClass: AnyClass {
+            get {
+                return CAGradientLayer.self
+            }
+        }
+
+        @IBInspectable var isHorizontal: Bool = true {
+            didSet {
+                updateView()
+            }
+        }
+
+         @IBInspectable var firstColor: UIColor = UIColor.clear {
+            didSet {
+                updateView()
+            }
+         }
+         @IBInspectable var secondColor: UIColor = UIColor.clear {
+            didSet {
+                updateView()
+        }
+    }
+
+    private func updateView() {
+        guard let layer = self.layer as? CAGradientLayer else {
+            return
+        }
+        layer.colors = [firstColor, secondColor].map{$0.cgColor}
+
+        if self.isHorizontal {
+           layer.startPoint = CGPoint(x: 0, y: 0.5)
+           layer.endPoint = CGPoint (x: 1, y: 0.5)
+
+        } else {
+           layer.startPoint = CGPoint(x: 0.5, y: 0)
+           layer.endPoint = CGPoint (x: 0.5, y: 1)
+        }
+    }
 }
 
 //MARK: - UIImageView
@@ -682,10 +672,10 @@ let imageCache = NSCache<NSString, UIImage>()
     
     open var imageUrlString: String?
     
-    open func loadImageUsingUrlString(urlString: String, defaultImage: UIImage?, completion:@escaping(UIImageViewCustom?, Error?)->()) {
+    open func downloadFrom(urlString: String, defaultImage: UIImage?, completion:@escaping(UIImageViewCustom?, Error?)->()) {
         
         imageUrlString = urlString
-        let error = NSError(domain: LCEssentials().DEFAULT_ERROR_DOMAIN, code: LCEssentials().DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "URL is wrong format." ])
+        let error = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN, code: LCEssentials.DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "URL is wrong format." ])
         guard let url = URL(string: urlString) else { completion(nil, error); return }
         
         image = defaultImage
@@ -710,6 +700,7 @@ let imageCache = NSCache<NSString, UIImage>()
                     
                     imageCache.setObject(imageToCache, forKey: urlString as NSString)
                     completion(self, nil)
+                    return
                 }
             }
         }).resume()
@@ -741,10 +732,6 @@ let imageCache = NSCache<NSString, UIImage>()
 }
 
 //MARK: - UILabel
-@IBDesignable open class CustomTabBadge: UILabel {
-    
-}
-
 @IBDesignable open class CustomUILabel: UILabel {
     override open func drawText(in rect: CGRect) {
         if let stringText = text {

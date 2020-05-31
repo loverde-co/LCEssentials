@@ -71,9 +71,10 @@ extension Dictionary {
         let output: T = try! JSONHelper.decode(jsonString)
         return output
     }
-//    public func convertToObject<T: Decodable>() throws -> T {
-//        return try JSONDecoder().decode(T.self, from: JSONSerialization.data(withJSONObject: self, options: []))
-//    }
+    
+    /// - LoverdeCo: Convert Dictonary to JSON
+    ///
+    /// - returns: JSON String
     public func toJSON() -> String {
         let jsonData = try! JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted)
         let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String

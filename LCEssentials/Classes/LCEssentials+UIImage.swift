@@ -68,10 +68,67 @@ public extension UIImage {
         return newImage!
     }
     
-    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
-    func decodeBase64ToImage(stringBase64:String) -> UIImage {
-        let imageData = Data(base64Encoded: stringBase64, options: .ignoreUnknownCharacters)
-        return UIImage(data: imageData!)!
+    /// Verifica se a imagem instanciada é uma animação.
+    /// - Returns: O retorno será 'true' para imagens animadas e 'false' para imagens normais.
+    func isAnimated() -> Bool {
+        if ((self.images?.count ?? 0) > 1) {
+            return true
+        }
+        return false
+    }
+    
+    
+    /// Cria o `thumbnail` da imagem.
+    /// - Parameter maxPixelSize: Máxima dimensão que o thumb deve ter.
+    /// - Returns: Retorna uma nova instância cópia do objeto imagem original.
+    func createThumbnail(_ maxPixelSize:UInt) -> UIImage {
+        
+        if self.size.width == 0 || self.size.height == 0 || self.isAnimated() {
+            return self
+        }
+        
+        if let data = UIImagePNGRepresentation(self) {
+            let imageSource:CGImageSource = CGImageSourceCreateWithData(data as CFData, nil)!
+            //
+            var options: [NSString:Any] = Dictionary()
+            options[kCGImageSourceThumbnailMaxPixelSize] = maxPixelSize
+            options[kCGImageSourceCreateThumbnailFromImageAlways] = true
+            //
+            if let scaledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary) {
+                let finalImage = UIImage.init(cgImage: scaledImage)
+                return finalImage
+            }
+        }
+        
+        return self
+    }
+    
+    /// Aplica uma máscara na imagem base, gerando uma nova imagem 'vazada'. A máscara deve conter canal alpha, que definirá a visibilidade final da imagem resultante.
+    func maskWithAlphaImage(maskImage:UIImage) -> UIImage {
+        
+        if self.cgImage == nil || maskImage.cgImage == nil || self.size.width == 0 || self.size.height == 0 || self.isAnimated() {
+            return self
+        }
+        
+        let filterName = "CIBlendWithAlphaMask"
+        
+        let inputImage = CIImage.init(cgImage: self.cgImage!)
+        let inputMaskImage = CIImage.init(cgImage: maskImage.cgImage!)
+        
+        let context:CIContext = CIContext.init()
+        
+        if let ciFilter:CIFilter = CIFilter.init(name: filterName) {
+            ciFilter.setValue(inputImage, forKey: kCIInputImageKey)
+            ciFilter.setValue(inputMaskImage, forKey: kCIInputMaskImageKey)
+            //
+            if let outputImage:CIImage = ciFilter.outputImage {
+                let cgimg:CGImage = context.createCGImage(outputImage, from: outputImage.extent)!
+                let newImage:UIImage = UIImage.init(cgImage: cgimg, scale: self.scale, orientation: self.imageOrientation)
+                return newImage
+            }
+        }
+        
+        return self
     }
 
     /// SwifterSwift: Create a new image from a base 64 string.

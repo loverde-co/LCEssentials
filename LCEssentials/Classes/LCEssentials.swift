@@ -56,9 +56,9 @@ public enum EnumBorderSide {
 }
 
 public struct LCEssentials {
-    public let DEFAULT_ERROR_DOMAIN = "LoverdeCoErrorDomain"
-    public let DEFAULT_ERROR_CODE = -99
-    public let DEFAULT_ERROR_MSG = "Error Unknow"
+    public static let DEFAULT_ERROR_DOMAIN = "LoverdeCoErrorDomain"
+    public static let DEFAULT_ERROR_CODE = -99
+    public static let DEFAULT_ERROR_MSG = "Error Unknow"
     
     #if os(iOS) || os(macOS)
     public let DEVICE_NAME: String = UIDevice().modelName
@@ -296,7 +296,7 @@ public struct LCEssentials {
     #endif
     
     #if os(iOS) || os(tvOS)
-    /// - LoverdeCo: Most top view controller (if applicable).
+    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
     public static var mostTopViewController: UIViewController? {
         get {
             return UIApplication.shared.keyWindow?.rootViewController
@@ -304,6 +304,20 @@ public struct LCEssentials {
         set {
             UIApplication.shared.keyWindow?.rootViewController = newValue
         }
+    }
+    /// - LoverdeCo: Most top view controller (if applicable).
+    public static func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+
+        if let nav = base as? UINavigationController {
+            return getTopViewController(base: nav.visibleViewController)
+
+        } else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            return getTopViewController(base: selected)
+
+        } else if let presented = base?.presentedViewController {
+            return getTopViewController(base: presented)
+        }
+        return base
     }
     #endif
     
@@ -345,23 +359,12 @@ public struct LCEssentials {
 public extension LCEssentials {
     
     #if os(iOS) || os(macOS)
-    /// - LoverdeCo: add collectionView Flow Layout config
-    ///
-    func setupCollectionView(collectionView: UICollectionView, spacings: CGFloat = 0, direction: UICollectionView.ScrollDirection = .horizontal, edgesInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), allowMulpleSelection: Bool = false){
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = edgesInset
-        layout.minimumInteritemSpacing = spacings
-        layout.minimumLineSpacing = spacings
-        layout.scrollDirection = direction
-        collectionView.collectionViewLayout = layout
-        collectionView.allowsMultipleSelection = allowMulpleSelection
-    }
     /// - LoverdeCo: Share link with message
     ///
     /// - Parameters:
     ///   - message: String with message you whant to send
     ///   - url: String with url you want to share
-    func shareApp(message:String = "", url: String){
+    static func shareApp(message:String = "", url: String){
         let textToShare = message
         let root = UIApplication.shared.keyWindow?.rootViewController
         if let myWebsite = NSURL(string: url) {
@@ -371,6 +374,19 @@ public extension LCEssentials {
             activityVC.popoverPresentationController?.sourceView = root?.view
             root?.modalPresentationStyle = .fullScreen
             root?.present(activityVC, animated: true, completion: nil)
+        }
+    }
+    
+    #endif
+    static func call(_ number: String!) {
+        if let url = URL(string: "tel://" + number) {
+            UIApplication.shared.canOpenURL(url)
+        }
+    }
+    #if os(iOS) || os(macOS)
+    static func openSafari(_ urlStr: String){
+        if let url = URL(string: urlStr) {
+            UIApplication.shared.canOpenURL(url)
         }
     }
     #endif
@@ -397,13 +413,6 @@ public extension LCEssentials {
             appDelegate?.window??.rootViewController = to
             if( completion != nil ){ completion!() }
         })
-    }
-    #endif
-    
-    #if os(iOS) || os(macOS)
-    //MARK: - Instance View Controllers Thru Storyboard
-    static func instanceViewController(_ storyBoardName:String = "Intro", withIdentifier: String = "mainIntro" ) -> UIViewController {
-        return UIStoryboard(name: storyBoardName, bundle: nil).instantiateViewController(withIdentifier: withIdentifier)
     }
     #endif
     
@@ -459,33 +468,6 @@ public extension LCEssentials {
 }
 
 
-#if os(iOS) || os(macOS)
-// MARK: - Extensions
-extension UITableViewCell {
-    public static var identifier: String {
-        
-        return "id"+String(describing: self)
-    }
-    public func prepareDisclosureIndicator() {
-        for case let button as UIButton in subviews {
-            let image = button.backgroundImage(for: .normal)?.withRenderingMode(.
-                alwaysTemplate)
-            button.setBackgroundImage(image, for: .normal)
-        }
-    }
-}
-extension UICollectionReusableView {
-    public static var identifier: String {
-        return "id"+String(describing: self)
-    }
-}
-extension Collection where Indices.Iterator.Element == Index {
-    subscript (exist index: Index) -> Iterator.Element? {
-        return indices.contains(index) ? self[index] : nil
-    }
-}
-#endif
-
 //MARK: - JSON Helper Codable/Decodable
 public struct JSONHelper<T: Codable> {
     
@@ -526,42 +508,5 @@ public struct JSONHelper<T: Codable> {
             throw NSError(domain: "JSONEcoding", code: 0, userInfo: nil)
         }
         return json
-    }
-    
-    /// - LoverdeCo: Convert object to dictionary
-    ///
-    /// - returns: [String:Any]
-    
-    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
-    public static func objectToDictionary() -> [String:Any] {
-        var dict = [String:Any]()
-        let otherSelf = Mirror(reflecting: T.self)
-        for child in otherSelf.children {
-            if let key = child.label {
-                dict[key] = child.value
-            }
-        }
-        return dict
-    }
-    
-    /// - LoverdeCo: convert dictionary to object
-    ///
-    /// - Parameter dict: [String:Any]
-    /// - returns: Object: Codable/Decodable
-    
-    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
-    public static func dictionaryToObject(dict: [String:Any]) -> T {
-        let json = String().dictionaryToStringJSON(dict: dict)
-        return try! self.decode(json)
-    }
-    
-    /// - LoverdeCo: Decode Object to JSON string
-    ///
-    /// - returns: String
-    
-    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
-    public static func convertToJsonStr() -> String{
-        let dic = self.objectToDictionary()
-        return String().dictionaryToStringJSON(dict: dic)
     }
 }

@@ -22,6 +22,9 @@
 
 import Foundation
 #if os(iOS) || os(macOS)
+@IBDesignable open class CustomTabBadge: UILabel {
+    
+}
 extension UITabBarController {
 
     public func setBadges(badgeValues: [Int]) {

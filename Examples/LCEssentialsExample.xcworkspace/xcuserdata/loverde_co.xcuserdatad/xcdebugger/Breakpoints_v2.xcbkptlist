@@ -14,8 +14,8 @@
             filePath = "LCEssentialsExample/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,8 +62,8 @@
             filePath = "LCEssentialsExample/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
             landmarkName = "datePickerViewController(didCancel:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -158,8 +158,8 @@
             filePath = "LCEssentialsExample/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
             landmarkName = "tableView(_:numberOfRowsInSection:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -174,8 +174,8 @@
             filePath = "LCEssentialsExample/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "openMessageAlert()"
             landmarkType = "7">
          </BreakpointContent>
@@ -193,181 +193,6 @@
             startingLineNumber = "92"
             endingLineNumber = "92"
             landmarkName = "show()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "507DBF53-B11A-42D1-AD38-92FE10E26214"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../LCEssentials/Classes/LCEssentials+Alamofire.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "254"
-            endingLineNumber = "254"
-            landmarkName = "get(withAction:withDictParams:debug:persistConnection:showStringParseError:completions:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "507DBF53-B11A-42D1-AD38-92FE10E26214 - 99a94d6246aa9dda"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #3 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in static LCEssentials.API.get(withAction: Swift.String, withDictParams: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, debug: Swift.Bool, persistConnection: Swift.Bool, showStringParseError: Swift.Bool, completions: Swift.Optional&lt;(Swift.Optional&lt;Any&gt;) -&gt; ()&gt;) -&gt; ()"
-                  moduleName = "LCEssentials"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/loverde_co/Documents/Loverde%20-%20JOBs/Producao/Loverde%20Co/Framework/Repositorio/LCEssentials/Classes/LCEssentials+Alamofire.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "140"
-                  endingLineNumber = "140"
-                  offsetFromSymbolStart = "166">
-               </Location>
-               <Location
-                  uuid = "507DBF53-B11A-42D1-AD38-92FE10E26214 - 206bb894d9309eee"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Any&gt;, Swift.Optional&lt;__C.NSError&gt;) -&gt; () in closure #3 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in static LCEssentials.API.get(withAction: Swift.String, withDictParams: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, debug: Swift.Bool, persistConnection: Swift.Bool, showStringParseError: Swift.Bool, completions: Swift.Optional&lt;(Swift.Optional&lt;Any&gt;) -&gt; ()&gt;) -&gt; ()"
-                  moduleName = "LCEssentials"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/loverde_co/Documents/Loverde%20-%20JOBs/Producao/Loverde%20Co/Framework/Repositorio/LCEssentials/Classes/LCEssentials+Alamofire.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "125"
-                  endingLineNumber = "125"
-                  offsetFromSymbolStart = "386">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4FFDEECC-DBDF-46D0-A4F7-603A3F1C3175"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../LCEssentials/Classes/LCEssentials+Alamofire.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "processRequest(requestResponse:withAction:withDictParams:jsonEncoding:debug:persistConnection:completions:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "4FFDEECC-DBDF-46D0-A4F7-603A3F1C3175 - 7ae50d7b0d0cb843"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static LCEssentials.API.processRequest(requestResponse: Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;, withAction: Swift.String, withDictParams: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, jsonEncoding: Swift.Bool, debug: Swift.Bool, persistConnection: Swift.Bool, completions: (Swift.Optional&lt;Any&gt;, Swift.Optional&lt;__C.NSError&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "LCEssentials"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/loverde_co/Documents/Loverde%20-%20JOBs/Producao/Loverde%20Co/Framework/Repositorio/LCEssentials/Classes/LCEssentials+Alamofire.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "34"
-                  endingLineNumber = "34"
-                  offsetFromSymbolStart = "1134">
-               </Location>
-               <Location
-                  uuid = "4FFDEECC-DBDF-46D0-A4F7-603A3F1C3175 - 7ae50d7b0d0cb843"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static LCEssentials.API.processRequest(requestResponse: Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;, withAction: Swift.String, withDictParams: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, jsonEncoding: Swift.Bool, debug: Swift.Bool, persistConnection: Swift.Bool, completions: (Swift.Optional&lt;Any&gt;, Swift.Optional&lt;__C.NSError&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "LCEssentials"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/loverde_co/Documents/Loverde%20-%20JOBs/Producao/Loverde%20Co/Framework/Repositorio/LCEssentials/Classes/LCEssentials+Alamofire.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "34"
-                  endingLineNumber = "34"
-                  offsetFromSymbolStart = "1220">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CF6262AF-EAEF-4C8F-9D68-EF41CF9E807B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../LCEssentials/Classes/LCEssentials+Alamofire.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "processRequest(requestResponse:withAction:withDictParams:jsonEncoding:debug:persistConnection:completions:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "CF6262AF-EAEF-4C8F-9D68-EF41CF9E807B - 7ae50d7b0d0cb843"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static LCEssentials.API.processRequest(requestResponse: Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;, withAction: Swift.String, withDictParams: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, jsonEncoding: Swift.Bool, debug: Swift.Bool, persistConnection: Swift.Bool, completions: (Swift.Optional&lt;Any&gt;, Swift.Optional&lt;__C.NSError&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "LCEssentials"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/loverde_co/Documents/Loverde%20-%20JOBs/Producao/Loverde%20Co/Framework/Repositorio/LCEssentials/Classes/LCEssentials+Alamofire.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "37"
-                  endingLineNumber = "37"
-                  offsetFromSymbolStart = "3029">
-               </Location>
-               <Location
-                  uuid = "CF6262AF-EAEF-4C8F-9D68-EF41CF9E807B - 7ae50d7b0d0cb843"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static LCEssentials.API.processRequest(requestResponse: Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;, withAction: Swift.String, withDictParams: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, jsonEncoding: Swift.Bool, debug: Swift.Bool, persistConnection: Swift.Bool, completions: (Swift.Optional&lt;Any&gt;, Swift.Optional&lt;__C.NSError&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "LCEssentials"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/loverde_co/Documents/Loverde%20-%20JOBs/Producao/Loverde%20Co/Framework/Repositorio/LCEssentials/Classes/LCEssentials+Alamofire.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "37"
-                  endingLineNumber = "37"
-                  offsetFromSymbolStart = "3046">
-               </Location>
-               <Location
-                  uuid = "CF6262AF-EAEF-4C8F-9D68-EF41CF9E807B - 7ae50d7b0d0cb843"
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static LCEssentials.API.processRequest(requestResponse: Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;, withAction: Swift.String, withDictParams: Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;, jsonEncoding: Swift.Bool, debug: Swift.Bool, persistConnection: Swift.Bool, completions: (Swift.Optional&lt;Any&gt;, Swift.Optional&lt;__C.NSError&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "LCEssentials"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/loverde_co/Documents/Loverde%20-%20JOBs/Producao/Loverde%20Co/Framework/Repositorio/LCEssentials/Classes/LCEssentials+Alamofire.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "37"
-                  endingLineNumber = "37"
-                  offsetFromSymbolStart = "15729">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E6F73AA8-877F-4D11-A771-EF0E2C4A791D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../LCEssentials/Classes/LCEssentials+Alamofire.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
-            landmarkName = "get(withAction:withDictParams:debug:persistConnection:showStringParseError:completions:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

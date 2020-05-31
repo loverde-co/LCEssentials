@@ -26,6 +26,11 @@ import Foundation
 import QuartzCore
 
 public extension UIViewController {
+    
+    @objc func dismissSystemKeyboard() {
+        view.endEditing(true)
+    }
+    
     static var identifier: String {
         return "id"+String(describing: self)
     }

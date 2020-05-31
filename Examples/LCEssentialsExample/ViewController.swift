@@ -39,8 +39,9 @@ class ViewController: UIViewController {
         tableView.reloadData()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
 
+        
         API.url = "https://api.github.com/users/{user}"
-        API.connect(["user": "loverde-co"] as [String:Any], .get) { (result) in
+        API.request(["user": "loverde-co"] as [String:Any], .get) { (result) in
             switch result {
             case .failure(let error):
                 print("Deu ruim \(error.localizedDescription)")

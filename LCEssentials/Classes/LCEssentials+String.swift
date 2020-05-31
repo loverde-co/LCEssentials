@@ -848,34 +848,78 @@ public extension String {
         return self
     }
     
-    func textWithoutFormat() -> String {
-        return (self
-            .replacingOccurrences(of: "+", with: "")
-            .replacingOccurrences(of: ".", with: "")
-            .replacingOccurrences(of: "(", with: "")
-            .replacingOccurrences(of: ")", with: "")
-            .replacingOccurrences(of: ",", with: "")
-            .replacingOccurrences(of: "-", with: "")
-            .replacingOccurrences(of: " ", with: ""))
-    }
-    func formattedNumber(mask:String = "XXXXX-XXXX", number: String) -> String {
-        let cleanPhoneNumber = number.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+    /// Loverde Co.: Add mask to a text - Very simple to use
+    ///
+    /// - Parameter toText: String you want to maks
+    /// - Parameter mask: Using mask like sharp ##-#####(###)
+    func applyMask(toText: String, mask: String) -> String {
 
-        var result = ""
-        var index = cleanPhoneNumber.startIndex
-        for ch in mask {
-            if index == cleanPhoneNumber.endIndex {
-                break
-            }
-            if ch == "X" {
-                result.append(cleanPhoneNumber[index])
-                index = cleanPhoneNumber.index(after: index)
-            } else {
-                result.append(ch)
+        let toTextNSString = toText as NSString
+        let maskNSString = mask as NSString
+        
+        var onOriginal:Int = 0
+        var onFilter:Int = 0
+        var onOutput:Int = 0
+        var outputString = [Character](repeating: "\0", count:maskNSString.length)
+        var done:Bool = false
+
+        while (onFilter < maskNSString.length && !done) {
+
+            let filterChar:Character = Character(UnicodeScalar(maskNSString.character(at: onFilter))!)
+            let originalChar:Character = onOriginal >= toTextNSString.length ? "\0" : Character(UnicodeScalar(toTextNSString.character(at: onOriginal))!)
+
+            switch filterChar {
+            case "#":
+
+                if (originalChar == "\0") {
+                    // We have no more input numbers for the filter.  We're done.
+                    done = true
+                    break
+                }
+
+                if (CharacterSet.init(charactersIn: "0123456789").contains(UnicodeScalar(originalChar.unicodeScalarCodePoint())!)) {
+                    outputString[onOutput] = originalChar;
+                    onOriginal += 1
+                    onFilter += 1
+                    onOutput += 1
+                }else{
+                    onOriginal += 1
+                }
+
+            default:
+                // Any other character will automatically be inserted for the user as they type (spaces, - etc..) or deleted as they delete if there are more numbers to come.
+                outputString[onOutput] = filterChar;
+                onOutput += 1
+                onFilter += 1
+                if(originalChar == filterChar) {
+                    onOriginal += 1
+                }
             }
         }
-        return result
+
+        if (onOutput < outputString.count){
+            outputString[onOutput] = "\0" // Cap the output string
+        }
+
+        return String(outputString).replacingOccurrences(of: "\0", with: "")
     }
+    
+    /// Loverde Co.: Remove mask from a text - Very simple to use
+    ///
+    /// - Parameter fromText: String you want to remove maks
+    /// - Parameter charsMask: Used mask like sharp ##-#####(###)
+    func removeMask(fromText:String, charsMask:String) -> String{
+
+        var resultString = fromText;
+        //
+        for character in charsMask {
+            let str:String = String(character)
+            resultString = resultString.replacingOccurrences(of: str, with: "")
+        }
+        //
+        return resultString;
+    }
+    
     func stringByAddingPercentEncodingForRFC3986() -> String {
         let allowedQueryParamAndKey =  CharacterSet(charactersIn: ";/?:@&=+$, ").inverted
         return addingPercentEncoding(withAllowedCharacters: allowedQueryParamAndKey)!
@@ -904,5 +948,17 @@ public extension String {
             NSLog("replaceAll error: \(error)")
             return self
         }
+    }
+}
+
+
+extension Character
+{
+    func unicodeScalarCodePoint() -> UInt32
+    {
+        let characterString = String(self)
+        let scalars = characterString.unicodeScalars
+        
+        return scalars[scalars.startIndex].value
     }
 }
