@@ -4,7 +4,7 @@ Loverde Co. Essentials Swift Scripts
 ----
 > Writen in Swift 4.2 - XCode 11.3
 > 
-> iOS 10.+
+> iOS 11.+
 > 
 ----
 

@@ -24,15 +24,6 @@ import Foundation
 
 #if os(iOS) || os(macOS)
 public extension UITableView {
-    
-    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
-    func reloadDataWithCompletion(_ completion: @escaping ()->()) {
-        UIView.animate(withDuration: 0, animations: {
-            self.reloadData()
-        }, completion: { finished in
-            completion()
-        })
-    }
 
     /// SwifterSwift: Reload data with a completion handler.
     ///

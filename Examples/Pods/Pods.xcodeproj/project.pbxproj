@@ -78,6 +78,7 @@
 		AD9899986955B2EC1EC20818C860C971 /* RequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955C7B41827018BB1B59E447A617F1A6 /* RequestInterceptor.swift */; };
 		AF92602937CA016548022C600B8CDC16 /* URLSessionConfiguration+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2598222A405D08F1B87C0463420492F3 /* URLSessionConfiguration+Alamofire.swift */; };
 		B0B198968D10A62C954AB2F0BBF4DF3E /* LCEssentials+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE378F7E01862B9DD36BBF9C171D26C /* LCEssentials+UIImage.swift */; };
+		B11FC09924842FE0006B682B /* LCEssentials+UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11FC09824842FE0006B682B /* LCEssentials+UIScrollView.swift */; };
 		B1C58F6CED7B3E45170711D9ADF878AF /* Alamofire-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CA569E409E59A3A7C43E582FFFECC049 /* Alamofire-dummy.m */; };
 		B23E9A5CDA31534491226F4C2EE8F8E6 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774B0CF83AA71BBED2A70E4A0AE6D9CD /* HTTPMethod.swift */; };
 		B788B3354CCEBE56DFDB963CAFD7F6C2 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6818CB68941B73559573DB4F55FF2F /* Alamofire.swift */; };
@@ -215,6 +216,7 @@
 		AC2D99281AC4D5FC721CA34E87E2908A /* Pods-LCEssentialsExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LCEssentialsExample-dummy.m"; sourceTree = "<group>"; };
 		B0B912D70323E7F86DCD780B2231C472 /* AFError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AFError.swift; path = Source/AFError.swift; sourceTree = "<group>"; };
 		B10C8F9E06508E092A2A31B8282417E9 /* ImageZoomController.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; path = ImageZoomController.storyboard; sourceTree = "<group>"; };
+		B11FC09824842FE0006B682B /* LCEssentials+UIScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UIScrollView.swift"; sourceTree = "<group>"; };
 		B597CFD6838F58DC876706285EA0E2F4 /* LCEssentials+UIImageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UIImageView.swift"; sourceTree = "<group>"; };
 		B5A0163C88A2DD79E2EF9660AC88734C /* LCEMessages.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LCEMessages.swift; sourceTree = "<group>"; };
 		B9EDBE3411AB0F448FDE780F9DF07E25 /* LCEssentials+FileManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+FileManager.swift"; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 				DBE9F38810D4CAAE0E6EAC020549A0AE /* LCEssentials+UIStackView.swift */,
 				A84DD29B4D2E9AE59B98C494A745D081 /* LCEssentials+UITabBarController.swift */,
 				C5726915142BD1A50EB88A1C1A98C314 /* LCEssentials+UITableView.swift */,
+				B11FC09824842FE0006B682B /* LCEssentials+UIScrollView.swift */,
 				8E7BA934B864085045E2D708EF447793 /* LCEssentials+UITextField.swift */,
 				6B34684FED5ED4449C070055C3FA54E3 /* LCEssentials+UIView.swift */,
 				2A9D85D8A68CC7DBEEA305B60FFC8025 /* LCEssentials+UIViewController.swift */,
@@ -786,6 +789,7 @@
 				7E71BBE2A31022D44DA710FBAE7E5986 /* LCEssentials+UIDevice.swift in Sources */,
 				B0B198968D10A62C954AB2F0BBF4DF3E /* LCEssentials+UIImage.swift in Sources */,
 				49E9DD3BA52507DBF69FC6BFD3EB1183 /* LCEssentials+UIImageView.swift in Sources */,
+				B11FC09924842FE0006B682B /* LCEssentials+UIScrollView.swift in Sources */,
 				0CE733EF526B0C9E40B82B8D85173F81 /* LCEssentials+UILabel.swift in Sources */,
 				03433661CB934847EB0A06D0D4A2A925 /* LCEssentials+UINavigationController.swift in Sources */,
 				8BB83668A7A31D5DC5B0E2CA1F9CC5C3 /* LCEssentials+UIPickerView.swift in Sources */,
