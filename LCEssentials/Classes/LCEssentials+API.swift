@@ -70,11 +70,17 @@ public struct API {
                 request.httpMethod = method.rawValue
                 
                 // - Put Default Headers togheter with user defined params
-                headers += defaultHeaders
-                
-                // - Add it to request
-                headers.forEach { (key, value) in
-                    request.addValue(key, forHTTPHeaderField: value)
+                if let _ = headers {
+                    headers += defaultHeaders
+                    
+                    // - Add it to request
+                    headers.forEach { (key, value) in
+                        request.addValue(value, forHTTPHeaderField: key)
+                    }
+                }else{
+                    defaultHeaders.forEach { (key, value) in
+                        request.addValue(value, forHTTPHeaderField: key)
+                    }
                 }
                 let task = URLSession.shared.dataTask(with: request) {data, response, error in
                     var code: Int = LCEssentials.DEFAULT_ERROR_CODE
@@ -90,7 +96,7 @@ public struct API {
                             printInfo(title: "FUNCTION", msg: #function)
                             printInfo(title: "METHOD", msg: method.rawValue)
                             printInfo(title: "REQUEST", msg: String(describing: request))
-                            printInfo(title: "HEADERS", msg: String(describing: request.allHTTPHeaderFields))
+                            printInfo(title: "HEADERS", msg: request.allHTTPHeaderFields!.debugDescription)
                             
                             //
                             if let data = request.httpBody {

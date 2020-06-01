@@ -44,6 +44,8 @@
      public var setDatePickerMode: UIDatePickerMode = .date
      public var setLocale: String = "pt_BR"
      public var setFormat: String = "dd/MM/yyyy"
+     public var maximumDate: Date = Date().add(years: 100)
+     public var minimumDate: Date = Date().add(years: -100)
      public var setSelectedDate: String?
      public var setHeight: CGFloat = 214
      public var setWidth: CGFloat = 375
@@ -74,6 +76,8 @@
      public func show(){
          datePicker.locale = Locale(identifier: setLocale)
          datePicker.datePickerMode = setDatePickerMode
+         datePicker.maximumDate = maximumDate
+         datePicker.minimumDate = minimumDate
          
          if let currDate = setSelectedDate {
              let dateFormatter = DateFormatter()
