@@ -376,14 +376,19 @@ public extension LCEssentials {
             root?.present(activityVC, animated: true, completion: nil)
         }
     }
-    
-    #endif
+    /// - LoverdeCo: Make a call
+    ///
+    /// - Parameters:
+    ///   - number: string phone number
     static func call(_ number: String!) {
         if let url = URL(string: "tel://" + number) {
             UIApplication.shared.canOpenURL(url)
         }
     }
-    #if os(iOS) || os(macOS)
+    /// - LoverdeCo: Open link on Safari
+    ///
+    /// - Parameters:
+    ///   - urlStr: url string to open
     static func openSafari(_ urlStr: String){
         if let url = URL(string: urlStr) {
             UIApplication.shared.canOpenURL(url)
