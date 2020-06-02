@@ -38,7 +38,6 @@
 		44127C4B989C9CC6A90D78B66A929A5E /* AlamofireExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A6BA50BC9798E96A96694316FD7F19 /* AlamofireExtended.swift */; };
 		48D97BE7D5CAED273BD2341C239CC934 /* RequestTaskMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C2ABABCF96583B0736B746A886AECB /* RequestTaskMap.swift */; };
 		49E9DD3BA52507DBF69FC6BFD3EB1183 /* LCEssentials+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597CFD6838F58DC876706285EA0E2F4 /* LCEssentials+UIImageView.swift */; };
-		4A3FD0D1D8BE08C71F3A99B4BB1D7EFB /* DatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F443D3FFCF26297C2ED38B62F24C0519 /* DatePickerViewController.swift */; };
 		4A66EE9CC634E6D29801DE4AE30B6F20 /* LCEssentials-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FCF5A30C1CD081D9AB959E53E7D443E7 /* LCEssentials-dummy.m */; };
 		56EC8ED1535DAB987F3D2B71D4C05773 /* HTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252E34E06DE82E4A96FF19DDAAB47C48 /* HTTPHeaders.swift */; };
 		5C4A0685B5A201436AB52EF25829B333 /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B0E4FA795EABD32357C1014201A8F9 /* MultipartFormData.swift */; };
@@ -244,7 +243,6 @@
 		DFF9FD98187DBCFCB2E2B6F327E45985 /* LCEssentials.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = LCEssentials.modulemap; sourceTree = "<group>"; };
 		E69A4119FCBA8C3CE8BCD6EFF68AA450 /* LCEssentials+API.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+API.swift"; sourceTree = "<group>"; };
 		E796A79369CC938F28F432A0ADE0FEB5 /* LCEssentials.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = LCEssentials.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		F443D3FFCF26297C2ED38B62F24C0519 /* DatePickerViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DatePickerViewController.swift; sourceTree = "<group>"; };
 		F725D8AEA60C55F04151CC3F3D427ACE /* alert@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "alert@3x.png"; sourceTree = "<group>"; };
 		F832D5DCB54F4499206CA6D8DECB63DA /* Session.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Session.swift; path = Source/Session.swift; sourceTree = "<group>"; };
 		FC87D7C9C22946B653EC891AD65CA774 /* NetworkReachabilityManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkReachabilityManager.swift; path = Source/NetworkReachabilityManager.swift; sourceTree = "<group>"; };
@@ -392,7 +390,6 @@
 		70132831E2FE874D3245E494B366A3AD /* PickerViews */ = {
 			isa = PBXGroup;
 			children = (
-				F443D3FFCF26297C2ED38B62F24C0519 /* DatePickerViewController.swift */,
 				404D4784C6A1D61BEEA3ABD7D7629F9B /* LCEssentials+UIDatePicker.swift */,
 				53AC2A4507167DF036D438320DAAD720 /* LCEssentials+UIPickerView.swift */,
 			);
@@ -756,7 +753,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A3FD0D1D8BE08C71F3A99B4BB1D7EFB /* DatePickerViewController.swift in Sources */,
 				89796AC9B87D1F45422B518EE84A6346 /* GifHelper.swift in Sources */,
 				5F1E0294BF7A608E288EA662DBDE2A36 /* ImageZoom.swift in Sources */,
 				744CB33F42842C0464519F6CBB455FD9 /* LCDesignables.swift in Sources */,

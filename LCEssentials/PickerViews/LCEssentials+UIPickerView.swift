@@ -45,7 +45,6 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     @IBOutlet var borderBottom: UIView!
     
     public var setSelectedRowIndex: Int = 0
-    public var setSelectedBGColor: UIColor = UIColor.white
     public var setFontName: String = "Helvetica"
     public var setFontSize: CGFloat = 24
     public var setFontColor: UIColor = .black
@@ -103,6 +102,15 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         btConfirm.sizeToFit()
         btConfirm.setTitleColor(setConfirmTitleColor, for: .normal)
         btCancel.setTitleColor(setCancelTitleColor, for: .normal)
+        if #available(iOS 12.0, *) {
+            if traitCollection.userInterfaceStyle == .dark {
+                pickerView.setValue(UIColor.white, forKey: "textColor")
+            }else{
+                pickerView.setValue(setFontColor, forKey: "textColor")
+            }
+        } else {
+            pickerView.setValue(setFontColor, forKey: "textColor")
+        }
         pickerView.reloadAllComponents()
         var controller: UIViewController!
         if delegate is UIViewController {
@@ -152,28 +160,12 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         delegate.pickerViewController(self, didSelectRow: row, inComponent: component)
-        //pickerView.reloadAllComponents()
+        pickerView.reloadAllComponents()
     }
     
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return delegate.pickerViewController(self, titleForRow: row, forComponent: component)
     }
-    
-//    public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-//        if let delgado = delegate.pickerViewController?(self, viewForRow: row, forComponent: component, reusing: view) {
-//            return delgado
-//        }
-//
-//        var pickerLabel: UILabel? = (view as? UILabel)
-//        if pickerLabel == nil {
-//            pickerLabel = UILabel()
-//            pickerLabel?.font = UIFont(name: setFontName, size: setFontSize)
-//            pickerLabel?.textAlignment = .center
-//        }
-//        pickerLabel?.text = pickerLabel?.text
-//        pickerLabel?.textColor = setFontColor
-//        return pickerLabel!
-//    }
     
     @available(iOS 2.0, *)
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -182,6 +174,24 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return delegate.pickerViewController(self, rowHeightForComponent: component)
+    }
+    
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        // Trait collection has already changed
+        if #available(iOS 12.0, *) {
+            if previousTraitCollection?.userInterfaceStyle == .dark {
+                pickerView.setValue(setFontColor, forKey: "textColor")
+            }else{
+                pickerView.setValue(UIColor.white, forKey: "textColor")
+            }
+        } else {
+            pickerView.setValue(setFontColor, forKey: "textColor")
+        }
+        pickerView.reloadAllComponents()
+    }
+
+    public override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        // Trait collection will change. Use this one so you know what the state is changing to.
     }
 }
 #endif
