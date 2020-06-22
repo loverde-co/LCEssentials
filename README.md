@@ -11,6 +11,7 @@ Loverde Co. Essentials Swift Scripts
 This is a repository of essential scripts written in Swift for Loverde Co. used to save time on re-writing and keeping it on all other projects. So this Cocoapods will evolve with Swift and will improve with every release!
 
 ## Features
+- [x] Many usefull scripts extensions
 - [x] Background Thread
 - [x] Custom change Root View Controller with animation
 - [x] Pop To View Controller with animation
@@ -61,7 +62,21 @@ self.navigationController?.popViewControllerWithHandler {
 ```
 * See the custom [PickerViewController](PickerViewController.md) 
 * See the custom [DatePickerViewController](DatePickerViewController.md) 
+* See the custom [ImageZoomController](ImageZoomController.md) 
+* See the custom [NotificationsController](NotificationsController) 
 
+* If you whant **ONLY** LCEssentials without this others controllers above, just add this to your podfile
+
+```ruby
+platform :ios, '10.0'
+use_frameworks!
+pod 'LCEssentials/Classes'
+```
+And then import `LCEssentials ` wherever you import UIKit
+
+``` swift
+import LCEssentials
+```
 
 Author of v1.0
 ----

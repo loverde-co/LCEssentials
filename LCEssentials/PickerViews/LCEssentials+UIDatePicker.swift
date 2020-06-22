@@ -34,13 +34,15 @@
      public var delegate: DatePickerViewControllerDelegate!
 
      @IBOutlet private var viewPicker: UIView!
+     @IBOutlet private var viewBlackBG: UIView!
      @IBOutlet weak var datePicker: UIDatePicker!
      @IBOutlet weak var btConfirm: UIButton!
      @IBOutlet weak var btCancel: UIButton!
      @IBOutlet weak var barView: UIView!
      @IBOutlet weak var borderTop: UIView!
      @IBOutlet weak var borderBottom: UIView!
-     
+
+     public var touchToClose: Bool = false
      public var setDatePickerMode: UIDatePickerMode = .date
      public var setLocale: String = "pt_BR"
      public var setFormat: String = "dd/MM/yyyy"
@@ -57,9 +59,14 @@
      public var setCancelTitleButton: String = "Cancel"
      
      override public func viewDidLoad() {
-         super.viewDidLoad()
+        super.viewDidLoad()
      }
-     
+     @objc func handleTap(_ sender: UITapGestureRecognizer) {
+         if sender.state == .ended, touchToClose {
+             self.hidde()
+         }
+         sender.cancelsTouchesInView = false
+     }
      static public func instantiate() -> DatePickerViewController {
          let instance: DatePickerViewController = DatePickerViewController.instantiate(storyBoard: "PickerViews")
          instance.loadView()
@@ -74,6 +81,7 @@
      
      //MARK: - Methods
      public func show(){
+         viewBlackBG.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
          datePicker.locale = Locale(identifier: setLocale)
          datePicker.datePickerMode = setDatePickerMode
          datePicker.maximumDate = maximumDate
@@ -119,6 +127,7 @@
      }
      
      public func hidde(){
+         viewBlackBG.removeGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
          UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear],
                         animations: {
                          self.viewPicker.center.y += self.view.bounds.height

@@ -37,22 +37,45 @@ func ^^ (radix: Float, power: Float) -> Float {
 
 
 /// Loverde Co: Custom Logs
-public func printLog(section:String, description:String){
-    print("\n\n[\(section)] \(description)")
+public func printLog(title:String, msg:String, prettyPrint: Bool = false){
+    if prettyPrint {
+        print("\n<=========================  \(title) - START =========================>")
+        print(msg)
+        print("\n<=========================  \(title) - END ===========================>")
+    }else{
+        print("\(title): \(msg)")
+    }
 }
 
-public func printInfo(title: String, msg: String){
-    print("💭 INFO: \(title): \(msg)")
+public func printInfo(title: String, msg: String, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
+    if prettyPrint {
+        print("\n<=========================  ℹ️ INFO: \(title) - START =========================>")
+        print("[\(LCEssentials.sourceFileName(filePath: file)): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
+        print(msg)
+        print("\n<=========================  ℹ️ INFO: \(title) - END ===========================>")
+    }else{
+        print("ℹ️ INFO: \(title): \(msg)")
+    }
 }
-public func printWarn(title: String, msg: String){
-    print("⚠️ WARN: \(title): \(msg)")
+public func printWarn(title: String, msg: String, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
+    if prettyPrint {
+        print("\n<=========================  ⚠️ WARN: \(title) - START =========================>")
+        print("[\(LCEssentials.sourceFileName(filePath: file)): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
+        print(msg)
+        print("\n<=========================  ⚠️ WARN: \(title) - END ===========================>")
+    }else{
+        print("⚠️ WARN: \(title): \(msg)")
+    }
 }
-public func printError(title: String, msg: String){
-    print("🚫 ERROR: \(title): \(msg)")
-}
-
-public enum EnumBorderSide {
-    case top, bottom, left, right
+public func printError(title: String, msg: String, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
+    if prettyPrint {
+        print("\n<=========================  🚫 ERROR: \(title) - START =========================>")
+        print("[\(LCEssentials.sourceFileName(filePath: file)): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
+        print(msg)
+        print("\n<=========================  🚫 ERROR: \(title) - END ===========================>")
+    }else{
+        print("🚫 ERROR: \(title): \(msg)")
+    }
 }
 
 public struct LCEssentials {
@@ -109,6 +132,14 @@ public struct LCEssentials {
             isVeryOld = true
         }
         return isVeryOld
+    }
+    /// Extract the file name from the file path
+    ///
+    /// - Parameter filePath: Full file path in bundle
+    /// - Returns: File Name with extension
+    public static func sourceFileName(filePath: String) -> String {
+        let components = filePath.components(separatedBy: "/")
+        return components.isEmpty ? "" : components.last!
     }
     #endif
     
@@ -296,22 +327,19 @@ public struct LCEssentials {
     #endif
     
     #if os(iOS) || os(tvOS)
-    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
-    public static var mostTopViewController: UIViewController? {
-        get {
-            return UIApplication.shared.keyWindow?.rootViewController
-        }
-        set {
-            UIApplication.shared.keyWindow?.rootViewController = newValue
-        }
-    }
     /// - LoverdeCo: Most top view controller (if applicable).
-    public static func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+    public static func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController, aboveBars: Bool = true) -> UIViewController? {
 
         if let nav = base as? UINavigationController {
+            if aboveBars {
+                return nav
+            }
             return getTopViewController(base: nav.visibleViewController)
 
         } else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+            if aboveBars {
+                return tab
+            }
             return getTopViewController(base: selected)
 
         } else if let presented = base?.presentedViewController {
@@ -503,15 +531,15 @@ public struct JSONHelper<T: Codable> {
         return try decode(data: try! Data(contentsOf: url))
     }
     
-    /// - LoverdeCo: Decode Object to JSON string
-    ///
-    /// - Parameter object: Codable/Decodable
-    /// - returns: String
-    public static func decode(toJSON object: T) throws -> String{
-        let jsonData = try! JSONEncoder().encode(object)
-        guard let json = String(data: jsonData, encoding: .utf8) else{
-            throw NSError(domain: "JSONEcoding", code: 0, userInfo: nil)
-        }
-        return json
-    }
+//    /// - LoverdeCo: Decode Object to JSON string
+//    ///
+//    /// - Parameter object: Codable/Decodable
+//    /// - returns: String
+//    public static func decode(toJSON object: T) throws -> String{
+//        let jsonData = try! JSONEncoder().encode(object)
+//        guard let json = String(data: jsonData, encoding: .utf8) else{
+//            throw NSError(domain: "JSONEcoding", code: 0, userInfo: nil)
+//        }
+//        return json
+//    }
 }

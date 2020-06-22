@@ -346,55 +346,51 @@ public extension String {
     //    }
     
     /// Verifica se o texto equivale a verdadeiro ou falso.
-    func validateBolean(text:String?, comparingBoolean:Bool = true) ->Bool{
-
-        guard text != nil else {
-            return false
-        }
+    func validateBolean(comparingBoolean:Bool = true) ->Bool{
 
         if(comparingBoolean)
         {
-            if (text!.uppercased() == "TRUE") {return true}
-            if (text!.uppercased() == "YES") {return true}
-            if (text!.uppercased() == "ON") {return true}
-            if (text!.uppercased() == "ONLINE") {return true}
-            if (text!.uppercased() == "ENABLE") {return true}
-            if (text!.uppercased() == "ACTIVATED") {return true}
-            if (text!.uppercased() == "ONE") {return true}
+            if (self.uppercased() == "TRUE") {return true}
+            if (self.uppercased() == "YES") {return true}
+            if (self.uppercased() == "ON") {return true}
+            if (self.uppercased() == "ONLINE") {return true}
+            if (self.uppercased() == "ENABLE") {return true}
+            if (self.uppercased() == "ACTIVATED") {return true}
+            if (self.uppercased() == "ONE") {return true}
             //
-            if (text!.uppercased() == "VERDADEIRO") {return true}
-            if (text!.uppercased() == "SIM") {return true}
-            if (text!.uppercased() == "LIGADO") {return true}
-            if (text!.uppercased() == "ATIVO") {return true}
-            if (text!.uppercased() == "ATIVADO") {return true}
-            if (text!.uppercased() == "HABILITADO") {return true}
-            if (text!.uppercased() == "UM") {return true}
+            if (self.uppercased() == "VERDADEIRO") {return true}
+            if (self.uppercased() == "SIM") {return true}
+            if (self.uppercased() == "LIGADO") {return true}
+            if (self.uppercased() == "ATIVO") {return true}
+            if (self.uppercased() == "ATIVADO") {return true}
+            if (self.uppercased() == "HABILITADO") {return true}
+            if (self.uppercased() == "UM") {return true}
             //
-            if (text!.uppercased() == "1") {return true}
-            if (text!.uppercased() == "T") {return true}
-            if (text!.uppercased() == "Y") {return true}
-            if (text!.uppercased() == "S") {return true}
+            if (self.uppercased() == "1") {return true}
+            if (self.uppercased() == "T") {return true}
+            if (self.uppercased() == "Y") {return true}
+            if (self.uppercased() == "S") {return true}
         }
         else
         {
-            if (text!.uppercased() == "FALSE") {return true}
-            if (text!.uppercased() == "NO") {return true}
-            if (text!.uppercased() == "OFF") {return true}
-            if (text!.uppercased() == "OFFLINE") {return true}
-            if (text!.uppercased() == "DISABLED") {return true}
-            if (text!.uppercased() == "DEACTIVATED") {return true}
-            if (text!.uppercased() == "ZERO") {return true}
+            if (self.uppercased() == "FALSE") {return true}
+            if (self.uppercased() == "NO") {return true}
+            if (self.uppercased() == "OFF") {return true}
+            if (self.uppercased() == "OFFLINE") {return true}
+            if (self.uppercased() == "DISABLED") {return true}
+            if (self.uppercased() == "DEACTIVATED") {return true}
+            if (self.uppercased() == "ZERO") {return true}
             //
-            if (text!.uppercased() == "FALSO") {return true}
-            if (text!.uppercased() == "NÃO") {return true}
-            if (text!.uppercased() == "NAO") {return true}
-            if (text!.uppercased() == "DESLIGADO") {return true}
-            if (text!.uppercased() == "DESATIVADO") {return true}
-            if (text!.uppercased() == "DESABILITADO") {return true}
+            if (self.uppercased() == "FALSO") {return true}
+            if (self.uppercased() == "NÃO") {return true}
+            if (self.uppercased() == "NAO") {return true}
+            if (self.uppercased() == "DESLIGADO") {return true}
+            if (self.uppercased() == "DESATIVADO") {return true}
+            if (self.uppercased() == "DESABILITADO") {return true}
             //
-            if (text!.uppercased() == "0") {return true}
-            if (text!.uppercased() == "F") {return true}
-            if (text!.uppercased() == "N") {return true}
+            if (self.uppercased() == "0") {return true}
+            if (self.uppercased() == "F") {return true}
+            if (self.uppercased() == "N") {return true}
         }
 
         return false;
@@ -596,8 +592,7 @@ public extension String {
     }
 
     //
-    //Usage Example: label.text = yourString.html2String
-    //
+    ///Usage Example: label.text = yourString.html2String
     var html2AttributedString: NSAttributedString? {
         guard
             let data = data(using: String.Encoding.utf8)

@@ -27,7 +27,7 @@ import UIKit
     @objc optional func imageZoomController(controller: ImageZoomController, didClose image: UIImage?)
 }
 
- public class ImageZoomController: UIViewController, UIScrollViewDelegate {
+public class ImageZoomController: UIViewController, UIScrollViewDelegate {
 
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -60,7 +60,7 @@ import UIKit
         return instance
     }
     
-    private func scrollViewDidZoom(_ scrollView: UIScrollView) {
+    public func scrollViewDidZoom(_ scrollView: UIScrollView) {
         delegate?.imageZoomController?(controller: self, didZoom: self.setImage)
     }
      
@@ -70,7 +70,7 @@ import UIKit
          }
      }
      
-    private func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.img
     }
 

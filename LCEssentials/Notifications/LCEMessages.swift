@@ -106,7 +106,7 @@ public class LCEMessages: UIViewController {
            initialOriginY = (self.setDistanceFromBottom - self.setHeight)
         }else{
             if originY == 0 {
-                initialOriginY = LCEssentials.mostTopViewController?.view?.frame.height ?? 0 - setDistanceFromBottom
+                initialOriginY = LCEssentials.getTopViewController()?.view?.frame.height ?? 0 - setDistanceFromBottom
             }else{
                 initialOriginY = originY
             }
@@ -122,7 +122,7 @@ public class LCEMessages: UIViewController {
     
     public func show(message withBody: String? = nil, withImage: UIImage? = nil, showLoading: Bool = false){
         if let _ = self.delegate {
-            let controller = LCEssentials.mostTopViewController
+            let controller = LCEssentials.getTopViewController(aboveBars: true)
             if let tabs = controller?.tabBarController, !tabs.tabBar.isHidden {
                 
             }
@@ -132,6 +132,7 @@ public class LCEMessages: UIViewController {
             self.view.autoresizesSubviews = true
             controller?.view.addSubview(self.view)
             self.view.layer.zPosition = 1
+            self.view.layoutIfNeeded()
         }else{
             fatalError("Ops! Missing delegate!")
         }
@@ -258,8 +259,8 @@ public class LCEMessages: UIViewController {
         let info = notification.userInfo!
         let keyboardSize = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
         if self.setDirection == .bottom {
-            self.view.frame.origin = CGPoint(x: 0, y: (LCEssentials.mostTopViewController!.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) ))
-            originY = (LCEssentials.mostTopViewController!.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) )
+            self.view.frame.origin = CGPoint(x: 0, y: (LCEssentials.getTopViewController(aboveBars: true)!.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) ))
+            originY = (LCEssentials.getTopViewController(aboveBars: true)!.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) )
         }
     }
     

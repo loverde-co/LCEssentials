@@ -202,17 +202,11 @@ open class Circle: UIView {
 
 
 //MARK: UIButton
+
+
 @IBDesignable
 open class UIButtomCustom: UIButton {
-    
-    @IBInspectable open var name: String? {
-//        didSet {
-//            accessibilityLabel = name
-//        }
-        get{ return accessibilityLabel }
-        set{ accessibilityLabel = newValue }
-    }
-    
+
 //    @IBInspectable open var borderWidth: CGFloat = 0 {
 //        didSet {
 //            layer.borderWidth = borderWidth
@@ -481,6 +475,7 @@ open class UIButtomCustom: UIButton {
             border.backgroundColor = self.color?.cgColor
             border.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.width)
             self.layer.addSublayer(border)
+            self.layoutSubviews()
             
         }
     }
@@ -490,6 +485,7 @@ open class UIButtomCustom: UIButton {
             border.backgroundColor = self.color?.cgColor
             border.frame = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.size.width, height: self.width)
             self.layer.addSublayer(border)
+            self.layoutSubviews()
             
         }
     }
@@ -499,6 +495,7 @@ open class UIButtomCustom: UIButton {
             border.backgroundColor = self.color?.cgColor
             border.frame = CGRect(x: 0, y: 0, width: self.width, height: self.frame.size.height)
             self.layer.addSublayer(border)
+            self.layoutSubviews()
             
         }
     }
@@ -508,17 +505,19 @@ open class UIButtomCustom: UIButton {
             border.backgroundColor = self.color?.cgColor
             border.frame = CGRect(x: self.frame.size.width - self.width, y: 0, width: width, height: self.frame.size.height)
             self.layer.addSublayer(border)
-            
+            self.layoutSubviews()
         }
     }
     @IBInspectable open var setBorderWidth: CGFloat = 0.0 {
         didSet {
             self.width = setBorderWidth
+            self.layoutSubviews()
         }
     }
     @IBInspectable open var setBorderColor: UIColor! {
         didSet {
             self.color = setBorderColor
+            self.layoutSubviews()
         }
     }
     
@@ -733,18 +732,39 @@ let imageCache = NSCache<NSString, UIImage>()
 
 //MARK: - UILabel
 @IBDesignable open class CustomUILabel: UILabel {
-    override open func drawText(in rect: CGRect) {
+    @IBInspectable var topInset: CGFloat = 0.0
+    @IBInspectable var bottomInset: CGFloat = 0.0
+    @IBInspectable var leftInset: CGFloat = 0.0
+    @IBInspectable var rightInset: CGFloat = 0.0
+
+    open override func drawText(in rect: CGRect) {
+        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
+        var newRect = rect
         if let stringText = text {
             let stringTextAsNSString = stringText as NSString
             let labelStringSize = stringTextAsNSString.boundingRect(with: CGSize(width: self.frame.width,height: CGFloat.greatestFiniteMagnitude),
                                                                     options: NSStringDrawingOptions.usesLineFragmentOrigin,
                                                                     attributes: [NSAttributedStringKey.font: font],
                                                                     context: nil).size
-            super.drawText(in: CGRect(x:0,y: 0,width: self.frame.width, height:ceil(labelStringSize.height)))
-        } else {
-            super.drawText(in: rect)
+            newRect = CGRect(x:0,y: 0,width: self.frame.width, height:ceil(labelStringSize.height))
+        
+        }
+        super.drawText(in: UIEdgeInsetsInsetRect(newRect, insets))
+    }
+
+    open override var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        return CGSize(width: size.width + leftInset + rightInset,
+                      height: size.height + topInset + bottomInset)
+    }
+
+    open override var bounds: CGRect {
+        didSet {
+            // ensures this works within stack views if multi-line
+            preferredMaxLayoutWidth = bounds.width - (leftInset + rightInset)
         }
     }
+    
     override open func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         layer.borderWidth = 1

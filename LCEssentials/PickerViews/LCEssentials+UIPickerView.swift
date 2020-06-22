@@ -38,6 +38,7 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     @IBOutlet var pickerView: UIPickerView!
     @IBOutlet private var viewPicker: UIView!
+    @IBOutlet private var viewBlackBG: UIView!
     @IBOutlet var btConfirm: UIButton!
     @IBOutlet var btCancel: UIButton!
     @IBOutlet var barView: UIView!
@@ -53,6 +54,7 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     public var setWidth: CGFloat = 375
     public var setDistanceFromBottom: CGFloat = 0
     public var isHidden: Bool = true
+    public var touchToClose: Bool = false
     public var setBorderTopColor: UIColor = UIColor.darkGray
     public var setBarBackgroundColor: UIColor = UIColor(hex: "#D1D1D1")
     public var setBorderBottomColor: UIColor = UIColor.darkGray
@@ -78,6 +80,12 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         self.viewPicker.autoresizesSubviews = true
         
     }
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended, touchToClose {
+            self.hidde()
+        }
+        sender.cancelsTouchesInView = false
+    }
     
     static public func instantiate() -> PickerViewController {
         let instance:PickerViewController = PickerViewController.instantiate(storyBoard: "PickerViews")
@@ -92,6 +100,7 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     //MARK: - Methods
     public func show(){
+        viewBlackBG.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
         //viewPicker.removeFromSuperview()
         borderTop.backgroundColor = setBorderTopColor
         borderBottom.backgroundColor = setBorderBottomColor
@@ -132,6 +141,7 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     }
     
     public func hidde(){
+        viewBlackBG.removeGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
         UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear],
                        animations: {
                         self.viewPicker.center.y += self.view.bounds.height

@@ -33,7 +33,8 @@ extension UIImageView {
         self.tintColor  = color
         return self
     }
-
+    
+    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
     public func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit, completion:@escaping (Bool?)->()) -> () {
         contentMode = mode
         URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -51,6 +52,7 @@ extension UIImageView {
     }
     /// EXAMPLE USAGE
     /// imageView.downloadedFrom(link: "http://www.apple.com/euro/ios/ios8/a/generic/images/og.png")
+    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
     public func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit, completion:@escaping (Bool?)->()) -> () {
         guard let url = URL(string: link) else { completion(false); return }
         downloadedFrom(url: url, contentMode: mode) { (success) in

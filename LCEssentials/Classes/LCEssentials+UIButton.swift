@@ -26,7 +26,13 @@ import UIKit
 #if os(iOS) || os(macOS)
 // MARK: - Properties
 public extension UIButton {
-
+    
+    /// Loverde Co: Set Get name to UIButton;  also inspectable from Storyboard.
+    @IBInspectable
+    var name: String? {
+        get{ return accessibilityLabel }
+        set{ accessibilityLabel = newValue }
+    }
     /// SwifterSwift: Image of disabled state for button; also inspectable from Storyboard.
     @IBInspectable
     var imageForDisabled: UIImage? {

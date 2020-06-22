@@ -1,24 +1,24 @@
 PODS:
-  - Alamofire (5.0.2)
-  - LCEssentials (0.3.4):
-    - Alamofire
+  - LCEssentials (0.4.2):
+    - LCEssentials/Classes (= 0.4.2)
+    - LCEssentials/ImageZoom (= 0.4.2)
+    - LCEssentials/Notifications (= 0.4.2)
+    - LCEssentials/PickerViews (= 0.4.2)
+  - LCEssentials/Classes (0.4.2)
+  - LCEssentials/ImageZoom (0.4.2)
+  - LCEssentials/Notifications (0.4.2)
+  - LCEssentials/PickerViews (0.4.2)
 
 DEPENDENCIES:
-  - Alamofire
   - LCEssentials (from `../`)
-
-SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - Alamofire
 
 EXTERNAL SOURCES:
   LCEssentials:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 3ba7a4db18b4f62c4a1c0e1cb39d7f3d52e10ada
-  LCEssentials: 1016c04608e6877cbc336a2bc9a360b5861305c7
+  LCEssentials: 8c12cb9fd3ad10ed61534b228677082b42b95057
 
-PODFILE CHECKSUM: 5cc32ba05ffad8e1bd1bd7b630348bd5ad8012e8
+PODFILE CHECKSUM: c68a36d1b89a6e674e8704b6b936cf59477d4f8b
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3

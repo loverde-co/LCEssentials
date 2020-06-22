@@ -26,7 +26,7 @@ import LCEssentials
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom", 3: "Open Notifications Runtime"]
+    lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom", 3: "Open Notifications Runtime", 4: "Open Image Zoom"]
     
     let pickerController: PickerViewController = PickerViewController.instantiate()
     lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
@@ -44,10 +44,10 @@ class ViewController: UIViewController {
         API.request(["user": "loverde-co"] as [String:Any], .get) { (result) in
             switch result {
             case .failure(let error):
-                print("Deu ruim \(error.localizedDescription)")
+                printLog(title: "JSON ERROR", msg: error.localizedDescription)
                 break
             case .success(let json):
-                print("JSON STRING ===> "+(json as! String))
+                printLog(title: "JSON OUTPUT", msg: json as! String, prettyPrint: true)
                 break
             }
         }
@@ -59,12 +59,15 @@ class ViewController: UIViewController {
         pickerController.setDistanceFromBottom = 50
         pickerController.setFontSize = 20
         pickerController.setFontColor = .black
+        pickerController.touchToClose = true
 
         
         //MARK: - Set Date Picker Controller
         datePickerController.delegate = self
         datePickerController.setWidth = self.view.bounds.width
         datePickerController.setDistanceFromBottom = 50
+        //datePickerController.minimumDate = Date()
+        datePickerController.touchToClose = true
     }
 }
 
@@ -114,6 +117,14 @@ extension ViewController {
         message.setBackgroundColor = .darkGray
         message.show(message: "Testing message bottom with loading", withImage: nil, showLoading: true)
     }
+    
+    //MARK: - Image Zoom
+    func openImageZoom(){
+        let imageZoomController: ImageZoomController = ImageZoomController.instantiate()
+        imageZoomController.delegate = self
+        imageZoomController.setImage = #imageLiteral(resourceName: "office_example_image_zoom")
+        self.present(imageZoomController, animated: true, completion: nil)
+    }
 }
 
 //MARK: - Messages Delegate
@@ -145,6 +156,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             openMessageAlert()
         case 3:
             openNotificationRuntime()
+        case 4:
+            openImageZoom()
         default:
             openPickerController()
             break;
@@ -206,10 +219,15 @@ extension ViewController: DatePickerViewControllerDelegate {
     }
     
     func datePickerViewController(didCancel picker: DatePickerViewController) {
-        
+        printInfo(title: "Date Picker", msg: "CANCEL")
     }
     
     func datePickerViewController(didEndScrollPicker picker: DatePickerViewController, withValue: String) {
         printInfo(title: "Date Picker - Scroll to date", msg: withValue)
     }
+}
+
+//MARK: - Image Zoom Controller Delegate
+extension ViewController: ImageZoomControllerDelegate {
+    
 }

@@ -48,7 +48,8 @@ public struct API {
     /// - Parameters: params - Dictionary
     /// - Parameters: method - httpMethod enum
     /// - Parameters: params - Dictionary
-    public static func request(_ params: [String: Any], _ method: httpMethod, jsonEncoding: Bool = true, debug:Bool = true, persistConnection:Bool = false, completion: @escaping (Result<Any, Swift.Error>) -> ()){
+    public static func request(_ params: [String: Any], _ method: httpMethod, jsonEncoding: Bool = true, debug:Bool = true, persistConnection:Bool = false,
+                               function: String = #function, file: String = #file, line: Int = #line, column: Int = #column, completion: @escaping (Result<Any, Swift.Error>) -> ()){
         do {
             // - Check if URL is valid and replace URL params on address
             if let urlReq = URL(string: url.replaceURL(params)) {
@@ -93,24 +94,26 @@ public struct API {
                        ///
                         do {
                             print("\n<=========================  INTERNET CONNECTION - START =========================>")
-                            printInfo(title: "FUNCTION", msg: #function)
-                            printInfo(title: "METHOD", msg: method.rawValue)
-                            printInfo(title: "REQUEST", msg: String(describing: request))
-                            printInfo(title: "HEADERS", msg: request.allHTTPHeaderFields!.debugDescription)
+                            printLog(title: "DATE AND TIME", msg: Date().debugDescription)
+                            printLog(title: "FUNCTION", msg: function)
+                            printLog(title: "FILE", msg: LCEssentials.sourceFileName(filePath: file)+" LINE: \(line) COLUMN: \(column)")
+                            printLog(title: "METHOD", msg: method.rawValue)
+                            printLog(title: "REQUEST", msg: String(describing: request))
+                            printLog(title: "HEADERS", msg: request.allHTTPHeaderFields!.debugDescription)
                             
                             //
                             if let data = request.httpBody {
-                                printInfo(title: "PARAMETERS", msg: String(describing: try JSONSerialization.jsonObject(with: data, options: .allowFragments)))
+                                printLog(title: "PARAMETERS", msg: String(describing: try JSONSerialization.jsonObject(with: data, options: .allowFragments)))
                             } else {
-                                printInfo(title: "PARAMETERS", msg: "")
+                                printLog(title: "PARAMETERS", msg: "-")
                             }
                             //
-                            printInfo(title: "STATUS CODE", msg: String(describing: code))
+                            printLog(title: "STATUS CODE", msg: String(describing: code))
                             //
                             if let data2 = data {
-                                printInfo(title: "RESPONSE", msg: String(describing: try JSONSerialization.jsonObject(with: data2, options: .allowFragments)))
+                                printLog(title: "RESPONSE", msg: String(describing: try JSONSerialization.jsonObject(with: data2, options: .allowFragments)))
                             } else {
-                                printInfo(title: "RESPONSE", msg: "")
+                                printLog(title: "RESPONSE", msg: "-")
                             }
                             //
                             if let error = error {
@@ -134,7 +137,15 @@ public struct API {
                                 }else{
                                     printError(title: "ERROR GENERAL", msg: error.localizedDescription)
                                 }
+                            }else if let data = data, code != 200 {
+                                // - Check if is JSON result
+                                if let jsonString = String(data: data, encoding: .utf8) {
+                                    printError(title: "JSON STATUS CODE \(code)", msg: jsonString)
+                                }else{
+                                    printError(title: "DATA STATUS CODE \(code)", msg: data.debugDescription)
+                                }
                             }
+                            
                             //
                             print("<=========================  INTERNET CONNECTION - END =========================>")
                         } catch {

@@ -23,6 +23,11 @@
 import Foundation
 
 #if os(iOS) || os(macOS)
+
+public enum EnumBorderSide {
+    case top, bottom, left, right
+}
+
 public extension UIView {
     func addBorder(_ sides: [EnumBorderSide], color: UIColor, width: CGFloat) {
         let border = CALayer()

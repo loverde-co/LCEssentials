@@ -136,11 +136,11 @@ public class Reachability {
                 return true
             #endif
         #else
-            #if (arch(i386) || arch(x86_64)) && os(iOS)
+            if let _ = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] {
                 return false
-            #else
+            }else{
                 return true
-            #endif
+            }
         #endif
     }()
     

@@ -4,7 +4,7 @@ Custom PickerView for Loverde Co. Essentials Swift Scripts
 ----
 > Writen in Swift 4.2 - XCode 11.3
 > 
-> iOS 10.+
+> iOS 11.+
 > 
 ----
 
@@ -25,7 +25,7 @@ You can use [CocoaPods](http://cocoapods.org/) to install `LCEssentials` by addi
 ```ruby
 platform :ios, '10.0'
 use_frameworks!
-pod 'LCEssentials'
+pod 'LCEssentials/PickerViews'
 ```
 
 Import `LCEssentials` wherever you import UIKit.  

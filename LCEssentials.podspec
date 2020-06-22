@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'LCEssentials'
-  s.version          = '0.4.1'
+  s.version          = '0.4.2'
   s.summary          = 'This is a repository of essential scripts written in Swift for Loverde Co.'
  
   s.description      = <<-DESC
@@ -20,4 +20,28 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
   s.ios.source_files     = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/PickerViews/*.{swift}', 'LCEssentials/Notifications/*.{swift}', 'LCEssentials/ImageZoom/*.{swift}'
   s.watchos.source_files     = 'LCEssentials/Classes/*.{swift}'
   s.ios.resources        = ['LCEssentials/PickerViews/Storyboards/*.{storyboard}', 'LCEssentials/Notifications/Storyboard/*.{storyboard}', 'LCEssentials/Notifications/Storyboard/*.{png}', 'LCEssentials/ImageZoom/Storyboard/*.{storyboard}']
+
+  # LCEMinimal Extensions
+  s.subspec 'Classes' do |sp|
+    sp.source_files  		= 'LCEssentials/Classes/*.{swift}'
+    sp.watchos.source_files     = 'LCEssentials/Classes/*.{swift}'
+  end
+
+  # LCEPickerViews Extensions
+  s.subspec 'PickerViews' do |sp|
+    sp.source_files  = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/PickerViews/*.{swift}'
+    sp.ios.resources = ['LCEssentials/PickerViews/Storyboards/*.{storyboard}']
+  end
+
+  # LCENotifications Extensions
+  s.subspec 'Notifications' do |sp|
+    sp.source_files  = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/Notifications/*.{swift}'
+    sp.ios.resources = ['LCEssentials/Notifications/Storyboards/*.{storyboard}', 'LCEssentials/Notifications/Storyboard/*.{png}']
+  end
+
+  # LCEImageZoom Extensions
+  s.subspec 'ImageZoom' do |sp|
+    sp.source_files  = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/ImageZoom/*.{swift}'
+    sp.ios.resources = ['LCEssentials/ImageZoom/Storyboards/*.{storyboard}']
+  end
 end

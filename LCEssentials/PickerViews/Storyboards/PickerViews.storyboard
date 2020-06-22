@@ -130,6 +130,7 @@
                         <outlet property="btCancel" destination="RBS-gi-fmq" id="X1a-C6-6ze"/>
                         <outlet property="btConfirm" destination="iZ0-s7-otY" id="k7q-I8-zrN"/>
                         <outlet property="pickerView" destination="mYB-P0-Tw6" id="H1K-B5-zNe"/>
+                        <outlet property="viewBlackBG" destination="rQI-J3-EU2" id="4Hc-iN-NKN"/>
                         <outlet property="viewPicker" destination="LEY-ik-XD8" id="miE-Jm-Pp4"/>
                     </connections>
                 </viewController>
@@ -255,6 +256,7 @@
                         <outlet property="btCancel" destination="Osj-05-3CS" id="hgp-YN-vy4"/>
                         <outlet property="btConfirm" destination="gfl-8s-TX5" id="lXa-Wf-UeX"/>
                         <outlet property="datePicker" destination="V9j-i6-PQ6" id="v7j-c2-Or9"/>
+                        <outlet property="viewBlackBG" destination="SYT-R9-jOq" id="DcZ-q5-LcU"/>
                         <outlet property="viewPicker" destination="QWX-By-wbj" id="x38-KJ-mRL"/>
                     </connections>
                 </viewController>
