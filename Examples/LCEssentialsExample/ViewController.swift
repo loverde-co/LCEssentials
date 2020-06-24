@@ -60,6 +60,8 @@ class ViewController: UIViewController {
         pickerController.setFontSize = 20
         pickerController.setFontColor = .black
         pickerController.touchToClose = true
+        pickerController.setFontSelectedBGColor = .darkGray
+        pickerController.setFontSelectedColor = .white
 
         
         //MARK: - Set Date Picker Controller
@@ -122,7 +124,7 @@ extension ViewController {
     func openImageZoom(){
         let imageZoomController: ImageZoomController = ImageZoomController.instantiate()
         imageZoomController.delegate = self
-        imageZoomController.setImage = #imageLiteral(resourceName: "office_example_image_zoom")
+        imageZoomController.setImage = #imageLiteral(resourceName: "office_example_image_zoom.jpg")
         self.present(imageZoomController, animated: true, completion: nil)
     }
 }
@@ -200,7 +202,7 @@ extension ViewController: PickerViewControllerDelegate {
     }
     
     func pickerViewController(_ picker: PickerViewController, rowHeightForComponent component: Int) -> CGFloat {
-        return 30
+        return 40
     }
     
     func pickerViewController(_ picker: PickerViewController, numberOfRowsInComponent component: Int) -> Int {

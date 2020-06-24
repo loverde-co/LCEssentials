@@ -49,6 +49,8 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     public var setFontName: String = "Helvetica"
     public var setFontSize: CGFloat = 24
     public var setFontColor: UIColor = .black
+    public var setFontSelectedBGColor: UIColor? = nil
+    public var setFontSelectedColor: UIColor = .black
     private var lblPicker: UILabel = UILabel()
     public var setHeight: CGFloat = 214
     public var setWidth: CGFloat = 375
@@ -100,6 +102,7 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     //MARK: - Methods
     public func show(){
+        self.pickerView.tag = -1
         viewBlackBG.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
         //viewPicker.removeFromSuperview()
         borderTop.backgroundColor = setBorderTopColor
@@ -171,10 +174,53 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         delegate.pickerViewController(self, didSelectRow: row, inComponent: component)
         pickerView.reloadAllComponents()
+        pickerView.tag = row
     }
     
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return delegate.pickerViewController(self, titleForRow: row, forComponent: component)
+    }
+    
+    public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        
+        if let settedView = self.delegate.pickerViewController?(self, viewForRow: row, forComponent: component, reusing: view) {
+            return settedView
+        }
+        
+        var label: UILabel = UILabel.init()
+        
+        if let v = view {
+            
+            label = v as! UILabel
+            
+        } else {
+            
+            label = UILabel.init(frame: CGRect.init(x: 0.0, y: -1.0, width: pickerView.frame.size.width, height: self.delegate.pickerViewController(self, rowHeightForComponent: component)))
+            label.backgroundColor = UIColor.white
+            label.textAlignment = .center
+            label.minimumScaleFactor = 0.5
+            label.adjustsFontSizeToFitWidth = true
+            label.tag = 99
+        }
+        
+        var text: String = ""
+        
+        if let del = self.delegate, let str = del.pickerViewController(self, titleForRow: row, forComponent: component) {
+            text = str
+        }
+        let attrStr = NSMutableAttributedString(string: text)
+        if pickerView.tag == row && setFontSelectedBGColor != nil {
+            label.tintColor = self.setFontSelectedColor
+            label.backgroundColor = self.setFontSelectedBGColor
+            attrStr.customize(text, size: self.setFontSize, color: self.setFontSelectedColor)
+        } else {
+            attrStr.customize(text, size: self.setFontSize, color: self.setFontColor)
+            label.backgroundColor = .white
+        }
+        //
+        label.attributedText = attrStr
+        
+        return label
     }
     
     @available(iOS 2.0, *)

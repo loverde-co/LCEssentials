@@ -41,9 +41,13 @@ public class ImageZoomController: UIViewController, UIScrollViewDelegate {
      
     override public func viewDidLoad() {
          super.viewDidLoad()
-         self.setupView()
      }
 
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setupView()
+    }
+    
     private func setupView(){
         self.img.image = setImage
         self.scrollView.minimumZoomScale = 1.0
