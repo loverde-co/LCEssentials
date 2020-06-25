@@ -15,6 +15,7 @@
 		B15F696323C76186002D7557 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B15F696223C76186002D7557 /* Assets.xcassets */; };
 		B15F696623C76186002D7557 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B15F696423C76186002D7557 /* LaunchScreen.storyboard */; };
 		B1CFF04424A116500047D438 /* office_example_image_zoom.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B1CFF04324A116500047D438 /* office_example_image_zoom.jpg */; };
+		B1CFF06624A4E0850047D438 /* SecondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CFF06524A4E0840047D438 /* SecondVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		B15F696523C76186002D7557 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B15F696723C76186002D7557 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1CFF04324A116500047D438 /* office_example_image_zoom.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = office_example_image_zoom.jpg; sourceTree = "<group>"; };
+		B1CFF06524A4E0840047D438 /* SecondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondVC.swift; sourceTree = "<group>"; };
 		EF384ACEC5194746AF4CD50F /* Pods-LCEssentialsExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LCEssentialsExample.debug.xcconfig"; path = "Target Support Files/Pods-LCEssentialsExample/Pods-LCEssentialsExample.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,6 +80,7 @@
 				B15F695923C76186002D7557 /* AppDelegate.swift */,
 				B15F695B23C76186002D7557 /* SceneDelegate.swift */,
 				B15F695D23C76186002D7557 /* ViewController.swift */,
+				B1CFF06524A4E0840047D438 /* SecondVC.swift */,
 				B15F695F23C76186002D7557 /* Main.storyboard */,
 				B15F696223C76186002D7557 /* Assets.xcassets */,
 				B15F696423C76186002D7557 /* LaunchScreen.storyboard */,
@@ -212,6 +215,7 @@
 			files = (
 				B15F695E23C76186002D7557 /* ViewController.swift in Sources */,
 				B15F695A23C76186002D7557 /* AppDelegate.swift in Sources */,
+				B1CFF06624A4E0850047D438 /* SecondVC.swift in Sources */,
 				B15F695C23C76186002D7557 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

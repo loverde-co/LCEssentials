@@ -20,39 +20,31 @@
 // THE SOFTWARE.
  
 
-import Foundation
+import UIKit
+import LCEssentials
 
-#if os(iOS) || os(macOS)
-import QuartzCore
+class SecondVC: UIViewController {
 
-public extension UIViewController {
+    var delegate: LCESingletonDelegate? = nil
     
-    @objc func dismissSystemKeyboard() {
-        view.endEditing(true)
-    }
-    
-    static var identifier: String {
-        return "id"+String(describing: self)
-    }
-    static var segueID: String {
-        return "idSegue"+String(describing: self)
-    }
-    static func instantiate<T: UIViewController>(storyBoard: String, identifier: String? = nil) -> T {
-        let storyboard = UIStoryboard(name: storyBoard, bundle: Bundle(for: T.self))
-        var identf = T.identifier
-        if let id = identifier {
-            identf = id
-        }
-        let controller = storyboard.instantiateViewController(withIdentifier: identf) as! T
-        return controller
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.setupView()
     }
     
-    func present(viewControllerToPresent: UIViewController, completion: @escaping ()->()) {
-        CATransaction.begin()
-        self.present(viewControllerToPresent, animated: true) {
-            CATransaction.setCompletionBlock(completion)
-        }
-        CATransaction.commit()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        delegate?.singleton?(get: "Object", withData: "Sending Back Data")
+    }
+
+    func setupView(){
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
 }
-#endif
+
+extension SecondVC: LCESingletonDelegate {
+    func singleton(set object: Any, withData: Any) {
+        printLog(title: "SEC VIEW", msg: "SET \(object) - \(withData)")
+    }
+}

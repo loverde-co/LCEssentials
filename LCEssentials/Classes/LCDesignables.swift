@@ -389,7 +389,7 @@ open class UIButtomCustom: UIButton {
     }
     @IBInspectable var imageForUnchecked: UIImage? {
         didSet {
-            guard let _ = imageForUnchecked else{ fatalError("Ops! Missing Enabled Image!") }
+            guard let _ = imageForUnchecked else{ fatalError("Ops! Missing Disabled Image!") }
         }
     }
     
@@ -418,35 +418,25 @@ open class UIButtomCustom: UIButton {
 
 @IBDesignable open class RadioNotifButton: UIButton {
     // Images
-    open var onImage: UIImage!
-    open var offImage: UIImage!
-    
-    open var CheckedImage: String! {
+    @IBInspectable var imageForChecked: UIImage? {
         didSet {
-            if CheckedImage != nil {
-                onImage = UIImage(named: CheckedImage)! as UIImage
-            }else{
-                fatalError("Ops! Missing ON image!")
-            }
+            guard let _ = imageForChecked else{ fatalError("Ops! Missing Enabled Image!") }
+            setNeedsLayout()
         }
     }
-    
-    open var UncheckedImage: String! {
+    @IBInspectable var imageForUnchecked: UIImage? {
         didSet {
-            if UncheckedImage != nil {
-                offImage = UIImage(named: UncheckedImage)! as UIImage
-            }else{
-                fatalError("Ops! Missing OFF image!")
-            }
+            guard let _ = imageForUnchecked else{ fatalError("Ops! Missing Disabled Image!") }
+            setNeedsLayout()
         }
     }
     // Bool property
     open var isChecked: Bool = false {
         didSet{
             if isChecked == true {
-                self.setImage(onImage, for: UIControlState.normal)
+                self.setImage(imageForChecked, for: UIControlState.normal)
             } else {
-                self.setImage(offImage, for: UIControlState.normal)
+                self.setImage(imageForUnchecked, for: UIControlState.normal)
             }
         }
     }
@@ -664,48 +654,6 @@ open class UIButtomCustom: UIButton {
         }
     }
 }
-
-//MARK: - UIImageView
-let imageCache = NSCache<NSString, UIImage>()
-@IBDesignable open class UIImageViewCustom: UIImageView {
-    
-    open var imageUrlString: String?
-    
-    open func downloadFrom(urlString: String, defaultImage: UIImage?, completion:@escaping(UIImageViewCustom?, Error?)->()) {
-        
-        imageUrlString = urlString
-        let error = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN, code: LCEssentials.DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "URL is wrong format." ])
-        guard let url = URL(string: urlString) else { completion(nil, error); return }
-        
-        image = defaultImage
-        
-        if let imageFromCache = imageCache.object(forKey: urlString as NSString) {
-            self.image = imageFromCache
-            completion(self, nil)
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url, completionHandler: { (data, respones, error) in
-            if error != nil {
-                completion(nil, error)
-                return
-            }else{
-                DispatchQueue.main.async {
-                    guard let imageToCache = UIImage(data: data!) else { return }
-                    
-                    if self.imageUrlString == urlString {
-                        self.image = imageToCache
-                    }
-                    
-                    imageCache.setObject(imageToCache, forKey: urlString as NSString)
-                    completion(self, nil)
-                    return
-                }
-            }
-        }).resume()
-    }
-}
-
 
 //MARK: - UIPageControll
 @IBDesignable open class UIPageControlCustom: UIPageControl {

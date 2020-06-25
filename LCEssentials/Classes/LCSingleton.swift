@@ -22,23 +22,23 @@
 import Foundation
 import UIKit
 
-@objc public protocol LCSingletonDelegate: class {
+@objc public protocol LCESingletonDelegate: class {
+//    var object: Any? { get set }
+//    var data: Any? { get set }
     @objc optional func singleton(get object: Any, withData: Any)
     @objc optional func singleton(set object: Any, withData: Any)
 }
 
-public class LCSingleton: NSObject {
-    public weak var delegate: LCSingletonDelegate? = nil
-    public var object: Any?
-    public var data: Any?
+public class LCESingleton: NSObject {
+    public weak var delegate: LCESingletonDelegate? = nil
     
     public func singleton(set object: Any, withData: Any){
+//        self.delegate?.object = object
+//        self.delegate?.data = withData
         delegate?.singleton?(get: object, withData: withData)
     }
     
     public func singleton(get object: Any, withData: Any){
-        self.object = object
-        self.data = withData
-        delegate?.singleton?(set: self.object!, withData: self.data!)
+        delegate?.singleton?(set: object, withData: withData)
     }
 }

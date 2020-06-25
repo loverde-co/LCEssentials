@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="A33-kk-7ss">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="A33-kk-7ss">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,14 +17,31 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="9T3-3c-tZr"/>
+                        <segue destination="XF2-Ut-ezX" kind="relationship" relationship="viewControllers" id="nOU-Aj-89N"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="024-2n-2PU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-829" y="139"/>
         </scene>
-        <!--Item-->
+        <!--Home-->
+        <scene sceneID="wAK-mo-T2b">
+            <objects>
+                <navigationController id="XF2-Ut-ezX" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" id="dTA-YU-0FR"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qVU-2V-gi9">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="KCX-Ny-Pfi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cyf-VA-EHX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1" y="139"/>
+        </scene>
+        <!--Home-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="LCEssentialsExample" customModuleProvider="target" sceneMemberID="viewController">
@@ -67,14 +84,47 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="oK4-TL-XVB"/>
+                    <tabBarItem key="tabBarItem" title="Home" id="oK4-TL-XVB"/>
+                    <navigationItem key="navigationItem" title="Home" largeTitleDisplayMode="always" id="zqz-Y6-bsl">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="nn5-Om-oGz"/>
+                    </navigationItem>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="RRo-wE-tOy" id="MYd-r5-VJA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="138.61607142857142"/>
+            <point key="canvasLocation" x="848" y="139"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="08Q-sz-vaX">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4rq-Qx-FvA" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="idSecondVC" id="EpT-Nn-0nh" customClass="SecondVC" customModule="LCEssentialsExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zad-gN-ETH">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loverde_company_logo_full" translatesAutoresizingMaskIntoConstraints="NO" id="BAz-Po-yHV">
+                                <rect key="frame" x="20" y="54" width="374" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="Zsd-6r-Cah"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="BAz-Po-yHV" firstAttribute="top" secondItem="XQi-fp-UxE" secondAttribute="top" constant="10" id="ecb-QY-QKD"/>
+                            <constraint firstItem="XQi-fp-UxE" firstAttribute="trailing" secondItem="BAz-Po-yHV" secondAttribute="trailing" constant="20" id="fvo-az-Ko1"/>
+                            <constraint firstItem="BAz-Po-yHV" firstAttribute="leading" secondItem="XQi-fp-UxE" secondAttribute="leading" constant="20" id="xZV-aC-apk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="XQi-fp-UxE"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="cus-hV-90u"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1610" y="139"/>
         </scene>
     </scenes>
     <resources>

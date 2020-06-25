@@ -26,19 +26,21 @@ import LCEssentials
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom", 3: "Open Notifications Runtime", 4: "Open Image Zoom"]
+    lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom",
+                                       3: "Open Notifications Runtime", 4: "Open Image Zoom", 5: "Open Second View With Singleton built in"]
     
     let pickerController: PickerViewController = PickerViewController.instantiate()
     lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
     
     let datePickerController: DatePickerViewController = DatePickerViewController.instantiate()
     
+    var delegate: LCESingletonDelegate? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
         tableView.reloadData()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
-
         
         API.url = "https://api.github.com/users/{user}"
         API.request(["user": "loverde-co"] as [String:Any], .get) { (result) in
@@ -70,6 +72,11 @@ class ViewController: UIViewController {
         datePickerController.setDistanceFromBottom = 50
         //datePickerController.minimumDate = Date()
         datePickerController.touchToClose = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
 }
 
@@ -127,6 +134,15 @@ extension ViewController {
         imageZoomController.setImage = #imageLiteral(resourceName: "office_example_image_zoom.jpg")
         self.present(imageZoomController, animated: true, completion: nil)
     }
+    
+    //MARK: - Singleton usage example
+    func openSecViewController(){
+        let controller:SecondVC = SecondVC.instantiate(storyBoard: "Main")
+        controller.delegate = self
+        self.delegate = controller
+        self.delegate?.singleton?(set: "Object", withData: "Transfering Data")
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 //MARK: - Messages Delegate
@@ -160,6 +176,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             openNotificationRuntime()
         case 4:
             openImageZoom()
+        case 5:
+            openSecViewController()
         default:
             openPickerController()
             break;
@@ -232,4 +250,11 @@ extension ViewController: DatePickerViewControllerDelegate {
 //MARK: - Image Zoom Controller Delegate
 extension ViewController: ImageZoomControllerDelegate {
     
+}
+
+//MARK: - Singleton Delegate
+extension ViewController: LCESingletonDelegate {
+    func singleton(get object: Any, withData: Any) {
+        printLog(title: "MAIN VIEW", msg: "GET \(object) - \(withData)")
+    }
 }
