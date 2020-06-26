@@ -260,14 +260,14 @@ public extension UIView {
     }
 
     /// Loverde Co: Height of view.
-//    var height: CGFloat {
-//        get {
-//            return frame.size.height
-//        }
-//        set {
-//            frame.size.height = newValue
-//        }
-//    }
+    var height: CGFloat {
+        get {
+            return frame.size.height
+        }
+        set {
+            frame.size.height = newValue
+        }
+    }
 
     /// Loverde Co: Check if view is in RTL format.
     var isRightToLeft: Bool {
@@ -343,6 +343,53 @@ public extension UIView {
             let image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             return UIImage(cgImage: image!.cgImage!)
+        }
+    }
+    
+    @IBInspectable var setBorderTop: Bool {
+        get{
+            return self.setBorderTop
+        }
+        set {
+            let border = CALayer()
+            border.backgroundColor = self.borderColor?.cgColor
+            border.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.borderWidth)
+            self.layer.addSublayer(border)
+        }
+    }
+    @IBInspectable var setBorderBottom : Bool {
+        get{
+            return self.setBorderBottom
+        }
+        set {
+            let border = CALayer()
+            border.backgroundColor = self.borderColor?.cgColor
+            border.frame = CGRect(x: 0, y: self.frame.size.height - self.borderWidth, width: self.frame.size.width, height: self.borderWidth)
+            self.layer.addSublayer(border)
+
+        }
+    }
+    @IBInspectable var setBorderLeft : Bool {
+        get{
+            return self.setBorderLeft
+        }
+        set {
+            let border = CALayer()
+            border.backgroundColor = self.borderColor?.cgColor
+            border.frame = CGRect(x: 0, y: 0, width: self.borderWidth, height: self.frame.size.height)
+            self.layer.addSublayer(border)
+
+        }
+    }
+    @IBInspectable var setBorderRight : Bool {
+        get{
+            return self.setBorderRight
+        }
+        set {
+            let border = CALayer()
+            border.backgroundColor = self.borderColor?.cgColor
+            border.frame = CGRect(x: self.frame.size.width - self.borderWidth, y: 0, width: self.borderWidth, height: self.frame.size.height)
+            self.layer.addSublayer(border)
         }
     }
 }

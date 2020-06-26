@@ -207,18 +207,7 @@ open class Circle: UIView {
 @IBDesignable
 open class UIButtomCustom: UIButton {
 
-//    @IBInspectable open var borderWidth: CGFloat = 0 {
-//        didSet {
-//            layer.borderWidth = borderWidth
-//        }
-//    }
-    
-//    @IBInspectable open var cornerRadius: CGFloat = 0 {
-//        didSet {
-//            layer.cornerRadius = cornerRadius
-//        }
-//    }
-    
+
     //Normal state bg and border
     @IBInspectable open var normalBorderColor: UIColor? {
         didSet {
@@ -456,57 +445,15 @@ open class UIButtomCustom: UIButton {
 
 @IBDesignable open class UITextFieldCustom : UITextField {
     
-    private var color: UIColor?
-    private var width: CGFloat = 0.0
-    
-    @IBInspectable open var setBorderTop : Bool = false {
-        didSet {
-            let border = CALayer()
-            border.backgroundColor = self.color?.cgColor
-            border.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.width)
-            self.layer.addSublayer(border)
-            self.layoutSubviews()
-            
-        }
-    }
-    @IBInspectable open var setBorderBottom : Bool = false {
-        didSet {
-            let border = CALayer()
-            border.backgroundColor = self.color?.cgColor
-            border.frame = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.size.width, height: self.width)
-            self.layer.addSublayer(border)
-            self.layoutSubviews()
-            
-        }
-    }
-    @IBInspectable open var setBorderLeft : Bool = false {
-        didSet {
-            let border = CALayer()
-            border.backgroundColor = self.color?.cgColor
-            border.frame = CGRect(x: 0, y: 0, width: self.width, height: self.frame.size.height)
-            self.layer.addSublayer(border)
-            self.layoutSubviews()
-            
-        }
-    }
-    @IBInspectable open var setBorderRight : Bool = false {
-        didSet {
-            let border = CALayer()
-            border.backgroundColor = self.color?.cgColor
-            border.frame = CGRect(x: self.frame.size.width - self.width, y: 0, width: width, height: self.frame.size.height)
-            self.layer.addSublayer(border)
-            self.layoutSubviews()
-        }
-    }
     @IBInspectable open var setBorderWidth: CGFloat = 0.0 {
         didSet {
-            self.width = setBorderWidth
+            self.borderWidth = setBorderWidth
             self.layoutSubviews()
         }
     }
     @IBInspectable open var setBorderColor: UIColor! {
         didSet {
-            self.color = setBorderColor
+            self.borderColor = setBorderColor
             self.layoutSubviews()
         }
     }
@@ -532,53 +479,7 @@ open class UIButtomCustom: UIButton {
     private var gradientColorTop: UIColor?
     private var gradientColorBottom: UIColor?
     
-    @IBInspectable open var setBorderTop : Bool = false {
-        didSet {
-            let border = CALayer()
-            border.backgroundColor = self.color?.cgColor
-            border.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.width)
-            self.layer.addSublayer(border)
-            
-        }
-    }
-    @IBInspectable open var setBorderBottom : Bool = false {
-        didSet {
-            let border = CALayer()
-            border.backgroundColor = self.color?.cgColor
-            border.frame = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.size.width, height: self.width)
-            self.layer.addSublayer(border)
-            
-        }
-    }
-    @IBInspectable open var setBorderLeft : Bool = false {
-        didSet {
-            let border = CALayer()
-            border.backgroundColor = self.color?.cgColor
-            border.frame = CGRect(x: 0, y: 0, width: self.width, height: self.frame.size.height)
-            self.layer.addSublayer(border)
-            
-        }
-    }
-    @IBInspectable open var setBorderRight : Bool = false {
-        didSet {
-            let border = CALayer()
-            border.backgroundColor = self.color?.cgColor
-            border.frame = CGRect(x: self.frame.size.width - self.width, y: 0, width: width, height: self.frame.size.height)
-            self.layer.addSublayer(border)
-        }
-    }
     
-    
-    @IBInspectable open var setBorderWidth: CGFloat = 0.0 {
-        didSet {
-            self.width = setBorderWidth
-        }
-    }
-    @IBInspectable open var setBorderColor: UIColor! {
-        didSet {
-            self.color = setBorderColor
-        }
-    }
     override open func layoutSubviews() {
         super.layoutSubviews()
         

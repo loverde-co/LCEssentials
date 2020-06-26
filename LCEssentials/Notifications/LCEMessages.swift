@@ -47,6 +47,8 @@ public class LCEMessages: UIViewController {
     @IBOutlet private var lblBody: UILabel!
     @IBOutlet private var iconImage: UIImageView!
     @IBOutlet private var iconActivityConstraints: NSLayoutConstraint!
+    @IBOutlet private var iconActivityBottomConstraints: NSLayoutConstraint!
+    @IBOutlet private var labelBottomConstraints: NSLayoutConstraint!
     @IBOutlet private var activity: UIActivityIndicatorView!
     @IBOutlet private var btClose: UIButton!
     private var fontName: String = "Helvetica Neue"
@@ -101,18 +103,6 @@ public class LCEMessages: UIViewController {
     
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        var initialOriginY: CGFloat = 0
-        if setDirection == .top {
-           initialOriginY = (self.setDistanceFromBottom - self.setHeight)
-        }else{
-            if originY == 0 {
-                initialOriginY = LCEssentials.getTopViewController()?.view?.frame.height ?? 0 - setDistanceFromBottom
-            }else{
-                initialOriginY = originY
-            }
-        }
-        self.view.frame.origin.y = initialOriginY
-        originY = self.view.frame.origin.y
     }
     
     override public func didReceiveMemoryWarning() {
@@ -126,8 +116,12 @@ public class LCEMessages: UIViewController {
             if let tabs = controller?.tabBarController, !tabs.tabBar.isHidden {
                 
             }
+            if setDirection == .top && LCEssentials.X_DEVICES {
+                self.iconActivityBottomConstraints.constant = 25
+                self.labelBottomConstraints.constant = 25
+            }
             //self.view.removeFromSuperview()
-            self.view.frame = CGRect(x: 0, y: originY , width: setWidth, height: setHeight + ( LCEssentials.X_DEVICES ? 40 : 0 ) )
+            self.view.frame = CGRect(x: 0, y: setDirection == .top ? -self.setHeight : (controller?.view.bounds.height ?? 0 + self.setHeight) , width: setWidth, height: setHeight + ( LCEssentials.X_DEVICES ? 40 : 0 ) )
             self.view.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
             self.view.autoresizesSubviews = true
             controller?.view.addSubview(self.view)

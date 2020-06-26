@@ -26,8 +26,8 @@ import LCEssentials
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom",
-                                       3: "Open Notifications Runtime", 4: "Open Image Zoom", 5: "Open Second View With Singleton built in"]
+    lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom", 3: "Open Alert Message on TOP",
+                                       4: "Open Notifications Runtime", 5: "Open Image Zoom", 6: "Open Second View With Singleton built in"]
     
     let pickerController: PickerViewController = PickerViewController.instantiate()
     lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
@@ -114,7 +114,7 @@ extension ViewController {
         notif.show()
     }
     
-    //MARK: - Messages Alert
+    //MARK: - Messages Alert Bottom
     func openMessageAlert(){
         let message = LCEMessages.instantiate()
         message.viewWillAppear(true)
@@ -125,6 +125,18 @@ extension ViewController {
         message.tapToDismiss = true
         message.setBackgroundColor = .darkGray
         message.show(message: "Testing message bottom with loading", withImage: nil, showLoading: true)
+    }
+    
+    //MARK: - Messages Alert TOP
+    func openMessageAlertTop(){
+        let message = LCEMessages.instantiate()
+        message.viewWillAppear(true)
+        message.delegate = self
+        message.setDirection = .top
+        message.setDuration = .fiveSecs
+        message.tapToDismiss = true
+        message.setBackgroundColor = .darkGray
+        message.show(message: "Testing message TOP with loading", withImage: nil, showLoading: true)
     }
     
     //MARK: - Image Zoom
@@ -173,10 +185,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         case 2:
             openMessageAlert()
         case 3:
-            openNotificationRuntime()
+            openMessageAlertTop()
         case 4:
-            openImageZoom()
+            openNotificationRuntime()
         case 5:
+            openImageZoom()
+        case 6:
             openSecViewController()
         default:
             openPickerController()
