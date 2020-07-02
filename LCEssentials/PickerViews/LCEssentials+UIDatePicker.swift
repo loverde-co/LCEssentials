@@ -48,6 +48,7 @@
      public var setFormat: String = "dd/MM/yyyy"
      public var maximumDate: Date = Date().add(years: 100)
      public var minimumDate: Date = Date().add(years: -100)
+    ///Set a select date with a string formatted like seFormat is setted
      public var setSelectedDate: String?
      public var setHeight: CGFloat = 214
      public var setWidth: CGFloat = 375

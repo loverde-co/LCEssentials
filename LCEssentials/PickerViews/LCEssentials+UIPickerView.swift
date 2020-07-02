@@ -75,13 +75,18 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.pickerView.selectRow(setSelectedRowIndex, inComponent: 0, animated: true)
-        
-        self.viewPicker.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.setWidth, height: self.setHeight)
-        self.viewPicker.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
-        self.viewPicker.autoresizesSubviews = true
-        
     }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.configLayout()
+    }
+    
+    override public func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         if sender.state == .ended, touchToClose {
             self.hidde()
@@ -95,16 +100,14 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         return instance
     }
     
-    override public func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     //MARK: - Methods
-    public func show(){
-        self.pickerView.tag = -1
+    private func configLayout(){
+        self.viewPicker.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.setWidth, height: self.setHeight)
+        self.viewPicker.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
+        self.viewPicker.autoresizesSubviews = true
+        self.pickerView.selectRow(setSelectedRowIndex, inComponent: 0, animated: true)
+        self.pickerView.tag = setSelectedRowIndex
         viewBlackBG.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
-        //viewPicker.removeFromSuperview()
         borderTop.backgroundColor = setBorderTopColor
         borderBottom.backgroundColor = setBorderBottomColor
         barView.backgroundColor = setBarBackgroundColor
@@ -124,6 +127,10 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
             pickerView.setValue(setFontColor, forKey: "textColor")
         }
         pickerView.reloadAllComponents()
+    }
+    
+    public func show(){
+        //viewPicker.removeFromSuperview()
         var controller: UIViewController!
         if delegate is UIViewController {
             controller = delegate as? UIViewController
@@ -172,9 +179,9 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
     }
     
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        delegate.pickerViewController(self, didSelectRow: row, inComponent: component)
         pickerView.reloadAllComponents()
         pickerView.tag = row
+        delegate.pickerViewController(self, didSelectRow: row, inComponent: component)
     }
     
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {

@@ -52,6 +52,8 @@ class MyCustomViewController: UIViewController, DatePickerViewControllerDelegate
        //For hour
        datePickerController.setDatePickerMode = .time
        datePickerController.setFormat = "HH:mm"
+       //If you whant a date format, you can pre-select a date
+       //datePickerController.setSelectedDate = "30/06/2020"
     }
 	
     func showPicker(){
