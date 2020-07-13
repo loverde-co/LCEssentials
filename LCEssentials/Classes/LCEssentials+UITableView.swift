@@ -21,8 +21,24 @@
  
 
 import Foundation
+import UIKit
 
 #if os(iOS) || os(macOS)
+//MARK: - UITableView Animation Cell
+public typealias UITableViewCellAnimation = (UITableViewCell, IndexPath, UITableView) -> Void
+
+public class UITableViewAnimator {
+    private let animation: UITableViewCellAnimation
+    
+    public init(animation: @escaping UITableViewCellAnimation) {
+        self.animation = animation
+    }
+    
+    public func animate(cell: UITableViewCell, at indexPath: IndexPath, in tableView: UITableView) {
+        animation(cell, indexPath, tableView)
+    }
+}
+
 public extension UITableView {
 
     /// SwifterSwift: Reload data with a completion handler.
@@ -34,6 +50,23 @@ public extension UITableView {
         }, completion: { _ in
             completion()
         })
+    }
+    
+    /// Loverde Co.: Animate cell to up with fade - See file example to know how to use
+    ///
+    func makeMoveUpWithFadeAnimation(rowHeight: CGFloat, duration: TimeInterval, delayFactor: TimeInterval) -> UITableViewCellAnimation {
+        return { cell, indexPath, _ in
+            cell.transform = CGAffineTransform(translationX: 0, y: rowHeight * 1.4)
+            cell.alpha = 0
+            UIView.animate(
+                withDuration: duration,
+                delay: delayFactor * Double(indexPath.row),
+                options: [.curveEaseInOut],
+                animations: {
+                    cell.transform = CGAffineTransform(translationX: 0, y: 0)
+                    cell.alpha = 1
+            })
+        }
     }
 
     /// SwifterSwift: Dequeue reusable UITableViewCell using class name

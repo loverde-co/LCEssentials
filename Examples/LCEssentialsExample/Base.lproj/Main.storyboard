@@ -100,7 +100,6 @@
         <!--Item-->
         <scene sceneID="08Q-sz-vaX">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4rq-Qx-FvA" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="idSecondVC" id="EpT-Nn-0nh" customClass="SecondVC" customModule="LCEssentialsExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zad-gN-ETH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -123,6 +122,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="cus-hV-90u"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4rq-Qx-FvA" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1610" y="139"/>
         </scene>

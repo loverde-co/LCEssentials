@@ -327,24 +327,6 @@ public extension String {
         return self
     }
     
-
-    //    func md5(_ string: String) -> String {
-    //        var digest = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
-    //        if let data = string.data(using: String.Encoding.utf8) {
-    //            CC_MD5((data as NSData).bytes, CC_LONG(data.count), &digest)
-    //        }
-    //
-    //        var digestHex = ""
-    //        for index in 0..<Int(CC_MD5_DIGEST_LENGTH) {
-    //            digestHex += String(format: "%02x", digest[index])
-    //        }
-    //
-    //        return digestHex
-    //        //Test:
-    //        //let digest = md5(string:"Hello")
-    //        //print("digest: \(digest)")
-    //    }
-    
     /// Verifica se o texto equivale a verdadeiro ou falso.
     func validateBolean(comparingBoolean:Bool = true) ->Bool{
 
@@ -395,6 +377,7 @@ public extension String {
 
         return false;
     }
+    
 
     func randomString(length: Int) -> String {
 

@@ -141,3 +141,22 @@ public extension Dictionary where Value: Equatable {
     }
 
 }
+
+// MARK: - Methods (ExpressibleByStringLiteral)
+public extension Dictionary where Key: StringProtocol {
+
+    /// SwifterSwift: Lowercase all keys in dictionary.
+    ///
+    ///        var dict = ["tEstKeY": "value"]
+    ///        dict.lowercaseAllKeys()
+    ///        print(dict) // prints "["testkey": "value"]"
+    ///
+    mutating func lowercaseAllKeys() {
+        // http://stackoverflow.com/questions/33180028/extend-dictionary-where-key-is-of-type-string
+        for key in keys {
+            if let lowercaseKey = String(describing: key).lowercased() as? Key {
+                self[lowercaseKey] = removeValue(forKey: key)
+            }
+        }
+    }
+}

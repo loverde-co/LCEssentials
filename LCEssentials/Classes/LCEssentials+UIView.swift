@@ -29,6 +29,19 @@ public enum EnumBorderSide {
 }
 
 public extension UIView {
+    
+    static var className: String {
+        return String(describing: self)
+    }
+    
+    static func instantiate(withNibName: String? = nil, owner: Any? = nil, options: [AnyHashable: Any]? = nil) -> [Any]? {
+        var nibName = self.className
+        if let settedNibName = withNibName {
+            nibName = settedNibName
+        }
+        return Bundle.main.loadNibNamed(nibName, owner: owner, options: options)
+    }
+    
     func addBorder(_ sides: [EnumBorderSide], color: UIColor, width: CGFloat) {
         let border = CALayer()
         border.backgroundColor = color.cgColor

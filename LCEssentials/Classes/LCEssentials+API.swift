@@ -47,7 +47,9 @@ public struct API {
     ///
     /// - Parameters: params - Dictionary
     /// - Parameters: method - httpMethod enum
-    /// - Parameters: params - Dictionary
+    /// - Parameters: jsonEncoding - bool
+    /// - Parameters: debug - bool - show or hide
+    /// - Parameters: persistConnection - bool - if error, re do the request
     public static func request(_ params: [String: Any], _ method: httpMethod, jsonEncoding: Bool = true, debug:Bool = true, persistConnection:Bool = false,
                                function: String = #function, file: String = #file, line: Int = #line, column: Int = #column, completion: @escaping (Result<Any, Swift.Error>) -> ()){
         do {

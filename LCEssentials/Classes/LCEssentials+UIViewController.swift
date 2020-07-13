@@ -32,11 +32,15 @@ public extension UIViewController {
     }
     
     static var identifier: String {
-        return "id"+String(describing: self)
+        return "id"+className
     }
     static var segueID: String {
-        return "idSegue"+String(describing: self)
+        return "idSegue"+className
     }
+    static var className: String {
+        return String(describing: self)
+    }
+    
     static func instantiate<T: UIViewController>(storyBoard: String, identifier: String? = nil) -> T {
         let storyboard = UIStoryboard(name: storyBoard, bundle: Bundle(for: T.self))
         var identf = T.identifier

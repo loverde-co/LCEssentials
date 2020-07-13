@@ -36,12 +36,18 @@ class ViewController: UIViewController {
     
     var delegate: LCESingletonDelegate? = nil
     
+    var alreadyAnimatedIndexPath = [IndexPath]()
+    var animationDuration: TimeInterval = 0.85
+    var delay: TimeInterval = 0.05
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
+        tableView.tableFooterView = UIView()
         tableView.reloadData()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
         
+        //LOOK AT DEBBUGER VIEW
         API.url = "https://api.github.com/users/{user}"
         API.request(["user": "loverde-co"] as [String:Any], .get) { (result) in
             switch result {
@@ -49,10 +55,14 @@ class ViewController: UIViewController {
                 printLog(title: "JSON ERROR", msg: error.localizedDescription)
                 break
             case .success(let json):
-                printLog(title: "JSON OUTPUT", msg: json as! String, prettyPrint: true)
+                printLog(title: "JSON OUTPUT", msg: (json as! String), prettyPrint: true)
                 break
             }
         }
+        
+        let stringo = Data.MD5(string: "teste em encript md5")
+        let toHex = stringo.toHexString()
+        printLog(title: "MD5", msg: toHex)
         
         //MARK: - Set Picker Controller
         pickerController.setSelectedRowIndex = 0
@@ -197,6 +207,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             break;
         }
         return
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if alreadyAnimatedIndexPath.contains(indexPath) {
+            return
+        }
+        
+        let animation = tableView.makeMoveUpWithFadeAnimation(rowHeight: tableView.cellForRow(at: indexPath)?.height ?? 60, duration: 0.85, delayFactor: 0.05)
+        let animator = UITableViewAnimator(animation: animation)
+        animator.animate(cell: cell, at: indexPath, in: tableView)
+        alreadyAnimatedIndexPath.append(indexPath)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
