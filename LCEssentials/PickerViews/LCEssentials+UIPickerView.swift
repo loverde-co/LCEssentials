@@ -222,7 +222,15 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
             attrStr.customize(text, size: self.setFontSize, color: self.setFontSelectedColor)
         } else {
             attrStr.customize(text, size: self.setFontSize, color: self.setFontColor)
-            label.backgroundColor = .white
+            if #available(iOS 12.0, *) {
+                if traitCollection.userInterfaceStyle == .light {
+                    label.backgroundColor = .white
+                } else {
+                    label.backgroundColor = .clear
+                }
+            } else {
+                label.backgroundColor = .white
+            }
         }
         //
         label.attributedText = attrStr
