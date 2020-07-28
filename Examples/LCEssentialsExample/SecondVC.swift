@@ -25,6 +25,9 @@ import LCEssentials
 
 class SecondVC: UIViewController {
 
+    @IBOutlet weak var lblMD5: UILabel!
+    let md5String = "MD5 native encode"
+    
     var delegate: LCESingletonDelegate? = nil
     
     override func viewDidLoad() {
@@ -40,6 +43,12 @@ class SecondVC: UIViewController {
 
     func setupView(){
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
+        let stringo = Data.MD5(string: md5String)
+        let toHex = stringo.toHexString()
+        printLog(title: "MD5", msg: toHex)
+        self.lblMD5.text = "Original message: \(md5String)\n\nMD5 output: "+toHex
+        
     }
 }
 

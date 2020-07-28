@@ -27,7 +27,8 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom", 3: "Open Alert Message on TOP",
-                                       4: "Open Notifications Runtime", 5: "Open Image Zoom", 6: "Open Second View With Singleton built in"]
+                                       4: "Open Notifications Runtime", 5: "Open Image Zoom", 6: "Open Second View With Singleton built in com uma linha a mais built in com uma linha a mais built in com uma linha a mais built in com uma linha a mais built in com uma linha a mais built in com uma linha a mais built in com uma linha a mais",
+                                       7: "Image Picker Controller"]
     
     let pickerController: PickerViewController = PickerViewController.instantiate()
     lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
@@ -44,6 +45,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
         tableView.tableFooterView = UIView()
+        tableView.estimatedRowHeight = 60
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.reloadData()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
         
@@ -60,17 +63,21 @@ class ViewController: UIViewController {
             }
         }
         
-        let stringo = Data.MD5(string: "teste em encript md5")
-        let toHex = stringo.toHexString()
-        printLog(title: "MD5", msg: toHex)
-        
         //MARK: - Set Picker Controller
         pickerController.setSelectedRowIndex = 0
         pickerController.delegate = self
         pickerController.setWidth = self.view.bounds.width
         pickerController.setDistanceFromBottom = 50
         pickerController.setFontSize = 20
-        pickerController.setFontColor = .black
+        if #available(iOS 12.0, *) {
+            if traitCollection.userInterfaceStyle == .light {
+                pickerController.setFontColor = .black
+            } else {
+                pickerController.setFontColor = .gray
+            }
+        } else {
+            pickerController.setFontColor = .black
+        }
         pickerController.touchToClose = true
         pickerController.setFontSelectedBGColor = .darkGray
         pickerController.setFontSelectedColor = .white
@@ -165,6 +172,13 @@ extension ViewController {
         self.delegate?.singleton?(set: "Object", withData: "Transfering Data")
         self.navigationController?.pushViewController(controller, animated: true)
     }
+    
+    //MARK: - Picker Controller
+    func openImagePicker(){
+        let camera = ImagePickerController()
+        camera.delegate = self
+        camera.openImagePicker()
+    }
 }
 
 //MARK: - Messages Delegate
@@ -202,6 +216,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             openImageZoom()
         case 6:
             openSecViewController()
+        case 7:
+            openImagePicker()
         default:
             openPickerController()
             break;
@@ -225,12 +241,15 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        return 60
+        guard let cell = tableView.cellForRow(at: indexPath) else{
+            return UITableView.automaticDimension
+        }
+        return cell.bounds.height < 60.0 ? 60.0 : UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
+        cell.textLabel?.numberOfLines = 0
         cell.textLabel?.text = self.content[indexPath.row]
         return cell
     }
@@ -291,5 +310,15 @@ extension ViewController: ImageZoomControllerDelegate {
 extension ViewController: LCESingletonDelegate {
     func singleton(get object: Any, withData: Any) {
         printLog(title: "MAIN VIEW", msg: "GET \(object) - \(withData)")
+    }
+}
+
+extension ViewController: ImagePickerControllerDelegate {
+    func imagePicker(didSelect image: UIImage?) {
+        if let image = image {
+            printInfo(title: "IMAGE SELECTED", msg: image.debugDescription)
+        }else{
+            printInfo(title: "IMAGE SELECTED", msg: "NOTHING")
+        }
     }
 }

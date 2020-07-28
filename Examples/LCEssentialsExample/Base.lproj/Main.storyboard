@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="A33-kk-7ss">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="A33-kk-7ss">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -28,7 +28,7 @@
         <scene sceneID="wAK-mo-T2b">
             <objects>
                 <navigationController id="XF2-Ut-ezX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" id="dTA-YU-0FR"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="house.fill" catalog="system" id="dTA-YU-0FR"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qVU-2V-gi9">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -84,7 +84,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" id="oK4-TL-XVB"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="house.fill" catalog="system" id="oK4-TL-XVB"/>
                     <navigationItem key="navigationItem" title="Home" largeTitleDisplayMode="always" id="zqz-Y6-bsl">
                         <barButtonItem key="backBarButtonItem" title="Back" id="nn5-Om-oGz"/>
                     </navigationItem>
@@ -111,23 +111,36 @@
                                     <constraint firstAttribute="height" constant="55" id="Zsd-6r-Cah"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="---" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SW9-0R-uHv">
+                                <rect key="frame" x="20" y="139" width="374" height="20.333333333333343"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="SW9-0R-uHv" firstAttribute="top" secondItem="BAz-Po-yHV" secondAttribute="bottom" constant="30" id="CXK-aW-ZeC"/>
                             <constraint firstItem="BAz-Po-yHV" firstAttribute="top" secondItem="XQi-fp-UxE" secondAttribute="top" constant="10" id="ecb-QY-QKD"/>
                             <constraint firstItem="XQi-fp-UxE" firstAttribute="trailing" secondItem="BAz-Po-yHV" secondAttribute="trailing" constant="20" id="fvo-az-Ko1"/>
+                            <constraint firstItem="SW9-0R-uHv" firstAttribute="leading" secondItem="XQi-fp-UxE" secondAttribute="leading" constant="20" id="rlz-0g-avN"/>
                             <constraint firstItem="BAz-Po-yHV" firstAttribute="leading" secondItem="XQi-fp-UxE" secondAttribute="leading" constant="20" id="xZV-aC-apk"/>
+                            <constraint firstItem="XQi-fp-UxE" firstAttribute="trailing" secondItem="SW9-0R-uHv" secondAttribute="trailing" constant="20" id="yMR-iW-O7P"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XQi-fp-UxE"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="cus-hV-90u"/>
+                    <connections>
+                        <outlet property="lblMD5" destination="SW9-0R-uHv" id="9AU-oa-pV0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4rq-Qx-FvA" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1610" y="139"/>
+            <point key="canvasLocation" x="1604" y="139"/>
         </scene>
     </scenes>
     <resources>
+        <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="loverde_company_logo_full" width="160" height="66"/>
     </resources>
 </document>
