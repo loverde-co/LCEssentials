@@ -50,7 +50,7 @@ public func printLog(title:String, msg:String, prettyPrint: Bool = false){
 public func printInfo(title: String, msg: String, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
     if prettyPrint {
         print("\n<=========================  ℹ️ INFO: \(title) - START =========================>")
-        print("[\(LCEssentials.sourceFileName(filePath: file)): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
+        print("[\(file): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
         print(msg)
         print("\n<=========================  ℹ️ INFO: \(title) - END ===========================>")
     }else{
@@ -60,7 +60,7 @@ public func printInfo(title: String, msg: String, prettyPrint: Bool = false, fun
 public func printWarn(title: String, msg: String, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
     if prettyPrint {
         print("\n<=========================  ⚠️ WARN: \(title) - START =========================>")
-        print("[\(LCEssentials.sourceFileName(filePath: file)): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
+        print("[\(file): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
         print(msg)
         print("\n<=========================  ⚠️ WARN: \(title) - END ===========================>")
     }else{
@@ -70,7 +70,7 @@ public func printWarn(title: String, msg: String, prettyPrint: Bool = false, fun
 public func printError(title: String, msg: String, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
     if prettyPrint {
         print("\n<=========================  🚫 ERROR: \(title) - START =========================>")
-        print("[\(LCEssentials.sourceFileName(filePath: file)): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
+        print("[\(file): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
         print(msg)
         print("\n<=========================  🚫 ERROR: \(title) - END ===========================>")
     }else{

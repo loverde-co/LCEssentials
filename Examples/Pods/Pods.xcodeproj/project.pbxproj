@@ -53,8 +53,8 @@
 		ADC8ED040EF6F7158CCE117081A11781 /* LCEssentials+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D47A0639762B69FB8B2FB56A96538A6 /* LCEssentials+UIImageView.swift */; };
 		B15D8F9A24B6652100EAFE64 /* LCEssentials+Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15D8F9924B6652100EAFE64 /* LCEssentials+Optional.swift */; };
 		B18275F686C42EE004E7EAA97B14E618 /* LCEssentials+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20BF5DA2595D0A66E10158F5427811F5 /* LCEssentials+UILabel.swift */; };
-		B1BFA46F24CF5BD2005094B8 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BFA46E24CF5BD1005094B8 /* ImagePickerController.swift */; };
-		B1BFA47524CF766B005094B8 /* ImagePickerController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1BFA47424CF766B005094B8 /* ImagePickerController.storyboard */; };
+		B1866F7724D0A3200009A0A2 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1866F7424D0A31F0009A0A2 /* ImagePickerController.swift */; };
+		B1866F7824D0A3200009A0A2 /* ImagePickerController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1866F7624D0A31F0009A0A2 /* ImagePickerController.storyboard */; };
 		B672C5B547891D6CD368D92031BEFE28 /* LCEssentials+UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39CDF4497A04FEBC91A46986650B169 /* LCEssentials+UIScrollView.swift */; };
 		B6CA736975C9B57AA042C36FB22B63BD /* LCEssentials-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D5FCC8FC091D2058631D85E91CB55BC /* LCEssentials-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B9FA14D8737B9D561E6E46EF59FBA8C2 /* ReachabilityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97F620398CDB2216B55DA5D296556FF /* ReachabilityHelper.swift */; };
@@ -141,8 +141,8 @@
 		AFA271E46F6BE30DC04F165EACA10686 /* LCDesignables.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LCDesignables.swift; sourceTree = "<group>"; };
 		B0FBE6CDA0DBA10C926C84BB26CEC4B8 /* LCEssentials+FileManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+FileManager.swift"; sourceTree = "<group>"; };
 		B15D8F9924B6652100EAFE64 /* LCEssentials+Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Optional.swift"; sourceTree = "<group>"; };
-		B1BFA46E24CF5BD1005094B8 /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
-		B1BFA47424CF766B005094B8 /* ImagePickerController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImagePickerController.storyboard; sourceTree = "<group>"; };
+		B1866F7424D0A31F0009A0A2 /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
+		B1866F7624D0A31F0009A0A2 /* ImagePickerController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImagePickerController.storyboard; sourceTree = "<group>"; };
 		B565E5BEE9E105A2A3E04FF2317C09E6 /* LCEssentials+Array.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Array.swift"; sourceTree = "<group>"; };
 		C2821263069D396D86B0E26C107D647A /* LCEssentials-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LCEssentials-prefix.pch"; sourceTree = "<group>"; };
 		C5637D2F07AD27F36E9A3F0B171BF246 /* LCEssentials+Bool.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Bool.swift"; sourceTree = "<group>"; };
@@ -254,8 +254,8 @@
 		58F748CEDFA7D2AD7057C72849DCB05A /* LCEssentials */ = {
 			isa = PBXGroup;
 			children = (
-				B1BFA46D24CF5BD1005094B8 /* ImagePicker */,
 				76ECF3EAFCAE29B163430D7419DDCF3F /* Classes */,
+				B1866F7324D0A31F0009A0A2 /* ImagePicker */,
 				252236BE8BFA0BFC4CC3DF0A6963A132 /* ImageZoom */,
 				E67C7EA4A35EFCCFB05207812D5FCFB3 /* Notifications */,
 				8B37B6AE943554C8A2E226F81A89B834 /* PickerViews */,
@@ -416,20 +416,20 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		B1BFA46D24CF5BD1005094B8 /* ImagePicker */ = {
+		B1866F7324D0A31F0009A0A2 /* ImagePicker */ = {
 			isa = PBXGroup;
 			children = (
-				B1BFA47324CF7651005094B8 /* Storyboard */,
-				B1BFA46E24CF5BD1005094B8 /* ImagePickerController.swift */,
+				B1866F7424D0A31F0009A0A2 /* ImagePickerController.swift */,
+				B1866F7524D0A31F0009A0A2 /* Storyboard */,
 			);
 			name = ImagePicker;
 			path = LCEssentials/ImagePicker;
 			sourceTree = "<group>";
 		};
-		B1BFA47324CF7651005094B8 /* Storyboard */ = {
+		B1866F7524D0A31F0009A0A2 /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
-				B1BFA47424CF766B005094B8 /* ImagePickerController.storyboard */,
+				B1866F7624D0A31F0009A0A2 /* ImagePickerController.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -579,7 +579,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1BFA47524CF766B005094B8 /* ImagePickerController.storyboard in Resources */,
+				B1866F7824D0A3200009A0A2 /* ImagePickerController.storyboard in Resources */,
 				0C7FAC7A5858A6262D5C75ACE4DF61F9 /* alert.png in Resources */,
 				6D27E3BB63AE87ED600D89699DCB8F8C /* alert@2x.png in Resources */,
 				C06AE5AD3E555CF177235E7FB3F470DA /* alert@3x.png in Resources */,
@@ -597,6 +597,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1866F7724D0A3200009A0A2 /* ImagePickerController.swift in Sources */,
 				A615019B56DB055C64A3513C5A1B6349 /* GifHelper.swift in Sources */,
 				524BF93A7E10372C708A8D152EC4E1A0 /* ImageZoom.swift in Sources */,
 				583DB9CD01C5C7D5FBA49CA1908117A3 /* LCDesignables.swift in Sources */,
@@ -628,7 +629,6 @@
 				EC5AE9762B2EF9F624E566001F5B7E18 /* LCEssentials+UICollectionView.swift in Sources */,
 				52C37844BAB9CF6D8F93E4FF87FA34A8 /* LCEssentials+UIColor.swift in Sources */,
 				AB77BDE4EEAAA3D79D4B202B2EB4864E /* LCEssentials+UIDatePicker.swift in Sources */,
-				B1BFA46F24CF5BD2005094B8 /* ImagePickerController.swift in Sources */,
 				7A1971E6C63F7BC66AF1D80D7134448E /* LCEssentials+UIDevice.swift in Sources */,
 				975C3E2F0E9FE2FD4481BD9F77297E17 /* LCEssentials+UIImage.swift in Sources */,
 				ADC8ED040EF6F7158CCE117081A11781 /* LCEssentials+UIImageView.swift in Sources */,

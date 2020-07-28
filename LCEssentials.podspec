@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'LCEssentials'
-  s.version          = '0.4.3'
+  s.version          = '0.4.4'
   s.summary          = 'This is a repository of essential scripts written in Swift for Loverde Co.'
  
   s.description      = <<-DESC
@@ -10,7 +10,7 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
   s.homepage         = 'https://github.com/loverde-co/LCEssentials'
   s.license          = { :type => 'MIT', :file => 'LICENSE.md' }
   s.author           = { 'Daniel Arantes Loverde' => 'daniel@loverde.com.br' }
-  s.source           = { :git => 'https://github.com/loverde-co/LCEssentials.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/loverde-co/LCEssentials.git', :tag => s.version }
   s.swift_version    = '4.0'
   #s.dependency       'Alamofire'
   s.platform         = :ios, '11.0'
@@ -40,14 +40,14 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
   end
 
   # LCEImageZoom Extensions
-  s.subspec 'ImageZoom' do |sp|
-    sp.source_files  = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/ImageZoom/*.{swift}'
-    sp.ios.resources = ['LCEssentials/ImageZoom/Storyboards/*.{storyboard}']
-  end
+  #s.subspec 'ImagesZoom' do |sp|
+  #  sp.source_files  = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/ImageZoom/*.{swift}'
+  #  sp.ios.resources = ['LCEssentials/ImageZoom/Storyboards/*.{storyboard}']
+  #end
 
   # LCEImagePicker Extensions
-  s.subspec 'ImagePicker' do |sp|
-    sp.source_files  = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/ImagePicker/*.{swift}'
-    sp.ios.resources = ['LCEssentials/ImagePicker/Storyboards/*.{storyboard}']
-  end
+  #s.subspec 'ImagePicker' do |sp|
+  #  sp.source_files  = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/ImagePicker/*.{swift}'
+  #  sp.ios.resources = ['LCEssentials/ImagePicker/Storyboards/*.{storyboard}']
+  #end
 end
