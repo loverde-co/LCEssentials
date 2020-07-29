@@ -62,9 +62,16 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
         }else if photos == .notDetermined || photos == .denied || photos == .restricted {
             albumPerm = false
         }
-        (self.delegate as? UIViewController)?.present(self, animated:false, completion: {
-            self.openAlerts(forCamera: cameraPerm, forAlbum: albumPerm)
-        })
+        
+        DispatchQueue.main.async {
+            if let presentedController = (self.delegate as? UIViewController)?.presentedViewController, presentedController == self {
+                self.openAlerts(forCamera: cameraPerm, forAlbum: albumPerm)
+            }else{
+                (self.delegate as? UIViewController)?.present(self, animated:false, completion: {
+                    self.openAlerts(forCamera: cameraPerm, forAlbum: albumPerm)
+                })
+            }
+        }
     }
     
     

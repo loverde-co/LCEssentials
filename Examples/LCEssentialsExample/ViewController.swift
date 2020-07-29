@@ -27,7 +27,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom", 3: "Open Alert Message on TOP",
-                                       4: "Open Notifications Runtime", 5: "Open Image Zoom", 6: "Open Second View With Singleton built in com uma linha a mais built in com uma linha a mais built in com uma linha a mais built in com uma linha a mais built in com uma linha a mais built in com uma linha a mais built in com uma linha a mais",
+                                       4: "Open Notifications Runtime", 5: "Open Image Zoom", 6: "Open Second View With Singleton built in",
                                        7: "Image Picker Controller"]
     
     let pickerController: PickerViewController = PickerViewController.instantiate()
