@@ -33,12 +33,13 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
     private var isAlertOpen: Bool = false
     private var imagePickerController: UIImagePickerController = UIImagePickerController()
     public var delegate: ImagePickerControllerDelegate?
+    public var isEditable: Bool = false
 
     public override func viewDidLoad() {
         super.viewDidLoad()
         
         self.imagePickerController.delegate = self
-        self.imagePickerController.allowsEditing = true
+        self.imagePickerController.allowsEditing = isEditable
         self.imagePickerController.mediaTypes = ["public.image", "public.movie"]
     }
 

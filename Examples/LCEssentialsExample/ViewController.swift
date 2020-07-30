@@ -177,6 +177,7 @@ extension ViewController {
     func openImagePicker(){
         let camera = ImagePickerController()
         camera.delegate = self
+        camera.isEditable = true
         camera.openImagePicker()
     }
 }
