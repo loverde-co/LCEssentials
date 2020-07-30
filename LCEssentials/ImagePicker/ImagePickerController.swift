@@ -130,7 +130,6 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
     private func openCameraDevice(){
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerController.SourceType.camera)){
             self.imagePickerController.sourceType = UIImagePickerController.SourceType.camera
-            self.imagePickerController.allowsEditing = true
             self.modalPresentationStyle = .fullScreen
             self.present(self.imagePickerController, animated: true, completion: nil)
         }else{
@@ -143,7 +142,6 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
     
     private func openAlbumDevice(){
         self.imagePickerController.sourceType = UIImagePickerController.SourceType.photoLibrary
-        self.imagePickerController.allowsEditing = true
         self.modalPresentationStyle = .fullScreen
         self.present(self.imagePickerController, animated: true, completion: nil)
     }
