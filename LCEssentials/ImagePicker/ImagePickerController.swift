@@ -88,6 +88,8 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
         //print("ESCOLHEU OU TIROU FOTO: \(info.debugDescription)")
         if let picInfo = UIImagePickerControllerEditedImage as? NSString, let image = info[picInfo] as? UIImage {
             self.delegate?.imagePicker(didSelect: image)
+        }else if let picInfo = UIImagePickerControllerOriginalImage as? NSString, let image = info[picInfo] as? UIImage {
+            self.delegate?.imagePicker(didSelect: image)
         }
         picker.dismiss(animated: true, completion: {
             self.dismiss(animated: false, completion: nil)
