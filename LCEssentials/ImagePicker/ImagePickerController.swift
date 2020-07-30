@@ -117,7 +117,9 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
             }))
         }
         
-        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: { _ in
+            self.dismiss(animated: false, completion: nil)
+        }))
         self.isAlertOpen = true
         DispatchQueue.main.async {
             self.modalPresentationStyle = .fullScreen
