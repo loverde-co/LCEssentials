@@ -21,8 +21,9 @@
  
 
 import Foundation
-
 #if os(iOS) || os(macOS)
+import UIKit
+
 public enum AttributtedAlignment {
     case center, left, right
 }

@@ -21,8 +21,9 @@
  
 
 import Foundation
-
 #if os(iOS) || os(macOS)
+import UIKit
+
 public extension UITextField {
     @IBInspectable
     var placeholderColor: UIColor {

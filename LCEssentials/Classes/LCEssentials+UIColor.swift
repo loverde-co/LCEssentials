@@ -21,9 +21,16 @@
  
 
 import Foundation
+import UIKit
 
 #if os(iOS) || os(macOS)
 public extension UIColor {
+    
+    var redValue: CGFloat{ return CIColor(color: self).red }
+    var greenValue: CGFloat{ return CIColor(color: self).green }
+    var blueValue: CGFloat{ return CIColor(color: self).blue }
+    var alphaValue: CGFloat{ return CIColor(color: self).alpha }
+    
     convenience init(hex: String) {
         var red:   CGFloat = 0.0
         var green: CGFloat = 0.0

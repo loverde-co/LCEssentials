@@ -21,6 +21,7 @@
  
 
 import Foundation
+import UIKit
 
 #if os(iOS) || os(macOS)
 extension UIImageView {

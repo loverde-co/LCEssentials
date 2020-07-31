@@ -21,8 +21,9 @@
  
 
 import Foundation
-
 #if os(iOS) || os(macOS)
+import UIKit
+
 public extension UICollectionView {
     func setupCollectionView(spacings: CGFloat = 0, direction: UICollectionView.ScrollDirection = .horizontal, edgesInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), allowMulpleSelection: Bool = false){
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()

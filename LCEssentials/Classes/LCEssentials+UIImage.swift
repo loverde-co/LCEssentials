@@ -21,6 +21,7 @@
  
 
 import Foundation
+import UIKit
 
 #if os(iOS) || os(macOS)
 public extension UIImage {
@@ -33,6 +34,26 @@ public extension UIImage {
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return image
+    }
+    
+    ///Make transparent color of image - choose a color and range color
+    func imageByMakingWhiteBackgroundTransparent(initialColor: UIColor, finalColor: UIColor) -> UIImage? {
+
+        let image = UIImage(data: UIImageJPEGRepresentation(self, 1.0)!)!
+        let rawImageRef: CGImage = image.cgImage!
+        
+        //let colorMasking: [CGFloat] = [222, 255, 222, 255, 222, 255]
+        let colorMasking: [CGFloat] = [finalColor.redValue, initialColor.redValue, finalColor.greenValue, initialColor.greenValue, finalColor.blueValue, initialColor.blueValue]
+        UIGraphicsBeginImageContext(image.size);
+
+        let maskedImageRef = rawImageRef.copy(maskingColorComponents: colorMasking)
+        UIGraphicsGetCurrentContext()?.translateBy(x: 0.0,y: image.size.height)
+        UIGraphicsGetCurrentContext()?.scaleBy(x: 1.0, y: -1.0)
+        UIGraphicsGetCurrentContext()?.draw(maskedImageRef!, in: CGRect.init(x: 0, y: 0, width: image.size.width, height: image.size.height))
+        let result = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return result
+
     }
 
     /// Creates a circular outline image.

@@ -22,6 +22,8 @@
 
 import Foundation
 #if os(iOS) || os(macOS)
+import UIKit
+
 @IBDesignable open class CustomTabBadge: UILabel {
     
 }

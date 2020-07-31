@@ -21,8 +21,8 @@
  
 
 import Foundation
-
 #if os(iOS) || os(macOS)
+import UIKit
 
 public enum EnumBorderSide {
     case top, bottom, left, right

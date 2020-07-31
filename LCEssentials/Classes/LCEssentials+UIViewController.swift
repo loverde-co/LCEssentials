@@ -23,6 +23,7 @@
 import Foundation
 
 #if os(iOS) || os(macOS)
+import UIKit
 import QuartzCore
 
 public extension UIViewController {
