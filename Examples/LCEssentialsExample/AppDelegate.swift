@@ -55,16 +55,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidEnterBackground(_ application: UIApplication) {
         application.ignoreSnapshotOnNextApplicationLaunch()
-        let objects = UIStoryboard.init(name: "LaunchScreen", bundle: nil)
-        protectView = (objects.instantiateInitialViewController())!.view
+        let controller = UIStoryboard.instantiateInitialViewController(storyBoard: "LaunchScreen")
+        protectView = controller!.view
         LCEssentials.getTopViewController()?.view.addSubview(protectView)
         LCEssentials.getTopViewController()?.view.bringSubviewToFront(protectView)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
         application.ignoreSnapshotOnNextApplicationLaunch()
-        let objects = UIStoryboard.init(name: "LaunchScreen", bundle: nil)
-        protectView = (objects.instantiateInitialViewController())!.view
+        let controller = UIStoryboard.instantiateInitialViewController(storyBoard: "LaunchScreen")
+        protectView = controller!.view
         LCEssentials.getTopViewController()?.view.addSubview(protectView)
         LCEssentials.getTopViewController()?.view.bringSubviewToFront(protectView)
     }

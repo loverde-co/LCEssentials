@@ -36,7 +36,7 @@ public enum httpMethod: String {
 }
 /// Loverde Co.: API generic struct for simple requests
 public struct API {
-    static let defaultError = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN, code: LCEssentials.DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: "Unknown error" ])
+    static let defaultError = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN, code: LCEssentials.DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: LCEssentials.DEFAULT_ERROR_MSG ])
     public static var persistConnectionDelay: Double = 3
     public static var headers: [String: String]!
     public static var defaultParams: [String:Any]!
@@ -120,22 +120,22 @@ public struct API {
                             //
                             if let error = error {
                                 if error.statusCode == NSURLErrorTimedOut {
-                                    if debug { printError(title: "RESPONSE ERROR TIMEOUT", msg: "DESCRICAO: \(error.localizedDescription)") }
+                                    printError(title: "RESPONSE ERROR TIMEOUT", msg: "DESCRICAO: \(error.localizedDescription)")
                                 }else
                                 if error.statusCode == NSURLErrorNotConnectedToInternet {
-                                    if debug { printError(title: "RESPONSE ERROR NO INTERNET", msg: "DESCRICAO: \(error.localizedDescription)") }
+                                    printError(title: "RESPONSE ERROR NO INTERNET", msg: "DESCRICAO: \(error.localizedDescription)")
                                 }else
                                 if error.statusCode == NSURLErrorNetworkConnectionLost {
-                                    if debug { printError(title: "RESPONSE ERROR CONNECTION LOST", msg: "DESCRICAO: \(error.localizedDescription)") }
+                                    printError(title: "RESPONSE ERROR CONNECTION LOST", msg: "DESCRICAO: \(error.localizedDescription)")
                                 }else
                                 if error.statusCode == NSURLErrorCancelledReasonUserForceQuitApplication {
-                                    if debug { printError(title: "RESPONSE ERROR APP QUIT", msg: "DESCRICAO: \(error.localizedDescription)") }
+                                    printError(title: "RESPONSE ERROR APP QUIT", msg: "DESCRICAO: \(error.localizedDescription)")
                                 }else
                                 if error.statusCode == NSURLErrorCancelledReasonBackgroundUpdatesDisabled {
-                                    if debug { printError(title: "RESPONSE ERROR BG DISABLED", msg: "DESCRICAO: \(error.localizedDescription)") }
+                                    printError(title: "RESPONSE ERROR BG DISABLED", msg: "DESCRICAO: \(error.localizedDescription)")
                                 }else
                                 if error.statusCode == NSURLErrorBackgroundSessionWasDisconnected {
-                                    if debug { printError(title: "RESPONSE ERROR BG SESSION DISCONNECTED", msg: "DESCRICAO: \(error.localizedDescription)") }
+                                    printError(title: "RESPONSE ERROR BG SESSION DISCONNECTED", msg: "DESCRICAO: \(error.localizedDescription)")
                                 }else{
                                     printError(title: "ERROR GENERAL", msg: error.localizedDescription)
                                 }
@@ -159,6 +159,7 @@ public struct API {
                         
                         // - Case user want to persist connection
                         if persistConnection {
+                            printError(title: "INTERNET CONNECTION ERROR", msg: "WILL PERSIST")
                             LCEssentials.backgroundThread(delay: persistConnectionDelay) {
                                 self.request(params, method, jsonEncoding: jsonEncoding, debug: debug, persistConnection: persistConnection) { (result) in
                                     completion(result)

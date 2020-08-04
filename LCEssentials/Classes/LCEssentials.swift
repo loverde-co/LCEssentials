@@ -439,12 +439,12 @@ public extension LCEssentials {
     //MARK: - Set Root View Controller
     static func setRootViewControllerWithAnimation(fromView from: UIView, toViewController to: UIViewController, duration: TimeInterval = 0.6, options: UIViewAnimationOptions, completion: (() -> Void)? = nil) {
         
-        let appDelegate = UIApplication.shared.delegate
+        let appDelegate = sharedApplication.delegate
         
         UIView.transition(from: from, to: to.view, duration: duration, options: options, completion: {
             _ in
             appDelegate?.window??.rootViewController = to
-            if( completion != nil ){ completion!() }
+            completion?()
         })
     }
     #endif

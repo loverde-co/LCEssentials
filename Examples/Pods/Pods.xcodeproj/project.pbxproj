@@ -51,6 +51,7 @@
 		AB77BDE4EEAAA3D79D4B202B2EB4864E /* LCEssentials+UIDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74DE04467C6C268D416D91F796B0AF6 /* LCEssentials+UIDatePicker.swift */; };
 		AD73CE029B5A64C78D33EF4896563083 /* LCEssentials+Numeric.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB20ED1E48CCD02A51ECCF77B712D4D /* LCEssentials+Numeric.swift */; };
 		ADC8ED040EF6F7158CCE117081A11781 /* LCEssentials+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D47A0639762B69FB8B2FB56A96538A6 /* LCEssentials+UIImageView.swift */; };
+		B129BEC824D9B51200926D5E /* LCEssentials+Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B129BEC724D9B51200926D5E /* LCEssentials+Storyboard.swift */; };
 		B15D8F9A24B6652100EAFE64 /* LCEssentials+Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15D8F9924B6652100EAFE64 /* LCEssentials+Optional.swift */; };
 		B18275F686C42EE004E7EAA97B14E618 /* LCEssentials+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20BF5DA2595D0A66E10158F5427811F5 /* LCEssentials+UILabel.swift */; };
 		B1866F7724D0A3200009A0A2 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1866F7424D0A31F0009A0A2 /* ImagePickerController.swift */; };
@@ -140,6 +141,7 @@
 		AC2D99281AC4D5FC721CA34E87E2908A /* Pods-LCEssentialsExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LCEssentialsExample-dummy.m"; sourceTree = "<group>"; };
 		AFA271E46F6BE30DC04F165EACA10686 /* LCDesignables.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LCDesignables.swift; sourceTree = "<group>"; };
 		B0FBE6CDA0DBA10C926C84BB26CEC4B8 /* LCEssentials+FileManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+FileManager.swift"; sourceTree = "<group>"; };
+		B129BEC724D9B51200926D5E /* LCEssentials+Storyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Storyboard.swift"; sourceTree = "<group>"; };
 		B15D8F9924B6652100EAFE64 /* LCEssentials+Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Optional.swift"; sourceTree = "<group>"; };
 		B1866F7424D0A31F0009A0A2 /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		B1866F7624D0A31F0009A0A2 /* ImagePickerController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImagePickerController.storyboard; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 				CBB20ED1E48CCD02A51ECCF77B712D4D /* LCEssentials+Numeric.swift */,
 				B15D8F9924B6652100EAFE64 /* LCEssentials+Optional.swift */,
 				D41936FA8757C9654465C00C7A91C76D /* LCEssentials+ReachabilityManager.swift */,
+				B129BEC724D9B51200926D5E /* LCEssentials+Storyboard.swift */,
 				2745F0516482AA2D50ED581E74053095 /* LCEssentials+String.swift */,
 				19E49C066B1DC5C930FA48CEB2F17056 /* LCEssentials+UIButton.swift */,
 				33DF44B60030F5DCEC1A2EC586F83CE2 /* LCEssentials+UICollectionView.swift */,
@@ -600,6 +603,7 @@
 				B1866F7724D0A3200009A0A2 /* ImagePickerController.swift in Sources */,
 				A615019B56DB055C64A3513C5A1B6349 /* GifHelper.swift in Sources */,
 				524BF93A7E10372C708A8D152EC4E1A0 /* ImageZoom.swift in Sources */,
+				B129BEC824D9B51200926D5E /* LCEssentials+Storyboard.swift in Sources */,
 				583DB9CD01C5C7D5FBA49CA1908117A3 /* LCDesignables.swift in Sources */,
 				4D5E6B9AAAF02827B7D7DEE39C187FC5 /* LCEffx.swift in Sources */,
 				1A67D8493366D660A935BD898084AE18 /* LCEMessages.swift in Sources */,

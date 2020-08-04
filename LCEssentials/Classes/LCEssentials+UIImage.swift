@@ -37,7 +37,7 @@ public extension UIImage {
     }
     
     ///Make transparent color of image - choose a color and range color
-    func imageByMakingWhiteBackgroundTransparent(initialColor: UIColor, finalColor: UIColor) -> UIImage? {
+    func backgroundColorTransparent(initialColor: UIColor, finalColor: UIColor) -> UIImage? {
 
         let image = UIImage(data: UIImageJPEGRepresentation(self, 1.0)!)!
         let rawImageRef: CGImage = image.cgImage!
