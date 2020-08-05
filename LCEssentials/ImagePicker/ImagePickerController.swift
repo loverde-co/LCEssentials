@@ -156,13 +156,6 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
                     self.openImagePicker()
                 }
             }else{
-                //                if let url = URL(string: "App-Prefs:root=\(BatuHelpers.BundleID)") {
-                //                    if #available(iOS 10.0, *) {
-                //                        UIApplication.shared.open(url, completionHandler: .none)
-                //                    } else {
-                //                        UIApplication.shared.openURL(url)
-                //                    }
-                //                }
                 guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
                     return
                 }
@@ -187,13 +180,6 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
                     self.openImagePicker()
                 }
             } else {
-                //                if let url = URL(string: "App-Prefs:root=\(BatuHelpers.BundleID)") {
-                //                    if #available(iOS 10.0, *) {
-                //                        UIApplication.shared.open(url, completionHandler: .none)
-                //                    } else {
-                //                        UIApplication.shared.openURL(url)
-                //                    }
-                //                }
                 guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
                     return
                 }

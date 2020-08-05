@@ -26,7 +26,7 @@ import LCEssentials
 class SecondVC: UIViewController {
 
     @IBOutlet weak var lblMD5: UILabel!
-    let md5String = "MD5 native encode"
+    var md5String = "MD5 native encode"
     
     var delegate: LCESingletonDelegate? = nil
     

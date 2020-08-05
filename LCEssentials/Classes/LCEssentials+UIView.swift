@@ -61,7 +61,7 @@ public extension UIView {
             self.layer.addSublayer(border)
         }
     }
-    func addCustomRoundCorners(topLeft: Bool = false, topRight: Bool = false, bottomLeft:Bool = false, bottomRight:Bool = false, radius: CGFloat = 8){
+    func addCornerRadius(topLeft: Bool = false, topRight: Bool = false, bottomLeft:Bool = false, bottomRight:Bool = false, radius: CGFloat = 8){
         var maskCorns: CACornerMask = []
         var path: UIBezierPath = UIBezierPath(roundedRect: (self.bounds), byRoundingCorners: [], cornerRadii: CGSize(width: radius, height: radius))
         var rectCorners: UIRectCorner = []
@@ -404,6 +404,10 @@ public extension UIView {
             border.frame = CGRect(x: self.frame.size.width - self.borderWidth, y: 0, width: self.borderWidth, height: self.frame.size.height)
             self.layer.addSublayer(border)
         }
+    }
+    
+    func copyView<T: UIView>() -> T {
+        return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as! T
     }
 }
 #endif
