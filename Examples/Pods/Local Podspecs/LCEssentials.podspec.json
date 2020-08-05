@@ -1,6 +1,6 @@
 {
   "name": "LCEssentials",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "summary": "This is a repository of essential scripts written in Swift for Loverde Co.",
   "description": "This is a repository of essential scripts written in Swift for Loverde Co. used to save time on re-writing and keeping it on all other projects. So this Cocoapods will evolve with Swift and will improve with every release!",
   "homepage": "https://github.com/loverde-co/LCEssentials",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/loverde-co/LCEssentials.git",
-    "tag": "0.4.2"
+    "tag": "0.5.0"
   },
   "swift_versions": "4.0",
   "platforms": {
@@ -22,63 +22,53 @@
   },
   "ios": {
     "source_files": [
-      "LCEssentials/Classes/*.{swift}",
-      "LCEssentials/PickerViews/*.{swift}",
-      "LCEssentials/Notifications/*.{swift}",
-      "LCEssentials/ImageZoom/*.{swift}"
+      "Sources/LCEssentials/Classes/*.{swift}",
+      "Sources/LCEssentials/PickerViews/*.{swift}",
+      "Sources/LCEssentials/Notifications/*.{swift}",
+      "Sources/LCEssentials/ImageZoom/*.{swift}",
+      "Sources/LCEssentials/ImagePicker/*.{swift}"
     ],
     "resources": [
-      "LCEssentials/PickerViews/Storyboards/*.{storyboard}",
-      "LCEssentials/Notifications/Storyboard/*.{storyboard}",
-      "LCEssentials/Notifications/Storyboard/*.{png}",
-      "LCEssentials/ImageZoom/Storyboard/*.{storyboard}"
+      "Sources/LCEssentials/PickerViews/Storyboards/*.{storyboard}",
+      "Sources/LCEssentials/Notifications/Storyboard/*.{storyboard}",
+      "Sources/LCEssentials/Notifications/Storyboard/*.{png}",
+      "Sources/LCEssentials/ImageZoom/Storyboard/*.{storyboard}",
+      "Sources/LCEssentials/ImagePicker/Storyboard/*.{storyboard}"
     ]
   },
   "watchos": {
-    "source_files": "LCEssentials/Classes/*.{swift}"
+    "source_files": "Sources/LCEssentials/Classes/*.{swift}"
   },
   "subspecs": [
     {
       "name": "Classes",
-      "source_files": "LCEssentials/Classes/*.{swift}",
+      "source_files": "Sources/LCEssentials/Classes/*.{swift}",
       "watchos": {
-        "source_files": "LCEssentials/Classes/*.{swift}"
+        "source_files": "Sources/LCEssentials/Classes/*.{swift}"
       }
     },
     {
       "name": "PickerViews",
       "source_files": [
-        "LCEssentials/Classes/*.{swift}",
-        "LCEssentials/PickerViews/*.{swift}"
+        "Sources/LCEssentials/Classes/*.{swift}",
+        "Sources/LCEssentials/PickerViews/*.{swift}"
       ],
       "ios": {
         "resources": [
-          "LCEssentials/PickerViews/Storyboards/*.{storyboard}"
+          "Sources/LCEssentials/PickerViews/Storyboards/*.{storyboard}"
         ]
       }
     },
     {
       "name": "Notifications",
       "source_files": [
-        "LCEssentials/Classes/*.{swift}",
-        "LCEssentials/Notifications/*.{swift}"
+        "Sources/LCEssentials/Classes/*.{swift}",
+        "Sources/LCEssentials/Notifications/*.{swift}"
       ],
       "ios": {
         "resources": [
-          "LCEssentials/Notifications/Storyboards/*.{storyboard}",
-          "LCEssentials/Notifications/Storyboard/*.{png}"
-        ]
-      }
-    },
-    {
-      "name": "ImageZoom",
-      "source_files": [
-        "LCEssentials/Classes/*.{swift}",
-        "LCEssentials/ImageZoom/*.{swift}"
-      ],
-      "ios": {
-        "resources": [
-          "LCEssentials/ImageZoom/Storyboards/*.{storyboard}"
+          "Sources/LCEssentials/Notifications/Storyboards/*.{storyboard}",
+          "Sources/LCEssentials/Notifications/Storyboard/*.{png}"
         ]
       }
     }

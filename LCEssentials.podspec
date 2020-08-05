@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'LCEssentials'
-  s.version          = '0.4.6.3'
+  s.version          = '0.5.0'
   s.summary          = 'This is a repository of essential scripts written in Swift for Loverde Co.'
  
   s.description      = <<-DESC
@@ -17,37 +17,37 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
   s.platform         = :watchos, '4.0'
   s.ios.deployment_target = '10.0'
   s.watchos.deployment_target = '5.0'
-  s.ios.source_files     = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/PickerViews/*.{swift}', 'LCEssentials/Notifications/*.{swift}', 'LCEssentials/ImageZoom/*.{swift}', 'LCEssentials/ImagePicker/*.{swift}'
-  s.watchos.source_files     = 'LCEssentials/Classes/*.{swift}'
-  s.ios.resources        = ['LCEssentials/PickerViews/Storyboards/*.{storyboard}', 'LCEssentials/Notifications/Storyboard/*.{storyboard}', 'LCEssentials/Notifications/Storyboard/*.{png}', 'LCEssentials/ImageZoom/Storyboard/*.{storyboard}', 'LCEssentials/ImagePicker/Storyboard/*.{storyboard}']
+  s.ios.source_files     = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/PickerViews/*.{swift}', 'Sources/LCEssentials/Notifications/*.{swift}', 'Sources/LCEssentials/ImageZoom/*.{swift}', 'Sources/LCEssentials/ImagePicker/*.{swift}'
+  s.watchos.source_files     = 'Sources/LCEssentials/Classes/*.{swift}'
+  s.ios.resources        = ['Sources/LCEssentials/PickerViews/Storyboards/*.{storyboard}', 'Sources/LCEssentials/Notifications/Storyboard/*.{storyboard}', 'Sources/LCEssentials/Notifications/Storyboard/*.{png}', 'Sources/LCEssentials/ImageZoom/Storyboard/*.{storyboard}', 'Sources/LCEssentials/ImagePicker/Storyboard/*.{storyboard}']
 
   # LCEMinimal Extensions
   s.subspec 'Classes' do |sp|
-    sp.source_files  		= 'LCEssentials/Classes/*.{swift}'
-    sp.watchos.source_files     = 'LCEssentials/Classes/*.{swift}'
+    sp.source_files  		= 'Sources/LCEssentials/Classes/*.{swift}'
+    sp.watchos.source_files     = 'Sources/LCEssentials/Classes/*.{swift}'
   end
 
   # LCEPickerViews Extensions
   s.subspec 'PickerViews' do |sp|
-    sp.source_files  = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/PickerViews/*.{swift}'
-    sp.ios.resources = ['LCEssentials/PickerViews/Storyboards/*.{storyboard}']
+    sp.source_files  = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/PickerViews/*.{swift}'
+    sp.ios.resources = ['Sources/LCEssentials/PickerViews/Storyboards/*.{storyboard}']
   end
 
   # LCENotifications Extensions
   s.subspec 'Notifications' do |sp|
-    sp.source_files  = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/Notifications/*.{swift}'
-    sp.ios.resources = ['LCEssentials/Notifications/Storyboards/*.{storyboard}', 'LCEssentials/Notifications/Storyboard/*.{png}']
+    sp.source_files  = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/Notifications/*.{swift}'
+    sp.ios.resources = ['Sources/LCEssentials/Notifications/Storyboards/*.{storyboard}', 'Sources/LCEssentials/Notifications/Storyboard/*.{png}']
   end
 
   # LCEImageZoom Extensions
   #s.subspec 'ImagesZoom' do |sp|
-  #  sp.source_files  = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/ImageZoom/*.{swift}'
-  #  sp.ios.resources = ['LCEssentials/ImageZoom/Storyboards/*.{storyboard}']
+  #  sp.source_files  = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/ImageZoom/*.{swift}'
+  #  sp.ios.resources = ['Sources/LCEssentials/ImageZoom/Storyboards/*.{storyboard}']
   #end
 
   # LCEImagePicker Extensions
   #s.subspec 'ImagePicker' do |sp|
-  #  sp.source_files  = 'LCEssentials/Classes/*.{swift}', 'LCEssentials/ImagePicker/*.{swift}'
-  #  sp.ios.resources = ['LCEssentials/ImagePicker/Storyboards/*.{storyboard}']
+  #  sp.source_files  = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/ImagePicker/*.{swift}'
+  #  sp.ios.resources = ['Sources/LCEssentials/ImagePicker/Storyboards/*.{storyboard}']
   #end
 end
