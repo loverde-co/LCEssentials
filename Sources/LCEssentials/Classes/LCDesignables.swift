@@ -282,7 +282,7 @@ open class UIButtomCustom: UIButton {
     }
     
     
-    private func setBgColorForState(color: UIColor?, forState: UIControlState){
+    private func setBgColorForState(color: UIColor?, forState: UIControl.State){
         if color != nil {
             setBackgroundImage(UIImage.imageWithColor(color: color!), for: forState)
             
@@ -333,7 +333,7 @@ open class UIButtomCustom: UIButton {
     
     private func makeUnderline() {
         
-        let customAttributes : [NSAttributedStringKey: Any] = [NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue]
+        let customAttributes : [NSAttributedString.Key: Any] = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue]
         let title = self.titleLabel?.text
         let attributeString = NSMutableAttributedString(string: (title)!, attributes: customAttributes)
         self.setAttributedTitle(attributeString, for: .normal)
@@ -342,15 +342,15 @@ open class UIButtomCustom: UIButton {
     open func underlinedString(string: NSString, term: NSString) -> NSAttributedString {
         let output = NSMutableAttributedString(string: String(string))
         let underlineRange = string.range(of: String(term))
-        output.addAttribute(NSAttributedStringKey.underlineStyle, value: NSUnderlineStyle.styleNone.rawValue, range: NSMakeRange(0, string.length))
-        output.addAttribute(NSAttributedStringKey.underlineStyle, value: NSUnderlineStyle.styleSingle.rawValue, range: underlineRange)
+        output.addAttribute(NSAttributedString.Key.underlineStyle, value: [], range: NSMakeRange(0, string.length))
+        output.addAttribute(NSAttributedString.Key.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: underlineRange)
         
         return output
     }
     
     @IBInspectable open var imageAspectFit: Int = 0 {
         didSet {
-            self.imageView?.contentMode = UIViewContentMode(rawValue: imageAspectFit)!
+            self.imageView?.contentMode = UIView.ContentMode(rawValue: imageAspectFit)!
         }
     }
     
@@ -385,15 +385,15 @@ open class UIButtomCustom: UIButton {
     open var isChecked: Bool = false {
         didSet{
             if isChecked == true {
-                self.setImage(onImage, for: UIControlState.normal)
+                self.setImage(onImage, for: UIControl.State.normal)
             } else {
-                self.setImage(offImage, for: UIControlState.normal)
+                self.setImage(offImage, for: UIControl.State.normal)
             }
         }
     }
     
     override open func awakeFromNib() {
-        self.addTarget(self, action:#selector(buttonClicked(sender:)), for: UIControlEvents.touchUpInside)
+        self.addTarget(self, action:#selector(buttonClicked(sender:)), for: UIControl.Event.touchUpInside)
         self.isChecked = false
     }
     
@@ -429,7 +429,7 @@ open class UIButtomCustom: UIButton {
     }
     
     override open func awakeFromNib() {
-        self.addTarget(self, action:#selector(buttonClicked(sender:)), for: UIControlEvents.touchUpInside)
+        self.addTarget(self, action:#selector(buttonClicked(sender:)), for: UIControl.Event.touchUpInside)
         self.isChecked = false
     }
     
@@ -459,15 +459,15 @@ open class UIButtomCustom: UIButton {
     open var isChecked: Bool = false {
         didSet{
             if isChecked == true {
-                self.setImage(imageForChecked, for: UIControlState.normal)
+                self.setImage(imageForChecked, for: UIControl.State.normal)
             } else {
-                self.setImage(imageForUnchecked, for: UIControlState.normal)
+                self.setImage(imageForUnchecked, for: UIControl.State.normal)
             }
         }
     }
     
     override open func awakeFromNib() {
-        self.addTarget(self, action:#selector(buttonClicked(sender:)), for: UIControlEvents.touchUpInside)
+        self.addTarget(self, action:#selector(buttonClicked(sender:)), for: UIControl.Event.touchUpInside)
         self.isChecked = false
     }
     
@@ -629,12 +629,12 @@ open class UIButtomCustom: UIButton {
             let stringTextAsNSString = stringText as NSString
             let labelStringSize = stringTextAsNSString.boundingRect(with: CGSize(width: self.frame.width,height: CGFloat.greatestFiniteMagnitude),
                                                                     options: NSStringDrawingOptions.usesLineFragmentOrigin,
-                                                                    attributes: [NSAttributedStringKey.font: font],
+                                                                    attributes: [NSAttributedString.Key.font: font],
                                                                     context: nil).size
             newRect = CGRect(x:0,y: 0,width: self.frame.width, height:ceil(labelStringSize.height))
         
         }
-        super.drawText(in: UIEdgeInsetsInsetRect(newRect, insets))
+        super.drawText(in: newRect.inset(by: insets))
     }
 
     open override var intrinsicContentSize: CGSize {
@@ -665,8 +665,8 @@ open class UIButtomCustom: UIButton {
     func makeStrikeThorugh(string: NSString, term: NSString) -> NSAttributedString {
         let output = NSMutableAttributedString(string: String(string))
         let underlineRange = string.range(of: String(term))
-        output.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 0, range: NSMakeRange(0, string.length))
-        output.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 2, range: underlineRange)
+        output.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 0, range: NSMakeRange(0, string.length))
+        output.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: underlineRange)
         
         return output
     }
@@ -733,7 +733,7 @@ open class StarsRating: UIView {
             for _ in 0..<maxRating {
                 let button = UIButton()
                 
-                button.setImage(emptyStarImage, for: UIControlState())
+                button.setImage(emptyStarImage, for: UIControl.State())
                 button.setImage(filledStarImage, for: .selected)
                 button.setImage(filledStarImage, for: [.highlighted, .selected])
                 button.isUserInteractionEnabled = false

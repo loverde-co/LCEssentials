@@ -43,7 +43,7 @@
      @IBOutlet weak var borderBottom: UIView!
 
      public var touchToClose: Bool = false
-     public var setDatePickerMode: UIDatePickerMode = .date
+     public var setDatePickerMode: UIDatePicker.Mode = .date
      public var setLocale: String = "pt_BR"
      public var setFormat: String = "dd/MM/yyyy"
      public var maximumDate: Date = Date().add(years: 100)

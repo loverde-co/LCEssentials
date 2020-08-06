@@ -39,7 +39,7 @@ public extension UIView {
         if let settedNibName = withNibName {
             nibName = settedNibName
         }
-        return Bundle.main.loadNibNamed(nibName, owner: owner, options: options)
+        return Bundle.main.loadNibNamed(nibName, owner: owner, options: options as! [UINib.OptionsKey : Any])
     }
     
     func addBorder(_ sides: [EnumBorderSide], color: UIColor, width: CGFloat) {
@@ -127,7 +127,7 @@ public extension UIView {
         let widthConstraint = shadow.widthAnchor.constraint(equalToConstant: self.frame.size.width - shadowWidth)
         let heightConstraint = shadow.heightAnchor.constraint(equalToConstant: shadowView.frame.size.height - shadowHeight)
         NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, heightConstraint])
-        self.bringSubview(toFront: shadowView)
+        self.bringSubviewToFront(shadowView)
     }
 
     /**

@@ -91,9 +91,9 @@ extension LCENotificationRunTime {
         self.view.autoresizesSubviews = true
         if let root = rootView {
             root.addSubview(self.view)
-            root.bringSubview(toFront: self.view)
+            root.bringSubviewToFront(self.view)
             if let controller = root.getParentViewController() {
-                controller.addChildViewController(self)
+                controller.addChild(self)
             }
         }
         self.view.layer.zPosition = 1
@@ -130,7 +130,7 @@ extension LCENotificationRunTime {
     }
     
     @IBAction func handlerSwipeGesture(gesture: UISwipeGestureRecognizer){
-        if gesture.direction == UISwipeGestureRecognizerDirection.up {
+        if gesture.direction == UISwipeGestureRecognizer.Direction.up {
             //LCEssentials.printWarn(title: "GESTURE SWIPE", msg: "TO UP")
             self.delegate?.messages?(didSwipeOnMessage: self, withData: anyData)
             self.moveUp()

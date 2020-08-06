@@ -13,9 +13,9 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
   s.source           = { :git => 'https://github.com/loverde-co/LCEssentials.git', :tag => s.version }
   s.swift_version    = '4.0'
   #s.dependency       'Alamofire'
-  s.platform         = :ios, '11.0'
+  s.platform         = :ios, '11.4'
   s.platform         = :watchos, '4.0'
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '11.4'
   s.watchos.deployment_target = '5.0'
   s.ios.source_files     = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/PickerViews/*.{swift}', 'Sources/LCEssentials/Notifications/*.{swift}', 'Sources/LCEssentials/ImageZoom/*.{swift}', 'Sources/LCEssentials/ImagePicker/*.{swift}'
   s.watchos.source_files     = 'Sources/LCEssentials/Classes/*.{swift}'

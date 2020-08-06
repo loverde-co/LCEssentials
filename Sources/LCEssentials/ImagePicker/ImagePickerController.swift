@@ -77,18 +77,18 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
     
     
     //MARK: - UIImagePicker Delegate
-    @objc func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    @objc public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.delegate?.imagePicker(didSelect: nil)
         picker.dismiss(animated: true, completion: {
             self.dismiss(animated: false, completion: nil)
         })
     }
     
-    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    @objc public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //print("ESCOLHEU OU TIROU FOTO: \(info.debugDescription)")
-        if let picInfo = UIImagePickerControllerEditedImage as? NSString, let image = info[picInfo] as? UIImage {
+        if let picInfo = UIImagePickerController.InfoKey.editedImage as? NSString, let image = info[picInfo as UIImagePickerController.InfoKey] as? UIImage {
             self.delegate?.imagePicker(didSelect: image)
-        }else if let picInfo = UIImagePickerControllerOriginalImage as? NSString, let image = info[picInfo] as? UIImage {
+        }else if let picInfo = UIImagePickerController.InfoKey.originalImage as? NSString, let image = info[picInfo as UIImagePickerController.InfoKey] as? UIImage {
             self.delegate?.imagePicker(didSelect: image)
         }
         picker.dismiss(animated: true, completion: {
@@ -156,7 +156,7 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
                     self.openImagePicker()
                 }
             }else{
-                guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                     return
                 }
                 if UIApplication.shared.canOpenURL(settingsUrl)  {
@@ -180,7 +180,7 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
                     self.openImagePicker()
                 }
             } else {
-                guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                     return
                 }
                 if UIApplication.shared.canOpenURL(settingsUrl)  {

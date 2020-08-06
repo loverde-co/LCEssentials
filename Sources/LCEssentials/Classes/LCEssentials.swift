@@ -437,7 +437,7 @@ public extension LCEssentials {
     
     #if os(iOS) || os(macOS)
     //MARK: - Set Root View Controller
-    static func setRootViewControllerWithAnimation(fromView from: UIView, toViewController to: UIViewController, duration: TimeInterval = 0.6, options: UIViewAnimationOptions, completion: (() -> Void)? = nil) {
+    static func setRootViewControllerWithAnimation(fromView from: UIView, toViewController to: UIViewController, duration: TimeInterval = 0.6, options: UIView.AnimationOptions, completion: (() -> Void)? = nil) {
         
         let appDelegate = sharedApplication.delegate
         
@@ -491,7 +491,7 @@ public extension LCEssentials {
     /// - Parameter action: a closure to run when user takes a screenshot
     static func didTakeScreenShot(_ action: @escaping (_ notification: Notification) -> Void) {
         // http://stackoverflow.com/questions/13484516/ios-detection-of-screenshot
-        _ = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationUserDidTakeScreenshot,
+        _ = NotificationCenter.default.addObserver(forName: UIApplication.userDidTakeScreenshotNotification,
                                                    object: nil,
                                                    queue: OperationQueue.main) { notification in
                                                     action(notification)

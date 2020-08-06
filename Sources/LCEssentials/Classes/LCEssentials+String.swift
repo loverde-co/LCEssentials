@@ -21,6 +21,7 @@
  
 
 import Foundation
+import UIKit
 
 public extension String {
     /// SwifterSwift: Check if string is a valid URL.
@@ -479,21 +480,21 @@ public extension String {
     #if os(iOS) || os(macOS)
     func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
 
         return ceil(boundingBox.height)
     }
 
     func width(withConstraintedHeight height: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
-        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
 
         return ceil(boundingBox.width)
     }
 
     func encodeImageToBase64(refImage: UIImage) -> String{
         let jpegCompressionQuality: CGFloat = 0.6
-        if let base64String = UIImageJPEGRepresentation(refImage, jpegCompressionQuality){
+        if let base64String = refImage.jpegData(compressionQuality: jpegCompressionQuality){
             let strBase64 = base64String.base64EncodedString(options: .endLineWithLineFeed)
             return strBase64
         }

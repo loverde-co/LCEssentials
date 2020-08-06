@@ -222,7 +222,7 @@ open class Location: NSObject, CLLocationManagerDelegate {
             let controller = delegate as! UIViewController
             let alert = UIAlertController(title: "Settings", message: "Para acessar seu GPS, precisa liberar o acesso nas configurações.", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Vamos lá!", style: .cancel, handler: { action in
-                UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
             }))
             alert.addAction(UIAlertAction(title: "Por enquanto não", style: .destructive, handler: nil))
             controller.present(alert, animated: true, completion: nil)

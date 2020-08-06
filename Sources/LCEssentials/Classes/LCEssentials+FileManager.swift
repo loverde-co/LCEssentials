@@ -57,7 +57,7 @@ public extension FileManager {
     #if os(iOS) || os(macOS)
     func saveImageToDirectory( _ imageWithPath : String, imagem : UIImage ) -> Bool {
 
-        let data = UIImagePNGRepresentation(imagem)
+        let data = imagem.pngData()
 
         let success = (try? data!.write(to: URL(fileURLWithPath: imageWithPath), options: [])) != nil
 

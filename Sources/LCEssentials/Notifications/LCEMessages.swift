@@ -240,18 +240,18 @@ public class LCEMessages: UIViewController {
     
     public func addObserverForKeyboard(){
         isKeyboardObservAdded = true
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     public func removeObserverForKeyboard(){
         isKeyboardObservAdded = false
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc private func keyboardWasShown(notification: NSNotification){
         let info = notification.userInfo!
-        let keyboardSize = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
+        let keyboardSize = (info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
         if self.setDirection == .bottom {
             self.view.frame.origin = CGPoint(x: 0, y: (LCEssentials.getTopViewController(aboveBars: true)!.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) ))
             originY = (LCEssentials.getTopViewController(aboveBars: true)!.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) )

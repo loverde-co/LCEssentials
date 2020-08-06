@@ -30,14 +30,14 @@ public enum AttributtedAlignment {
 
 public extension NSMutableAttributedString {
     @discardableResult func customize(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil, lineSpace: CGFloat? = nil, alignment: AttributtedAlignment? = nil) -> NSMutableAttributedString {
-        var attrs:[NSAttributedStringKey:Any] = [NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
+        var attrs:[NSAttributedString.Key:Any] = [NSAttributedString.Key.font : UIFont(name: fontName, size: size)!]
         if color != nil {
-            attrs[NSAttributedStringKey.foregroundColor] = color
+            attrs[NSAttributedString.Key.foregroundColor] = color
         }
         if lineSpace != nil {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = lineSpace!
-            attrs[NSAttributedStringKey.paragraphStyle] = paragraphStyle
+            attrs[NSAttributedString.Key.paragraphStyle] = paragraphStyle
         }
         
         if let alignment = alignment {
@@ -50,7 +50,7 @@ public extension NSMutableAttributedString {
                 case .right:
                     paragraph.alignment = .right
             }
-            attrs[NSAttributedStringKey.paragraphStyle] = paragraph
+            attrs[NSAttributedString.Key.paragraphStyle] = paragraph
         }
 
         //let customStr = NSMutableAttributedString(string:"\(text)", attributes:attrs)
@@ -60,9 +60,9 @@ public extension NSMutableAttributedString {
     }
 
     @discardableResult func bold(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil) -> NSMutableAttributedString {
-        var attrs:[NSAttributedStringKey:Any] = [NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
+        var attrs:[NSAttributedString.Key:Any] = [NSAttributedString.Key.font : UIFont(name: fontName, size: size)!]
         if color != nil {
-            attrs[NSAttributedStringKey.foregroundColor] = color
+            attrs[NSAttributedString.Key.foregroundColor] = color
         }
         //let boldString = NSMutableAttributedString(string:"\(text)", attributes:attrs)
         self.addAttributes(attrs, range: self.mutableString.range(of: text))
@@ -71,9 +71,9 @@ public extension NSMutableAttributedString {
     }
 
     @discardableResult func underline(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil) -> NSMutableAttributedString {
-        var attrs:[NSAttributedStringKey:Any] = [NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue as AnyObject, NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
+        var attrs:[NSAttributedString.Key:Any] = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue as AnyObject, NSAttributedString.Key.font : UIFont(name: fontName, size: size)!]
         if color != nil {
-            attrs[NSAttributedStringKey.foregroundColor] = color
+            attrs[NSAttributedString.Key.foregroundColor] = color
         }
         //let underString = NSMutableAttributedString(string: "\(text)", attributes:attrs)
         self.addAttributes(attrs, range: self.mutableString.range(of: text))
@@ -82,11 +82,11 @@ public extension NSMutableAttributedString {
     }
 
     @discardableResult func linkTouch(_ text:String, url: String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor = UIColor.blue) -> NSMutableAttributedString {
-        let linkTerms:[NSAttributedStringKey: Any]  = [NSAttributedStringKey.link: NSURL(string: url)!,
-                                                            NSAttributedStringKey.foregroundColor: color,
-                                                            NSAttributedStringKey.underlineColor: color,
-                                                            NSAttributedStringKey.underlineStyle: NSUnderlineStyle.styleSingle.rawValue,
-                                                            NSAttributedStringKey.font: UIFont(name: fontName, size: size)!]
+        let linkTerms:[NSAttributedString.Key: Any]  = [NSAttributedString.Key.link: NSURL(string: url)!,
+                                                            NSAttributedString.Key.foregroundColor: color,
+                                                            NSAttributedString.Key.underlineColor: color,
+                                                            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
+                                                            NSAttributedString.Key.font: UIFont(name: fontName, size: size)!]
         //let linkString = NSMutableAttributedString(string: "\(text)", attributes:linkTerms)
         self.setAttributes(linkTerms, range: self.mutableString.range(of: text))
         //self.append(linkString)
@@ -94,9 +94,9 @@ public extension NSMutableAttributedString {
     }
     
     @discardableResult func supperscript(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil, offset: CGFloat) -> NSMutableAttributedString {
-        var attrs:[NSAttributedStringKey:Any] = [NSAttributedStringKey.baselineOffset: offset, NSAttributedStringKey.font : UIFont(name: fontName, size: size)!]
+        var attrs:[NSAttributedString.Key:Any] = [NSAttributedString.Key.baselineOffset: offset, NSAttributedString.Key.font : UIFont(name: fontName, size: size)!]
         if color != nil {
-            attrs[NSAttributedStringKey.foregroundColor] = color
+            attrs[NSAttributedString.Key.foregroundColor] = color
         }
         //let underString = NSMutableAttributedString(string: "\(text)", attributes:attrs)
         self.addAttributes(attrs, range: self.mutableString.range(of: text))
@@ -118,7 +118,7 @@ public extension NSMutableAttributedString {
 
         let foundRange = self.mutableString.range(of: textToFind)
         if foundRange.location != NSNotFound {
-            self.addAttribute(NSAttributedStringKey.link, value: linkURL, range: foundRange)
+            self.addAttribute(NSAttributedString.Key.link, value: linkURL, range: foundRange)
             return true
         }
         return false

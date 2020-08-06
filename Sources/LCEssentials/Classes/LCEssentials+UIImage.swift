@@ -39,7 +39,7 @@ public extension UIImage {
     ///Make transparent color of image - choose a color and range color
     func backgroundColorTransparent(initialColor: UIColor, finalColor: UIColor) -> UIImage? {
 
-        let image = UIImage(data: UIImageJPEGRepresentation(self, 1.0)!)!
+        let image = UIImage(data: self.jpegData(compressionQuality: 1.0)!)!
         let rawImageRef: CGImage = image.cgImage!
         
         //let colorMasking: [CGFloat] = [222, 255, 222, 255, 222, 255]
@@ -108,7 +108,7 @@ public extension UIImage {
             return self
         }
         
-        if let data = UIImagePNGRepresentation(self) {
+        if let data = self.pngData() {
             let imageSource:CGImageSource = CGImageSourceCreateWithData(data as CFData, nil)!
             //
             var options: [NSString:Any] = Dictionary()

@@ -91,7 +91,7 @@ extension UITabBarController {
         badgeView.frame.size = CGSize(width: 17, height: 17)
         badgeView.center = CGPoint(x: center.x + xOffset, y: center.y + yOffset)
         badgeView.layer.cornerRadius = badgeView.bounds.width/2
-        tabBar.bringSubview(toFront: badgeView)
+        tabBar.bringSubviewToFront(badgeView)
     }
 }
 #endif

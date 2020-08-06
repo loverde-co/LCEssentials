@@ -29,14 +29,14 @@ extension UIImageView {
     public func changeColorOfImage( _ color: UIColor, image: NSString ) -> UIImageView {
 
         let origImage   = UIImage(named: image as String);
-        let tintedImage = origImage?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+        let tintedImage = origImage?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         self.image      = tintedImage
         self.tintColor  = color
         return self
     }
     
     @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
-    public func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit, completion:@escaping (Bool?)->()) -> () {
+    public func downloadedFrom(url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit, completion:@escaping (Bool?)->()) -> () {
         contentMode = mode
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard
@@ -54,7 +54,7 @@ extension UIImageView {
     /// EXAMPLE USAGE
     /// imageView.downloadedFrom(link: "http://www.apple.com/euro/ios/ios8/a/generic/images/og.png")
     @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
-    public func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit, completion:@escaping (Bool?)->()) -> () {
+    public func downloadedFrom(link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit, completion:@escaping (Bool?)->()) -> () {
         guard let url = URL(string: link) else { completion(false); return }
         downloadedFrom(url: url, contentMode: mode) { (success) in
             completion(true)
@@ -184,7 +184,7 @@ class ImageCache {
     private init() {
         // make sure to purge cache on memory pressure
 
-        observer = NotificationCenter.default.addObserver(forName: .UIApplicationDidReceiveMemoryWarning, object: nil, queue: nil) { [weak self] notification in
+        observer = NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: nil) { [weak self] notification in
             self?.cache.removeAllObjects()
         }
     }
