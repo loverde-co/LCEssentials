@@ -2,11 +2,6 @@
 ![](loverde_company_logo_full.png)  
 Loverde Co. Essentials Swift Scripts
 ----
-> Writen in Swift 4.2 - XCode 11.3
-> 
-> iOS 11.+
-> 
-----
 
 This is a repository of essential scripts written in Swift for Loverde Co. used to save time on re-writing and keeping it on all other projects. So this Cocoapods will evolve with Swift and will improve with every release!
 
@@ -26,15 +21,33 @@ Installation
 You can use [CocoaPods](http://cocoapods.org/) to install `LCEssentials` by adding it to your `Podfile`:
 
 ```ruby
-platform :ios, '10.0'
+platform :ios, '11.4'
 use_frameworks!
+
+# Swift 5.0
 pod 'LCEssentials'
+
+# Swift 4.2
+pod 'LCEssentials', '~> 0.4.6.3'
 ```
 
 To get the full benefits import `LCEssentials` wherever you import UIKit
 
 ``` swift
 import LCEssentials
+```
+
+#### Swift Package  Manager (SPM)
+``` swift
+dependencies: [
+    .package(url: "https://github.com/loverde-co/LCEssentials.git", .upToNextMajor(from: "0.5.0"))
+]
+```
+
+You can also add it via XCode SPM editor with URL: 
+
+``` swift
+https://github.com/loverde-co/LCEssentials.git
 ```
 
 ## Usage example
@@ -68,7 +81,7 @@ self.navigationController?.popViewControllerWithHandler {
 * If you whant **ONLY** LCEssentials without this others controllers above, just add this to your podfile
 
 ```ruby
-platform :ios, '10.0'
+platform :ios, '11.4'
 use_frameworks!
 pod 'LCEssentials/Classes'
 ```

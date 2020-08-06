@@ -11,7 +11,7 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
   s.license          = { :type => 'MIT', :file => 'LICENSE.md' }
   s.author           = { 'Daniel Arantes Loverde' => 'daniel@loverde.com.br' }
   s.source           = { :git => 'https://github.com/loverde-co/LCEssentials.git', :tag => s.version }
-  s.swift_version    = '4.0'
+  s.swift_version    = '5.0'
   #s.dependency       'Alamofire'
   s.platform         = :ios, '11.4'
   s.platform         = :watchos, '4.0'

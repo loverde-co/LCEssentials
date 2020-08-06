@@ -86,7 +86,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008617A9774DBAD27808AD29FDC8341E /* Pods_LCEssentialsExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LCEssentialsExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		008617A9774DBAD27808AD29FDC8341E /* Pods_LCEssentialsExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_LCEssentialsExample.framework; path = "Pods-LCEssentialsExample.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00F8ED59CAFA365D8077A94E52E67E36 /* Pods-LCEssentialsExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LCEssentialsExample.release.xcconfig"; sourceTree = "<group>"; };
 		033102D6F284BA2E30ACE2A744508496 /* LCEssentials+UIStackView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UIStackView.swift"; sourceTree = "<group>"; };
 		06345DFDF2A97FFE0B19030FA1958FDA /* LCEssentials+Data.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Data.swift"; sourceTree = "<group>"; };
@@ -113,8 +113,8 @@
 		484862989C6DCA7005694AA38482E863 /* LCEssentials+UITableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UITableView.swift"; sourceTree = "<group>"; };
 		4DAD6B883537B53E5EB8B27501E5B2CB /* LCEssentials+UIColor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UIColor.swift"; sourceTree = "<group>"; };
 		4F9450455C0A024FBF24D22AEDCBA0E1 /* LCEssentials+UIImageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UIImageView.swift"; sourceTree = "<group>"; };
-		4FD9816399B63E745B1D6FDFF4ACBEEF /* LICENSE.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
-		4FE07A074B359731B23357DA183D25D2 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4FD9816399B63E745B1D6FDFF4ACBEEF /* LICENSE.md */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE.md; sourceTree = "<group>"; };
+		4FE07A074B359731B23357DA183D25D2 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
 		58E9C3A0FBE340E575DBC408261A5188 /* LCEssentials+UINavigationController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UINavigationController.swift"; sourceTree = "<group>"; };
 		592A976B84E664662984591DC19408A7 /* alert@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "alert@3x.png"; sourceTree = "<group>"; };
 		59C60646542AAFF5D1256892FE661477 /* LCEssentials+Dictionary.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Dictionary.swift"; sourceTree = "<group>"; };
@@ -130,10 +130,10 @@
 		92509F3ADA6933FE612875C10DDB882D /* alert@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "alert@2x.png"; sourceTree = "<group>"; };
 		943FBB5E6E61600979E3AD007B782E3B /* LCEssentials+URL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+URL.swift"; sourceTree = "<group>"; };
 		980EF8C1DF03DED52B367BBF7F6A284B /* LCEssentials+FileManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+FileManager.swift"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A3DE64DAE3BB91B55FFA399FF363EE7E /* alert.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = alert.png; sourceTree = "<group>"; };
 		A9C272B4D848DBA5CF694E70FEB6BAB7 /* LCEssentials+UIImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UIImage.swift"; sourceTree = "<group>"; };
-		AAF1013E6983536EF5148BFD70F5807A /* LCEssentials.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LCEssentials.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAF1013E6983536EF5148BFD70F5807A /* LCEssentials.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = LCEssentials.framework; path = LCEssentials.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB1115E0156FC2200F36DC005E6D8C5C /* Pods-LCEssentialsExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LCEssentialsExample.debug.xcconfig"; sourceTree = "<group>"; };
 		AC2D99281AC4D5FC721CA34E87E2908A /* Pods-LCEssentialsExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LCEssentialsExample-dummy.m"; sourceTree = "<group>"; };
 		AC63C5F8F16B4DA40A61CF01FF93BF72 /* LCSingleton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LCSingleton.swift; sourceTree = "<group>"; };
@@ -146,7 +146,7 @@
 		B9F3114DF368FF4557E8BBADD2535E42 /* LCEssentials+UIView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UIView.swift"; sourceTree = "<group>"; };
 		BA4426E89597A640DBB4774FDBD259E8 /* LCEssentials+UILabel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UILabel.swift"; sourceTree = "<group>"; };
 		C50220CE48CED9FBFF8712C9C51BA759 /* ImageZoomController.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; path = ImageZoomController.storyboard; sourceTree = "<group>"; };
-		CB54F57014179964757CA398989D924A /* LCEssentials.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = LCEssentials.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		CB54F57014179964757CA398989D924A /* LCEssentials.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = LCEssentials.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		CBE04820F2F72419CB4E8A2AF89E5075 /* LCEssentials+NumberFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+NumberFormatter.swift"; sourceTree = "<group>"; };
 		CC6F66A18DD35A76549590340C341AF2 /* ImagePickerController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		CC9DFD0CDFE6306F4050F860003D1BF7 /* ImageZoom.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImageZoom.swift; sourceTree = "<group>"; };
@@ -222,6 +222,7 @@
 			children = (
 				F667D96DB3CC787A205DA3A7FA118082 /* ImagePickerController.storyboard */,
 			);
+			name = Storyboard;
 			path = Storyboard;
 			sourceTree = "<group>";
 		};
@@ -305,6 +306,7 @@
 			children = (
 				CF849C7E51303C029396CD7B3FD93A2A /* PickerViews.storyboard */,
 			);
+			name = Storyboards;
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
@@ -313,6 +315,7 @@
 			children = (
 				C50220CE48CED9FBFF8712C9C51BA759 /* ImageZoomController.storyboard */,
 			);
+			name = Storyboard;
 			path = Storyboard;
 			sourceTree = "<group>";
 		};
@@ -489,6 +492,7 @@
 				CEC9A2E223C3190AACA61F35DFAD38D7 /* LCEMessages.storyboard */,
 				145997358B4CA40A48EB9E6EB1CB8094 /* LCENotificationRunTime.storyboard */,
 			);
+			name = Storyboard;
 			path = Storyboard;
 			sourceTree = "<group>";
 		};
@@ -559,11 +563,6 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 1100;
-				TargetAttributes = {
-					5CA548E789E9AD0CBEC3DE29F587BE16 = {
-						LastSwiftMigration = 1160;
-					};
-				};
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 10.0";
@@ -750,7 +749,7 @@
 			};
 			name = Release;
 		};
-		3D3CB6B968F12CF3FC1E54EB6A561AB7 /* Release */ = {
+		57D6B1DE3215A3945B6EF8F69987EBD3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0F017C223427516DFA407FB89FB6CDB8 /* LCEssentials.release.xcconfig */;
 			buildSettings = {
@@ -786,42 +785,6 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
-		};
-		906DE2FF6B0246BC499367512321D0D0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B699D302A3E0EF367C00174CFBDD9876 /* LCEssentials.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/LCEssentials/LCEssentials-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/LCEssentials/LCEssentials-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/LCEssentials/LCEssentials.modulemap";
-				PRODUCT_MODULE_NAME = LCEssentials;
-				PRODUCT_NAME = LCEssentials;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
 		};
 		A03B081BB3647F7F2137992DC7AA02A9 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -861,6 +824,42 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		A5C250385F42EE8B293A84BA7EEF86B7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B699D302A3E0EF367C00174CFBDD9876 /* LCEssentials.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/LCEssentials/LCEssentials-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/LCEssentials/LCEssentials-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/LCEssentials/LCEssentials.modulemap";
+				PRODUCT_MODULE_NAME = LCEssentials;
+				PRODUCT_NAME = LCEssentials;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
 		};
 		A816B0507F9ED99D8FEBDC1DB84A5BB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -988,8 +987,8 @@
 		EC7A7AA242D660823934498E84F67176 /* Build configuration list for PBXNativeTarget "LCEssentials" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				906DE2FF6B0246BC499367512321D0D0 /* Debug */,
-				3D3CB6B968F12CF3FC1E54EB6A561AB7 /* Release */,
+				A5C250385F42EE8B293A84BA7EEF86B7 /* Debug */,
+				57D6B1DE3215A3945B6EF8F69987EBD3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
