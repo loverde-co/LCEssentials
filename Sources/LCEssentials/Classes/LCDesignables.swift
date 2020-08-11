@@ -629,7 +629,7 @@ open class UIButtomCustom: UIButton {
             let stringTextAsNSString = stringText as NSString
             let labelStringSize = stringTextAsNSString.boundingRect(with: CGSize(width: self.frame.width,height: CGFloat.greatestFiniteMagnitude),
                                                                     options: NSStringDrawingOptions.usesLineFragmentOrigin,
-                                                                    attributes: [NSAttributedString.Key.font: font],
+                                                                    attributes: [NSAttributedString.Key.font: font!],
                                                                     context: nil).size
             newRect = CGRect(x:0,y: 0,width: self.frame.width, height:ceil(labelStringSize.height))
         
