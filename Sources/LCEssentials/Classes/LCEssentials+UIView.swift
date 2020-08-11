@@ -39,7 +39,7 @@ public extension UIView {
         if let settedNibName = withNibName {
             nibName = settedNibName
         }
-        return Bundle.main.loadNibNamed(nibName, owner: owner, options: options as! [UINib.OptionsKey : Any])
+        return Bundle.main.loadNibNamed(nibName, owner: owner, options: options as? [UINib.OptionsKey : Any])
     }
     
     func addBorder(_ sides: [EnumBorderSide], color: UIColor, width: CGFloat) {

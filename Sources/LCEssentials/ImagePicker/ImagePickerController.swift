@@ -86,9 +86,9 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
     
     @objc public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //print("ESCOLHEU OU TIROU FOTO: \(info.debugDescription)")
-        if let picInfo = UIImagePickerController.InfoKey.editedImage as? NSString, let image = info[picInfo as UIImagePickerController.InfoKey] as? UIImage {
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             self.delegate?.imagePicker(didSelect: image)
-        }else if let picInfo = UIImagePickerController.InfoKey.originalImage as? NSString, let image = info[picInfo as UIImagePickerController.InfoKey] as? UIImage {
+        }else if let image = info[ UIImagePickerController.InfoKey.originalImage] as? UIImage {
             self.delegate?.imagePicker(didSelect: image)
         }
         picker.dismiss(animated: true, completion: {

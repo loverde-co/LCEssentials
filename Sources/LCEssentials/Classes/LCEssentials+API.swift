@@ -21,7 +21,7 @@
  
 
 import UIKit
-#if os(iOS)
+#if os(iOS) || os(watchOS)
 
 public enum Result<Value, Error: Swift.Error> {
     case success(Value)
@@ -98,7 +98,7 @@ public struct API {
                             print("\n<=========================  INTERNET CONNECTION - START =========================>")
                             printLog(title: "DATE AND TIME", msg: Date().debugDescription)
                             printLog(title: "FUNCTION", msg: function)
-                            printLog(title: "FILE", msg: LCEssentials.sourceFileName(filePath: file)+" LINE: \(line) COLUMN: \(column)")
+                            //printLog(title: "FILE", msg: LCEssentials.sourceFileName(filePath: file)+" LINE: \(line) COLUMN: \(column)")
                             printLog(title: "METHOD", msg: method.rawValue)
                             printLog(title: "REQUEST", msg: String(describing: request))
                             printLog(title: "HEADERS", msg: request.allHTTPHeaderFields!.debugDescription)

@@ -58,7 +58,7 @@ class ViewController: UIViewController {
     lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom", 3: "Open Alert Message on TOP",
                                        4: "Open Notifications Runtime", 5: "Open Image Zoom", 6: "Open Second View With Singleton built in",
                                        7: "Image Picker Controller",
-                                       8: "Image Picker Controller",
+                                       /*8: "Image Picker Controller",
                                        9: "Image Picker Controller",
                                        10: "Image Picker Controller",
                                        11: "Image Picker Controller",
@@ -75,7 +75,7 @@ class ViewController: UIViewController {
                                        22: "Image Picker Controller",
                                        23: "Image Picker Controller",
                                        24: "Image Picker Controller",
-                                       25: "Image Picker Controller"]
+                                       25: "Image Picker Controller"*/]
     
     let pickerController: PickerViewController = PickerViewController.instantiate()
     lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
@@ -174,12 +174,6 @@ extension ViewController {
                 self.copyView.isHidden = false
                 keyboardShowing = true
                 copyTextField.becomeFirstResponder()
-//                self.copyView.subviews.forEach { (text) in
-//                    if text is UITextField {
-//                        text.becomeFirstResponder()
-//                        (text as! UITextField).addPaddingLeft(10)
-//                    }
-//                }
                 bottomInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
             }else{
                 keyboardShowing = false
@@ -311,18 +305,6 @@ extension ViewController: LCENotifiactionRunTimeDelegate {
 
 //MARK: - TableView Delegate
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//
-//        if !keyboardShowing {
-//            return
-//        }
-//
-//        let toolbarFrame = accessoryView.convert(accessoryView.frame, to: nil)
-//
-//        tableView.scrollIndicatorInsets.bottom = view.bounds.height - toolbarFrame.minY
-//        tableView.contentInset.bottom = view.bounds.height - toolbarFrame.minY
-//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {

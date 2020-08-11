@@ -95,7 +95,7 @@ public extension FileManager {
         do {
             var filelist = try fileMngr.contentsOfDirectory(atPath: "\(docs)/\(directoryName)")
             if filelist.contains(".DS_Store") {
-                filelist.remove(at: filelist.index(of: ".DS_Store")!)
+                filelist.remove(at: filelist.firstIndex(of: ".DS_Store")!)
             }
             return filelist
         } catch let error {
