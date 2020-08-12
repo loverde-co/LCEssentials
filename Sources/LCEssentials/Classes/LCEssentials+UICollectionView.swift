@@ -38,7 +38,7 @@ public extension UICollectionView {
         return "id"+String(describing: self)
     }
 }
-extension Collection where Indices.Iterator.Element == Index {
+public extension Collection where Indices.Iterator.Element == Index {
     subscript (exist index: Index) -> Iterator.Element? {
         return indices.contains(index) ? self[index] : nil
     }

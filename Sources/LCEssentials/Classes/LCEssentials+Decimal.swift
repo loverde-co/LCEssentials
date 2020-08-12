@@ -22,7 +22,7 @@
 
 import Foundation
 
-extension Decimal {
+public extension Decimal {
     mutating func round(_ scale: Int, _ roundingMode: NSDecimalNumber.RoundingMode) {
         var localCopy = self
         NSDecimalRound(&self, &localCopy, scale, roundingMode)

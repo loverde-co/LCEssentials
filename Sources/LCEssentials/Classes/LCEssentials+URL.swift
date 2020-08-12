@@ -22,7 +22,7 @@
 
 import Foundation
 
-extension URL {
+public extension URL {
     var params: [String: String] {
         get {
             let urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false)

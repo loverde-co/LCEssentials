@@ -23,7 +23,7 @@
 import Foundation
 import UIKit
 
-extension Dictionary {
+public extension Dictionary {
 
     //MARK: - Append Dictionary
     static func += (lhs: inout [Key: Value], rhs: [Key: Value]) {
@@ -66,7 +66,7 @@ extension Dictionary {
     /// - LoverdeCo: Convert Dictonary to Object
     ///
     /// - returns: Object: Codable/Decodable
-    public func toObjetct<T: Codable>() -> T {
+    func toObjetct<T: Codable>() -> T {
         let jsonData = try! JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted)
         let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
         let output: T = try! JSONHelper.decode(jsonString)
@@ -76,7 +76,7 @@ extension Dictionary {
     /// - LoverdeCo: Convert Dictonary to JSON
     ///
     /// - returns: JSON String
-    public func toJSON() -> String {
+    func toJSON() -> String {
         let jsonData = try! JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted)
         let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
         return jsonString

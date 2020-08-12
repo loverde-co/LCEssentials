@@ -27,9 +27,9 @@ import UIKit
 @IBDesignable open class CustomTabBadge: UILabel {
     
 }
-extension UITabBarController {
+public extension UITabBarController {
 
-    public func setBadges(badgeValues: [Int]) {
+    func setBadges(badgeValues: [Int]) {
 
         for view in self.tabBar.subviews {
             if view is CustomTabBadge {
@@ -44,7 +44,7 @@ extension UITabBarController {
         }
     }
 
-    public func addBadge(index: Int, value: Int, color: UIColor, font: UIFont) {
+    func addBadge(index: Int, value: Int, color: UIColor, font: UIFont) {
         let badgeView = CustomTabBadge()
 
         badgeView.clipsToBounds = true
@@ -59,13 +59,13 @@ extension UITabBarController {
         self.positionBadges()
     }
 
-    override open func viewDidLayoutSubviews() {
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.positionBadges()
     }
 
     // Positioning
-    public func positionBadges() {
+    func positionBadges() {
 
         var tabbarButtons = self.tabBar.subviews.filter { (view: UIView) -> Bool in
             return view.isUserInteractionEnabled // only UITabBarButton are userInteractionEnabled
@@ -81,7 +81,7 @@ extension UITabBarController {
         }
     }
 
-    public func positionBadge(badgeView: UIView, items: [UIView], index: Int) {
+    func positionBadge(badgeView: UIView, items: [UIView], index: Int) {
 
         let itemView = items[index]
         let center = itemView.center
