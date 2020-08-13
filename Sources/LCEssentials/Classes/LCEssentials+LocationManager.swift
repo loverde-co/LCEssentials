@@ -76,6 +76,8 @@ open class Location: NSObject, CLLocationManagerDelegate {
     public var location: CLLocation?
     public static var permited: Bool = false
     public static var unknown: Bool = false
+    public var requestAlwaysAuthorization: Bool = false
+    public var requestWhenInUseAuthorization: Bool = true
     public static let shared = Location()
     
     override public init() {
@@ -91,8 +93,11 @@ open class Location: NSObject, CLLocationManagerDelegate {
     public func requestPermissions(completion:@escaping ((Bool)->Void)){
         let status = CLLocationManager.authorizationStatus()
         if status == CLAuthorizationStatus.denied || status == CLAuthorizationStatus.notDetermined {
-            //locationManager.requestAlwaysAuthorization()
-            locationManager.requestWhenInUseAuthorization()
+            if requestAlwaysAuthorization {
+                locationManager.requestAlwaysAuthorization()
+            }else{
+                locationManager.requestWhenInUseAuthorization()
+            }
             Location.permited = false
             Location.unknown = status == CLAuthorizationStatus.notDetermined ? true : false
             completion(false)
