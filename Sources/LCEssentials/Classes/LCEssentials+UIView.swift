@@ -364,10 +364,12 @@ public extension UIView {
             return self.setBorderTop
         }
         set {
-            let border = CALayer()
-            border.backgroundColor = self.borderColor?.cgColor
-            border.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.borderWidth)
-            self.layer.addSublayer(border)
+            if newValue == true {
+                let border = CALayer()
+                border.backgroundColor = self.borderColor?.cgColor
+                border.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.borderWidth)
+                self.layer.addSublayer(border)
+            }
         }
     }
     @IBInspectable var setBorderBottom : Bool {
@@ -375,11 +377,12 @@ public extension UIView {
             return self.setBorderBottom
         }
         set {
-            let border = CALayer()
-            border.backgroundColor = self.borderColor?.cgColor
-            border.frame = CGRect(x: 0, y: self.frame.size.height - self.borderWidth, width: self.frame.size.width, height: self.borderWidth)
-            self.layer.addSublayer(border)
-
+            if newValue == true {
+                let border = CALayer()
+                border.backgroundColor = self.borderColor?.cgColor
+                border.frame = CGRect(x: 0, y: self.frame.size.height - self.borderWidth, width: self.frame.size.width, height: self.borderWidth)
+                self.layer.addSublayer(border)
+            }
         }
     }
     @IBInspectable var setBorderLeft : Bool {
@@ -387,11 +390,12 @@ public extension UIView {
             return self.setBorderLeft
         }
         set {
-            let border = CALayer()
-            border.backgroundColor = self.borderColor?.cgColor
-            border.frame = CGRect(x: 0, y: 0, width: self.borderWidth, height: self.frame.size.height)
-            self.layer.addSublayer(border)
-
+            if newValue == true {
+                let border = CALayer()
+                border.backgroundColor = self.borderColor?.cgColor
+                border.frame = CGRect(x: 0, y: 0, width: self.borderWidth, height: self.frame.size.height)
+                self.layer.addSublayer(border)
+            }
         }
     }
     @IBInspectable var setBorderRight : Bool {
@@ -399,10 +403,12 @@ public extension UIView {
             return self.setBorderRight
         }
         set {
-            let border = CALayer()
-            border.backgroundColor = self.borderColor?.cgColor
-            border.frame = CGRect(x: self.frame.size.width - self.borderWidth, y: 0, width: self.borderWidth, height: self.frame.size.height)
-            self.layer.addSublayer(border)
+            if newValue == true {
+                let border = CALayer()
+                border.backgroundColor = self.borderColor?.cgColor
+                border.frame = CGRect(x: self.frame.size.width - self.borderWidth, y: 0, width: self.borderWidth, height: self.frame.size.height)
+                self.layer.addSublayer(border)
+            }
         }
     }
     
