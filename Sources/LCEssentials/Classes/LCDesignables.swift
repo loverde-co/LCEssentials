@@ -506,6 +506,43 @@ open class UIButtomCustom: UIButton {
     override open func editingRect(forBounds bounds: CGRect) -> CGRect {
         return textRect(forBounds: bounds)
     }
+    
+    @IBInspectable open override var setBorderTop : Bool {
+        didSet {
+            let border = CALayer()
+            border.backgroundColor = self.setBorderColor?.cgColor
+            border.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.setBorderWidth)
+            self.layer.addSublayer(border)
+            
+        }
+    }
+    @IBInspectable open override var setBorderBottom : Bool {
+        didSet {
+            let border = CALayer()
+            border.backgroundColor = self.setBorderColor?.cgColor
+            border.frame = CGRect(x: 0, y: self.frame.size.height - setBorderWidth, width: self.frame.size.width, height: self.setBorderWidth)
+            self.layer.addSublayer(border)
+            
+        }
+    }
+    @IBInspectable open override var setBorderLeft : Bool {
+        didSet {
+            let border = CALayer()
+            border.backgroundColor = self.setBorderColor?.cgColor
+            border.frame = CGRect(x: 0, y: 0, width: self.setBorderWidth, height: self.frame.size.height)
+            self.layer.addSublayer(border)
+            
+        }
+    }
+    @IBInspectable open override var setBorderRight : Bool {
+        didSet {
+            let border = CALayer()
+            border.backgroundColor = self.setBorderColor?.cgColor
+            border.frame = CGRect(x: self.frame.size.width - self.setBorderWidth, y: 0, width: setBorderWidth, height: self.frame.size.height)
+            self.layer.addSublayer(border)
+            
+        }
+    }
 }
 //MARK: UIView
 @IBDesignable open class CustomUIView : UIView {

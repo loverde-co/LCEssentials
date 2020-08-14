@@ -828,6 +828,91 @@ public extension String {
     ///
     /// - Parameter toText: String you want to maks
     /// - Parameter mask: Using mask like sharp ##-#####(###)
+    func applyMask(inputMask:String?, maxLenght:Int, range:NSRange, textFieldString:String, replacementString:String, charactersRestriction:String?) -> String? {
+        
+        // Prevent crashing undo bug
+        if (range.length + range.location > textFieldString.count) {
+            return nil
+        }
+        
+        //Mask validation:
+        if let mask:String = inputMask {
+            
+            var changedString:String = (textFieldString as NSString).replacingCharacters(in: range, with: replacementString)
+            
+            if changedString == "" {
+                return ""
+            }
+            
+            var ignore:Bool = false
+            
+            let subString:String = (textFieldString as NSString).substring(with: range)
+            let rangeSub:Range? = subString.rangeOfCharacter(from: CharacterSet.init(charactersIn: "0123456789"))
+            
+            if ((range.length == 1) && (replacementString.count < range.length) && (rangeSub == nil)) {
+                
+                var location:Int = changedString.count - 1
+                
+                if (location > 0) {
+                    
+                    for index in stride(from: location, through: 1, by: -1) {
+                        
+                        if (CharacterSet.init(charactersIn: "0123456789").contains(UnicodeScalar((changedString as NSString).character(at: index))!)) {
+                            location = index;
+                            break
+                        }
+                    }
+                    changedString = (changedString as NSString).substring(to: location)
+                    
+                }else {
+                    ignore = true
+                }
+            }
+            
+            if (ignore) {
+                return nil
+            }else {
+                return applyMask(toText: changedString, mask: mask)
+            }
+            
+        }else{
+            
+            //Max lenght validation:
+            if (maxLenght > 0) {
+                
+                let newLength:Int = textFieldString.count + replacementString.count - range.length
+                if (newLength > maxLenght) {
+                    return nil
+                }
+            }
+            
+            //Characters validation:
+            if let chars:String = charactersRestriction {
+                
+                let characterset = CharacterSet(charactersIn: chars)
+                if replacementString.rangeOfCharacter(from: characterset.inverted) != nil {
+                    //O texto possui caracteres inválidos
+                    return nil
+                }else{
+                    var newText = (textFieldString as NSString).replacingCharacters(in: range, with: replacementString)
+                    newText = self.removeMask(fromText:  "~˜^ˆ'`¨", charsMask: newText)
+                    return newText
+                }
+                
+            }else{
+                //Normal success return
+                let newText = (textFieldString as NSString).replacingCharacters(in: range, with: replacementString)
+                return newText
+            }
+            
+        }
+        
+    }
+    
+    /// Loverde Co.: Add mask to a text - Very simple to use
+    ///
+    /// - Parameter toText: String you want to maks
+    /// - Parameter mask: Using mask like sharp ##-#####(###)
     func applyMask(toText: String, mask: String) -> String {
 
         let toTextNSString = toText as NSString
@@ -878,6 +963,29 @@ public extension String {
         }
 
         return String(outputString).replacingOccurrences(of: "\0", with: "")
+    }
+    
+    /// Loverde Co.: Add mask to a text - Very simple to use
+    ///
+    /// - Parameter toText: String you want to maks
+    /// - Parameter mask: Using mask like sharp ##-#####(###)
+    func applyMask(mask:String = "#####-####", toText: String) -> String {
+        let cleanPhoneNumber = toText.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+
+        var result = ""
+        var index = cleanPhoneNumber.startIndex
+        for ch in mask {
+            if index == cleanPhoneNumber.endIndex {
+                break
+            }
+            if ch == "#" {
+                result.append(cleanPhoneNumber[index])
+                index = cleanPhoneNumber.index(after: index)
+            } else {
+                result.append(ch)
+            }
+        }
+        return result
     }
     
     /// Loverde Co.: Remove mask from a text - Very simple to use
