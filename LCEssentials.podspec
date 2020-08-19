@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'LCEssentials'
-  s.version          = '0.5.5'
+  s.version          = '0.5.6'
   s.summary          = 'This is a repository of essential scripts written in Swift for Loverde Co.'
  
   s.description      = <<-DESC
@@ -18,8 +18,10 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
   s.ios.deployment_target = '11.4'
   s.watchos.deployment_target = '5.0'
   s.ios.source_files     = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/PickerViews/*.{swift}', 'Sources/LCEssentials/Notifications/*.{swift}', 'Sources/LCEssentials/ImageZoom/*.{swift}', 'Sources/LCEssentials/ImagePicker/*.{swift}'
-  s.watchos.source_files     = 'Sources/LCEssentials/Classes/*.{swift}'
   s.ios.resources        = ['Sources/LCEssentials/PickerViews/Storyboards/*.{storyboard}', 'Sources/LCEssentials/Notifications/Storyboard/*.{storyboard}', 'Sources/LCEssentials/Notifications/Storyboard/*.{png}', 'Sources/LCEssentials/ImageZoom/Storyboard/*.{storyboard}', 'Sources/LCEssentials/ImagePicker/Storyboard/*.{storyboard}']
+  
+  s.watchos.source_files     = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/PickerViews/*.{swift}', 'Sources/LCEssentials/Notifications/*.{swift}', 'Sources/LCEssentials/ImageZoom/*.{swift}', 'Sources/LCEssentials/ImagePicker/*.{swift}'
+  #s.watchos.resources        = ['Sources/LCEssentials/PickerViews/Storyboards/*.{storyboard}', 'Sources/LCEssentials/Notifications/Storyboard/*.{storyboard}', 'Sources/LCEssentials/Notifications/Storyboard/*.{png}', 'Sources/LCEssentials/ImageZoom/Storyboard/*.{storyboard}', 'Sources/LCEssentials/ImagePicker/Storyboard/*.{storyboard}']
 
   # LCEMinimal Extensions
   s.subspec 'Classes' do |sp|

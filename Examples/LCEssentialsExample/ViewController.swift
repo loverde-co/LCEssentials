@@ -177,7 +177,6 @@ extension ViewController {
                 bottomInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
             }else{
                 keyboardShowing = false
-
                 bottomInset = UIEdgeInsets.zero
             }
 

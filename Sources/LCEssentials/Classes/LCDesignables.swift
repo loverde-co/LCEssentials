@@ -507,7 +507,7 @@ open class UIButtomCustom: UIButton {
         return textRect(forBounds: bounds)
     }
     
-    @IBInspectable open override var setBorderTop : Bool {
+    @IBInspectable open var borderTop : Bool = false {
         didSet {
             let border = CALayer()
             border.backgroundColor = self.setBorderColor?.cgColor
@@ -516,7 +516,7 @@ open class UIButtomCustom: UIButton {
             
         }
     }
-    @IBInspectable open override var setBorderBottom : Bool {
+    @IBInspectable open var borderBottom : Bool = false {
         didSet {
             let border = CALayer()
             border.backgroundColor = self.setBorderColor?.cgColor
@@ -525,7 +525,7 @@ open class UIButtomCustom: UIButton {
             
         }
     }
-    @IBInspectable open override var setBorderLeft : Bool {
+    @IBInspectable open var borderLeft : Bool = false {
         didSet {
             let border = CALayer()
             border.backgroundColor = self.setBorderColor?.cgColor
@@ -534,7 +534,7 @@ open class UIButtomCustom: UIButton {
             
         }
     }
-    @IBInspectable open override var setBorderRight : Bool {
+    @IBInspectable open var borderRight : Bool = false {
         didSet {
             let border = CALayer()
             border.backgroundColor = self.setBorderColor?.cgColor

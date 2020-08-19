@@ -20,6 +20,7 @@
 // THE SOFTWARE.
  
 
+#if os(iOS) || os(macOS)
 import UIKit
 import AVFoundation
 import Photos
@@ -196,3 +197,4 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
         })
     }
 }
+#endif
