@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = 'LCEssentialsWatch'
   s.version          = '0.0.1'
-  s.summary          = 'This is a repository of essential scripts written in Swift for Loverde Co.'
+  s.summary          = 'This is a repository of essential watchOS sscripts written in Swift for Loverde Co.'
  
   s.description      = <<-DESC
 This is a repository of essential watchOS scripts written in Swift for Loverde Co. used to save time on re-writing and keeping it on all other projects. So this Cocoapods will evolve with Swift and will improve with every release!
