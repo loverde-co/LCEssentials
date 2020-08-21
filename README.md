@@ -27,7 +27,7 @@ use_frameworks!
 # Swift 5.0
 pod 'LCEssentials'
 
-# Swift 5.0 only for watchOS
+# Swift 5.0 for watchOS
 pod 'LCEssentialsWatch'
 
 # Swift 4.2

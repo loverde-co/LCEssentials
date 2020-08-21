@@ -1,22 +1,31 @@
 PODS:
-  - LCEssentials (0.5.5):
-    - LCEssentials/Classes (= 0.5.5)
-    - LCEssentials/Notifications (= 0.5.5)
-    - LCEssentials/PickerViews (= 0.5.5)
-  - LCEssentials/Classes (0.5.5)
-  - LCEssentials/Notifications (0.5.5)
-  - LCEssentials/PickerViews (0.5.5)
+  - InputBarAccessoryView (5.0.0):
+    - InputBarAccessoryView/Core (= 5.0.0)
+  - InputBarAccessoryView/Core (5.0.0)
+  - LCEssentials (0.5.6):
+    - LCEssentials/Classes (= 0.5.6)
+    - LCEssentials/Notifications (= 0.5.6)
+    - LCEssentials/PickerViews (= 0.5.6)
+  - LCEssentials/Classes (0.5.6)
+  - LCEssentials/Notifications (0.5.6)
+  - LCEssentials/PickerViews (0.5.6)
 
 DEPENDENCIES:
+  - InputBarAccessoryView
   - LCEssentials (from `../`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - InputBarAccessoryView
 
 EXTERNAL SOURCES:
   LCEssentials:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LCEssentials: d9b048b8a90de2c55e911d575b8298729b8a71ab
+  InputBarAccessoryView: cbc0b2d9456058e1166898897865f9f4960fac81
+  LCEssentials: 7f76671c7372e018d52b99793d52d331b816b9e9
 
-PODFILE CHECKSUM: 92556a571ebd57808846d309c9e510e7a7c6d830
+PODFILE CHECKSUM: 0be0b257840b103f6eef1e5d9bc155dbf81f4bb8
 
 COCOAPODS: 1.9.3
