@@ -24,58 +24,19 @@ import UIKit
 import LCEssentials
 
 class ViewController: UIViewController {
-    private var copyView: UIView!
-    private var copyTextField: UITextField!
-    private var copyButton: UIButton!
-    @IBOutlet weak var accessoryView: UIView!
-    @IBOutlet weak var txtAccessoryView: UITextField!{
-        didSet{
-            txtAccessoryView.addPaddingLeft(10)
-            copyView = accessoryView.copyView()
-            copyView.subviews.forEach { (text) in
-                if text is UITextField || text is UIButton  {
-                    text.borderWidth = 1
-                    text.borderColor = UIColor.init(red: 118/255, green: 131/255, blue: 239/255, alpha: 1)
-                    text.cornerRadius = text.height / 2
-                    if text is UITextField {
-                        copyTextField = (text as! UITextField)
-                        copyTextField.addPaddingLeft(10)
-                        copyTextField.delegate = self
-                    }
-                    if text is UIButton{
-                        copyButton = (text as! UIButton)
-                        copyButton.addTarget(self, action: #selector(sendMenssage), for: .touchUpInside)
-                    }
-                }
-            }
-            txtAccessoryView.inputAccessoryView = copyView
-        }
-    }
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var txtSearch: UITextField!{
+        didSet{
+            txtSearch.borderWidth = 1
+            txtSearch.borderColor = .darkGray
+            txtSearch.cornerRadius = txtSearch.height / 2
+        }
+    }
     private var keyboardShowing: Bool = false
     lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom", 3: "Open Alert Message on TOP",
                                        4: "Open Notifications Runtime", 5: "Open Image Zoom", 6: "Open Second View With Singleton built in",
-                                       7: "Image Picker Controller",
-                                       /*8: "Image Picker Controller",
-                                       9: "Image Picker Controller",
-                                       10: "Image Picker Controller",
-                                       11: "Image Picker Controller",
-                                       12: "Image Picker Controller",
-                                       13: "Image Picker Controller",
-                                       14: "Image Picker Controller",
-                                       15: "Image Picker Controller",
-                                       16: "Image Picker Controller",
-                                       17: "Image Picker Controller",
-                                       18: "Image Picker Controller",
-                                       19: "Image Picker Controller",
-                                       20: "Image Picker Controller",
-                                       21: "Image Picker Controller",
-                                       22: "Image Picker Controller",
-                                       23: "Image Picker Controller",
-                                       24: "Image Picker Controller",
-                                       25: "Image Picker Controller"*/]
+                                       7: "Image Picker Controller"]
     
     let pickerController: PickerViewController = PickerViewController.instantiate()
     lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
@@ -137,20 +98,9 @@ class ViewController: UIViewController {
         //datePickerController.minimumDate = Date()
         datePickerController.touchToClose = true
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardNotification(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
     }
 }
 
@@ -161,44 +111,6 @@ extension ViewController {
             self.view.endEditing(true)
         }
         sender.cancelsTouchesInView = false
-    }
-    
-    @objc func handleKeyboardNotification(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as AnyObject).cgRectValue
-            let animationDuration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as AnyObject).doubleValue
-            let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
-            var bottomInset: UIEdgeInsets!
-            if isKeyboardShowing {
-                self.accessoryView.isHidden = true
-                self.copyView.isHidden = false
-                keyboardShowing = true
-                copyTextField.becomeFirstResponder()
-                bottomInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-            }else{
-                keyboardShowing = false
-                bottomInset = UIEdgeInsets.zero
-            }
-
-            if notification.name == UIResponder.keyboardDidHideNotification {
-                self.accessoryView.isHidden = false
-                self.copyView.isHidden = true
-            }
-
-            tableViewBottomConstraint.constant = isKeyboardShowing ? (keyboardFrame!.height - self.accessoryView.height) - self.tabBarController!.tabBar.height : 0
-            self.tableView.contentInset = bottomInset
-
-            UIView.animate(withDuration: animationDuration!, delay: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
-                self.view.layoutIfNeeded()
-            }, completion: { (completed) in
-                if isKeyboardShowing && !self.content.isEmpty {
-                    LCEssentials.backgroundThread(delay: 0.2) {
-                        let indexPath = IndexPath(item: self.content.count - 1, section: 0)
-                        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-                    }
-                }
-            })
-        }
     }
 
     //MARK: - Open Picker Controller
@@ -274,13 +186,6 @@ extension ViewController {
         camera.delegate = self
         camera.isEditable = false
         camera.openImagePicker()
-    }
-    
-    @IBAction func sendMenssage(){
-        txtAccessoryView.text = copyTextField.text != "" ? copyTextField.text : txtAccessoryView.text
-        printInfo(title: "Chat Bar", msg: txtAccessoryView.text ?? "")
-        txtAccessoryView.text = nil
-        copyTextField.text = nil
     }
 }
 
@@ -427,7 +332,12 @@ extension ViewController: ImagePickerControllerDelegate {
 }
 
 extension ViewController: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        txtAccessoryView.text = textField.text
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        let texto: String? = String().applyMask(inputMask: "#####-###", maxLenght: 9, range: range, textFieldString: textField.text ?? "", replacementString: string, charactersRestriction: nil)
+//        if let output = texto {
+//            textField.text = output
+//        }
+//        return false
+        return true
     }
 }

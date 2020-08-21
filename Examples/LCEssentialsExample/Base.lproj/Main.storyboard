@@ -57,7 +57,7 @@
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RRo-wE-tOy">
-                                <rect key="frame" x="0.0" y="153" width="414" height="600"/>
+                                <rect key="frame" x="0.0" y="153" width="414" height="660"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="d1F-1T-qSA"/>
@@ -70,102 +70,29 @@
                                     <constraint firstAttribute="height" constant="34" id="w4t-Er-Lhb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
                                         <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="borderBottom" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="OB3-Zz-s4Y"/>
                                 </connections>
                             </textField>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kgK-pz-Dp0">
-                                <rect key="frame" x="0.0" y="753" width="414" height="60"/>
-                                <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Nux-k8-kAT">
-                                        <rect key="frame" x="13" y="13" width="341" height="34"/>
-                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="34" id="zjm-xf-2fe"/>
-                                        </constraints>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="17"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.46274509800000002" green="0.51372549020000002" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="setBorderTop" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="setBorderBottom" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="setBorderLeft" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="setBorderRight" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                                <color key="value" red="0.46274509800000002" green="0.51372549020000002" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <outlet property="delegate" destination="BYZ-38-t0r" id="0zV-1v-uO5"/>
-                                        </connections>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jGV-nB-xj7">
-                                        <rect key="frame" x="367" y="13" width="34" height="34"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="34" id="Zc8-Bd-QsH"/>
-                                            <constraint firstAttribute="height" constant="34" id="wG4-Tr-VkZ"/>
-                                        </constraints>
-                                        <state key="normal" image="paperplane.fill" catalog="system"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.46274509800000002" green="0.51372549020000002" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="17"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="sendMenssage" destination="BYZ-38-t0r" eventType="touchUpInside" id="eDk-n5-nqG"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="Nux-k8-kAT" firstAttribute="leading" secondItem="kgK-pz-Dp0" secondAttribute="leading" constant="13" id="8Es-iQ-SK1"/>
-                                    <constraint firstItem="jGV-nB-xj7" firstAttribute="leading" secondItem="Nux-k8-kAT" secondAttribute="trailing" constant="13" id="Cqh-ik-f7s"/>
-                                    <constraint firstAttribute="bottom" secondItem="jGV-nB-xj7" secondAttribute="bottom" constant="13" id="NOl-hA-oHf"/>
-                                    <constraint firstItem="jGV-nB-xj7" firstAttribute="top" secondItem="kgK-pz-Dp0" secondAttribute="top" constant="13" id="TVk-vU-WWs"/>
-                                    <constraint firstAttribute="bottom" secondItem="Nux-k8-kAT" secondAttribute="bottom" constant="13" id="Vyc-RL-Rov"/>
-                                    <constraint firstItem="Nux-k8-kAT" firstAttribute="top" secondItem="kgK-pz-Dp0" secondAttribute="top" constant="13" id="efp-FE-hl6"/>
-                                    <constraint firstAttribute="trailing" secondItem="jGV-nB-xj7" secondAttribute="trailing" constant="13" id="hgU-PK-ugW"/>
-                                    <constraint firstAttribute="height" constant="60" id="mvT-Vy-dZP"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="RRo-wE-tOy" firstAttribute="top" secondItem="vwx-kA-VLX" secondAttribute="bottom" constant="10" id="23F-aV-8BV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vwx-kA-VLX" secondAttribute="trailing" constant="20" id="3b5-d1-Ywy"/>
-                            <constraint firstItem="kgK-pz-Dp0" firstAttribute="top" secondItem="RRo-wE-tOy" secondAttribute="bottom" id="7Kx-uz-PZ3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mct-3T-jz7" secondAttribute="trailing" constant="20" id="8MR-SQ-ZCW"/>
                             <constraint firstItem="mct-3T-jz7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="AIp-kA-C1a"/>
-                            <constraint firstItem="kgK-pz-Dp0" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="B2d-68-2dM"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="RRo-wE-tOy" secondAttribute="bottom" id="F2v-fa-kCO"/>
                             <constraint firstItem="mct-3T-jz7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Lgn-UL-djU"/>
-                            <constraint firstItem="kgK-pz-Dp0" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="agJ-Rv-NbN"/>
                             <constraint firstItem="vwx-kA-VLX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="bKN-Xk-zGc"/>
                             <constraint firstItem="RRo-wE-tOy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="lKs-Z6-WJU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="RRo-wE-tOy" secondAttribute="trailing" id="lL0-yd-ura"/>
                             <constraint firstItem="vwx-kA-VLX" firstAttribute="top" secondItem="mct-3T-jz7" secondAttribute="bottom" constant="10" id="qLj-RU-0dG"/>
-                            <constraint firstItem="kgK-pz-Dp0" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="rOd-im-a4I"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -175,10 +102,8 @@
                     </navigationItem>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="accessoryView" destination="kgK-pz-Dp0" id="Ery-KK-rqa"/>
                         <outlet property="tableView" destination="RRo-wE-tOy" id="MYd-r5-VJA"/>
-                        <outlet property="tableViewBottomConstraint" destination="7Kx-uz-PZ3" id="BpX-MX-gPl"/>
-                        <outlet property="txtAccessoryView" destination="Nux-k8-kAT" id="t1C-Iw-jXC"/>
+                        <outlet property="txtSearch" destination="vwx-kA-VLX" id="hVu-ol-fT2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -269,6 +194,5 @@
     <resources>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="loverde_company_logo_full" width="160" height="66"/>
-        <image name="paperplane.fill" catalog="system" width="128" height="121"/>
     </resources>
 </document>

@@ -12,7 +12,7 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
 - [x] Pop To View Controller with animation
 - [x] Stars Rating Designable
 - [x] Many others usefull Designables
-- [x] Create a XCode Proj example with all features
+- [x] Create a XCode Proj example with principal features
 
 
 Installation
@@ -26,6 +26,9 @@ use_frameworks!
 
 # Swift 5.0
 pod 'LCEssentials'
+
+# WatchOS
+pod 'LCEssentialsWatch'
 
 # Swift 4.2
 pod 'LCEssentials', '~> 0.4.6.3'
