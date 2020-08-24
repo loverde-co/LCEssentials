@@ -169,7 +169,7 @@ open class Location: NSObject, CLLocationManagerDelegate {
                     address.completeAddress = "\((address.street)!), \((address.neightboor)!), \((address.city)!) - \((address.state)!), \((address.country)!), \((address.zipCode)!)"
                     self.allAddress.append(address)
                 })
-                self.address = self.allAddress.first!
+                self.address = self.allAddress.last!
                 self.address.addresses = self.allAddress
                 Location.shared.address = self.address
                 Location.shared.address.addresses = self.allAddress

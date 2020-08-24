@@ -63,6 +63,21 @@ public extension Date {
         dateFormatter.dateFormat = formatted
         return dateFormatter.date(from: convertedDate)!
     }
+    /// LoverdeCo: Timestamp to Date.
+    ///
+    /// - Parameters:
+    ///   - withFormatt: Give a input formatt to any formatt you want.
+    ///   - useHour: Keep or remove hour form given date
+    ///   - Returns: String object.
+    func timestampToDate(timestamp: Double) -> Date? {
+        let date = Date(timeIntervalSince1970: timestamp)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "GMT") //Set timezone that you want
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm" //Specify your format that you want
+        let strDate = dateFormatter.string(from: date)
+        return dateFormatter.date(from: strDate)
+    }
     
     
     /// LoverdeCo: Date to String object.
