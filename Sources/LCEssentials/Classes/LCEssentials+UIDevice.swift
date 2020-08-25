@@ -60,7 +60,7 @@ public extension UIDevice {
         case "iPhone8,2":                               return "iPhone 6s Plus"
         case "iPhone9,1", "iPhone9,3":                  return "iPhone 7"
         case "iPhone9,2", "iPhone9,4":                  return "iPhone 7 Plus"
-        case "iPhone8,4":                               return "iPhone SE"
+        case "iPhone8,4", "iPhone12,8":                 return "iPhone SE"
         case "iPhone10,1", "iPhone10,4":                return "iPhone 8"
         case "iPhone10,2", "iPhone10,5":                return "iPhone 8 Plus"
         case "iPhone10,3", "iPhone10,6":                return "iPhone X"
@@ -103,6 +103,23 @@ public extension UIDevice {
         case "i386", "x86_64": return "Simulator \(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "tvOS"))"
         default: return identifier
         }
+//        #elseif os(watchOS)
+//        switch identifier {
+//        case "Watch1,1", "Watch1,2":                    return "Apple Watch 38mm"
+//        case "Watch2,6":                                return "Apple Watch S1 38mm"
+//        case "Watch2,7":                                return "Apple Watch S1 42mm"
+//        case "Watch2,3":                                return "Apple Watch S2 38mm"
+//        case "Watch2,4":                                return "Apple Watch S2 42mm"
+//        case "Watch3,1", "Watch3,3":                    return "Apple Watch S3 38mm"
+//        case "Watch3,2", "Watch3,4":                    return "Apple Watch S3 42mm"
+//        case "Watch4,1", "Watch4,3":                    return "Apple Watch S4 40mm"
+//        case "Watch4,2", "Watch4,4":                    return "Apple Watch S4 44mm"
+//        case "Watch5,1", "Watch5,3":                    return "Apple Watch S5 40mm"
+//        case "Watch5,2", "Watch5,4":                    return "Apple Watch S5 44mm"
+//        case "AudioAccessory1,1":                       return "HomePod"
+//        case "i386", "x86_64":                          return "Simulator"
+//        default:                                        return identifier
+//        }
         #endif
     }
 }

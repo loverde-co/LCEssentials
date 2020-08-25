@@ -151,11 +151,6 @@ open class Location: NSObject, CLLocationManagerDelegate {
                     }else{
                         address.street = ""
                     }
-                    //var zipCodeFinal = ""
-                    
-                    //                    if let zipFinal = places.subThoroughfare {
-                    //                        zipCodeFinal = "-"+zipFinal
-                    //                    }
                     if let postalCode = places.postalCode {
                         address.zipCode = postalCode //+zipCodeFinal
                     }else{
@@ -171,9 +166,10 @@ open class Location: NSObject, CLLocationManagerDelegate {
                 })
                 self.address = self.allAddress.last!
                 self.address.addresses = self.allAddress
-                Location.shared.address = self.address
+                Location.shared.address = self.allAddress.last!
                 Location.shared.address.addresses = self.allAddress
                 completion(self.address, nil)
+                self.allAddress.removeAll()
             }
         })
     }
