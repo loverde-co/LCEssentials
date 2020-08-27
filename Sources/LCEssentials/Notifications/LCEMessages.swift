@@ -25,6 +25,7 @@ import UIKit
 #if os(iOS) || os(macOS)
 @objc public protocol LCEMessagesDelegate {
     @objc optional func messages(didTapOnMessage: LCEMessages)
+    @objc optional func messages(onDissmiss message: LCEMessages)
 }
 
 public enum LCEMessagesDirection {
@@ -165,24 +166,34 @@ public class LCEMessages: UIViewController {
         fontName = name
     }
     
-    public func dismiss(){
-        hidde()
+    public func dismiss(completion: (() -> Void)? = nil){
+        hidde {
+            completion?()
+        }
     }
     
-    private func hidde(){
+    private func hidde(completion: (() -> Void)? = nil){
         if setDirection == .bottom {
-            toBottom(completion: nil)
+            toBottom(completion: {
+                self.delegate?.messages?(onDissmiss: self)
+            })
         }else{
-            toUp(completion: nil)
+            toUp(completion: {
+                self.delegate?.messages?(onDissmiss: self)
+            })
         }
         isHidden = true
     }
     
-    private func anitamete(){
+    private func anitamete(completion: (() -> Void)? = nil){
         if setDirection == .bottom {
-            toUp(completion: nil)
+            toUp(completion: {
+                completion?()
+            })
         }else{
-            toBottom(completion: nil)
+            toBottom(completion: {
+                completion?()
+            })
         }
         isHidden = false
     }
