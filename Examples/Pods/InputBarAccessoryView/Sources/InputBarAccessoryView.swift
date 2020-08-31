@@ -40,11 +40,7 @@ open class InputBarAccessoryView: UIView {
     open var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        if #available(iOS 13, *) {
-            view.backgroundColor = .systemBackground
-        } else {
-            view.backgroundColor = .white
-        }
+        view.backgroundColor = InputBarAccessoryView.defaultBackgroundColor
         return view
     }()
     
@@ -81,7 +77,7 @@ open class InputBarAccessoryView: UIView {
                 blurView.fillSuperview()
             }
             blurView.isHidden = !isTranslucent
-            let color: UIColor = backgroundView.backgroundColor ?? .white
+            let color: UIColor = backgroundView.backgroundColor ?? InputBarAccessoryView.defaultBackgroundColor
             backgroundView.backgroundColor = isTranslucent ? color.withAlphaComponent(0.75) : color
         }
     }
@@ -144,6 +140,14 @@ open class InputBarAccessoryView: UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+
+    private static let defaultBackgroundColor: UIColor = {
+        if #available(iOS 13, *) {
+            return .systemBackground
+        } else {
+            return .white
+        }
     }()
     
     /// The InputTextView a user can input a message in
@@ -257,6 +261,7 @@ open class InputBarAccessoryView: UIView {
     
     /// A boolean that indicates if the maxTextViewHeight has been met. Keeping track of this
     /// improves the performance
+    /// The default value is `FALSE`
     public private(set) var isOverMaxTextViewHeight = false
     
     /// A boolean that when set as `TRUE` will always enable the `InputTextView` to be anchored to the
@@ -266,11 +271,13 @@ open class InputBarAccessoryView: UIView {
     
     /// A boolean that determines if the `maxTextViewHeight` should be maintained automatically.
     /// To control the maximum height of the view yourself, set this to `false`.
+    /// The default value is `TRUE`
     open var shouldAutoUpdateMaxTextViewHeight = true
 
     /// The maximum height that the InputTextView can reach.
     /// This is set automatically when `shouldAutoUpdateMaxTextViewHeight` is true.
     /// To control the height yourself, make sure to set `shouldAutoUpdateMaxTextViewHeight` to false.
+    /// The default value is `0`
     open var maxTextViewHeight: CGFloat = 0 {
         didSet {
             textViewHeightAnchor?.constant = maxTextViewHeight
@@ -278,7 +285,13 @@ open class InputBarAccessoryView: UIView {
     }
     
     /// A boolean that determines whether the sendButton's `isEnabled` state should be managed automatically.
+    /// The default value is `TRUE`
     open var shouldManageSendButtonEnabledState = true
+
+    /// A boolean that determines if the layout required for new or typed text should
+    /// be animated.
+    /// The default value is `FALSE`
+    open var shouldAnimateTextDidChangeLayout = false
     
     /// The height that will fit the current text in the InputTextView based on its current bounds
     public var requiredInputTextViewHeight: CGFloat {
@@ -290,6 +303,7 @@ open class InputBarAccessoryView: UIView {
     }
     
     /// The fixed widthAnchor constant of the leftStackView
+    /// The default value is `0`
     public private(set) var leftStackViewWidthConstant: CGFloat = 0 {
         didSet {
             leftStackViewLayoutSet?.width?.constant = leftStackViewWidthConstant
@@ -297,6 +311,7 @@ open class InputBarAccessoryView: UIView {
     }
     
     /// The fixed widthAnchor constant of the rightStackView
+    /// The default value is `52`
     public private(set) var rightStackViewWidthConstant: CGFloat = 52 {
         didSet {
             rightStackViewLayoutSet?.width?.constant = rightStackViewWidthConstant
@@ -377,7 +392,7 @@ open class InputBarAccessoryView: UIView {
     /// Sets up the default properties
     open func setup() {
 
-        backgroundColor = .white
+        backgroundColor = InputBarAccessoryView.defaultBackgroundColor
         autoresizingMask = [.flexibleHeight]
         setupSubviews()
         setupConstraints()
@@ -774,8 +789,7 @@ open class InputBarAccessoryView: UIView {
         performLayout(animated) { 
             self.leftStackViewWidthConstant = newValue
             self.layoutStackViews([.left])
-            guard self.superview?.superview != nil else { return }
-            self.superview?.superview?.layoutIfNeeded()
+            self.layoutContainerViewIfNeeded()
         }
     }
     
@@ -788,8 +802,7 @@ open class InputBarAccessoryView: UIView {
         performLayout(animated) { 
             self.rightStackViewWidthConstant = newValue
             self.layoutStackViews([.right])
-            guard self.superview?.superview != nil else { return }
-            self.superview?.superview?.layoutIfNeeded()
+            self.layoutContainerViewIfNeeded()
         }
     }
     
@@ -802,9 +815,24 @@ open class InputBarAccessoryView: UIView {
         performLayout(animated) {
             self.shouldForceTextViewMaxHeight = newValue
             self.textViewHeightAnchor?.isActive = newValue
-            guard self.superview?.superview != nil else { return }
-            self.superview?.superview?.layoutIfNeeded()
+            self.layoutContainerViewIfNeeded()
         }
+    }
+
+    /// Calls `layoutIfNeeded()` on the `UIInputSetContainerView` that holds the
+    /// `InputBarAccessoryView`, if it exists, else `layoutIfNeeded()` is called
+    /// on the `superview`.
+    /// Use this for invoking a smooth layout of a size change when used as
+    /// an `inputAccessoryView`
+    public func layoutContainerViewIfNeeded() {
+        guard
+            let UIInputSetContainerViewKind: AnyClass = NSClassFromString("UIInputSetContainerView"),
+            let container = superview?.superview,
+            container.isKind(of: UIInputSetContainerViewKind) else {
+            superview?.layoutIfNeeded()
+            return
+        }
+        superview?.superview?.layoutIfNeeded()
     }
     
     // MARK: - Notifications/Hooks
@@ -857,6 +885,12 @@ open class InputBarAccessoryView: UIView {
         if shouldInvalidateIntrinsicContentSize {
             // Prevent un-needed content size invalidation
             invalidateIntrinsicContentSize()
+            if shouldAnimateTextDidChangeLayout {
+                inputTextView.layoutIfNeeded()
+                UIView.animate(withDuration: 0.15) {
+                    self.layoutContainerViewIfNeeded()
+                }
+            }
         }
     }
     

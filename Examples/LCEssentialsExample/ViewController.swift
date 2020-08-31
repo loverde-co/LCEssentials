@@ -33,10 +33,9 @@ class ViewController: UIViewController {
             txtSearch.cornerRadius = txtSearch.height / 2
         }
     }
-    private var keyboardShowing: Bool = false
     lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom", 3: "Open Alert Message on TOP",
                                        4: "Open Notifications Runtime", 5: "Open Image Zoom", 6: "Open Second View With Singleton built in",
-                                       7: "Image Picker Controller"]
+                                       7: "Image Picker Controller", 8: "Alert Controller"]
     
     let pickerController: PickerViewController = PickerViewController.instantiate()
     lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
@@ -187,6 +186,10 @@ extension ViewController {
         camera.isEditable = false
         camera.openImagePicker()
     }
+    
+    func openAlert(){
+        //let controller = 
+    }
 }
 
 //MARK: - Messages Delegate
@@ -226,6 +229,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             openSecViewController()
         case 7:
             openImagePicker()
+        case 8:
+            openAlert()
         default:
             openPickerController()
             break;
@@ -238,7 +243,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
 
-        let animation = tableView.makeMoveUpWithFadeAnimation(rowHeight: tableView.cellForRow(at: indexPath)?.height ?? 60, duration: 0.85, delayFactor: 0.05)
+        let animation = tableView.makeMoveUpWithFadeAnimation(rowHeight: tableView.cellForRow(at: indexPath)?.height ?? 60, duration: animationDuration, delayFactor: delay)
         let animator = UITableViewAnimator(animation: animation)
         animator.animate(cell: cell, at: indexPath, in: tableView)
         alreadyAnimatedIndexPath.append(indexPath)

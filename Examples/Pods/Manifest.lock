@@ -1,7 +1,7 @@
 PODS:
-  - InputBarAccessoryView (5.0.0):
-    - InputBarAccessoryView/Core (= 5.0.0)
-  - InputBarAccessoryView/Core (5.0.0)
+  - InputBarAccessoryView (5.1.0):
+    - InputBarAccessoryView/Core (= 5.1.0)
+  - InputBarAccessoryView/Core (5.1.0)
   - LCEssentials (0.5.6):
     - LCEssentials/Classes (= 0.5.6)
     - LCEssentials/Notifications (= 0.5.6)
@@ -23,7 +23,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  InputBarAccessoryView: cbc0b2d9456058e1166898897865f9f4960fac81
+  InputBarAccessoryView: 19953f486a23e846e9487099f92bbe3456e46ce5
   LCEssentials: 7f76671c7372e018d52b99793d52d331b816b9e9
 
 PODFILE CHECKSUM: 0be0b257840b103f6eef1e5d9bc155dbf81f4bb8
