@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     }
     lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom", 3: "Open Alert Message on TOP",
                                        4: "Open Notifications Runtime", 5: "Open Image Zoom", 6: "Open Second View With Singleton built in",
-                                       7: "Image Picker Controller", 8: "Alert Controller"]
+                                       7: "Image Picker Controller", 8: "Show loading screen and then alert Controller"]
     
     let pickerController: PickerViewController = PickerViewController.instantiate()
     lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
@@ -188,7 +188,30 @@ extension ViewController {
     }
     
     func openAlert(){
-        //let controller = 
+        let controller: HUDAlertController = HUDAlertController.instantiate()
+        controller.isLoadingAlert = true
+        controller.setAlert(with: "Loading...")
+        controller.showAlert()
+        LCEssentials.backgroundThread(delay: 8) {
+            controller.isLoadingAlert = false
+            let actionContinue = HUDAlertAction("Normal Style", .normal) {
+                print("Normal Style")
+            }
+            let actionGrey = HUDAlertAction("Discrete Style", .discrete) {
+                print("Discrete Style")
+            }
+            let actionCancel = HUDAlertAction("Cancel Style", .cancel) {
+                print("Cancel Style")
+            }
+            let actionDestructive = HUDAlertAction("Destrctive Style", .destructive) {
+                print("Destrctive Style")
+            }
+            let actionGreen = HUDAlertAction("Green Style", .green) {
+                print("Green Style")
+            }
+            controller.setAlert(with: "This is a complete alert", titleColor: .red, description: "With all type of buttons", options: [actionContinue, actionGrey, actionDestructive, actionGreen, actionCancel])
+            controller.showAlert()
+        }
     }
 }
 

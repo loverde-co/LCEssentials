@@ -79,10 +79,8 @@
 		A4F396BDDA94981C5345E188BEF268D4 /* AttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2F12A829BAD3637E6A1F3F978E7B46 /* AttachmentCell.swift */; };
 		A867B6083DABD77C29D9B2AC13C269BC /* InputBarAccessoryViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4D5A250FE2EBF1EF427B589F60D1D9 /* InputBarAccessoryViewDelegate.swift */; };
 		AB9FD9115A20E7983093BDD88C450654 /* LCEssentials+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8B21E352A063E34B355E6652222F111 /* LCEssentials+URL.swift */; };
-		B1F4017124FD83C00002E3FA /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = B1F4016D24FD83C00002E3FA /* loading.gif */; };
-		B1F4017224FD83C00002E3FA /* LCEHUDAlert.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1F4016E24FD83C00002E3FA /* LCEHUDAlert.storyboard */; };
-		B1F4017324FD83C00002E3FA /* dual_loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = B1F4016F24FD83C00002E3FA /* dual_loading.gif */; };
-		B1F4017424FD83C00002E3FA /* HUDAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F4017024FD83C00002E3FA /* HUDAlertController.swift */; };
+		B13C797324FD99E200E47029 /* HUDAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13C797224FD99E200E47029 /* HUDAlertController.swift */; };
+		B13C797524FE83B300E47029 /* HUDAlertController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B13C797424FE83B300E47029 /* HUDAlertController.storyboard */; };
 		B794E8347DD9C7453415270CEA4D1060 /* LCEssentials+UIPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E70047AD145AE924C5BC3689758A3C /* LCEssentials+UIPickerView.swift */; };
 		BC66A1073CB351CD7C06EC6CE3DEAD06 /* LCEssentials+Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEFE1E1574C5B2598325E3ED20BB045 /* LCEssentials+Storyboard.swift */; };
 		BCEA9DD26F0584E21D3747954E042071 /* InputBarAccessoryView+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A8E9BC891604B95D85D5181C3D9FF /* InputBarAccessoryView+Availability.swift */; };
@@ -221,10 +219,8 @@
 		AC2D99281AC4D5FC721CA34E87E2908A /* Pods-LCEssentialsExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LCEssentialsExample-dummy.m"; sourceTree = "<group>"; };
 		AFAA18B7FB2A61FE0A81FDEC426D9AD8 /* ImagePickerController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		B0EC4B30B782D713590BCAA1AFEB9A80 /* LCEssentials+UIViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UIViewController.swift"; sourceTree = "<group>"; };
-		B1F4016D24FD83C00002E3FA /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
-		B1F4016E24FD83C00002E3FA /* LCEHUDAlert.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LCEHUDAlert.storyboard; sourceTree = "<group>"; };
-		B1F4016F24FD83C00002E3FA /* dual_loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dual_loading.gif; sourceTree = "<group>"; };
-		B1F4017024FD83C00002E3FA /* HUDAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUDAlertController.swift; sourceTree = "<group>"; };
+		B13C797224FD99E200E47029 /* HUDAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDAlertController.swift; sourceTree = "<group>"; };
+		B13C797424FE83B300E47029 /* HUDAlertController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HUDAlertController.storyboard; sourceTree = "<group>"; };
 		B2D2E9D3302375CE92AF8B772304D134 /* AutocompleteTableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AutocompleteTableView.swift; path = Sources/Plugins/AutocompleteManager/Views/AutocompleteTableView.swift; sourceTree = "<group>"; };
 		B577247086A261A965B0C3D872C3BFEE /* NSNotification+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSNotification+Extensions.swift"; path = "Sources/Extensions/NSNotification+Extensions.swift"; sourceTree = "<group>"; };
 		B5FE61B5318E2710A060845F27EA92A8 /* LCEssentials+Formatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Formatter.swift"; sourceTree = "<group>"; };
@@ -375,7 +371,7 @@
 		39FEFD921B455246900097D8DA08585C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B1F4016B24FD83C00002E3FA /* HUDAlert */,
+				B13C796E24FD99AF00E47029 /* HUDAlert */,
 				F7F4EAAABD521954213030BBA1E3C061 /* ImagePicker */,
 				05E3420B1792B7902BE6271130179CAB /* ImageZoom */,
 				814BC1277E949238354097D750B0E2BA /* Notifications */,
@@ -403,6 +399,7 @@
 		47CAE2DC30F412E0057AEDEF41F007E8 /* LCEssentials */ = {
 			isa = PBXGroup;
 			children = (
+				B13C797024FD99BC00E47029 /* HUDAlert */,
 				4C1ACF247ACBF9CF68FA8667489ABA86 /* Classes */,
 				31BC8E33A940AB9B05256EA00D6248F4 /* ImagePicker */,
 				3DF697D3F697D5A98F9E465C27809871 /* ImageZoom */,
@@ -604,32 +601,38 @@
 			path = "Target Support Files/Pods-LCEssentialsExample";
 			sourceTree = "<group>";
 		};
+		B13C796E24FD99AF00E47029 /* HUDAlert */ = {
+			isa = PBXGroup;
+			children = (
+				B13C796F24FD99AF00E47029 /* Storyboard */,
+			);
+			name = HUDAlert;
+			path = Sources/LCEssentials/HUDAlert;
+			sourceTree = "<group>";
+		};
+		B13C796F24FD99AF00E47029 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				B13C797424FE83B300E47029 /* HUDAlertController.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		B13C797024FD99BC00E47029 /* HUDAlert */ = {
+			isa = PBXGroup;
+			children = (
+				B13C797224FD99E200E47029 /* HUDAlertController.swift */,
+			);
+			name = HUDAlert;
+			path = Sources/LCEssentials/HUDAlert;
+			sourceTree = "<group>";
+		};
 		B13F5DF912F3948F3D177014B4A30197 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				BCB9CF79EA7896518F000F4A0A21B4FF /* InputBarAccessoryView */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		B1F4016B24FD83C00002E3FA /* HUDAlert */ = {
-			isa = PBXGroup;
-			children = (
-				B1F4016C24FD83C00002E3FA /* Storyboard */,
-				B1F4017024FD83C00002E3FA /* HUDAlertController.swift */,
-			);
-			name = HUDAlert;
-			path = Sources/LCEssentials/HUDAlert;
-			sourceTree = "<group>";
-		};
-		B1F4016C24FD83C00002E3FA /* Storyboard */ = {
-			isa = PBXGroup;
-			children = (
-				B1F4016D24FD83C00002E3FA /* loading.gif */,
-				B1F4016E24FD83C00002E3FA /* LCEHUDAlert.storyboard */,
-				B1F4016F24FD83C00002E3FA /* dual_loading.gif */,
-			);
-			path = Storyboard;
 			sourceTree = "<group>";
 		};
 		BC6376271D9DB329AEEA8A9D7F00EDCE /* Products */ = {
@@ -814,13 +817,11 @@
 			files = (
 				05CB9D4FAC1A8219B425E27677033B8E /* alert.png in Resources */,
 				5E40C0747AB771BA30AD4B15AFBEC928 /* alert@2x.png in Resources */,
-				B1F4017224FD83C00002E3FA /* LCEHUDAlert.storyboard in Resources */,
+				B13C797524FE83B300E47029 /* HUDAlertController.storyboard in Resources */,
 				6515F0DFCB4B6AE1CA737A39F3B2C78D /* alert@3x.png in Resources */,
 				8B70B7D165901F69BA4FC13B7757E081 /* ImagePickerController.storyboard in Resources */,
-				B1F4017324FD83C00002E3FA /* dual_loading.gif in Resources */,
 				841E06C3326332C939886D7972AFC600 /* ImageZoomController.storyboard in Resources */,
 				DD7209F14AF5599993C9B421D47EE658 /* LCEMessages.storyboard in Resources */,
-				B1F4017124FD83C00002E3FA /* loading.gif in Resources */,
 				9AF59548652E26505EF0503663031419 /* LCENotificationRunTime.storyboard in Resources */,
 				A0562150A2309FD788520237075E28A8 /* PickerViews.storyboard in Resources */,
 			);
@@ -859,7 +860,7 @@
 				96623A7EACB1868A74523FD32828F237 /* ImagePickerController.swift in Sources */,
 				E06B2420981F05E426BF33759A83B0CF /* ImageZoom.swift in Sources */,
 				70D246F1646C511B727B1D99CBA93E11 /* LCDesignables.swift in Sources */,
-				B1F4017424FD83C00002E3FA /* HUDAlertController.swift in Sources */,
+				B13C797324FD99E200E47029 /* HUDAlertController.swift in Sources */,
 				CD23EFF7E08CE39435B2673F3BEE3471 /* LCEffx.swift in Sources */,
 				FB9A6003B86A1425EC08D16E737A773B /* LCEMessages.swift in Sources */,
 				217510111574D51866153D2E9DFE6C26 /* LCENotificationRunTime.swift in Sources */,
