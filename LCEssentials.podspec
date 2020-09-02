@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'LCEssentials'
-  s.version          = '0.5.7'
+  s.version          = '0.5.8'
   s.summary          = 'This is a repository of essential scripts written in Swift for Loverde Co.'
  
   s.description      = <<-DESC
@@ -40,20 +40,20 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
   end
 
   # LCEImageZoom Extensions
-  s.subspec 'ImagesZoom' do |sp|
+  s.subspec 'ImageZoom' do |sp|
     sp.source_files  = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/ImageZoom/*.{swift}'
-    sp.ios.resources = ['Sources/LCEssentials/ImageZoom/Storyboards/*.{storyboard}']
+    sp.ios.resources = ['Sources/LCEssentials/ImageZoom/Storyboard/*.{storyboard}']
   end
 
   # LCEImagePicker Extensions
   s.subspec 'ImagePicker' do |sp|
     sp.source_files  = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/ImagePicker/*.{swift}'
-    sp.ios.resources = ['Sources/LCEssentials/ImagePicker/Storyboards/*.{storyboard}']
+    sp.ios.resources = ['Sources/LCEssentials/ImagePicker/Storyboard/*.{storyboard}']
   end
 
   # LCEHUDAlert Extensions
   s.subspec 'HUDAlert' do |sp|
     sp.source_files  = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/HUDAlert/*.{swift}'
-    sp.ios.resources = ['Sources/LCEssentials/HUDAlert/Storyboards/*.{storyboard}']
+    sp.ios.resources = ['Sources/LCEssentials/HUDAlert/Storyboard/*.{storyboard}']
   end
 end

@@ -43,7 +43,7 @@ import LCEssentials
 #### Swift Package  Manager (SPM)
 ``` swift
 dependencies: [
-    .package(url: "https://github.com/loverde-co/LCEssentials.git", .upToNextMajor(from: "0.5.0"))
+    .package(url: "https://github.com/loverde-co/LCEssentials.git", .upToNextMajor(from: "0.5.8"))
 ]
 ```
 
@@ -78,8 +78,9 @@ self.navigationController?.popViewControllerWithHandler {
 ```
 * See the custom [PickerViewController](PickerViewController.md) 
 * See the custom [DatePickerViewController](DatePickerViewController.md) 
-* See the custom [ImageZoomController](ImageZoomController.md) ( Disabled separated installation - for now ) 
+* See the custom [ImageZoomController](ImageZoomController.md) 
 * See the custom [NotificationsController](NotificationsController.md) 
+* See the custom [HUDAlert](HUDAlert.md) 
 
 * If you whant **ONLY** LCEssentials without this others controllers above, just add this to your podfile
 

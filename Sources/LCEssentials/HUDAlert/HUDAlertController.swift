@@ -19,9 +19,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
  
-
+import Foundation
 import UIKit
 
+#if os(iOS) || os(macOS)
 @objc public protocol HUDAlertControllerDelegate {
     @objc optional func alert(didOpen alert: HUDAlertController)
     @objc optional func alert(didClose alert: HUDAlertController)
@@ -246,3 +247,4 @@ public class HUDAlertController: UIViewController {
     }
     
 }
+#endif
