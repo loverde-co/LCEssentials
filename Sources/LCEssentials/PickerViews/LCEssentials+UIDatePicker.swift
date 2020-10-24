@@ -87,6 +87,9 @@
          datePicker.datePickerMode = setDatePickerMode
          datePicker.maximumDate = maximumDate
          datePicker.minimumDate = minimumDate
+        if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        }
          
          if let currDate = setSelectedDate {
              let dateFormatter = DateFormatter()
@@ -113,15 +116,15 @@
              controller = delegate as? UIViewController
              //controller.modalPresentationStyle = .overCurrentContext
              controller.present(self, animated: true, completion: nil)
-             LCEssentials.backgroundThread(delay: 0.3) {
-                 UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear],
-                                animations: {
-                                 self.viewPicker.center.y -= self.viewPicker.bounds.height
-                                 self.viewPicker.layoutIfNeeded()
-                 }, completion: { (completed) in
-                     self.isHidden = false
-                 })
-             }
+            LCEssentials.backgroundThread(delay: 0.3, completion:  {
+                UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear],
+                   animations: {
+                        self.viewPicker.center.y -= self.viewPicker.bounds.height
+                        self.viewPicker.layoutIfNeeded()
+                   }, completion: { (completed) in
+                        self.isHidden = false
+                   })
+            })
          }else{
              fatalError("Ops! Missing delegate!")
          }

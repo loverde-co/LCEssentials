@@ -136,15 +136,15 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
             controller = delegate as? UIViewController
             //controller.modalPresentationStyle = .overCurrentContext
             controller.present(self, animated: true, completion: nil)
-            LCEssentials.backgroundThread(delay: 0.3) {
+            LCEssentials.backgroundThread(delay: 0.3, completion:  {
                 UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear],
-                               animations: {
-                                self.viewPicker.center.y -= self.viewPicker.bounds.height
-                                self.viewPicker.layoutIfNeeded()
-                }, completion: { (completed) in
-                    self.isHidden = false
-                })
-            }
+                   animations: {
+                        self.viewPicker.center.y -= self.viewPicker.bounds.height
+                        self.viewPicker.layoutIfNeeded()
+                   }, completion: { (completed) in
+                        self.isHidden = false
+                   })
+            })
         }else{
             fatalError("Ops! Missing delegate!")
         }

@@ -28,6 +28,20 @@ import QuartzCore
 
 public extension UIViewController {
     
+    var isModal: Bool {
+        if let index = navigationController?.viewControllers.firstIndex(of: self), index > 0 {
+            return false
+        } else if presentingViewController != nil {
+            return true
+        } else if navigationController?.presentingViewController?.presentedViewController == navigationController {
+            return true
+        } else if tabBarController?.presentingViewController is UITabBarController {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     @objc func dismissSystemKeyboard() {
         view.endEditing(true)
     }
@@ -52,12 +66,40 @@ public extension UIViewController {
         return controller
     }
     
+    static func instatiate<T: UIViewController>(nibName: String, bundle: Bundle? = nil) -> T {
+        let controller = T(nibName: nibName, bundle: bundle)
+        controller.awakeFromNib()
+        controller.view.updateConstraints()
+        controller.view.layoutIfNeeded()
+        return controller
+    }
+    
     func present(viewControllerToPresent: UIViewController, completion: @escaping ()->()) {
         CATransaction.begin()
         self.present(viewControllerToPresent, animated: true) {
             CATransaction.setCompletionBlock(completion)
         }
         CATransaction.commit()
+    }
+    
+    func closeController(jumpToController: UIViewController? = nil, completion: @escaping ()->()){
+        if self.isModal {
+            self.dismiss(animated: true) {
+                completion()
+            }
+            return
+        }
+        guard let jump = jumpToController else {
+            self.navigationController?.popViewControllerWithHandler {
+                completion()
+            }
+            return
+        }
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        self.navigationController?.popToViewController(jump, animated: true)
+        CATransaction.commit()
+        
     }
 }
 #endif

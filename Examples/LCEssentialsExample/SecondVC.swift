@@ -49,6 +49,11 @@ class SecondVC: UIViewController {
         printLog(title: "MD5", msg: toHex)
         self.lblMD5.text = "Original message: \(md5String)\n\nMD5 output: "+toHex
     }
+    @IBAction func close(){
+        self.closeController{
+            
+        }
+    }
 }
 
 extension SecondVC: LCESingletonDelegate {

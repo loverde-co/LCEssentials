@@ -432,7 +432,6 @@ public extension LCEssentials {
                 completion?()
             }
         }
-        
     }
     
     #if os(iOS) || os(macOS)

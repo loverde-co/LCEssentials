@@ -208,7 +208,7 @@ public class HUDAlertController: UIViewController {
         UIView.animate(withDuration: 0.1, delay: 0.0, options: [.allowUserInteraction, .allowAnimatedContent, .curveEaseOut], animations: {
             self.view.alpha = 1.0
         }) { (completed) in
-            self.performSpringAnimationIn(for: self.view) {
+            self.performSpringAnimationIn(for: self.containerView) {
                 completion()
             }
         }
@@ -216,7 +216,7 @@ public class HUDAlertController: UIViewController {
     
     private func animateOut(completion: @escaping() -> Void) {
         
-        self.performSpringAnimationOut(for: self.view) {
+        self.performSpringAnimationOut(for: self.containerView) {
             UIView.animate(withDuration: 0.1, delay: 0.0, options: [.allowUserInteraction, .allowAnimatedContent, .curveEaseIn], animations: {
                 self.view.alpha = 0.0
             }) { (completed) in

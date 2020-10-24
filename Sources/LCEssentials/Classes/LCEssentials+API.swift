@@ -160,11 +160,11 @@ public struct API {
                         // - Case user want to persist connection
                         if persistConnection {
                             printError(title: "INTERNET CONNECTION ERROR", msg: "WILL PERSIST")
-                            LCEssentials.backgroundThread(delay: persistConnectionDelay) {
+                            LCEssentials.backgroundThread(delay: persistConnectionDelay, completion:  {
                                 self.request(params, method, jsonEncoding: jsonEncoding, debug: debug, persistConnection: persistConnection) { (result) in
                                     completion(result)
                                 }
-                            }
+                            })
                         }else{
                             if let error = error {
                                 completion(Result.failure(error))
