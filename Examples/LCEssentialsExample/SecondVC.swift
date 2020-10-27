@@ -37,8 +37,9 @@ class SecondVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        delegate?.singleton?(get: "Object", withData: "Sending Back Data")
+        LCEssentials.delay(milliseconds: 3) {
+            self.delegate?.singleton?(get: "Object", withData: "Sending Back Data")
+        }
     }
 
     func setupView(){
