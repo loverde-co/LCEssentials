@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4BD-oD-Kmp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4BD-oD-Kmp">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,14 +21,14 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UvT-je-JOT">
-                                <rect key="frame" x="40" y="351.5" width="334" height="193"/>
+                                <rect key="frame" x="40" y="356.5" width="334" height="183"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wY3-UE-fm3" customClass="RotatingCircularGradientProgressBar" customModule="LCEssentials" customModuleProvider="target">
-                                        <rect key="frame" x="142" y="10" width="50" height="50"/>
+                                        <rect key="frame" x="147" y="10" width="40" height="40"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="Jzg-Qf-lY0"/>
-                                            <constraint firstAttribute="height" constant="50" id="PIl-Ep-g5O"/>
+                                            <constraint firstAttribute="width" constant="40" id="Jzg-Qf-lY0"/>
+                                            <constraint firstAttribute="height" constant="40" id="PIl-Ep-g5O"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="color">
@@ -43,19 +43,19 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHE-U2-VDO">
-                                        <rect key="frame" x="10" y="68" width="314" height="26.5"/>
+                                        <rect key="frame" x="10" y="58" width="314" height="26.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Hv-jO-3ln">
-                                        <rect key="frame" x="10" y="102.5" width="314" height="19.5"/>
+                                        <rect key="frame" x="10" y="92.5" width="314" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="s3C-SD-qSs">
-                                        <rect key="frame" x="10" y="130" width="314" height="55"/>
+                                        <rect key="frame" x="10" y="120" width="314" height="55"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="55" id="doh-jT-NjG"/>
@@ -79,6 +79,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="ALh-pI-xQm"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ALh-pI-xQm" firstAttribute="trailing" secondItem="UvT-je-JOT" secondAttribute="trailing" constant="40" id="22M-qr-gEI"/>
@@ -91,7 +92,6 @@
                             <constraint firstItem="UvT-je-JOT" firstAttribute="centerY" secondItem="C1d-n6-RcI" secondAttribute="centerY" id="x54-L7-k5Q"/>
                             <constraint firstItem="by1-6i-O3w" firstAttribute="top" secondItem="C1d-n6-RcI" secondAttribute="top" id="zv9-ZY-4q4"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="ALh-pI-xQm"/>
                     </view>
                     <connections>
                         <outlet property="containerView" destination="UvT-je-JOT" id="jXF-CL-jd4"/>
