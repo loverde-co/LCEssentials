@@ -56,8 +56,8 @@ public extension UIViewController {
         return String(describing: self)
     }
     
-    static func instantiate<T: UIViewController>(storyBoard: String, identifier: String? = nil) -> T {
-        let storyboard = UIStoryboard(name: storyBoard, bundle: Bundle(for: T.self))
+    static func instantiate<T: UIViewController>(storyBoard: String, identifier: String? = nil, bundle: Bundle? = Bundle(for: T.self)) -> T {
+        let storyboard = UIStoryboard(name: storyBoard, bundle: bundle)
         var identf = T.identifier
         if let id = identifier {
             identf = id

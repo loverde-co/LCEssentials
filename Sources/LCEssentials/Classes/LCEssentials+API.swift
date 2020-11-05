@@ -39,7 +39,7 @@ public struct API {
     static let defaultError = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN, code: LCEssentials.DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: LCEssentials.DEFAULT_ERROR_MSG ])
     public static var persistConnectionDelay: Double = 3
     public static var headers: [String: String]!
-    public static var defaultParams: [String:Any]!
+    public static var defaultParams: [String:Any] = [String: Any]()
     public static var defaultHeaders: [String: String] = ["Accept": "application/json", "Content-Type": "application/json; charset=UTF-8", "Accept-Encoding": "gzip"]
     public static var url: String = ""
     
@@ -58,13 +58,13 @@ public struct API {
                 var request = URLRequest(url: urlReq, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 20)
                 if method == .post {
                     var newParams = defaultParams
-                    newParams! += params
+                    newParams += params
                     if jsonEncoding {
-                        let requestObject = try JSONSerialization.data(withJSONObject: newParams!)
+                        let requestObject = try JSONSerialization.data(withJSONObject: newParams)
                         request.httpBody = requestObject
                     }else{
                         var bodyComponents = URLComponents()
-                        newParams?.forEach({ (key, value) in
+                        newParams.forEach({ (key, value) in
                             bodyComponents.queryItems?.append(URLQueryItem(name: key, value: value as? String))
                         })
                         request.httpBody = bodyComponents.query?.data(using: .utf8)
