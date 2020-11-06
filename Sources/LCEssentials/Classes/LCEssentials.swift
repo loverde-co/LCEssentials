@@ -444,6 +444,20 @@ public extension LCEssentials {
             completion?()
         })
     }
+    
+    static func setNewRootViewController(to viewController: UIViewController, duration: TimeInterval = 0.6, options: UIView.AnimationOptions = .transitionCrossDissolve, completion: (() -> Void)? = nil){
+        let snapshot = (UIApplication.shared.keyWindow?.snapshotView(afterScreenUpdates: true))!
+        viewController.view.addSubview(snapshot)
+
+        UIApplication.shared.keyWindow?.rootViewController = viewController
+        UIView.transition(with: snapshot, duration: duration, options: options, animations: {
+            snapshot.layer.opacity = 0
+        },
+        completion: { status in
+            snapshot.removeFromSuperview()
+            completion?()
+        })
+    }
     #endif
     
     /// - LoverdeCo: Delay function or closure call.
