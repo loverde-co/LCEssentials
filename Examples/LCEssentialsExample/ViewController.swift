@@ -191,6 +191,7 @@ extension ViewController {
     func openAlert(){
         let controller: HUDAlertController = HUDAlertController.instantiate()
         controller.isLoadingAlert = true
+        controller.setFontTitle(name: "Avenir-Heavy", size: 12, color: .blue)
         controller.setAlert(with: "Loading...")
         controller.showAlert()
         LCEssentials.backgroundThread(delay: 8, completion:  {
@@ -210,7 +211,8 @@ extension ViewController {
             let actionGreen = HUDAlertAction("Green Style", .green) {
                 print("Green Style")
             }
-            controller.setAlert(with: "This is a complete alert", titleColor: .red, description: "With all type of buttons", options: [actionContinue, actionGrey, actionDestructive, actionGreen, actionCancel])
+            controller.setFontTitle(name: "Avenir-Heavy", size: 12, color: .red)
+            controller.setAlert(with: "This is a complete alert", description: "With all type of buttons", options: [actionContinue, actionGrey, actionDestructive, actionGreen, actionCancel])
             controller.showAlert()
         })
     }

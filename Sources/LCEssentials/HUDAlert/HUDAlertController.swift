@@ -91,7 +91,7 @@ public class HUDAlertController: UIViewController {
     private func setupView(){
     }
     
-    public func setAlert(with title: String, titleColor: UIColor = .black, description: String? = nil, viewController: UIViewController? = nil, options: [HUDAlertAction]? = nil){
+    public func setAlert(with title: String, description: String? = nil, viewController: UIViewController? = nil, options: [HUDAlertAction]? = nil){
         self.viewController = LCEssentials.getTopViewController()
         if let currentController = viewController {
             self.viewController = currentController
@@ -109,7 +109,6 @@ public class HUDAlertController: UIViewController {
         
         self.containerView.cornerRadius = 8
         self.lblTitle.text = title
-        self.lblTitle.textColor = titleColor
         if let desc = description {
             self.lblDescr.text = desc
         }else{
@@ -182,6 +181,16 @@ public class HUDAlertController: UIViewController {
         self.viewController.addChild(self)
         self.view.layoutSubviews()
         
+    }
+    
+    public func setFontTitle(name: String, size: CGFloat = 12, color: UIColor = .black){
+        lblTitle.font = UIFont(name: name, size: size)
+        lblTitle.textColor = color
+    }
+    
+    public func setFontDescription(name: String, size: CGFloat = 12, color: UIColor = .black){
+        lblDescr.font = UIFont(name: name, size: size)
+        lblDescr.textColor = color
     }
     
     public func showAlert(){
