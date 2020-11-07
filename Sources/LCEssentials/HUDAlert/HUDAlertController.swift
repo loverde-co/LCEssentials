@@ -63,6 +63,7 @@ public class HUDAlertController: UIViewController {
     private let redColor: UIColor = UIColor(hex: "a32a2e")
     private let blueColor: UIColor = UIColor(hex: "2a50a8")
     private let greyColor: UIColor = UIColor(hex: "a6a6a6")
+    private var viewController: UIViewController!
     
     @IBOutlet private var rotatinProgress: RotatingCircularGradientProgressBar!
     @IBOutlet private var imageHeight: NSLayoutConstraint!
@@ -90,94 +91,97 @@ public class HUDAlertController: UIViewController {
     private func setupView(){
     }
     
-    public func setAlert(with title: String, titleColor: UIColor = .black, description: String? = nil, options: [HUDAlertAction]? = nil){
-        if let controller = LCEssentials.getTopViewController() {
-            self.view.removeFromSuperview()
-            self.removeFromParent()
-            
-            if isLoadingAlert {
-                rotatinProgress.progress = 0.7
-                imageHeight.constant = 40
-            }else{
-                rotatinProgress.progress = 0
-                imageHeight.constant = 0
+    public func setAlert(with title: String, titleColor: UIColor = .black, description: String? = nil, viewController: UIViewController? = nil, options: [HUDAlertAction]? = nil){
+        self.viewController = LCEssentials.getTopViewController()
+        if let currentController = viewController {
+            self.viewController = currentController
+        }
+        self.view.removeFromSuperview()
+        self.removeFromParent()
+        
+        if isLoadingAlert {
+            rotatinProgress.progress = 0.7
+            imageHeight.constant = 40
+        }else{
+            rotatinProgress.progress = 0
+            imageHeight.constant = 0
+        }
+        
+        self.containerView.cornerRadius = 8
+        self.lblTitle.text = title
+        self.lblTitle.textColor = titleColor
+        if let desc = description {
+            self.lblDescr.text = desc
+        }else{
+            self.lblDescr.text = nil
+        }
+        self.actions.removeAll()
+        self.stackView.removeArrangedSubviews()
+        var internalTag: Int = 0
+        var totalHeight: CGFloat = 0.0
+        if let options = options {
+            for action in options {
+                totalHeight += 45.0
+                let button: UIButton = UIButton(type: .custom)
+                button.frame = CGRect(x: 0, y: 0, width: stackView.frame.width, height: 45)
+                button.tag = internalTag
+                internalTag += 1
+                button.isExclusiveTouch = true
+                button.isUserInteractionEnabled = true
+                button.addTarget(self, action: #selector(self.actionButton(sender:)), for: .touchUpInside)
+                
+                switch action.type {
+                case .cancel:
+                    button.cornerRadius = 5
+                    button.borderWidth = 1
+                    button.borderColor = blueColor
+                    button.backgroundColor = .white
+                    button.setTitleForAllStates(action.title)
+                    button.setTitleColor(blueColor, for: .normal)
+                    
+                case .destructive:
+                    button.cornerRadius = 5
+                    button.backgroundColor = redColor
+                    button.setTitleForAllStates(action.title)
+                    button.setTitleColor(.white, for: .normal)
+                    
+                case .normal:
+                    button.cornerRadius = 5
+                    button.backgroundColor = blueColor
+                    button.setTitleForAllStates(action.title)
+                    button.setTitleColor(.white, for: .normal)
+                    
+                case .discrete:
+                    button.cornerRadius = 5
+                    button.backgroundColor = greyColor
+                    button.setTitleForAllStates(action.title)
+                    button.setTitleColor(.white, for: .normal)
+                case .green:
+                    button.cornerRadius = 5
+                    button.backgroundColor = greenColor
+                    button.setTitleForAllStates(action.title)
+                    button.setTitleColor(.white, for: .normal)
+                }
+                self.actions.append(action)
+                self.stackView.addArrangedSubview(button)
+                self.stackView.spacing = 10
+                totalHeight += (CGFloat(self.actions.count - 1) * 10.0)
+                self.stackHeight.constant = totalHeight
+                self.stackView.isHidden = false
             }
-            
-            self.containerView.cornerRadius = 8
-            self.lblTitle.text = title
-            self.lblTitle.textColor = titleColor
-            if let desc = description {
-                self.lblDescr.text = desc
-            }else{
-                self.lblDescr.text = nil
-            }
+        }else{
             self.actions.removeAll()
             self.stackView.removeArrangedSubviews()
-            var internalTag: Int = 0
-            var totalHeight: CGFloat = 0.0
-            if let options = options {
-                for action in options {
-                    totalHeight += 45.0
-                    let button: UIButton = UIButton(type: .custom)
-                    button.frame = CGRect(x: 0, y: 0, width: stackView.frame.width, height: 45)
-                    button.tag = internalTag
-                    internalTag += 1
-                    button.isExclusiveTouch = true
-                    button.isUserInteractionEnabled = true
-                    button.addTarget(self, action: #selector(self.actionButton(sender:)), for: .touchUpInside)
-                    
-                    switch action.type {
-                    case .cancel:
-                        button.cornerRadius = 5
-                        button.borderWidth = 1
-                        button.borderColor = blueColor
-                        button.backgroundColor = .white
-                        button.setTitleForAllStates(action.title)
-                        button.setTitleColor(blueColor, for: .normal)
-                        
-                    case .destructive:
-                        button.cornerRadius = 5
-                        button.backgroundColor = redColor
-                        button.setTitleForAllStates(action.title)
-                        button.setTitleColor(.white, for: .normal)
-                        
-                    case .normal:
-                        button.cornerRadius = 5
-                        button.backgroundColor = blueColor
-                        button.setTitleForAllStates(action.title)
-                        button.setTitleColor(.white, for: .normal)
-                        
-                    case .discrete:
-                        button.cornerRadius = 5
-                        button.backgroundColor = greyColor
-                        button.setTitleForAllStates(action.title)
-                        button.setTitleColor(.white, for: .normal)
-                    case .green:
-                        button.cornerRadius = 5
-                        button.backgroundColor = greenColor
-                        button.setTitleForAllStates(action.title)
-                        button.setTitleColor(.white, for: .normal)
-                    }
-                    self.actions.append(action)
-                    self.stackView.addArrangedSubview(button)
-                    self.stackView.spacing = 10
-                    totalHeight += (CGFloat(self.actions.count - 1) * 10.0)
-                    self.stackHeight.constant = totalHeight
-                    self.stackView.isHidden = false
-                }
-            }else{
-                self.actions.removeAll()
-                self.stackView.removeArrangedSubviews()
-                self.stackView.spacing = 0
-                self.stackHeight.constant = 0
-                self.stackView.isHidden = true
-            }
-            
-            controller.view.addSubview(self.view)
-            controller.view.bringSubviewToFront(self.view)
-            controller.addChild(self)
-            self.view.layoutSubviews()
+            self.stackView.spacing = 0
+            self.stackHeight.constant = 0
+            self.stackView.isHidden = true
         }
+        
+        self.viewController.view.addSubview(self.view)
+        self.viewController.view.bringSubviewToFront(self.view)
+        self.viewController.addChild(self)
+        self.view.layoutSubviews()
+        
     }
     
     public func showAlert(){
