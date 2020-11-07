@@ -33,13 +33,18 @@ public extension UIView {
     static var className: String {
         return String(describing: self)
     }
+    @IBInspectable
+    var name: String? {
+        get{ return accessibilityLabel }
+        set{ accessibilityLabel = newValue }
+    }
     
-    static func instantiate(withNibName: String? = nil, owner: Any? = nil, options: [AnyHashable: Any]? = nil) -> [Any]? {
+    static func instantiate(withNibName: String? = nil, owner: Any? = nil, options: [UINib.OptionsKey : Any]? = nil) -> [Any]? {
         var nibName = self.className
         if let settedNibName = withNibName {
             nibName = settedNibName
         }
-        return Bundle.main.loadNibNamed(nibName, owner: owner, options: options as? [UINib.OptionsKey : Any])
+        return Bundle.main.loadNibNamed(nibName, owner: owner, options: options)
     }
     
     func addBorder(_ sides: [EnumBorderSide], color: UIColor, width: CGFloat) {

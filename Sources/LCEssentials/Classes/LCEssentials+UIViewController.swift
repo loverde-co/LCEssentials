@@ -42,8 +42,11 @@ public extension UIViewController {
         }
     }
     
-    @objc func dismissSystemKeyboard() {
-        view.endEditing(true)
+    @objc func dismissSystemKeyboard(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            self.view.endEditing(true)
+        }
+        sender.cancelsTouchesInView = false
     }
     
     static var identifier: String {

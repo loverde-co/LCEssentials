@@ -25,6 +25,7 @@ import Foundation
 import UIKit
 
 public extension UITextField {
+
     @IBInspectable
     var placeholderColor: UIColor {
         get {
