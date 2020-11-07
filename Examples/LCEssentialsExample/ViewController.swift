@@ -176,8 +176,8 @@ extension ViewController {
         controller.delegate = self
         self.delegate = controller
         self.delegate?.singleton?(set: "Object", withData: "Transfering Data")
-        self.navigationController?.pushViewController(controller, animated: true)
-        //self.present(controller, animated: true, completion: nil)
+        //self.navigationController?.pushViewController(controller, animated: true)
+        self.present(controller, animated: true, completion: nil)
     }
     
     //MARK: - Picker Controller

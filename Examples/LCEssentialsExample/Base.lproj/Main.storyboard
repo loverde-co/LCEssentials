@@ -3,7 +3,7 @@
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -168,31 +168,58 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G9Z-BU-b9i">
-                                <rect key="frame" x="20" y="319.33333333333331" width="374" height="60"/>
+                                <rect key="frame" x="20" y="369.33333333333331" width="374" height="60"/>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="BVw-OZ-EpC"/>
+                                </constraints>
+                                <state key="normal" title="Open Alert">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="openAlert" destination="EpT-Nn-0nh" eventType="touchUpInside" id="aaf-pP-7NF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lck-hC-KTH">
+                                <rect key="frame" x="20" y="449.33333333333331" width="374" height="60"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="YfT-Ic-oHa"/>
                                 </constraints>
                                 <state key="normal" title="Go Back">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="close" destination="EpT-Nn-0nh" eventType="touchUpInside" id="USG-0A-cMl"/>
+                                    <action selector="close" destination="EpT-Nn-0nh" eventType="touchUpInside" id="Rwr-GQ-K7h"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="28E-1a-9Mm">
+                                <rect key="frame" x="20" y="319.33333333333331" width="374" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Pne-Aw-VPP"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="XQi-fp-UxE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="28E-1a-9Mm" firstAttribute="leading" secondItem="XQi-fp-UxE" secondAttribute="leading" constant="20" id="0fz-G8-yEN"/>
                             <constraint firstItem="G9Z-BU-b9i" firstAttribute="leading" secondItem="XQi-fp-UxE" secondAttribute="leading" constant="20" id="4q2-YF-Tdl"/>
+                            <constraint firstItem="G9Z-BU-b9i" firstAttribute="top" secondItem="28E-1a-9Mm" secondAttribute="bottom" constant="20" id="9Ga-sR-eOi"/>
                             <constraint firstItem="XQi-fp-UxE" firstAttribute="trailing" secondItem="G9Z-BU-b9i" secondAttribute="trailing" constant="20" id="AIl-WV-XnQ"/>
                             <constraint firstItem="SW9-0R-uHv" firstAttribute="top" secondItem="BAz-Po-yHV" secondAttribute="bottom" constant="30" id="CXK-aW-ZeC"/>
-                            <constraint firstItem="G9Z-BU-b9i" firstAttribute="top" secondItem="K3C-lr-qoz" secondAttribute="bottom" constant="20" id="D0i-xu-raR"/>
+                            <constraint firstItem="lck-hC-KTH" firstAttribute="top" secondItem="G9Z-BU-b9i" secondAttribute="bottom" constant="20" id="FN9-hm-JCV"/>
                             <constraint firstItem="XQi-fp-UxE" firstAttribute="trailing" secondItem="K3C-lr-qoz" secondAttribute="trailing" constant="50" id="HVa-IP-laT"/>
                             <constraint firstItem="K3C-lr-qoz" firstAttribute="leading" secondItem="XQi-fp-UxE" secondAttribute="leading" constant="50" id="LfJ-V8-qCZ"/>
+                            <constraint firstItem="28E-1a-9Mm" firstAttribute="top" secondItem="K3C-lr-qoz" secondAttribute="bottom" constant="20" id="Mol-yI-I9Y"/>
+                            <constraint firstItem="XQi-fp-UxE" firstAttribute="trailing" secondItem="28E-1a-9Mm" secondAttribute="trailing" constant="20" id="SKP-aU-f2i"/>
+                            <constraint firstItem="XQi-fp-UxE" firstAttribute="trailing" secondItem="lck-hC-KTH" secondAttribute="trailing" constant="20" id="e9X-4a-gWn"/>
                             <constraint firstItem="BAz-Po-yHV" firstAttribute="top" secondItem="XQi-fp-UxE" secondAttribute="top" constant="10" id="ecb-QY-QKD"/>
                             <constraint firstItem="XQi-fp-UxE" firstAttribute="trailing" secondItem="BAz-Po-yHV" secondAttribute="trailing" constant="20" id="fvo-az-Ko1"/>
                             <constraint firstItem="K3C-lr-qoz" firstAttribute="top" secondItem="SW9-0R-uHv" secondAttribute="bottom" constant="40" id="oEF-R6-9gC"/>
+                            <constraint firstItem="lck-hC-KTH" firstAttribute="leading" secondItem="XQi-fp-UxE" secondAttribute="leading" constant="20" id="opf-mY-RKp"/>
                             <constraint firstItem="SW9-0R-uHv" firstAttribute="leading" secondItem="XQi-fp-UxE" secondAttribute="leading" constant="20" id="rlz-0g-avN"/>
                             <constraint firstItem="BAz-Po-yHV" firstAttribute="leading" secondItem="XQi-fp-UxE" secondAttribute="leading" constant="20" id="xZV-aC-apk"/>
                             <constraint firstItem="XQi-fp-UxE" firstAttribute="trailing" secondItem="SW9-0R-uHv" secondAttribute="trailing" constant="20" id="yMR-iW-O7P"/>
@@ -201,11 +228,12 @@
                     <tabBarItem key="tabBarItem" title="Item" id="cus-hV-90u"/>
                     <connections>
                         <outlet property="lblMD5" destination="SW9-0R-uHv" id="9AU-oa-pV0"/>
+                        <outlet property="txtField" destination="28E-1a-9Mm" id="9Rv-qm-dqB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4rq-Qx-FvA" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1604" y="139"/>
+            <point key="canvasLocation" x="1602.8985507246377" y="138.61607142857142"/>
         </scene>
     </scenes>
     <designables>

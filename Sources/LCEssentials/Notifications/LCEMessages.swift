@@ -71,6 +71,7 @@ public class LCEMessages: UIViewController {
         set{
         }
     }
+    private var viewController: UIViewController!
     public var delegate: LCEMessagesDelegate?
     public var setBackgroundColor: UIColor = UIColor.cyan
     public var loadingColor: UIColor = UIColor.white
@@ -111,10 +112,13 @@ public class LCEMessages: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    public func show(message withBody: String? = nil, withImage: UIImage? = nil, showLoading: Bool = false){
+    public func show(message withBody: String? = nil, withImage: UIImage? = nil, showLoading: Bool = false, viewController: UIViewController? = nil){
         if let _ = self.delegate {
-            let controller = LCEssentials.getTopViewController(aboveBars: true)
-            if let tabs = controller?.tabBarController, !tabs.tabBar.isHidden {
+            self.viewController = LCEssentials.getTopViewController(aboveBars: true)
+            if let currentController = viewController {
+                self.viewController = currentController
+            }
+            if let tabs = self.viewController?.tabBarController, !tabs.tabBar.isHidden {
                 
             }
             if setDirection == .top && LCEssentials.X_DEVICES {
@@ -122,10 +126,10 @@ public class LCEMessages: UIViewController {
                 self.labelBottomConstraints.constant = 25
             }
             //self.view.removeFromSuperview()
-            self.view.frame = CGRect(x: 0, y: setDirection == .top ? -self.setHeight : (controller?.view.bounds.height ?? 0 + self.setHeight) , width: setWidth, height: setHeight + ( LCEssentials.X_DEVICES ? 40 : 0 ) )
+            self.view.frame = CGRect(x: 0, y: setDirection == .top ? -self.setHeight : (self.viewController?.view.bounds.height ?? 0 + self.setHeight) , width: setWidth, height: setHeight + ( LCEssentials.X_DEVICES ? 40 : 0 ) )
             self.view.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
             self.view.autoresizesSubviews = true
-            controller?.view.addSubview(self.view)
+            self.viewController?.view.addSubview(self.view)
             self.view.layer.zPosition = 1
             self.view.layoutIfNeeded()
         }else{
@@ -264,8 +268,8 @@ public class LCEMessages: UIViewController {
         let info = notification.userInfo!
         let keyboardSize = (info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
         if self.setDirection == .bottom {
-            self.view.frame.origin = CGPoint(x: 0, y: (LCEssentials.getTopViewController(aboveBars: true)!.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) ))
-            originY = (LCEssentials.getTopViewController(aboveBars: true)!.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) )
+            self.view.frame.origin = CGPoint(x: 0, y: (self.viewController!.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) ))
+            originY = (self.viewController!.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) )
         }
     }
     

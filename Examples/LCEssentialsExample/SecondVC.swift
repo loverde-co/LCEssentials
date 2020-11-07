@@ -26,6 +26,7 @@ import LCEssentials
 class SecondVC: UIViewController {
 
     @IBOutlet weak var lblMD5: UILabel!
+    @IBOutlet weak var txtField: UITextField!
     var md5String = "MD5 native encode"
     
     var delegate: LCESingletonDelegate? = nil
@@ -55,10 +56,32 @@ class SecondVC: UIViewController {
             
         }
     }
+    
+    @IBAction func openAlert(){
+        let message = LCEMessages.instantiate()
+        message.viewWillAppear(true)
+        message.addObserverForKeyboard()
+        message.delegate = self
+        message.setDirection = .bottom
+        message.setDuration = .fiveSecs
+        message.tapToDismiss = true
+        message.setBackgroundColor = .darkGray
+        message.show(message: "Testing message TOP with loading", withImage: nil, showLoading: true, viewController: self)
+        LCEssentials.backgroundThread(delay: 1, completion: {
+            self.txtField.becomeFirstResponder()
+        })
+        LCEssentials.backgroundThread(delay: 5, completion: {
+            self.view.endEditing(true)
+        })
+    }
 }
 
 extension SecondVC: LCESingletonDelegate {
     func singleton(set object: Any, withData: Any) {
         printLog(title: "SEC VIEW", msg: "SET \(object) - \(withData)")
     }
+}
+
+extension SecondVC: LCEMessagesDelegate {
+    
 }
