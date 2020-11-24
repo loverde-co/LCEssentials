@@ -392,17 +392,18 @@ public extension LCEssentials {
     /// - Parameters:
     ///   - message: String with message you whant to send
     ///   - url: String with url you want to share
-    static func shareApp(message:String = "", url: String){
+    static func shareApp(message:String = "", url: String = ""){
         let textToShare = message
         let root = UIApplication.shared.keyWindow?.rootViewController
+        var objectsToShare = [textToShare] as [Any]
         if let myWebsite = NSURL(string: url) {
-            let objectsToShare = [textToShare, myWebsite] as [Any]
-            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-            
-            activityVC.popoverPresentationController?.sourceView = root?.view
-            root?.modalPresentationStyle = .fullScreen
-            root?.present(activityVC, animated: true, completion: nil)
+            objectsToShare.append(myWebsite)
         }
+        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        
+        activityVC.popoverPresentationController?.sourceView = root?.view
+        root?.modalPresentationStyle = .fullScreen
+        root?.present(activityVC, animated: true, completion: nil)
     }
     /// - LoverdeCo: Make a call
     ///

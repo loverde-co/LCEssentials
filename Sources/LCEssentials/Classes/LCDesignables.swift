@@ -637,7 +637,7 @@ class RotatingCircularGradientProgressBar: UIView {
     @IBInspectable var gradientColor: UIColor = .white {
         didSet { setNeedsDisplay() }
     }
-    @IBInspectable var ringWidth: CGFloat = 5
+    @IBInspectable var ringWidth: CGFloat = 2
 
     var progress: CGFloat = 0 {
         didSet { setNeedsDisplay() }

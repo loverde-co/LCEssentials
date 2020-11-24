@@ -100,7 +100,7 @@ public class HUDAlertController: UIViewController {
         self.removeFromParent()
         
         if isLoadingAlert {
-            rotatinProgress.progress = 0.7
+            rotatinProgress.progress = 0.8
             imageHeight.constant = 40
         }else{
             rotatinProgress.progress = 0
