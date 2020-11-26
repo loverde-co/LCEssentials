@@ -94,68 +94,60 @@ public struct API {
                     // - Debug LOG
                     if debug {
                        ///
-                        do {
-                            print("\n<=========================  INTERNET CONNECTION - START =========================>")
-                            printLog(title: "DATE AND TIME", msg: Date().debugDescription)
-                            printLog(title: "FUNCTION", msg: function)
-                            //printLog(title: "FILE", msg: LCEssentials.sourceFileName(filePath: file)+" LINE: \(line) COLUMN: \(column)")
-                            printLog(title: "METHOD", msg: method.rawValue)
-                            printLog(title: "REQUEST", msg: String(describing: request))
-                            printLog(title: "HEADERS", msg: request.allHTTPHeaderFields!.debugDescription)
-                            
-                            //
-                            if let data = request.httpBody {
-                                printLog(title: "PARAMETERS", msg: String(describing: try JSONSerialization.jsonObject(with: data, options: .allowFragments)))
-                            } else {
-                                printLog(title: "PARAMETERS", msg: "-")
-                            }
-                            //
-                            printLog(title: "STATUS CODE", msg: String(describing: code))
-                            //
-                            if let data2 = data {
-                                printLog(title: "RESPONSE", msg: String(describing: try JSONSerialization.jsonObject(with: data2, options: .allowFragments)))
-                            } else {
-                                printLog(title: "RESPONSE", msg: "-")
-                            }
-                            //
-                            if let error = error {
-                                if error.statusCode == NSURLErrorTimedOut {
-                                    printError(title: "RESPONSE ERROR TIMEOUT", msg: "DESCRICAO: \(error.localizedDescription)")
-                                }else
-                                if error.statusCode == NSURLErrorNotConnectedToInternet {
-                                    printError(title: "RESPONSE ERROR NO INTERNET", msg: "DESCRICAO: \(error.localizedDescription)")
-                                }else
-                                if error.statusCode == NSURLErrorNetworkConnectionLost {
-                                    printError(title: "RESPONSE ERROR CONNECTION LOST", msg: "DESCRICAO: \(error.localizedDescription)")
-                                }else
-                                if error.statusCode == NSURLErrorCancelledReasonUserForceQuitApplication {
-                                    printError(title: "RESPONSE ERROR APP QUIT", msg: "DESCRICAO: \(error.localizedDescription)")
-                                }else
-                                if error.statusCode == NSURLErrorCancelledReasonBackgroundUpdatesDisabled {
-                                    printError(title: "RESPONSE ERROR BG DISABLED", msg: "DESCRICAO: \(error.localizedDescription)")
-                                }else
-                                if error.statusCode == NSURLErrorBackgroundSessionWasDisconnected {
-                                    printError(title: "RESPONSE ERROR BG SESSION DISCONNECTED", msg: "DESCRICAO: \(error.localizedDescription)")
-                                }else{
-                                    printError(title: "ERROR GENERAL", msg: error.localizedDescription)
-                                }
-                            }else if let data = data, code != 200 {
-                                // - Check if is JSON result
-                                if let jsonString = String(data: data, encoding: .utf8) {
-                                    printError(title: "JSON STATUS CODE \(code)", msg: jsonString)
-                                }else{
-                                    printError(title: "DATA STATUS CODE \(code)", msg: data.debugDescription)
-                                }
-                            }
-                            
-                            //
-                            print("<=========================  INTERNET CONNECTION - END =========================>")
-                        } catch {
-                            printError(title: "INTERNET CONNECTION ERROR", msg: "DESCRICAO: \(error.localizedDescription)")
-                            print("<=========================  INTERNET CONNECTION - END =========================>")
-                            //completion(Result.failure(error))
+                        print("\n<=========================  INTERNET CONNECTION - START =========================>")
+                        printLog(title: "DATE AND TIME", msg: Date().debugDescription)
+                        printLog(title: "FUNCTION", msg: function)
+                        //printLog(title: "FILE", msg: LCEssentials.sourceFileName(filePath: file)+" LINE: \(line) COLUMN: \(column)")
+                        printLog(title: "METHOD", msg: method.rawValue)
+                        printLog(title: "REQUEST", msg: String(describing: request))
+                        printLog(title: "HEADERS", msg: request.allHTTPHeaderFields!.debugDescription)
+                        
+                        //
+                        if let data = request.httpBody, let jsonString = String(data: data, encoding: .utf8) {
+                            printLog(title: "PARAMETERS", msg: jsonString)
+                        } else {
+                            printLog(title: "PARAMETERS", msg: "-")
                         }
-                        ///
+                        //
+                        printLog(title: "STATUS CODE", msg: String(describing: code))
+                        //
+                        if let data2 = data, let jsonString = String(data: data2, encoding: .utf8) {
+                            printLog(title: "RESPONSE", msg: jsonString)
+                        } else {
+                            printLog(title: "RESPONSE", msg: "-")
+                        }
+                        //
+                        if let error = error {
+                            if error.statusCode == NSURLErrorTimedOut {
+                                printError(title: "RESPONSE ERROR TIMEOUT", msg: "DESCRICAO: \(error.localizedDescription)")
+                            }else
+                            if error.statusCode == NSURLErrorNotConnectedToInternet {
+                                printError(title: "RESPONSE ERROR NO INTERNET", msg: "DESCRICAO: \(error.localizedDescription)")
+                            }else
+                            if error.statusCode == NSURLErrorNetworkConnectionLost {
+                                printError(title: "RESPONSE ERROR CONNECTION LOST", msg: "DESCRICAO: \(error.localizedDescription)")
+                            }else
+                            if error.statusCode == NSURLErrorCancelledReasonUserForceQuitApplication {
+                                printError(title: "RESPONSE ERROR APP QUIT", msg: "DESCRICAO: \(error.localizedDescription)")
+                            }else
+                            if error.statusCode == NSURLErrorCancelledReasonBackgroundUpdatesDisabled {
+                                printError(title: "RESPONSE ERROR BG DISABLED", msg: "DESCRICAO: \(error.localizedDescription)")
+                            }else
+                            if error.statusCode == NSURLErrorBackgroundSessionWasDisconnected {
+                                printError(title: "RESPONSE ERROR BG SESSION DISCONNECTED", msg: "DESCRICAO: \(error.localizedDescription)")
+                            }else{
+                                printError(title: "ERROR GENERAL", msg: error.localizedDescription)
+                            }
+                        }else if let data = data, code != 200 {
+                            // - Check if is JSON result
+                            if let jsonString = String(data: data, encoding: .utf8) {
+                                printError(title: "JSON STATUS CODE \(code)", msg: jsonString)
+                            }else{
+                                printError(title: "DATA STATUS CODE \(code)", msg: data.debugDescription)
+                            }
+                        }
+                        //
+                        print("<=========================  INTERNET CONNECTION - END =========================>")
                     }
                     guard let data = data, error == nil else {
                         
