@@ -152,7 +152,8 @@ public struct API {
                             print("<=========================  INTERNET CONNECTION - END =========================>")
                         } catch {
                             printError(title: "INTERNET CONNECTION ERROR", msg: "DESCRICAO: \(error.localizedDescription)")
-                            completion(Result.failure(error))
+                            print("<=========================  INTERNET CONNECTION - END =========================>")
+                            //completion(Result.failure(error))
                         }
                         ///
                     }
