@@ -103,18 +103,18 @@ public struct API {
                         printLog(title: "HEADERS", msg: request.allHTTPHeaderFields!.debugDescription)
                         
                         //
-                        if let data = request.httpBody, let jsonString = String(data: data, encoding: .utf8) {
-                            printLog(title: "PARAMETERS", msg: jsonString)
+                        if let data = request.httpBody, let prettyJson = data.prettyJson {
+                            printLog(title: "PARAMETERS", msg: prettyJson)
                         } else {
-                            printLog(title: "PARAMETERS", msg: "-")
+                            printLog(title: "PARAMETERS", msg: data?.debugDescription ?? "-")
                         }
                         //
                         printLog(title: "STATUS CODE", msg: String(describing: code))
                         //
-                        if let data2 = data, let jsonString = String(data: data2, encoding: .utf8) {
-                            printLog(title: "RESPONSE", msg: jsonString)
+                        if let data2 = data, let prettyJson = data2.prettyJson {
+                            printLog(title: "RESPONSE", msg: prettyJson)
                         } else {
-                            printLog(title: "RESPONSE", msg: "-")
+                            printLog(title: "RESPONSE", msg: data?.debugDescription ?? "-")
                         }
                         //
                         if let error = error {
