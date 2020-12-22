@@ -437,16 +437,7 @@ public extension LCEssentials {
     
     #if os(iOS) || os(macOS)
     //MARK: - Set Root View Controller
-    static func setRootViewControllerWithAnimation(fromView from: UIView, toViewController to: UIViewController, duration: TimeInterval = 0.6, options: UIView.AnimationOptions, completion: (() -> Void)? = nil) {
-        
-        UIView.transition(from: from, to: to.view, duration: duration, options: options, completion: {
-            _ in
-            sharedApplication.windows.first?.rootViewController = to
-            completion?()
-        })
-    }
-    
-    static func setNewRootViewController(to viewController: UIViewController, duration: TimeInterval = 0.6, options: UIView.AnimationOptions = .transitionCrossDissolve, completion: (() -> Void)? = nil){
+    static func setRootViewController(to viewController: UIViewController, duration: TimeInterval = 0.6, options: UIView.AnimationOptions = .transitionCrossDissolve, completion: (() -> Void)? = nil){
         let snapshot = (UIApplication.shared.keyWindow?.snapshotView(afterScreenUpdates: true))!
         viewController.view.addSubview(snapshot)
 

@@ -106,7 +106,7 @@ public struct API {
                         if let data = request.httpBody, let prettyJson = data.prettyJson {
                             printLog(title: "PARAMETERS", msg: prettyJson)
                         } else {
-                            printLog(title: "PARAMETERS", msg: data?.debugDescription ?? "-")
+                            printLog(title: "PARAMETERS", msg: String(data: data ?? Data(), encoding: .utf8) ?? "-")
                         }
                         //
                         printLog(title: "STATUS CODE", msg: String(describing: code))
@@ -114,7 +114,7 @@ public struct API {
                         if let data2 = data, let prettyJson = data2.prettyJson {
                             printLog(title: "RESPONSE", msg: prettyJson)
                         } else {
-                            printLog(title: "RESPONSE", msg: data?.debugDescription ?? "-")
+                            printLog(title: "RESPONSE", msg: String(data: data ?? Data(), encoding: .utf8) ?? "-")
                         }
                         //
                         if let error = error {

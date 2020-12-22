@@ -26,9 +26,9 @@ import UIKit
 #if os(iOS) || os(macOS)
 public extension UIImageView {
 
-    func changeColorOfImage( _ color: UIColor, image: NSString ) -> UIImageView {
+    func changeColorOfImage( _ color: UIColor, image: UIImage? ) -> UIImageView {
 
-        let origImage   = UIImage(named: image as String);
+        let origImage   = image
         let tintedImage = origImage?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
         self.image      = tintedImage
         self.tintColor  = color
