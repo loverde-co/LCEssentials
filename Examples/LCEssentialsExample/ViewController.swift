@@ -323,6 +323,7 @@ extension ViewController: PickerViewControllerDelegate {
     func pickerViewController(_ picker: PickerViewController, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerParams[row]["title"] as? String
     }
+    
 }
 
 //MARK: - Date Picker Controller Delegate

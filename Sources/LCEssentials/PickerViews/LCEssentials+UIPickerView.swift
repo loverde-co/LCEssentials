@@ -163,6 +163,10 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         })
     }
     
+    public func reloadAllComponents(){
+        self.pickerView.reloadAllComponents()
+    }
+    
     @IBAction func done(_ sender: Any){
         hidde()
         delegate.pickerViewController(didDone: self, didSelectRow: self.pickerView.selectedRow(inComponent: 0), inComponent: 0)

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'LCEssentials'
-  s.version          = '0.6.2.2'
+  s.version          = '0.6.3'
   s.summary          = 'This is a repository of essential scripts written in Swift for Loverde Co.'
  
   s.description      = <<-DESC
