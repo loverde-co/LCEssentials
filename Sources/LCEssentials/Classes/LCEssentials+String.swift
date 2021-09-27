@@ -412,59 +412,34 @@ public extension String {
     /// LoverdeCo: String to Date object.
     ///
     /// - Parameters:
-    ///   - receivedFormatt: Give a input formatt as it comes in String.
+    ///   - withCurrFormatt: Give a input formatt as it comes in String.
     ///   - Returns: Date object.
-    func convertToDate(receivedFormatt: String = "yyyy-MM-dd HH:mm:ss") -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        return dateFormatter.date(from: self)
-    }
-    
-    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
-    func dateTimeToString( _ dateTime: Date, withHour: Bool = false, returnOnlyTime:Bool = false ) -> String {
+    func date(withCurrFormatt: String = "yyyy-MM-dd HH:mm:ss", localeIdentifier: String = "pt-BR", timeZone:TimeZone? = TimeZone.current) -> Date? {
 
-        let dateformatter = DateFormatter()
-        dateformatter.timeZone = TimeZone(abbreviation: "GMT")
-        if returnOnlyTime {
-            dateformatter.dateFormat = "HH:mm:ss"
-        }else{
-            dateformatter.dateFormat = "yyyy-MM-dd\( withHour ? " HH:mm:ss" : "" )"
-        }
-        return dateformatter.string(from: dateTime)
-    }
-    
-    /// LoverdeCo: String BR formatted to String object.
-    ///
-    /// - Parameters:
-    ///   - fromFormat: Give a input formatt as it comes in String.
-    ///   - toFormat: to DataBase SQL formatt
-    ///   - Returns: String.
-    func dateDataBaseConverter(fromFormat:String = "dd/MM/yyyy", toFormat: String = "yyyy-MM-dd") -> String{
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-        dateFormatter.dateFormat = fromFormat
-        let date = dateFormatter.date(from: self)
-        dateFormatter.dateFormat = toFormat
-        return  dateFormatter.string(from: date!)
+        let updatedString:String = self.replacingOccurrences(of: " 0000", with: " +0000")
+        let dateFormatter:DateFormatter = DateFormatter.init()
+        let calendar:Calendar = Calendar.init(identifier: Calendar.Identifier.gregorian)
+        let enUSPOSIXLocale:Locale = Locale.init(identifier: localeIdentifier)
+        //
+        dateFormatter.timeZone = timeZone
+        //
+        dateFormatter.calendar = calendar
+        dateFormatter.locale = enUSPOSIXLocale
+        dateFormatter.dateFormat = withCurrFormatt
+        //
+        return dateFormatter.date(from: updatedString)
     }
     
     /// LoverdeCo: String to Date object.
     ///
     /// - Parameters:
-    ///   - withFormatt: Give a input formatt as it comes in String.
-    ///   - useHour: Add or remove hour form String given date
+    ///   - withCurrFormatt: Give a input formatt as it comes in String.
+    ///   - newFormatt: Give a new formatt you want in String
     ///   - Returns: Date object.
-    func toDateFormat(withFormatt: String = "yyyy-MM-dd HH:mm:ss", useHour: Bool = false) -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = NSTimeZone.default
-        dateFormatter.locale = Calendar.current.locale
-        var formatt = withFormatt
-        if useHour {
-            formatt = String(formatt.dropLast(9))
-        }
-        dateFormatter.dateFormat = formatt
-        return dateFormatter.date(from: self)
+    func date(withCurrFormatt: String = "yyyy-MM-dd HH:mm:ss", newFormatt: String = "yyyy-MM-dd HH:mm:ss", localeIdentifier: String = "pt-BR", timeZone:TimeZone? = TimeZone.current) -> Date? {
+        let date = self.date(withCurrFormatt: withCurrFormatt, localeIdentifier: localeIdentifier, timeZone: timeZone)
+        let strDate = date?.string(stringFormat: newFormatt, localeIdentifier: localeIdentifier, timeZone: timeZone)
+        return strDate?.date(withCurrFormatt: newFormatt, localeIdentifier: localeIdentifier, timeZone: timeZone)
     }
 
     var first: String {
@@ -711,7 +686,7 @@ public extension String {
             // check if it has default space like EUR
             let hasSpace = amountString.rangeOfCharacter(from: .whitespaces) != nil
             
-            if let indexOfSymbol = amountString.index(of: Character(currencyFormatter.currencySymbol)) {
+            if let indexOfSymbol = amountString.firstIndex(of: Character(currencyFormatter.currencySymbol)) {
                 if amountString.startIndex == indexOfSymbol {
                     currencyFormatter.paddingPosition = .afterPrefix
                 } else {

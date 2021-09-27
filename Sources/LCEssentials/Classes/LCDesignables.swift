@@ -356,55 +356,6 @@ open class UIButtomCustom: UIButton {
     
 }
 
-@IBDesignable open class CheckBoxButton: UIButton {
-    // Images
-    open var onImage: UIImage!
-    open var offImage: UIImage!
-    
-    open var CheckedImage: String! {
-        didSet {
-            if CheckedImage != nil {
-                onImage = UIImage(named: CheckedImage)! as UIImage
-            }else{
-                fatalError("Ops! Missing ON image!")
-            }
-        }
-    }
-    
-    open var UncheckedImage: String! {
-        didSet {
-            if UncheckedImage != nil {
-                offImage = UIImage(named: UncheckedImage)! as UIImage
-            }else{
-                fatalError("Ops! Missing OFF image!")
-            }
-        }
-    }
-    
-    // Bool property
-    open var isChecked: Bool = false {
-        didSet{
-            if isChecked == true {
-                self.setImage(onImage, for: UIControl.State.normal)
-            } else {
-                self.setImage(offImage, for: UIControl.State.normal)
-            }
-        }
-    }
-    
-    override open func awakeFromNib() {
-        self.addTarget(self, action:#selector(buttonClicked(sender:)), for: UIControl.Event.touchUpInside)
-        self.isChecked = false
-    }
-    
-    @objc open func buttonClicked(sender: UIButton) {
-        if sender == self {
-            isChecked = !isChecked
-        }
-    }
-}
-
-
 @IBDesignable open class UIButtonCheckBox: UIButton {
     
     @IBInspectable open var imageForChecked: UIImage? {
@@ -559,12 +510,9 @@ open class UIButtomCustom: UIButton {
         layer.cornerRadius = cornerRadius
         clipsToBounds = true
         
-        if( setBorderTop || setBorderLeft || setBorderRight || setBorderBottom ) {
+        if( borderWidth > 0 ) {
             layer.backgroundColor = self.color?.cgColor
         }
-        //        if (gradientFirstColor != nil) && (gradientSecondColor != nil) {
-        //            self.addGradient()
-        //        }
     }
     
     @IBInspectable open var shadow: Bool {

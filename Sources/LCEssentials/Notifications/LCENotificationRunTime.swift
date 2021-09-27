@@ -101,8 +101,8 @@ extension LCENotificationRunTime {
             isHidden = false
             moveDown()
         }
-        self.view.setNeedsLayout()
-        self.view.layoutIfNeeded()
+        //self.view.setNeedsLayout()
+        //self.view.layoutIfNeeded()
     }
     
     private func moveUp(){

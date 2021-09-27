@@ -32,6 +32,8 @@ public class ImageZoomController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
     public var setImage: UIImage!
+    public var minimumZoomScale: CGFloat = 1.0
+    public var maximumZoomScale: CGFloat = 6.0
     public var addGestureToDismiss: Bool = true
     public var delegate : ImageZoomControllerDelegate?
     
@@ -50,8 +52,8 @@ public class ImageZoomController: UIViewController, UIScrollViewDelegate {
     
     private func setupView(){
         self.img.image = setImage
-        self.scrollView.minimumZoomScale = 1.0
-        self.scrollView.maximumZoomScale = 6.0
+        self.scrollView.minimumZoomScale = self.minimumZoomScale
+        self.scrollView.maximumZoomScale = self.maximumZoomScale
         if addGestureToDismiss {
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(onPan(_:)))
             view.addGestureRecognizer(panGesture)

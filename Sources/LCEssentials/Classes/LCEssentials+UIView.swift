@@ -47,25 +47,52 @@ public extension UIView {
         return Bundle.main.loadNibNamed(nibName, owner: owner, options: options)
     }
     
-    func addBorder(_ sides: [EnumBorderSide], color: UIColor, width: CGFloat) {
-        let border = CALayer()
-        border.backgroundColor = color.cgColor
-        for side in sides
-        {
-            switch side {
-            case .top:
-                border.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: width)
-            case .bottom:
-                border.frame = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.size.width, height: width)
-            case .left:
-                border.frame = CGRect(x: 0, y: 0, width: width, height: self.frame.size.height)
-            case .right:
-                border.frame = CGRect(x: self.frame.size.width - width, y: 0, width: width, height: self.frame.size.height)
-            }
+    func addBorders(for edges:[UIRectEdge] = [.all], width:CGFloat = 1, color: UIColor = .black) {
+        if edges.contains(.all) {
+            layer.borderWidth = width
+            layer.borderColor = color.cgColor
+        } else {
+            let allSpecificBorders:[UIRectEdge] = [.top, .bottom, .left, .right]
 
-            self.layer.addSublayer(border)
+            for edge in allSpecificBorders {
+                if let v = viewWithTag(Int(edge.rawValue)) {
+                    v.removeFromSuperview()
+                }
+
+                if edges.contains(edge) {
+                    let v = UIView()
+                    v.tag = Int(edge.rawValue)
+                    v.backgroundColor = color
+                    v.translatesAutoresizingMaskIntoConstraints = false
+                    addSubview(v)
+
+                    var horizontalVisualFormat = "H:"
+                    var verticalVisualFormat = "V:"
+
+                    switch edge {
+                    case UIRectEdge.bottom:
+                        horizontalVisualFormat += "|-(0)-[v]-(0)-|"
+                        verticalVisualFormat += "[v(\(width))]-(0)-|"
+                    case UIRectEdge.top:
+                        horizontalVisualFormat += "|-(0)-[v]-(0)-|"
+                        verticalVisualFormat += "|-(0)-[v(\(width))]"
+                    case UIRectEdge.left:
+                        horizontalVisualFormat += "|-(0)-[v(\(width))]"
+                        verticalVisualFormat += "|-(0)-[v]-(0)-|"
+                    case UIRectEdge.right:
+                        horizontalVisualFormat += "[v(\(width))]-(0)-|"
+                        verticalVisualFormat += "|-(0)-[v]-(0)-|"
+                    default:
+                        break
+                    }
+
+                    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: horizontalVisualFormat, options: .directionLeadingToTrailing, metrics: nil, views: ["v": v]))
+                    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: verticalVisualFormat, options: .directionLeadingToTrailing, metrics: nil, views: ["v": v]))
+                }
+            }
         }
     }
+    
     func addCornerRadius(topLeft: Bool = false, topRight: Bool = false, bottomLeft:Bool = false, bottomRight:Bool = false, radius: CGFloat = 8){
         var maskCorns: CACornerMask = []
         var path: UIBezierPath = UIBezierPath(roundedRect: (self.bounds), byRoundingCorners: [], cornerRadii: CGSize(width: radius, height: radius))
@@ -107,6 +134,11 @@ public extension UIView {
             self.layer.mask = maskLayer
         }
     }
+    
+    func cornerRadius(radius: CGFloat) {
+        self.layer.cornerRadius = radius
+        self.layer.masksToBounds = true
+    }
 
     func drawCircle(inCoord x: CGFloat, y: CGFloat, with radius: CGFloat, strokeColor:UIColor = UIColor.red, fillColor:UIColor = UIColor.gray, isEmpty: Bool = false) -> [String:Any] {
         let dotPath = UIBezierPath(ovalIn: CGRect(x: x,y: y, width: radius, height: radius))
@@ -135,6 +167,24 @@ public extension UIView {
         self.bringSubviewToFront(shadowView)
     }
 
+    func applyShadow(color:UIColor, offSet:CGSize, radius:CGFloat, opacity:Float, shouldRasterize:Bool = true, rasterizationScaleTo: CGFloat = UIScreen.main.scale){
+
+        self.layer.masksToBounds = false
+        self.layer.shadowColor = color.cgColor
+        self.layer.shadowOffset = offSet
+        self.layer.shadowRadius = radius
+        self.layer.shadowOpacity = opacity
+        self.layer.shouldRasterize = shouldRasterize
+        self.layer.rasterizationScale = rasterizationScaleTo
+    }
+
+    func removeShadow(){
+        self.layer.shadowColor = UIColor.clear.cgColor
+        self.layer.shadowOffset = CGSize.zero
+        self.layer.shadowRadius = 0.0
+        self.layer.shadowOpacity = 0.0
+    }
+    
     /**
      Fade in a view with a duration
 
@@ -273,17 +323,7 @@ public extension UIView {
         }
         set {
             layer.masksToBounds = true
-            layer.cornerRadius = abs(CGFloat(Int(newValue * 100)) / 100)
-        }
-    }
-
-    /// Loverde Co: Height of view.
-    var height: CGFloat {
-        get {
-            return frame.size.height
-        }
-        set {
-            frame.size.height = newValue
+            layer.cornerRadius = newValue
         }
     }
 
@@ -306,47 +346,6 @@ public extension UIView {
         layer.render(in: context)
         return UIGraphicsGetImageFromCurrentImageContext()
     }
-
-    /// Loverde Co: Shadow color of view; also inspectable from Storyboard.
-    @IBInspectable var shadowColor: UIColor? {
-        get {
-            guard let color = layer.shadowColor else { return nil }
-            return UIColor(cgColor: color)
-        }
-        set {
-            layer.shadowColor = newValue?.cgColor
-        }
-    }
-
-    /// Loverde Co: Shadow offset of view; also inspectable from Storyboard.
-    @IBInspectable var shadowOffset: CGSize {
-        get {
-            return layer.shadowOffset
-        }
-        set {
-            layer.shadowOffset = newValue
-        }
-    }
-
-    /// Loverde Co: Shadow opacity of view; also inspectable from Storyboard.
-    @IBInspectable var shadowOpacity: Float {
-        get {
-            return layer.shadowOpacity
-        }
-        set {
-            layer.shadowOpacity = newValue
-        }
-    }
-
-    /// Loverde Co: Shadow radius of view; also inspectable from Storyboard.
-    @IBInspectable var shadowRadius: CGFloat {
-        get {
-            return layer.shadowRadius
-        }
-        set {
-            layer.shadowRadius = newValue
-        }
-    }
     
     /// Loverde Co: transform UIView to UIImage
     func asImage() -> UIImage {
@@ -364,60 +363,7 @@ public extension UIView {
         }
     }
     
-    @IBInspectable var setBorderTop: Bool {
-        get{
-            return self.setBorderTop
-        }
-        set {
-            if newValue == true {
-                let border = CALayer()
-                border.backgroundColor = self.borderColor?.cgColor
-                border.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.borderWidth)
-                self.layer.addSublayer(border)
-            }
-        }
-    }
-    @IBInspectable var setBorderBottom : Bool {
-        get{
-            return self.setBorderBottom
-        }
-        set {
-            if newValue == true {
-                let border = CALayer()
-                border.backgroundColor = self.borderColor?.cgColor
-                border.frame = CGRect(x: 0, y: self.frame.size.height - self.borderWidth, width: self.frame.size.width, height: self.borderWidth)
-                self.layer.addSublayer(border)
-            }
-        }
-    }
-    @IBInspectable var setBorderLeft : Bool {
-        get{
-            return self.setBorderLeft
-        }
-        set {
-            if newValue == true {
-                let border = CALayer()
-                border.backgroundColor = self.borderColor?.cgColor
-                border.frame = CGRect(x: 0, y: 0, width: self.borderWidth, height: self.frame.size.height)
-                self.layer.addSublayer(border)
-            }
-        }
-    }
-    @IBInspectable var setBorderRight : Bool {
-        get{
-            return self.setBorderRight
-        }
-        set {
-            if newValue == true {
-                let border = CALayer()
-                border.backgroundColor = self.borderColor?.cgColor
-                border.frame = CGRect(x: self.frame.size.width - self.borderWidth, y: 0, width: self.borderWidth, height: self.frame.size.height)
-                self.layer.addSublayer(border)
-            }
-        }
-    }
-    
-    func copyView<T: UIView>() -> T {
+    func copyElement<T: UIView>() -> T {
         return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as! T
     }
 }

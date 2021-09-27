@@ -35,6 +35,18 @@ public extension UIImage {
         UIGraphicsEndImageContext()
         return image
     }
+    /** Cria uma cópia de uma imagem fazendo sobreposição de cor.*/
+    func tintImage(color:UIColor) -> UIImage {
+        
+        let newImage = self.withRenderingMode(.alwaysTemplate)
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale);
+        color.set()
+        newImage.draw(in: CGRect.init(x: 0.0, y: 0.0, width: self.size.width, height: self.size.height))
+        let finalImage:UIImage? = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        //
+        return finalImage ?? self
+    }
     
     ///Make transparent color of image - choose a color and range color
     func backgroundColorTransparent(initialColor: UIColor, finalColor: UIColor) -> UIImage? {

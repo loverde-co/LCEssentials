@@ -25,10 +25,7 @@ import UIKit
 
 #if os(iOS) || os(macOS)
 public extension UILabel {
-    func boldSubstring(search:String){
 
-    }
-    
     func lineNumbers() -> Int{
         let textSize = CGSize(width: self.frame.size.width, height: CGFloat(Float.infinity))
         let rHeight = lroundf(Float(self.sizeThatFits(textSize).height))

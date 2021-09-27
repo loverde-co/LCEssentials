@@ -107,7 +107,7 @@ public class HUDAlertController: UIViewController {
             imageHeight.constant = 0
         }
         
-        self.containerView.cornerRadius = 8
+        self.containerView.cornerRadius(radius: 8)
         self.lblTitle.text = title
         if let desc = description {
             self.lblDescr.text = desc
@@ -131,7 +131,7 @@ public class HUDAlertController: UIViewController {
                 
                 switch action.type {
                 case .cancel:
-                    button.cornerRadius = 5
+                    button.cornerRadius(radius: 5)
                     button.borderWidth = 1
                     button.borderColor = blueColor
                     button.backgroundColor = .white
@@ -139,24 +139,24 @@ public class HUDAlertController: UIViewController {
                     button.setTitleColor(blueColor, for: .normal)
                     
                 case .destructive:
-                    button.cornerRadius = 5
+                    button.cornerRadius(radius: 5)
                     button.backgroundColor = redColor
                     button.setTitleForAllStates(action.title)
                     button.setTitleColor(.white, for: .normal)
                     
                 case .normal:
-                    button.cornerRadius = 5
+                    button.cornerRadius(radius: 5)
                     button.backgroundColor = blueColor
                     button.setTitleForAllStates(action.title)
                     button.setTitleColor(.white, for: .normal)
                     
                 case .discrete:
-                    button.cornerRadius = 5
+                    button.cornerRadius(radius: 5)
                     button.backgroundColor = greyColor
                     button.setTitleForAllStates(action.title)
                     button.setTitleColor(.white, for: .normal)
                 case .green:
-                    button.cornerRadius = 5
+                    button.cornerRadius(radius: 5)
                     button.backgroundColor = greenColor
                     button.setTitleForAllStates(action.title)
                     button.setTitleColor(.white, for: .normal)

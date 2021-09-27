@@ -57,6 +57,7 @@ public class LCEMessages: UIViewController {
     private var fontColor: UIColor = .white
     private var tapedToHide: Bool = false
     private var isKeyboardObservAdded: Bool = false
+    private var isKeyboardShowed: Bool = false
     private var originY: CGFloat {
         get{
             return self.view.frame.origin.y
@@ -93,6 +94,7 @@ public class LCEMessages: UIViewController {
     static public func instantiate() -> LCEMessages {
         let instance: LCEMessages = LCEMessages.instantiate(storyBoard: "LCEMessages", identifier: LCEMessages.identifier)
         instance.loadView()
+        instance.viewController = LCEssentials.getTopViewController(aboveBars: true)
         return instance
     }
     
@@ -105,6 +107,7 @@ public class LCEMessages: UIViewController {
     
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.viewController = LCEssentials.getTopViewController(aboveBars: true)
     }
     
     override public func didReceiveMemoryWarning() {
@@ -113,8 +116,8 @@ public class LCEMessages: UIViewController {
     }
     
     public func show(message withBody: String? = nil, withImage: UIImage? = nil, showLoading: Bool = false, viewController: UIViewController? = nil){
+        self.viewWillAppear(true)
         if let _ = self.delegate {
-            self.viewController = LCEssentials.getTopViewController(aboveBars: true)
             if let currentController = viewController {
                 self.viewController = currentController
             }
@@ -126,7 +129,17 @@ public class LCEMessages: UIViewController {
                 self.labelBottomConstraints.constant = 25
             }
             //self.view.removeFromSuperview()
-            self.view.frame = CGRect(x: 0, y: setDirection == .top ? -self.setHeight : (self.viewController?.view.bounds.height ?? 0 + self.setHeight) , width: setWidth, height: setHeight + ( LCEssentials.X_DEVICES ? 40 : 0 ) )
+            var currOriginY: CGFloat = 0
+            if setDirection == .top {
+                currOriginY = -self.setHeight
+            }else{
+                if isKeyboardShowed {
+                    currOriginY = originY
+                }else{
+                    currOriginY = (self.viewController?.view.bounds.height ?? 0 + self.setHeight)
+                }
+            }
+            self.view.frame = CGRect(x: 0, y: currOriginY, width: setWidth, height: setHeight + ( LCEssentials.X_DEVICES ? 40 : 0 ) )
             self.view.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
             self.view.autoresizesSubviews = true
             self.viewController?.view.addSubview(self.view)
@@ -265,19 +278,23 @@ public class LCEMessages: UIViewController {
     }
     
     @objc private func keyboardWasShown(notification: NSNotification){
+        isKeyboardShowed = true
         let info = notification.userInfo!
         let keyboardSize = (info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.size
+        let newOriginY: CGFloat = (self.viewController!.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) )
         if self.setDirection == .bottom {
-            self.view.frame.origin = CGPoint(x: 0, y: (self.viewController!.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) ))
-            originY = (self.viewController!.view.frame.height) - (keyboardSize!.height + ( isHidden ? 0 : self.setHeight) )
+            self.view.frame.origin = CGPoint(x: 0, y: newOriginY)
+            originY = newOriginY
         }
     }
     
     @objc private func keyboardWillBeHidden(notification: NSNotification){
+        isKeyboardShowed = false
         if self.setDirection == .bottom && (self.delegate is UIViewController) && isKeyboardObservAdded {
             UIView.animate(withDuration: 1) {
-                self.view.frame.origin = CGPoint(x: 0, y: (self.delegate as! UIViewController).view.frame.size.height - ( self.isHidden ? 0 : self.setHeight  + ( LCEssentials.X_DEVICES ? 40 : 0 ) ) )
-                self.originY = (self.delegate as! UIViewController).view.frame.size.height - ( self.isHidden ? 0 : self.setHeight + ( LCEssentials.X_DEVICES ? 40 : 0 ) )
+                let newOriginY: CGFloat = (self.delegate as! UIViewController).view.frame.size.height - ( self.isHidden ? 0 : self.setHeight  + ( LCEssentials.X_DEVICES ? 40 : 0 ) )
+                self.view.frame.origin = CGPoint(x: 0, y: newOriginY)
+                self.originY = newOriginY
             }
         }
     }

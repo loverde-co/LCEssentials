@@ -25,7 +25,7 @@ import UIKit
 import AVFoundation
 import Photos
 
-public protocol ImagePickerControllerDelegate: class {
+public protocol ImagePickerControllerDelegate: AnyObject {
     func imagePicker(didSelect image: UIImage?)
 }
 

@@ -28,7 +28,7 @@ import CoreLocation
 import MapKit
 import Contacts
 
-@objc public protocol LocationDelegate: class {
+@objc public protocol LocationDelegate: AnyObject {
     
     @objc(manager: region:)
     optional func location(manager: CLLocationManager, didStartMonitoringFor region: CLRegion)

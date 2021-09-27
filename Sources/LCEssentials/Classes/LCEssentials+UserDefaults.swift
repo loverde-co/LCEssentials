@@ -46,19 +46,6 @@ public extension UserDefaults {
     func isFirstTimeOnApp() -> Bool {
         return bool(forKey: UserDefaultsKeys.isFirstTimeOnApp.rawValue)
     }
-    
-    func setObject<T: Encodable>(object: T, forKey: String){
-        if let encoded = try? JSONEncoder().encode(object) {
-            UserDefaults.standard.set(encoded, forKey: forKey)
-            UserDefaults.standard.synchronize()
-        }
-    }
-    func getObject<T: Decodable>(_ type: T.Type, forKey: String) -> T? {
-        if let userData = data(forKey: forKey) {
-            return try? JSONDecoder().decode(type, from: userData)
-        }
-        return nil
-    }
     /// SwifterSwift: Retrieves a Codable object from UserDefaults.
     ///
     /// - Parameters:

@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         didSet{
             txtSearch.borderWidth = 1
             txtSearch.borderColor = .darkGray
-            txtSearch.cornerRadius = txtSearch.height / 2
+            txtSearch.cornerRadius = txtSearch.frame.height / 2
         }
     }
     lazy var content: [Int: String] = [0: "Open Picker Controller", 1: "Open Date Picker", 2: "Open Alert Message on bottom", 3: "Open Alert Message on TOP",
@@ -55,11 +55,11 @@ class ViewController: UIViewController {
         tableView.estimatedRowHeight = 60
         tableView.rowHeight = UITableView.automaticDimension
         tableView.reloadData()
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissSystemKeyboard(_:))))
         
-        //LOOK AT DEBBUGER VIEW
+        //LOOK AT DEBBUGER CONSOLE
         API.url = "https://api.github.com/users/{user}"
-        API.request(["user": "loverde-co"] as [String:Any], .get) { (result) in
+        API.request(["user": "loverde-co"] as [String: Any], .get) { (result) in
             switch result {
             case .failure(let error):
                 printLog(title: "JSON ERROR", msg: error.localizedDescription)
@@ -104,13 +104,6 @@ class ViewController: UIViewController {
 }
 
 extension ViewController {
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        if sender.state == .ended {
-            // Do your thang here!
-            self.view.endEditing(true)
-        }
-        sender.cancelsTouchesInView = false
-    }
 
     //MARK: - Open Picker Controller
     func openPickerController(){
@@ -126,13 +119,14 @@ extension ViewController {
         }
     }
     
-    //MARK: - Set Picker Controller
+    //MARK: - Notification Runtime Controller
     func openNotificationRuntime(){
         let notif = LCENotificationRunTime.instantiate()
         notif.delegate = self
         notif.anyData = nil //If you need grab any data to handler on Delegate
         notif.setDesc = "Description on received message"
         notif.setTitle = "Title on received message"
+        notif.setImage = nil //If you need to set a image on left
         notif.setHeight = LCEssentials.X_DEVICES ? 130 : 100
         notif.show()
     }
@@ -175,9 +169,9 @@ extension ViewController {
         let controller:SecondVC = SecondVC.instantiate(storyBoard: "Main")
         controller.delegate = self
         self.delegate = controller
-        self.delegate?.singleton?(set: "Object", withData: "Transfering Data")
-        //self.navigationController?.pushViewController(controller, animated: true)
-        self.present(controller, animated: true, completion: nil)
+        self.delegate?.singleton?(object: "Object", withData: "Transfering Data")
+        self.navigationController?.pushViewController(controller, animated: true)
+        //self.present(controller, animated: true, completion: nil)
     }
     
     //MARK: - Picker Controller
@@ -269,7 +263,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
 
-        let animation = tableView.makeMoveUpWithFadeAnimation(rowHeight: tableView.cellForRow(at: indexPath)?.height ?? 60, duration: animationDuration, delayFactor: delay)
+        let animation = tableView.makeMoveUpWithFadeAnimation(rowHeight: tableView.cellForRow(at: indexPath)?.frame.height ?? 60, duration: animationDuration, delayFactor: delay)
         let animator = UITableViewAnimator(animation: animation)
         animator.animate(cell: cell, at: indexPath, in: tableView)
         alreadyAnimatedIndexPath.append(indexPath)
@@ -348,11 +342,12 @@ extension ViewController: ImageZoomControllerDelegate {
 
 //MARK: - Singleton Delegate
 extension ViewController: LCESingletonDelegate {
-    func singleton(get object: Any, withData: Any) {
-        printLog(title: "MAIN VIEW", msg: "GET \(object) - \(withData)")
+    func singleton(object: Any?, withData: Any) {
+        printLog(title: "MAIN VIEW", msg: "GET \(object ?? "") - \(withData)")
     }
 }
 
+//MARK: - Image Picker Controller Delegate
 extension ViewController: ImagePickerControllerDelegate {
     func imagePicker(didSelect image: UIImage?) {
         if let image = image {
@@ -363,6 +358,7 @@ extension ViewController: ImagePickerControllerDelegate {
     }
 }
 
+//MARK: - TextField Delegate mask example
 extension ViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 //        let texto: String? = String().applyMask(inputMask: "#####-###", maxLenght: 9, range: range, textFieldString: textField.text ?? "", replacementString: string, charactersRestriction: nil)

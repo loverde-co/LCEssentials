@@ -128,7 +128,7 @@ public struct LCEssentials {
         var isVeryOld = false
         if (LCEssentials().DEVICE_NAME == "iPhone X" || LCEssentials().DEVICE_NAME == "iPhone XS"
             || LCEssentials().DEVICE_NAME == "iPhone XS Max" || LCEssentials().DEVICE_NAME == "iPhone XR"
-            || LCEssentials().DEVICE_NAME == "iPhone 11" || LCEssentials().DEVICE_NAME == "iPhone 11 Pro" || LCEssentials().DEVICE_NAME == "iPhone 11 Pro Max") {
+            || LCEssentials().DEVICE_NAME.contains("iPhone 11") || LCEssentials().DEVICE_NAME.contains("iPhone 12")) {
             isVeryOld = true
         }
         return isVeryOld
@@ -533,16 +533,4 @@ public struct JSONHelper<T: Codable> {
     public static func decode(fromURL url: URL) throws -> T {
         return try decode(data: try! Data(contentsOf: url))
     }
-    
-//    /// - LoverdeCo: Decode Object to JSON string
-//    ///
-//    /// - Parameter object: Codable/Decodable
-//    /// - returns: String
-//    public static func decode(toJSON object: T) throws -> String{
-//        let jsonData = try! JSONEncoder().encode(object)
-//        guard let json = String(data: jsonData, encoding: .utf8) else{
-//            throw NSError(domain: "JSONEcoding", code: 0, userInfo: nil)
-//        }
-//        return json
-//    }
 }

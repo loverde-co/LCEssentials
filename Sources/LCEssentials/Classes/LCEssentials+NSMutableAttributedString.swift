@@ -53,20 +53,9 @@ public extension NSMutableAttributedString {
             attrs[NSAttributedString.Key.paragraphStyle] = paragraph
         }
 
-        //let customStr = NSMutableAttributedString(string:"\(text)", attributes:attrs)
-        self.addAttributes(attrs, range: self.mutableString.range(of: text))
-        //self.append(customStr)
-        return self
-    }
-
-    @discardableResult func bold(_ text:String, withFont fontName:String = "Helvetica Neue", size:CGFloat = 12, color:UIColor? = nil) -> NSMutableAttributedString {
-        var attrs:[NSAttributedString.Key:Any] = [NSAttributedString.Key.font : UIFont(name: fontName, size: size)!]
-        if color != nil {
-            attrs[NSAttributedString.Key.foregroundColor] = color
-        }
-        //let boldString = NSMutableAttributedString(string:"\(text)", attributes:attrs)
-        self.addAttributes(attrs, range: self.mutableString.range(of: text))
-        //self.append(boldString)
+        let customStr = NSMutableAttributedString(string:"\(text)", attributes:attrs)
+        //self.addAttributes(attrs, range: self.mutableString.range(of: text))
+        self.append(customStr)
         return self
     }
 
@@ -75,9 +64,9 @@ public extension NSMutableAttributedString {
         if color != nil {
             attrs[NSAttributedString.Key.foregroundColor] = color
         }
-        //let underString = NSMutableAttributedString(string: "\(text)", attributes:attrs)
-        self.addAttributes(attrs, range: self.mutableString.range(of: text))
-        //self.append(underString)
+        let underString = NSMutableAttributedString(string: "\(text)", attributes:attrs)
+        //self.addAttributes(attrs, range: self.mutableString.range(of: text))
+        self.append(underString)
         return self
     }
 
@@ -87,9 +76,9 @@ public extension NSMutableAttributedString {
                                                             NSAttributedString.Key.underlineColor: color,
                                                             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
                                                             NSAttributedString.Key.font: UIFont(name: fontName, size: size)!]
-        //let linkString = NSMutableAttributedString(string: "\(text)", attributes:linkTerms)
-        self.setAttributes(linkTerms, range: self.mutableString.range(of: text))
-        //self.append(linkString)
+        let linkString = NSMutableAttributedString(string: "\(text)", attributes:linkTerms)
+        //self.setAttributes(linkTerms, range: self.mutableString.range(of: text))
+        self.append(linkString)
         return self
     }
     
@@ -98,14 +87,18 @@ public extension NSMutableAttributedString {
         if color != nil {
             attrs[NSAttributedString.Key.foregroundColor] = color
         }
-        //let underString = NSMutableAttributedString(string: "\(text)", attributes:attrs)
-        self.addAttributes(attrs, range: self.mutableString.range(of: text))
-        //self.append(underString)
+        let underString = NSMutableAttributedString(string: "\(text)", attributes:attrs)
+        //self.addAttributes(attrs, range: self.mutableString.range(of: text))
+        self.append(underString)
         return self
     }
     
     func makeAttributted(){
         self.append(self)
+    }
+    
+    func attributtedString() -> NSMutableAttributedString {
+        return self
     }
 
     @discardableResult func normal(_ text:String)->NSMutableAttributedString {

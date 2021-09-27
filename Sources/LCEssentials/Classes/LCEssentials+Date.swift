@@ -31,51 +31,26 @@ public extension Date {
         let value: Int?
     }
     
-//    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
-//    func stringToDateTime( _ dateTime: String = "", formatted : String = "yyyy-MM-dd", withTime:Bool = false ) -> Date{
-//        var dateArray = dateTime.split{$0 == "/"}.map(String.init)
-//        var hour = [String]()
-//        var convertedDate = ""
-//        if dateArray.count > 1 {
-//            hour = dateArray[2].split{$0 == " "}.map(String.init)
-//            if hour.count > 1 {
-//                dateArray[2] = hour[0]
-//            }
-//            convertedDate = "\(dateArray[2])-\(dateArray[1])-\(dateArray[0])\( withTime ? " \(hour[1])" : "" )"
-//        }else{
-//            convertedDate = dateTime
-//        }
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-//        dateFormatter.dateFormat = "\(formatted)\( withTime ? " HH:mm:ss" : "" )"
-//        return dateFormatter.date(from: convertedDate)!
-//    }
-//    
-//    @available(*, deprecated, message: "This will be removed on 0.4.* version of this repository")
-//    func stringToDate( _ date: String = "2010-10-10", formatted : String = "yyyy-MM-dd" ) -> Date{
-//        let dateArray = date.split{$0 == "/"}.map(String.init)
-//        var convertedDate = date
-//        if dateArray.count > 1 {
-//            convertedDate = "\(dateArray[2])-\(dateArray[1])-\(dateArray[0])"
-//        }
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
-//        dateFormatter.dateFormat = formatted
-//        return dateFormatter.date(from: convertedDate)!
-//    }
     /// LoverdeCo: Timestamp to Date.
     ///
     /// - Parameters:
-    ///   - withFormatt: Give a input formatt to any formatt you want.
-    ///   - useHour: Keep or remove hour form given date
-    ///   - Returns: String object.
-    func timestampToDate(timestamp: Double) -> Date? {
+    ///   - timestamp: Give a input timestamp double.
+    ///   - stringFormat: Give a input formatt that is setted.
+    ///   - localeIdentifier: Locale your time
+    ///   - timeZone: Specify your time zone   
+    ///   - Returns: Date object.
+    func timestampToDate(timestamp: Double, stringFormat:String = "yyyy-MM-dd HH:mm", localeIdentifier: String = "pt-BR", timeZone:TimeZone? = TimeZone.current) -> Date? {
         let date = Date(timeIntervalSince1970: timestamp)
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT") //Set timezone that you want
-        dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm" //Specify your format that you want
-        let strDate = dateFormatter.string(from: date)
+        let dateFormatter:DateFormatter = DateFormatter.init()
+        let calendar:Calendar = Calendar.init(identifier: Calendar.Identifier.gregorian)
+        let enUSPOSIXLocale:Locale = Locale.init(identifier: localeIdentifier)
+        //
+        dateFormatter.timeZone = timeZone
+        //
+        dateFormatter.calendar = calendar
+        dateFormatter.locale = enUSPOSIXLocale
+        dateFormatter.dateFormat = stringFormat
+        let strDate:String = dateFormatter.string(from: date)
         return dateFormatter.date(from: strDate)
     }
     
@@ -83,31 +58,25 @@ public extension Date {
     /// LoverdeCo: Date to String object.
     ///
     /// - Parameters:
-    ///   - withFormatt: Give a input formatt to any formatt you want.
-    ///   - useHour: Keep or remove hour form given date
+    ///   - stringFormat: Give a input formatt that is setted.
+    ///   - localeIdentifier: Locale your time
+    ///   - timeZone: Specify your time zone
     ///   - Returns: String object.
-    func toStringFormatt(formattTo: String = "yyyy-MM-dd HH:mm:ss", useHour: Bool = false) -> String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = NSTimeZone.default
-        dateFormatter.locale = Calendar.current.locale
-        var formatt = formattTo
-        if useHour {
-            formatt = String(formatt.dropLast(9))
-        }
-        dateFormatter.dateFormat = formatt
-        return dateFormatter.string(from: self)
-    }
-    
-    /// LoverdeCo: Date to BR formatt in String object.
-    ///
-    /// - Parameters:
-    ///   - withHour: Keep or remove hour form given date
-    ///   - Returns: String object.
-    func convertToStringBRFormatt(_ withHour:Bool = false ) -> String {
-        let dateformatter = DateFormatter()
-        dateformatter.timeZone = TimeZone(abbreviation: "GMT")
-        dateformatter.dateFormat = "dd/MM/yyyy\( withHour ? " HH:mm:ss" : "" )"
-        return dateformatter.string(from: self)
+    func string(stringFormat:String, localeIdentifier: String = "pt-BR", timeZone:TimeZone? = TimeZone.current) -> String {
+
+        let dateFormatter:DateFormatter = DateFormatter.init()
+        let calendar:Calendar = Calendar.init(identifier: Calendar.Identifier.gregorian)
+        let enUSPOSIXLocale:Locale = Locale.init(identifier: localeIdentifier)
+        //
+        dateFormatter.timeZone = timeZone
+        //
+        dateFormatter.calendar = calendar
+        dateFormatter.locale = enUSPOSIXLocale
+        dateFormatter.dateFormat = stringFormat
+        //
+        let strDate:String = dateFormatter.string(from: self)
+        //
+        return strDate
     }
 
     /// Returns a Date with the specified days added to the one it is called with
@@ -146,7 +115,7 @@ public extension Date {
         }else{ return nil }
     }
 
-    func getMonthName(identifier: String = "") -> String {
+    func getMonthName(identifier: String = "pt-BR") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"
         dateFormatter.locale = identifier != "" ? Locale(identifier: identifier) : Locale.current
@@ -154,7 +123,7 @@ public extension Date {
         return strMonth
     }
 
-    func getDayNumber(identifier: String = "") -> String {
+    func getDayNumber(identifier: String = "pt-BR") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd"
         dateFormatter.locale = identifier != "" ? Locale(identifier: identifier) : Locale.current
@@ -162,7 +131,7 @@ public extension Date {
         return strDay
     }
     
-    func getWeekDayName(identifier: String = "") -> String {
+    func getWeekDayName(identifier: String = "pt-BR") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
         dateFormatter.locale = identifier != "" ? Locale(identifier: identifier) : Locale.current

@@ -67,8 +67,7 @@ public extension Dictionary {
     ///
     /// - returns: Object: Codable/Decodable
     func toObjetct<T: Codable>() -> T {
-        let jsonData = try! JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted)
-        let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
+        let jsonString = self.toJSON()
         let output: T = try! JSONHelper.decode(jsonString)
         return output
     }

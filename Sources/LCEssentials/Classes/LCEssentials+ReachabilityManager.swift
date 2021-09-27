@@ -26,7 +26,7 @@ import Foundation
 
 #if os(iOS) || os(macOS)
 /// Protocol for listenig network status change
-public protocol NetworkStatusListener : class {
+public protocol NetworkStatusListener : AnyObject {
     func networkStatusDidChange(status: Reachability.Connection)
 }
 

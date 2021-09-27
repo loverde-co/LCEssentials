@@ -219,7 +219,7 @@ public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPic
         if let del = self.delegate, let str = del.pickerViewController(self, titleForRow: row, forComponent: component) {
             text = str
         }
-        let attrStr = NSMutableAttributedString(string: text)
+        let attrStr = NSMutableAttributedString()
         if pickerView.tag == row && setFontSelectedBGColor != nil {
             label.tintColor = self.setFontSelectedColor
             label.backgroundColor = self.setFontSelectedBGColor

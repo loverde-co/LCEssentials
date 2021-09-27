@@ -1,5 +1,5 @@
 //  
-// Copyright (c) 2018 Loverde Co.
+// Copyright (c) 2021 Loverde Co.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,23 +22,6 @@
 import Foundation
 import UIKit
 
-@objc public protocol LCESingletonDelegate: class {
-//    var object: Any? { get set }
-//    var data: Any? { get set }
-    @objc optional func singleton(get object: Any, withData: Any)
-    @objc optional func singleton(set object: Any, withData: Any)
-}
-
-public class LCESingleton: NSObject {
-    public weak var delegate: LCESingletonDelegate? = nil
-    
-    public func singleton(set object: Any, withData: Any){
-//        self.delegate?.object = object
-//        self.delegate?.data = withData
-        delegate?.singleton?(get: object, withData: withData)
-    }
-    
-    public func singleton(get object: Any, withData: Any){
-        delegate?.singleton?(set: object, withData: withData)
-    }
+@objc public protocol LCESingletonDelegate: AnyObject {
+    @objc optional func singleton(object: Any?, withData: Any)
 }

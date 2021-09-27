@@ -93,5 +93,68 @@ public extension UITabBarController {
         badgeView.layer.cornerRadius = badgeView.bounds.width/2
         tabBar.bringSubviewToFront(badgeView)
     }
+    
+    func setSelectedView(atIndex: Int, withAnimation: Bool = false, completion:(()->())?){
+        if let navController = self.viewControllers![atIndex] as? UINavigationController {
+            navController.popToRootViewController(animated: false)
+        }
+        if withAnimation {
+            animateToTab(toIndex: atIndex)
+        }else{
+            self.selectedIndex = atIndex
+        }
+        completion?()
+    }
+    
+    func setSelectedView(withNoPop atIndex: Int, withAnimation: Bool = false, completion:(()->())?) {
+        //self.viewControllers?[atIndex].viewWillAppear(true)
+        if withAnimation {
+            animateToTab(toIndex: atIndex)
+        }else{
+            self.selectedIndex = atIndex
+        }
+        completion?()
+    }
+    
+    func changeViewControllerToItem(withViewController: UIViewController, Item: Int){
+        guard let navController = self.viewControllers?[Item] as? UINavigationController else{ return }
+        navController.setViewControllers([withViewController], animated: true)
+        self.setSelectedView(atIndex: Item, completion: nil)
+    }
+    
+    func animateToTab(toIndex: Int) {
+        let tabViewControllers = viewControllers!
+        let fromView = selectedViewController!.view
+        let toView = tabViewControllers[toIndex].view
+        let fromIndex = self.selectedIndex //tabViewControllers.index(of: selectedViewController!)
+        
+        guard fromIndex != toIndex else {return}
+        
+        // Add the toView to the tab bar view
+        fromView?.superview!.addSubview(toView!)
+        
+        // Position toView off screen (to the left/right of fromView)
+        let screenWidth = UIScreen.main.bounds.size.width;
+        let scrollRight = toIndex > fromIndex;
+        let offset = (scrollRight ? screenWidth : -screenWidth)
+        toView?.center = CGPoint(x: (fromView?.center.x)! + offset, y: (toView?.center.y)!)
+        
+        // Disable interaction during animation
+        view.isUserInteractionEnabled = false
+        
+        UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIView.AnimationOptions.curveEaseOut, animations: {
+            
+            // Slide the views by -offset
+            fromView?.center = CGPoint(x: (fromView?.center.x)! - offset, y: (fromView?.center.y)!);
+            toView?.center   = CGPoint(x: (toView?.center.x)! - offset, y: (toView?.center.y)!);
+            
+        }, completion: { finished in
+            
+            // Remove the old view from the tabbar view.
+            fromView?.removeFromSuperview()
+            self.selectedIndex = toIndex
+            self.view.isUserInteractionEnabled = true
+        })
+    }
 }
 #endif

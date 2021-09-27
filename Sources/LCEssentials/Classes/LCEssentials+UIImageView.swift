@@ -164,7 +164,7 @@ class ImageCache {
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(observer)
+        NotificationCenter.default.removeObserver(observer ?? (Any).self)
     }
 
     func image(forKey key: String) -> UIImage? {
