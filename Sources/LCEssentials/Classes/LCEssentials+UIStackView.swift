@@ -27,42 +27,69 @@ import UIKit
 // MARK: - Initializers
 @available(iOS 9.0, *)
 public extension UIStackView {
-
-    /// SwifterSwift: Initialize an UIStackView with an array of UIView and common parameters.
-    ///
-    ///     let stackView = UIStackView(arrangedSubviews: [UIView(), UIView()], axis: .vertical)
-    ///
-    /// - Parameters:
-    ///   - arrangedSubviews: The UIViews to add to the stack.
-    ///   - axis: The axis along which the arranged views are laid out.
-    ///   - spacing: The distance in points between the adjacent edges of the stack view’s arranged views.(default: 0.0)
-    ///   - alignment: The alignment of the arranged subviews perpendicular to the stack view’s axis. (default: .fill)
-    ///   - distribution: The distribution of the arranged views along the stack view’s axis.(default: .fill)
-    convenience init(arrangedSubviews: [UIView], axis: NSLayoutConstraint.Axis, spacing: CGFloat = 0.0,
-                     alignment: UIStackView.Alignment = .fill, distribution: UIStackView.Distribution = .fill) {
-        self.init(arrangedSubviews: arrangedSubviews)
+    
+    convenience init(arrangedSubviews: [UIView]? = nil,
+                     axis: NSLayoutConstraint.Axis = .vertical,
+                     spacing: CGFloat = 0.0,
+                     alignment: UIStackView.Alignment = .fill,
+                     distribution: UIStackView.Distribution = .fill,
+                     layoutMargins: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
+                     isMarginsRelative: Bool = true) {
+        if let arrangedSubviews = arrangedSubviews {
+            self.init(arrangedSubviews: arrangedSubviews)
+        } else {
+            self.init()
+        }
         self.axis = axis
         self.spacing = spacing
         self.alignment = alignment
         self.distribution = distribution
+        self.layoutMargins = layoutMargins
+        self.isLayoutMarginsRelativeArrangement = isMarginsRelative
     }
 
-    /// SwifterSwift: Adds array of views to the end of the arrangedSubviews array.
-    ///
-    /// - Parameter views: views array.
     func addArrangedSubviews(_ views: [UIView]) {
         for view in views {
             addArrangedSubview(view)
         }
     }
-
-    /// SwifterSwift: Removes all views in stack’s array of arranged subviews.
-    func removeArrangedSubviews() {
-        for view in arrangedSubviews {
-            removeArrangedSubview(view)
-            view.removeFromSuperview()
+    
+    func addArrangedSubviews(_ views: [UIView], translateAutoresizing: Bool = false) {
+        views.forEach { subview in
+            addArrangedSubview(subview)
+            subview.translatesAutoresizingMaskIntoConstraints = translateAutoresizing
+        }
+    }
+    
+    func removeAllArrangedSubviews() {
+        arrangedSubviews.forEach {
+            self.removeArrangedSubview($0)
+            NSLayoutConstraint.deactivate($0.constraints)
+            $0.removeFromSuperview()
         }
     }
 
+    private func addSpace(height: CGFloat? = nil, width: CGFloat? = nil, backgroundColor: UIColor = .clear) {
+        let spaceView = UIView()
+        spaceView.backgroundColor = backgroundColor
+        spaceView.translatesAutoresizingMaskIntoConstraints = false
+        if let height = height {
+            spaceView.height(size: height)
+        }
+        if let width = width {
+            spaceView.width(size: width)
+        }
+        addArrangedSubview(spaceView)
+    }
+    
+    func addSpace(_ size: CGFloat, backgroundColor: UIColor = .clear) {
+        switch self.axis {
+        case .vertical:
+            addSpace(height: size, backgroundColor: backgroundColor)
+        case .horizontal:
+            addSpace(width: size, backgroundColor: backgroundColor)
+        default: break
+        }
+    }
 }
 #endif

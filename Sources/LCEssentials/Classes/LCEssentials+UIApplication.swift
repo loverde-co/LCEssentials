@@ -1,5 +1,5 @@
 //  
-// Copyright (c) 2018 Loverde Co.
+// Copyright (c) 2022 Loverde Co.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,24 @@
 
 import Foundation
 
-extension Formatter {
-    static let currency = NumberFormatter(style: .currency)
-    static let currencyUS = NumberFormatter(style: .currency, locale: .us)
-    static let currencyBR = NumberFormatter(style: .currency, locale: .br)
+public extension UIApplication {
+    
+    static func openURL(urlStr: String) {
+        guard let url  = URL(string: urlStr) else { return }
+        if UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        } else {
+            // App is not installed
+            guard let storeApp  = URL(string: urlStr) else { return }
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(storeApp, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(storeApp)
+            }
+        }
+    }
 }

@@ -104,21 +104,6 @@ public extension UITableView {
         return headerFooterView
     }
 
-    /// SwifterSwift: Scroll to bottom of TableView.
-    ///
-    /// - Parameter animated: set true to animate scroll (default is true).
-    func scrollToBottom(animated: Bool = true) {
-        let bottomOffset = CGPoint(x: 0, y: contentSize.height - bounds.size.height)
-        setContentOffset(bottomOffset, animated: animated)
-    }
-
-    /// SwifterSwift: Scroll to top of TableView.
-    ///
-    /// - Parameter animated: set true to animate scroll (default is true).
-    func scrollToTop(animated: Bool = true) {
-        setContentOffset(CGPoint.zero, animated: animated)
-    }
-
     /// SwifterSwift: Check whether IndexPath is valid within the tableView
     ///
     /// - Parameter indexPath: An IndexPath to check

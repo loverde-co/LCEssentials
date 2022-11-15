@@ -36,11 +36,16 @@ public enum httpMethod: String {
 }
 /// Loverde Co.: API generic struct for simple requests
 public struct API {
-    static let defaultError = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN, code: LCEssentials.DEFAULT_ERROR_CODE, userInfo: [ NSLocalizedDescriptionKey: LCEssentials.DEFAULT_ERROR_MSG ])
+    static let defaultError = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN,
+                                      code: LCEssentials.DEFAULT_ERROR_CODE,
+                                      userInfo: [ NSLocalizedDescriptionKey: LCEssentials.DEFAULT_ERROR_MSG ])
+    
     public static var persistConnectionDelay: Double = 3
     public static var headers: [String: String]!
     public static var defaultParams: [String:Any] = [String: Any]()
-    public static var defaultHeaders: [String: String] = ["Accept": "application/json", "Content-Type": "application/json; charset=UTF-8", "Accept-Encoding": "gzip"]
+    public static var defaultHeaders: [String: String] = ["Accept": "application/json",
+                                                          "Content-Type": "application/json; charset=UTF-8",
+                                                          "Accept-Encoding": "gzip"]
     public static var url: String = ""
     
     /// Loverde Co.: API Requests made simple way
@@ -50,8 +55,16 @@ public struct API {
     /// - Parameters: jsonEncoding - bool
     /// - Parameters: debug - bool - show or hide
     /// - Parameters: persistConnection - bool - if error, re do the request
-    public static func request(_ params: [String: Any], _ method: httpMethod, jsonEncoding: Bool = true, debug:Bool = true, persistConnection:Bool = false,
-                               function: String = #function, file: String = #file, line: Int = #line, column: Int = #column, completion: @escaping (Result<Any, Swift.Error>) -> ()){
+    public static func request(_ params: [String: Any],
+                               _ method: httpMethod,
+                               jsonEncoding: Bool = true,
+                               debug: Bool = true,
+                               persistConnection: Bool = false,
+                               function: String = #function,
+                               file: String = #file,
+                               line: Int = #line,
+                               column: Int = #column,
+                               completion: @escaping (Result<Any, Swift.Error>) -> ()){
         do {
             // - Check if URL is valid and replace URL params on address
             if let urlReq = URL(string: url.replaceURL(params)) {

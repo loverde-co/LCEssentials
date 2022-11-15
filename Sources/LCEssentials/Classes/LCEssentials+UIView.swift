@@ -24,19 +24,255 @@ import Foundation
 #if os(iOS) || os(macOS)
 import UIKit
 
+typealias GradientPoints = (startPoint: CGPoint, endPoint: CGPoint)
+
+public enum GradientOrientation {
+    case topRightBottomLeft
+    case topLeftBottomRight
+    case horizontal
+    case vertical
+
+    var startPoint: CGPoint {
+        return points.startPoint
+    }
+
+    var endPoint: CGPoint {
+        return points.endPoint
+    }
+
+    var points: GradientPoints {
+        switch self {
+        case .topRightBottomLeft:
+            return (CGPoint(x: 0.0, y: 1.0), CGPoint(x: 1.0, y: 0.0))
+        case .topLeftBottomRight:
+            return (CGPoint(x: 0.0, y: 0.0), CGPoint(x: 1, y: 1))
+        case .horizontal:
+            return (CGPoint(x: 0.0, y: 0.5), CGPoint(x: 1.0, y: 0.5))
+        case .vertical:
+            return (CGPoint(x: 0.0, y: 0.0), CGPoint(x: 0.0, y: 1.0))
+        }
+    }
+}
+
 public enum EnumBorderSide {
     case top, bottom, left, right
 }
 
 public extension UIView {
     
+    enum AnchorType {
+        case all
+        case top
+        case bottom
+        case leading
+        case trailing
+        case heigth
+        case width
+        case centerX
+        case centerY
+        case bottomOf
+        case leadingToTrailing
+        case trailingToLeading
+        case topGreaterThanOrEqualTo
+        case bottomGreaterThanOrEqualTo
+        case topToTopGreaterThanOrEqualTo
+        case left
+        case right
+    }
+    
     static var className: String {
         return String(describing: self)
     }
-    @IBInspectable
-    var name: String? {
-        get{ return accessibilityLabel }
-        set{ accessibilityLabel = newValue }
+    
+    var heightConstraint: NSLayoutConstraint? {
+        get {
+            return constraints.first(where: {
+                $0.firstAttribute == .height && $0.relation == .equal
+            })
+        }
+        set { setNeedsLayout() }
+    }
+    
+    var widthConstraint: NSLayoutConstraint? {
+        get {
+            return constraints.first(where: {
+                $0.firstAttribute == .width && $0.relation == .equal
+            })
+        }
+        set { setNeedsLayout() }
+    }
+
+    var bottomConstraint: NSLayoutConstraint? {
+        get {
+            return constraints.first(where: {
+                $0.firstAttribute == .bottom && $0.relation == .equal
+            })
+        }
+        
+        set { setNeedsLayout() }
+    }
+    
+    var leadingConstraint: NSLayoutConstraint? {
+        get {
+            return constraints.first(where: {
+                $0.firstAttribute == .leading && $0.relation == .equal
+            })
+        }
+    }
+    
+    var trailingConstraints: NSLayoutConstraint? {
+        get {
+            return constraints.first(where: {
+                $0.firstAttribute == .trailing && $0.relation == .equal
+            })
+        }
+    }
+    
+    var globalPoint :CGPoint? {
+       return self.superview?.convert(self.frame.origin, to: nil)
+    }
+
+    var globalFrame :CGRect? {
+       return self.superview?.convert(self.frame, to: nil)
+    }
+    
+    /// Loverde Co: Border color of view; also inspectable from Storyboard.
+    var borderColor: UIColor? {
+        get {
+            guard let color = layer.borderColor else { return nil }
+            return UIColor(cgColor: color)
+        }
+        set {
+            guard let color = newValue else {
+                layer.borderColor = nil
+                return
+            }
+            // Fix React-Native conflict issue
+            guard String(describing: type(of: color)) != "__NSCFType" else { return }
+            layer.borderColor = color.cgColor
+        }
+    }
+
+    /// Loverde Co: Border width of view; also inspectable from Storyboard.
+    var borderWidth: CGFloat {
+        get {
+            return layer.borderWidth
+        }
+        set {
+            layer.borderWidth = newValue
+        }
+    }
+
+    /// Loverde Co: Corner radius of view; also inspectable from Storyboard.
+    var cornerRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        set {
+            layer.masksToBounds = true
+            layer.cornerRadius = newValue
+        }
+    }
+
+    /// Loverde Co: Check if view is in RTL format.
+    var isRightToLeft: Bool {
+        if #available(iOS 10.0, *, tvOS 10.0, *) {
+            return effectiveUserInterfaceLayoutDirection == .rightToLeft
+        } else {
+            return false
+        }
+    }
+
+    /// Loverde Co: Take screenshot of view (if applicable).
+    var screenshot: UIImage? {
+        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, 0)
+        defer {
+            UIGraphicsEndImageContext()
+        }
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        layer.render(in: context)
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+    
+    /// Loverde Co: transform UIView to UIImage
+    func asImage() -> UIImage {
+        if #available(iOS 10.0, *) {
+            let renderer = UIGraphicsImageRenderer(bounds: bounds)
+            return renderer.image { rendererContext in
+                layer.render(in: rendererContext.cgContext)
+            }
+        } else {
+            UIGraphicsBeginImageContext(self.frame.size)
+            self.layer.render(in:UIGraphicsGetCurrentContext()!)
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return UIImage(cgImage: image!.cgImage!)
+        }
+    }
+    
+    func copyElement<T: UIView>() -> T {
+        return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as! T
+    }
+    
+    func addSubview(_ subview: UIView, constraints: Bool = false) {
+        addSubview(subview)
+        subview.translatesAutoresizingMaskIntoConstraints = constraints
+    }
+    
+    func addSubviews(_ subviews: [UIView], constraints: Bool = false) {
+        for subview in subviews {
+            addSubview(subview)
+            subview.translatesAutoresizingMaskIntoConstraints = constraints
+        }
+    }
+    
+    @discardableResult
+    func height(size: CGFloat) -> NSLayoutConstraint {
+        
+        let constraint: NSLayoutConstraint
+        constraint = heightAnchor.constraint(equalToConstant: size)
+        constraint.isActive = true
+        return constraint
+    }
+    
+    @discardableResult
+    func height(min: CGFloat) -> NSLayoutConstraint {
+        let constraint: NSLayoutConstraint
+        constraint = heightAnchor.constraint(greaterThanOrEqualToConstant: min)
+        constraint.isActive = true
+        return constraint
+    }
+    
+    @discardableResult
+    func width(size: CGFloat) -> NSLayoutConstraint {
+        let constraint: NSLayoutConstraint
+        constraint = widthAnchor.constraint(equalToConstant: size)
+        constraint.isActive = true
+        return constraint
+    }
+    
+    @discardableResult
+    func width(min: CGFloat) -> NSLayoutConstraint {
+        let constraint: NSLayoutConstraint
+        constraint = widthAnchor.constraint(greaterThanOrEqualToConstant: min)
+        constraint.isActive = true
+        return constraint
+    }
+    
+    @discardableResult
+    func centerX(to: UIView, padding: CGFloat? = 0) -> NSLayoutConstraint {
+        let constraint: NSLayoutConstraint
+        constraint = centerXAnchor.constraint(equalTo: to.centerXAnchor, constant: padding ?? 0)
+        constraint.isActive = true
+        return constraint
+    }
+    
+    @discardableResult
+    func centerY(to: UIView, padding: CGFloat? = nil) -> NSLayoutConstraint {
+        let constraint: NSLayoutConstraint
+        constraint = centerYAnchor.constraint(equalTo: to.centerYAnchor, constant: padding ?? 0)
+        constraint.isActive = true
+        return constraint
     }
     
     static func instantiate(withNibName: String? = nil, owner: Any? = nil, options: [UINib.OptionsKey : Any]? = nil) -> [Any]? {
@@ -185,6 +421,27 @@ public extension UIView {
         self.layer.shadowOpacity = 0.0
     }
     
+    /// Insert a blur in a view. Must insert on init of it
+    ///
+    /// - Parameter style: Blur styles available for blur effect objects.
+    /// - Parameter alpha: The view’s alpha value.
+    /// - Returns: An object that implements some complex visual effects.
+    func insertBlurView (style: UIBlurEffect.Style, alpha: CGFloat = 0.9) -> UIVisualEffectView {
+        self.backgroundColor = UIColor.clear
+
+        let blurEffect = UIBlurEffect(style: style)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.bounds
+        blurEffectView.alpha = alpha
+        
+        blurEffectView.autoresizingMask = [
+            .flexibleWidth, .flexibleHeight
+        ]
+        
+        self.insertSubview(blurEffectView, at: 0)
+        return blurEffectView
+    }
+    
     /**
      Fade in a view with a duration
 
@@ -289,82 +546,105 @@ public extension UIView {
         }
     }
     
-    /// Loverde Co: Border color of view; also inspectable from Storyboard.
-    @IBInspectable var borderColor: UIColor? {
-        get {
-            guard let color = layer.borderColor else { return nil }
-            return UIColor(cgColor: color)
-        }
-        set {
-            guard let color = newValue else {
-                layer.borderColor = nil
-                return
+    func applyConstraints(_ toView: UIView,
+                          applyAnchor: [(anchor: AnchorType, constraint: CGFloat)],
+                          safeArea: Bool = false) {
+        applyAnchor.forEach { element in
+            switch element.anchor {
+            case .all:
+                if #available(iOS 11.0, *) {
+                    self.topAnchor.constraint(equalTo: (safeArea ? toView.safeAreaLayoutGuide.topAnchor : toView.topAnchor),
+                                              constant: element.constraint).isActive = true
+                } else {
+                    self.topAnchor.constraint(equalTo: toView.topAnchor,
+                                              constant: element.constraint).isActive = true
+                }
+                self.leadingAnchor.constraint(equalTo: toView.leadingAnchor,
+                                              constant: element.constraint).isActive = true
+                self.trailingAnchor.constraint(equalTo: toView.trailingAnchor,
+                                               constant: element.constraint).isActive = true
+                self.bottomAnchor.constraint(equalTo: toView.bottomAnchor,
+                                             constant: element.constraint).isActive = true
+            case .top:
+                if #available(iOS 11.0, *) {
+                    self.topAnchor.constraint(equalTo: (safeArea ? toView.safeAreaLayoutGuide.topAnchor : toView.topAnchor),
+                                              constant: element.constraint).isActive = true
+                } else {
+                    self.topAnchor.constraint(equalTo: toView.topAnchor,
+                                              constant: element.constraint).isActive = true
+                }
+                
+            case .bottom:
+                self.bottomAnchor.constraint(equalTo: toView.bottomAnchor,
+                                             constant: element.constraint).isActive = true
+                
+            case .bottomOf:
+                self.topAnchor.constraint(equalTo: toView.bottomAnchor,
+                                          constant: element.constraint).isActive = true
+                
+            case .leading:
+                self.leadingAnchor.constraint(equalTo: toView.leadingAnchor,
+                                              constant: element.constraint).isActive = true
+                
+            case .leadingToTrailing:
+                self.leadingAnchor.constraint(equalTo: toView.trailingAnchor,
+                                              constant: element.constraint).isActive = true
+                
+            case .trailing:
+                self.trailingAnchor.constraint(equalTo: toView.trailingAnchor,
+                                               constant: element.constraint).isActive = true
+                
+            case .trailingToLeading:
+                self.trailingAnchor.constraint(equalTo: toView.leadingAnchor,
+                                               constant: element.constraint).isActive = true
+                
+            case .heigth:
+                self.heightAnchor.constraint(equalTo: toView.heightAnchor,
+                                             constant: element.constraint).isActive = true
+                
+            case .width:
+                self.widthAnchor.constraint(equalTo: toView.widthAnchor,
+                                            constant: element.constraint).isActive = true
+                
+            case .centerX:
+                self.centerXAnchor.constraint(equalTo: toView.centerXAnchor,
+                                              constant: element.constraint).isActive = true
+                
+            case .centerY:
+                self.centerYAnchor.constraint(equalTo: toView.centerYAnchor,
+                                              constant: element.constraint).isActive = true
+                
+            case .topGreaterThanOrEqualTo:
+                self.topAnchor.constraint(greaterThanOrEqualTo: toView.bottomAnchor,
+                                          constant: element.constraint).isActive = true
+                
+            case .topToTopGreaterThanOrEqualTo:
+                self.topAnchor.constraint(greaterThanOrEqualTo: toView.topAnchor,
+                                          constant: element.constraint).isActive = true
+                
+            case .bottomGreaterThanOrEqualTo:
+                self.bottomAnchor.constraint(greaterThanOrEqualTo: toView.bottomAnchor,
+                                             constant: element.constraint).isActive = true
+                
+            case .left:
+                self.leftAnchor.constraint(equalTo: toView.leftAnchor,
+                                           constant: element.constraint).isActive = true
+                
+            case .right:
+                self.rightAnchor.constraint(equalTo: toView.rightAnchor,
+                                            constant: element.constraint).isActive = true
             }
-            // Fix React-Native conflict issue
-            guard String(describing: type(of: color)) != "__NSCFType" else { return }
-            layer.borderColor = color.cgColor
         }
-    }
-
-    /// Loverde Co: Border width of view; also inspectable from Storyboard.
-    @IBInspectable var borderWidth: CGFloat {
-        get {
-            return layer.borderWidth
-        }
-        set {
-            layer.borderWidth = newValue
-        }
-    }
-
-    /// Loverde Co: Corner radius of view; also inspectable from Storyboard.
-    @IBInspectable var cornerRadius: CGFloat {
-        get {
-            return layer.cornerRadius
-        }
-        set {
-            layer.masksToBounds = true
-            layer.cornerRadius = newValue
-        }
-    }
-
-    /// Loverde Co: Check if view is in RTL format.
-    var isRightToLeft: Bool {
-        if #available(iOS 10.0, *, tvOS 10.0, *) {
-            return effectiveUserInterfaceLayoutDirection == .rightToLeft
-        } else {
-            return false
-        }
-    }
-
-    /// Loverde Co: Take screenshot of view (if applicable).
-    var screenshot: UIImage? {
-        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, 0)
-        defer {
-            UIGraphicsEndImageContext()
-        }
-        guard let context = UIGraphicsGetCurrentContext() else { return nil }
-        layer.render(in: context)
-        return UIGraphicsGetImageFromCurrentImageContext()
     }
     
-    /// Loverde Co: transform UIView to UIImage
-    func asImage() -> UIImage {
-        if #available(iOS 10.0, *) {
-            let renderer = UIGraphicsImageRenderer(bounds: bounds)
-            return renderer.image { rendererContext in
-                layer.render(in: rendererContext.cgContext)
-            }
-        } else {
-            UIGraphicsBeginImageContext(self.frame.size)
-            self.layer.render(in:UIGraphicsGetCurrentContext()!)
-            let image = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            return UIImage(cgImage: image!.cgImage!)
-        }
-    }
-    
-    func copyElement<T: UIView>() -> T {
-        return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as! T
+    func applyConstraint(_ toScrollView: UIScrollView) {
+        applyConstraints(toScrollView, applyAnchor: [(.top, 0.0), (.leading, 0.0), (.trailing, 0.0), (.bottom, 0.0)])
+        let widthConstraint = widthAnchor.constraint(equalTo: toScrollView.widthAnchor)
+        widthConstraint.isActive = true
+        
+        let heigthConstraint = heightAnchor.constraint(equalTo: toScrollView.heightAnchor)
+        heigthConstraint.priority = UILayoutPriority(250.0)
+        heigthConstraint.isActive = true
     }
 }
 #endif

@@ -24,16 +24,6 @@ import Foundation
 #if os(iOS) || os(macOS)
 import UIKit
 
-public func insertBlurView (view: UIView, style: UIBlurEffect.Style) -> UIVisualEffectView {
-    view.backgroundColor = UIColor.clear
-
-    let blurEffect = UIBlurEffect(style: style)
-    let blurEffectView = UIVisualEffectView(effect: blurEffect)
-    blurEffectView.frame = view.bounds
-    view.insertSubview(blurEffectView, at: 0)
-    return blurEffectView
-}
-
 public class UIViewWithShadow: CustomUIView {
     private var shadowLayer: CAShapeLayer!
     //internal var cornerRadius: CGFloat = 25.0
@@ -57,25 +47,5 @@ public class UIViewWithShadow: CustomUIView {
             layer.insertSublayer(shadowLayer, at: 0)
         }
     }
-    
-//    public func addShadowTo(shadowView: UIView, shadowWidth: CGFloat, shadowHeight: CGFloat){
-//        let shadow = UIViewWithShadow()
-//        let parent = shadowView.getParentViewController()
-//        if let viewController = parent {
-//            viewController.view.addSubview(shadowView)
-//
-//            // Auto layout code using anchors (iOS9+)
-//            // set witdh and height constraints if necessary
-//            shadow.translatesAutoresizingMaskIntoConstraints = false
-//            let horizontalConstraint = shadow.centerXAnchor.constraint(equalTo: shadowView.centerXAnchor)
-//            let verticalConstraint = shadow.centerYAnchor.constraint(equalTo: shadowView.centerYAnchor)
-//            let widthConstraint = shadow.widthAnchor.constraint(equalToConstant: viewController.view.frame.size.width - shadowWidth)
-//            let heightConstraint = shadow.heightAnchor.constraint(equalToConstant: shadowView.frame.size.height - shadowHeight)
-//            NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, heightConstraint])
-//            viewController.view.bringSubview(toFront: shadowView)
-//        }else{
-//            fatalError("Ops! There is no ViewController setted")
-//        }
-//    }
 }
 #endif

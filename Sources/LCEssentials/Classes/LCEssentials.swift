@@ -84,55 +84,6 @@ public struct LCEssentials {
     public static let DEFAULT_ERROR_MSG = "Error Unknow"
     
     #if os(iOS) || os(macOS)
-    public let DEVICE_NAME: String = UIDevice().modelName
-    /// - LoverdeCo: Tell if the device is iPhone older family or descontinued
-    public var OLDER_DEVICES: Bool {
-        return !(LCEssentials().DEVICE_NAME == "iPhone SE" || LCEssentials().DEVICE_NAME == "iPhone 5"
-            || LCEssentials().DEVICE_NAME == "iPhone 5c" || LCEssentials().DEVICE_NAME == "iPhone 5s"
-            || LCEssentials().DEVICE_NAME == "iPhone 4" || LCEssentials().DEVICE_NAME == "iPhone 4s")
-    }
-    
-    /// - LoverdeCo: Tell if the device is iPhone family small sizes
-    public static var SMALL_DEVICES: Bool {
-        var isVeryOld = true
-        if (LCEssentials().DEVICE_NAME == "iPhone SE" || LCEssentials().DEVICE_NAME == "iPhone 5"
-            || LCEssentials().DEVICE_NAME == "iPhone 5c" || LCEssentials().DEVICE_NAME == "iPhone 5s"
-            || LCEssentials().DEVICE_NAME == "iPhone 4" || LCEssentials().DEVICE_NAME == "iPhone 4s") {
-            isVeryOld = true
-        }else{
-            isVeryOld = false
-        }
-        return isVeryOld
-    }
-    
-    /// - LoverdeCo: Tell if the device is iPhone  plus sizes
-    public static var BIGGER_DEVICES: Bool {
-        var isVeryOld = false
-        if (LCEssentials().DEVICE_NAME == "iPhone 6s Plus" || LCEssentials().DEVICE_NAME == "iPhone 7 Plus" || LCEssentials().DEVICE_NAME == "iPhone 8 Plus") {
-            isVeryOld = true
-        }
-        return isVeryOld
-    }
-    
-    /// - LoverdeCo: Tell if the device is iPhone regular sizes
-    public static var REGULAR_DEVICES: Bool {
-        var isVeryOld = false
-        if (LCEssentials().DEVICE_NAME == "iPhone 6" || LCEssentials().DEVICE_NAME == "iPhone 6s"
-            || LCEssentials().DEVICE_NAME == "iPhone 7" || LCEssentials().DEVICE_NAME == "iPhone 8") {
-            isVeryOld = true
-        }
-        return isVeryOld
-    }
-    /// - LoverdeCo: Tell if the device is iPhone family X
-    public static var X_DEVICES: Bool {
-        var isVeryOld = false
-        if (LCEssentials().DEVICE_NAME == "iPhone X" || LCEssentials().DEVICE_NAME == "iPhone XS"
-            || LCEssentials().DEVICE_NAME == "iPhone XS Max" || LCEssentials().DEVICE_NAME == "iPhone XR"
-            || LCEssentials().DEVICE_NAME.contains("iPhone 11") || LCEssentials().DEVICE_NAME.contains("iPhone 12")) {
-            isVeryOld = true
-        }
-        return isVeryOld
-    }
     /// Extract the file name from the file path
     ///
     /// - Parameter filePath: Full file path in bundle

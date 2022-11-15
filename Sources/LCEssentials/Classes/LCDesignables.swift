@@ -66,42 +66,6 @@ open class Circle: UIView {
     }
 }
 
-@IBDesignable
-open class DashedLines: UIView {
-    
-    @IBInspectable public override var cornerRadius: CGFloat {
-        didSet {
-            layer.cornerRadius = cornerRadius
-            layer.masksToBounds = cornerRadius > 0
-        }
-    }
-    @IBInspectable var dashWidth: CGFloat = 0
-    @IBInspectable var dashColor: UIColor = .clear
-    @IBInspectable var dashLength: CGFloat = 0
-    @IBInspectable var betweenDashesSpace: CGFloat = 0
-    
-    var dashBorder: CAShapeLayer?
-    
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        dashBorder?.removeFromSuperlayer()
-        let dashBorder = CAShapeLayer()
-        dashBorder.lineWidth = dashWidth
-        dashBorder.strokeColor = dashColor.cgColor
-        dashBorder.lineDashPattern = [dashLength, betweenDashesSpace] as [NSNumber]
-        dashBorder.frame = bounds
-        dashBorder.fillColor = nil
-        if cornerRadius > 0 {
-            dashBorder.path = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath
-        } else {
-            dashBorder.path = UIBezierPath(rect: bounds).cgPath
-        }
-        layer.addSublayer(dashBorder)
-        self.dashBorder = dashBorder
-    }
-}
-
-
 @IBDesignable open class DottedLine: UIView {
     
     @IBInspectable
@@ -672,12 +636,6 @@ class RotatingCircularGradientProgressBar: UIView {
     
     private var color: UIColor!
     private var size: CGFloat! // 7.0 is great for border
-    
-    @IBInspectable open override var borderColor: UIColor! {
-        didSet {
-            self.color = borderColor
-        }
-    }
     
     @IBInspectable open var borderSize: CGFloat = 0.0 {
         didSet {

@@ -24,7 +24,7 @@ import Foundation
 import UIKit
 
 public extension FileManager {
-
+    
     func createDirectory(_ directoryName: String) -> URL? {
         let fileManager = FileManager.default
         if let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
@@ -42,9 +42,9 @@ public extension FileManager {
             return nil
         }
     }
-
+    
     func saveFileToDirectory( _ sourceURL: URL, toPathURL: URL ) -> Bool {
-
+        
         do {
             try FileManager.default.moveItem(at: sourceURL, to: toPathURL)
             return true
@@ -53,16 +53,16 @@ public extension FileManager {
             return false
         }
     }
-
-    #if os(iOS) || os(macOS)
+    
+#if os(iOS) || os(macOS)
     func saveImageToDirectory( _ imageWithPath : String, imagem : UIImage ) -> Bool {
-
+        
         let data = imagem.pngData()
-
+        
         let success = (try? data!.write(to: URL(fileURLWithPath: imageWithPath), options: [])) != nil
-
+        
         //let success = NSFileManager.defaultManager().createFileAtPath(imageWithPath, contents: data, attributes: nil)
-
+        
         if success {
             return true
         } else {
@@ -70,14 +70,14 @@ public extension FileManager {
             return false
         }
     }
-    #endif
-
+#endif
+    
     func retrieveFile( _ directoryAndFile: String ) -> URL {
         let documentsPath = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         let logsPath = documentsPath.appendingPathComponent(directoryAndFile)
         return logsPath
     }
-
+    
     func removeFile( _ directoryAndFile: String ) -> Bool {
         do {
             try self.removeItem(atPath: directoryAndFile)
@@ -88,7 +88,12 @@ public extension FileManager {
             return false
         }
     }
-
+    /// LoverdeCo: Retrieve all files names as dictionary.
+    ///
+    /// - Parameters:
+    ///   - directoryName: Give a directory name.
+    /// - Returns:
+    /// An array of files name: [String].
     func retrieveAllFilesFromDirectory(directoryName: String) -> [String]? {
         let fileMngr = FileManager.default;
         let docs = fileMngr.urls(for: .documentDirectory, in: .userDomainMask)[0].path
@@ -102,33 +107,22 @@ public extension FileManager {
             print("Error: \(error.localizedDescription)")
             return nil
         }
-        //        let fileMngr = FileManager.default;
-        //
-        //        // Full path to documents directory
-        //        let docs = fileMngr.urls(for: .documentDirectory, in: .userDomainMask)[0].path
-        //
-        //        let final = try? fileMngr.contentsOfDirectory(atPath:docs)
-        //        print(final!.debugDescription)
-        //
-        //
-        //        // List all contents of directory and return as [String] OR nil if failed
-        //        return try? fileMngr.contentsOfDirectory(atPath:"\(docs)/\(directoryName)")
-    }
-
-    func directoryExistsAtPath(_ path: String) -> Bool {
-        var isDirectory = ObjCBool(true)
-        let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
-        return exists && isDirectory.boolValue
-    }
-
-    func convertToURL(path:String)-> URL?{
-        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path
-        do {
-            _ = try FileManager.default.contentsOfDirectory(atPath: "\(docs)/\(path)")
-            return URL(fileURLWithPath: "\(docs)/\(path)", isDirectory: true)
-        } catch let error {
-            print("Error: \(error.localizedDescription)")
-            return nil
+        
+        func directoryExistsAtPath(_ path: String) -> Bool {
+            var isDirectory = ObjCBool(true)
+            let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
+            return exists && isDirectory.boolValue
+        }
+        
+        func convertToURL(path:String)-> URL?{
+            let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path
+            do {
+                _ = try FileManager.default.contentsOfDirectory(atPath: "\(docs)/\(path)")
+                return URL(fileURLWithPath: "\(docs)/\(path)", isDirectory: true)
+            } catch let error {
+                print("Error: \(error.localizedDescription)")
+                return nil
+            }
         }
     }
 }

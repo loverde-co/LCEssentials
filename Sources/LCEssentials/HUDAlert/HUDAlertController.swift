@@ -115,7 +115,7 @@ public class HUDAlertController: UIViewController {
             self.lblDescr.text = nil
         }
         self.actions.removeAll()
-        self.stackView.removeArrangedSubviews()
+        self.stackView.removeAllArrangedSubviews()
         var internalTag: Int = 0
         var totalHeight: CGFloat = 0.0
         if let options = options {
@@ -170,7 +170,7 @@ public class HUDAlertController: UIViewController {
             }
         }else{
             self.actions.removeAll()
-            self.stackView.removeArrangedSubviews()
+            self.stackView.removeAllArrangedSubviews()
             self.stackView.spacing = 0
             self.stackHeight.constant = 0
             self.stackView.isHidden = true

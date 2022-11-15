@@ -87,14 +87,12 @@ public extension String {
         return strOutput
     }
     
-    var isEmailValid: Bool {
-        do {
-            let regex = try NSRegularExpression(pattern: "(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])", options: .caseInsensitive)
-            return regex.firstMatch(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, self.count)) != nil
-        } catch {
-            return false
-        }
+    var isEmail: Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,20}"
+        let emailTest  = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: self)
     }
+    
     var isCPF: Bool {
         let cpf = self.onlyNumbers()
         guard cpf.count == 11 else { return false }
@@ -125,31 +123,7 @@ public extension String {
 
         return temp1 == d1 && temp2 == d2
     }
-
-    #if canImport(Foundation)
-    /// SwifterSwift: Check if string is a valid Swift number. Note: In North America, "." is the decimal separator, while in many parts of Europe "," is used,
-    ///
-    ///        "123".isNumeric -> true
-    ///     "1.3".isNumeric -> true (en_US)
-    ///     "1,3".isNumeric -> true (fr_FR)
-    ///        "abc".isNumeric -> false
-    ///
-    var isNumeric: Bool {
-        let scanner = Scanner(string: self)
-        scanner.locale = NSLocale.current
-        #if os(Linux) || targetEnvironment(macCatalyst)
-        return scanner.scanDecimal() != nil && scanner.isAtEnd
-        #else
-        return scanner.scanDecimal(nil) && scanner.isAtEnd
-        #endif
-    }
-    #endif
-    /// SwifterSwift.: Bool value from string (if applicable).
-    ///
-    ///        "1".bool -> true
-    ///        "False".bool -> false
-    ///        "Hello".bool = nil
-    ///
+    
     var bool: Bool? {
         let selfLowercased = trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         switch selfLowercased {
@@ -161,34 +135,65 @@ public extension String {
             return nil
         }
     }
-
-    /// SwifterSwift: Check if string contains one or more emojis.
+    
+    var removeSpecialChars: String {
+        let okayChars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890-")
+        return self.filter {okayChars.contains($0) }
+    }
+    
+    var removeHTMLTags: String {
+        return self.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+    }
+    
+    var removeEmoji: String {
+        return self.components(separatedBy: CharacterSet.symbols).joined()
+    }
+    
+    var alphanumeric: String {
+        return self.components(separatedBy: CharacterSet.alphanumerics.inverted).joined()
+    }
+    
+    var alphanumericWithWhiteSpace: String {
+        return self.components(separatedBy: CharacterSet.alphanumerics.union(.whitespaces).inverted).joined()
+    }
+    
+    var lettersWithWhiteSpace: String {
+        return self.components(separatedBy: CharacterSet.letters.union(.whitespaces).inverted).joined()
+    }
+    
+    var letters: String {
+        return self.components(separatedBy: CharacterSet.letters.inverted).joined()
+    }
+    
+    var numbers: String {
+        return components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+    }
+    
+    /// Retorna a URL encontrada na string, caso exista. Se não, retorna nulo
     ///
-    ///        "Hello 😀".containEmoji -> true
-    ///
-    var containEmoji: Bool {
-        // http://stackoverflow.com/questions/30757193/find-out-if-character-in-string-is-emoji
-        for scalar in unicodeScalars {
-            switch scalar.value {
-            case 0x1F600...0x1F64F, // Emoticons
-            0x1F300...0x1F5FF, // Misc Symbols and Pictographs
-            0x1F680...0x1F6FF, // Transport and Map
-            0x1F1E6...0x1F1FF, // Regional country flags
-            0x2600...0x26FF, // Misc symbols
-            0x2700...0x27BF, // Dingbats
-            0xE0020...0xE007F, // Tags
-            0xFE00...0xFE0F, // Variation Selectors
-            0x1F900...0x1F9FF, // Supplemental Symbols and Pictographs
-            127000...127600, // Various asian characters
-            65024...65039, // Variation selector
-            9100...9300, // Misc items
-            8400...8447: // Combining Diacritical Marks for Symbols
-                return true
-            default:
-                continue
+    ///        let string = "Meu www.algumsite.com.br tem tudo que voce precisa."
+    ///        print(string.url)
+    ///        //Optional(www.algumsite.com.br)
+    var url: String? {
+        do {
+            let detector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+            let matches = detector.matches(in: self, options: [], range: NSRange(location: 0, length: self.utf16.count))
+            for match in matches {
+                return (self as NSString).substring(with: match.range)
             }
+        } catch {
+            return nil
         }
-        return false
+        return nil
+    }
+    
+    /// Retorna true caso contenha tag HTML na String
+    ///
+    ///        let string = "Meu <a href="www.algumsite.com.br">site</a> tem tudo que voce precisa."
+    ///        print(string.isHTML)
+    ///        //true
+    var isHTML: Bool {
+        return self.range(of: "<[^>]+>", options: .regularExpression, range: nil, locale: nil) != nil
     }
 
     /// SwifterSwift.: Lorem ipsum string of given length.
@@ -435,7 +440,8 @@ public extension String {
     /// - Parameters:
     ///   - withCurrFormatt: Give a input formatt as it comes in String.
     ///   - newFormatt: Give a new formatt you want in String
-    ///   - Returns: Date object.
+    /// - Returns:
+    /// Date object.
     func date(withCurrFormatt: String = "yyyy-MM-dd HH:mm:ss", newFormatt: String = "yyyy-MM-dd HH:mm:ss", localeIdentifier: String = "pt-BR", timeZone:TimeZone? = TimeZone.current) -> Date? {
         let date = self.date(withCurrFormatt: withCurrFormatt, localeIdentifier: localeIdentifier, timeZone: timeZone)
         let strDate = date?.string(stringFormat: newFormatt, localeIdentifier: localeIdentifier, timeZone: timeZone)
@@ -571,7 +577,7 @@ public extension String {
             let data = data(using: String.Encoding.utf8)
             else { return nil }
         do {
-            let attributedOptions: [NSAttributedString.DocumentReadingOptionKey : Any] = [
+            let attributedOptions: [NSAttributedString.DocumentReadingOptionKey: Any] = [
                 NSAttributedString.DocumentReadingOptionKey(rawValue: NSAttributedString.DocumentAttributeKey.documentType.rawValue): NSAttributedString.DocumentType.html,
                 NSAttributedString.DocumentReadingOptionKey(rawValue: NSAttributedString.DocumentAttributeKey.characterEncoding.rawValue): String.Encoding.utf8.rawValue
             ]
@@ -583,6 +589,50 @@ public extension String {
     }
     var html2String: String {
         return html2AttributedString?.string ?? ""
+    }
+    
+    /// Converte String para HTML com CSS.
+    ///
+    /// - Parameters:
+    ///   - font: Caso necessite uma fonte diferente ou que seja considerado o CSS nessa conversão.
+    ///   - csscolor: Cor da font em formato ASCII.
+    ///   - lineheight: Quantas linhas o texto pode conter. Digite 0 (zero) caso queira dinâmico.
+    ///   - csstextalign: Alinhamento do texto em formato CSS.
+    ///   - linkColor: Adiciona uma cor separada para a tag de link em HTML.
+    /// - Returns:
+    /// Retorna um NSAttributedString convertido.
+    func convertToHtml(font: UIFont?,
+                       csscolor: String = "black",
+                       lineheight: Int = 0,
+                       csstextalign: String = "left",
+                       linkColor: String = "blue") -> NSAttributedString? {
+        guard let font = font else { return html2AttributedString }
+        
+        let modifiedString = """
+        <style>
+            body{ font-family: '\(font.fontName)';
+                font-size:\(font.pointSize)px;
+                color: \(csscolor);
+                line-height: \(lineheight)px;
+                text-align: \(csstextalign); }
+            a{ color: \(linkColor); }
+        </style>\(self)
+        """;
+        
+        guard let data = modifiedString.data(using: .utf8) else {
+            return nil
+        }
+        
+        do {
+            return try NSAttributedString(data: data,
+                                          options: [
+                                            .documentType: NSAttributedString.DocumentType.html,
+                                            .characterEncoding: String.Encoding.utf8.rawValue
+                                          ], documentAttributes: nil)
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
     }
     
     func JSONStringToDictionary() -> [String:Any]? {
@@ -598,115 +648,15 @@ public extension String {
             return nil
         }
     }
-    //MARK: - Currency formatters alternative
-    //    let price = 1.99
-    //
-    //    print(Formatter.currency.locale)  // "en_US (current)\n"
-    //    print(price.currency)             // "$1.99\n"
-    //
-    //    Formatter.currency.locale = Locale(identifier: "pt_BR")
-    //    print(price.currency)  // "R$1,99\n"
-    //
-    //    Formatter.currency.locale = Locale(identifier: "en_UK")
-    //    print(price.currency)  // "£1.99\n"
-    //
-    //    print(price.currencyBR)  // "R$1,99\n"
-    //    print(price.currencyUS)  // "$1.99\n"s
-    func removeFormatAmount() -> Float {
-        let textValue   = self //"$1.200,33"
-        let nonDigits   = CharacterSet(charactersIn: "01234456789").inverted
-        let digitGroups = textValue.components(separatedBy:nonDigits).filter{!$0.isEmpty}
-        let textNumber  = digitGroups.dropLast().joined(separator:"")
-            + ( digitGroups.last!.count == 2
-                && digitGroups.count > 1 ? "." : "" )
-            + digitGroups.last!
-        
-        return Float(textNumber)!
-    }
-    func convertFloatToCurrency(value: Float, withSpace: Bool = false) -> String{
-        
-        let currencyFormatter = NumberFormatter()
-        currencyFormatter.usesGroupingSeparator = true
-        currencyFormatter.numberStyle = NumberFormatter.Style.currency
-        currencyFormatter.currencySymbol = withSpace ? "\(currencyFormatter.currencySymbol!) " : currencyFormatter.currencySymbol
-        // localize to your grouping and decimal separator
-        currencyFormatter.locale = NSLocale.current
-        let priceString = currencyFormatter.string(from: NSNumber(value: value))
-        return priceString!
-    }
     
-    func currencyInputFormatting(withSpace: Bool = false, withSymbol: Bool = true) -> String {
-        
-        var number: NSNumber!
+    var currencyStringToDouble: Double {
         let formatter = NumberFormatter()
-        formatter.usesGroupingSeparator = true
-        formatter.numberStyle = NumberFormatter.Style.currency
-        formatter.currencySymbol = withSymbol ? ( withSpace ? "\(formatter.currencySymbol!) " : formatter.currencySymbol ): ""
-        formatter.maximumFractionDigits = 2
-        formatter.minimumFractionDigits = 2
-        formatter.locale = NSLocale.current
+        let str = self.replacingOccurrences(of: " ", with: "")
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "pt_br")
+        let number = formatter.number(from: str)
         
-        var amountWithPrefix = self
-        
-        // remove from String: "$", ".", ","
-        let regex = try! NSRegularExpression(pattern: "[^0-9]", options: .caseInsensitive)
-        amountWithPrefix = regex.stringByReplacingMatches(in: amountWithPrefix, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, count), withTemplate: "")
-        
-        let double = (amountWithPrefix as NSString).doubleValue
-        number = NSNumber(value: (double / 100))
-        
-        // if first number is 0 or all numbers were deleted
-        guard number != 0 as NSNumber else {
-            return ""
-        }
-        
-        return formatter.string(from: number)!
-    }
-    
-    
-    func convertFloatToCurrency(value: Float) -> String{
-
-        let currencyFormatter = NumberFormatter()
-        currencyFormatter.usesGroupingSeparator = true
-        currencyFormatter.numberStyle = NumberFormatter.Style.currency
-        // localize to your grouping and decimal separator
-        currencyFormatter.locale = NSLocale.current
-        let priceString = currencyFormatter.string(from: NSNumber(value: value))
-        return priceString!
-    }
-    
-    func convertToCurrencyFormatt(value: Float) -> String?{
-        let currencyFormatter = NumberFormatter()
-        currencyFormatter.usesGroupingSeparator = true
-        currencyFormatter.numberStyle = NumberFormatter.Style.currency
-        // localize to your grouping and decimal separator
-        currencyFormatter.locale = NSLocale.current
-        
-        if let amountString = currencyFormatter.string(from: NSNumber(value: value)) {
-            // check if it has default space like EUR
-            let hasSpace = amountString.rangeOfCharacter(from: .whitespaces) != nil
-            
-            if let indexOfSymbol = amountString.firstIndex(of: Character(currencyFormatter.currencySymbol)) {
-                if amountString.startIndex == indexOfSymbol {
-                    currencyFormatter.paddingPosition = .afterPrefix
-                } else {
-                    currencyFormatter.paddingPosition = .beforeSuffix
-                }
-            }
-            if !hasSpace {
-                currencyFormatter.formatWidth = amountString.count + 1
-                currencyFormatter.paddingCharacter = " "
-            }
-        } else {
-            print("Error while making amount string from given amount: \(value)")
-            return nil
-        }
-        
-        if let finalAmountString = currencyFormatter.string(from: NSNumber(value: value)) {
-            return finalAmountString
-        } else {
-            return nil
-        }
+        return number?.doubleValue ?? 0.0
     }
     
     func toURL() -> NSURL? {

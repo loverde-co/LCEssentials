@@ -29,23 +29,22 @@ public extension UserDefaults {
         case isFirstTimeOnApp
     }
 
-    func setIsLoggedIn(value: Bool) {
-        set(value, forKey: UserDefaultsKeys.isLoggedIn.rawValue)
-        synchronize()
+    var isLoggedIn: Bool {
+        set {
+            set(newValue, forKey: UserDefaultsKeys.isLoggedIn.rawValue)
+            synchronize()
+        }
+        get { bool(forKey: UserDefaultsKeys.isLoggedIn.rawValue) }
     }
-
-    func setIsFirstTimeOnApp(value: Bool) {
-        set(value, forKey: UserDefaultsKeys.isFirstTimeOnApp.rawValue)
-        synchronize()
+    
+    var isFirstTimeOnApp: Bool {
+        set{
+            set(newValue, forKey: UserDefaultsKeys.isFirstTimeOnApp.rawValue)
+            synchronize()
+        }
+        get{ bool(forKey: UserDefaultsKeys.isFirstTimeOnApp.rawValue) }
     }
-
-    func isLoggedIn() -> Bool {
-        return bool(forKey: UserDefaultsKeys.isLoggedIn.rawValue)
-    }
-
-    func isFirstTimeOnApp() -> Bool {
-        return bool(forKey: UserDefaultsKeys.isFirstTimeOnApp.rawValue)
-    }
+    
     /// SwifterSwift: Retrieves a Codable object from UserDefaults.
     ///
     /// - Parameters:
