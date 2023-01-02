@@ -37,8 +37,8 @@ class ViewController: UIViewController {
                                        4: "Open Notifications Runtime", 5: "Open Image Zoom", 6: "Open Second View With Singleton built in",
                                        7: "Image Picker Controller", 8: "Show loading screen and then, alert Controller"]
     
-    let pickerController: PickerViewController = PickerViewController.instantiate()
-    lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
+//    let pickerController: PickerViewController = PickerViewController.instantiate()
+//    lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
     
     let datePickerController: DatePickerViewController = DatePickerViewController.instantiate()
     
@@ -71,23 +71,23 @@ class ViewController: UIViewController {
         }
         
         //MARK: - Set Picker Controller
-        pickerController.setSelectedRowIndex = 0
-        pickerController.delegate = self
-        pickerController.setWidth = self.view.bounds.width
-        pickerController.setDistanceFromBottom = 50
-        pickerController.setFontSize = 20
-        if #available(iOS 12.0, *) {
-            if traitCollection.userInterfaceStyle == .light {
-                pickerController.setFontColor = .black
-            } else {
-                pickerController.setFontColor = .gray
-            }
-        } else {
-            pickerController.setFontColor = .black
-        }
-        pickerController.touchToClose = true
-        pickerController.setFontSelectedBGColor = .darkGray
-        pickerController.setFontSelectedColor = .white
+//        pickerController.setSelectedRowIndex = 0
+//        pickerController.delegate = self
+//        pickerController.setWidth = self.view.bounds.width
+//        pickerController.setDistanceFromBottom = 50
+//        pickerController.setFontSize = 20
+//        if #available(iOS 12.0, *) {
+//            if traitCollection.userInterfaceStyle == .light {
+//                pickerController.setFontColor = .black
+//            } else {
+//                pickerController.setFontColor = .gray
+//            }
+//        } else {
+//            pickerController.setFontColor = .black
+//        }
+//        pickerController.touchToClose = true
+//        pickerController.setFontSelectedBGColor = .darkGray
+//        pickerController.setFontSelectedColor = .white
 
         
         //MARK: - Set Date Picker Controller
@@ -107,9 +107,9 @@ extension ViewController {
 
     //MARK: - Open Picker Controller
     func openPickerController(){
-        if pickerController.isHidden {
-            pickerController.show()
-        }
+//        if pickerController.isHidden {
+//            pickerController.show()
+//        }
     }
 
     //MARK: - Open Date Picker Controller
@@ -127,33 +127,33 @@ extension ViewController {
         notif.setDesc = "Description on received message"
         notif.setTitle = "Title on received message"
         notif.setImage = nil //If you need to set a image on left
-        notif.setHeight = LCEssentials.X_DEVICES ? 130 : 100
+        notif.setHeight = UIDevice.bottomNotch >= 20 ? 130 : 100
         notif.show()
     }
     
     //MARK: - Messages Alert Bottom
     func openMessageAlert(){
-        let message = LCEMessages.instantiate()
-        message.viewWillAppear(true)
+        let message = LCEMessages()
         message.delegate = self
         message.addObserverForKeyboard()
-        message.setDirection = .bottom
-        message.setDuration = .fiveSecs
+        message.direction = .bottom
+        message.duration = .fiveSecs
         message.tapToDismiss = true
-        message.setBackgroundColor = .darkGray
-        message.show(message: "Testing message bottom with loading", withImage: nil, showLoading: true)
+        message.backgroundColor = .darkGray
+        message.descriptionLabelString = "Testing message bottom with loading"
+        message.show(loading: true)
     }
     
     //MARK: - Messages Alert TOP
     func openMessageAlertTop(){
-        let message = LCEMessages.instantiate()
-        message.viewWillAppear(true)
+        let message = LCEMessages()
         message.delegate = self
-        message.setDirection = .top
-        message.setDuration = .fiveSecs
+        message.direction = .top
+        message.duration = .fiveSecs
         message.tapToDismiss = true
-        message.setBackgroundColor = .darkGray
-        message.show(message: "Testing message TOP with loading", withImage: nil, showLoading: true)
+        message.backgroundColor = .darkGray
+        message.descriptionLabelString = "Testing message TOP with loading"
+        message.show(loading: true)
     }
     
     //MARK: - Image Zoom
@@ -183,31 +183,33 @@ extension ViewController {
     }
     
     func openAlert(){
-        let controller: HUDAlertController = HUDAlertController.instantiate()
+        let controller: HUDAlertViewController = HUDAlertViewController()
+        controller.delegate = self
         controller.isLoadingAlert = true
-        controller.setFontTitle(name: "Avenir-Heavy", size: 12, color: .blue)
-        controller.setAlert(with: "Loading...")
+        controller.setTitle(color: .blue)
+        controller.configureAlertWith(title: "Loading...")
         controller.showAlert()
         LCEssentials.backgroundThread(delay: 8, completion:  {
             controller.isLoadingAlert = false
-            let actionContinue = HUDAlertAction("Normal Style", .normal) {
+            let actionContinue = HUDAlertAction(title: "Normal Style", type: .normal) {
                 print("Normal Style")
             }
-            let actionGrey = HUDAlertAction("Discrete Style", .discrete) {
+            let actionGrey = HUDAlertAction(title: "Discrete Style", type: .discrete) {
                 print("Discrete Style")
             }
-            let actionCancel = HUDAlertAction("Cancel Style", .cancel) {
+            let actionCancel = HUDAlertAction(title: "Cancel Style", type: .cancel) {
                 print("Cancel Style")
             }
-            let actionDestructive = HUDAlertAction("Destrctive Style", .destructive) {
+            let actionDestructive = HUDAlertAction(title: "Destrctive Style", type: .destructive) {
                 print("Destrctive Style")
             }
-            let actionGreen = HUDAlertAction("Green Style", .green) {
+            let actionGreen = HUDAlertAction(title: "Green Style", type: .green) {
                 print("Green Style")
             }
-            controller.setFontTitle(name: "Avenir-Heavy", size: 12, color: .red)
-            controller.setAlert(with: "This is a complete alert", description: "With all type of buttons", options: [actionContinue, actionGrey, actionDestructive, actionGreen, actionCancel])
-            controller.showAlert()
+            controller.setTitle(font: .systemFont(ofSize: 12), color: .red)
+            controller.configureAlertWith(title: "This is a complete alert",
+                                          description: "With all type of buttons",
+                                          actionButtons: [actionContinue, actionGrey, actionDestructive, actionGreen, actionCancel])
         })
     }
 }
@@ -289,36 +291,36 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 //MARK: - Picker Controller Delegate
-extension ViewController: PickerViewControllerDelegate {
-    func pickerViewController(_ picker: PickerViewController, didSelectRow row: Int, inComponent component: Int) {
-        
-    }
-    
-    func pickerViewController(didDone picker: PickerViewController, didSelectRow row: Int, inComponent component: Int) {
-        printInfo(title: "PICKER", msg: pickerParams[row]["title"] as! String)
-    }
-    
-    func pickerViewController(didCancel picker: PickerViewController) {
-        
-    }
-    
-    func pickerViewController(numberOfComponents inPicker: PickerViewController) -> Int {
-        return 1
-    }
-    
-    func pickerViewController(_ picker: PickerViewController, rowHeightForComponent component: Int) -> CGFloat {
-        return 40
-    }
-    
-    func pickerViewController(_ picker: PickerViewController, numberOfRowsInComponent component: Int) -> Int {
-        return pickerParams.count
-    }
-    
-    func pickerViewController(_ picker: PickerViewController, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerParams[row]["title"] as? String
-    }
-    
-}
+//extension ViewController: PickerViewControllerDelegate {
+//    func pickerViewController(_ picker: PickerViewController, didSelectRow row: Int, inComponent component: Int) {
+//
+//    }
+//
+//    func pickerViewController(didDone picker: PickerViewController, didSelectRow row: Int, inComponent component: Int) {
+//        printInfo(title: "PICKER", msg: pickerParams[row]["title"] as! String)
+//    }
+//
+//    func pickerViewController(didCancel picker: PickerViewController) {
+//
+//    }
+//
+//    func pickerViewController(numberOfComponents inPicker: PickerViewController) -> Int {
+//        return 1
+//    }
+//
+//    func pickerViewController(_ picker: PickerViewController, rowHeightForComponent component: Int) -> CGFloat {
+//        return 40
+//    }
+//
+//    func pickerViewController(_ picker: PickerViewController, numberOfRowsInComponent component: Int) -> Int {
+//        return pickerParams.count
+//    }
+//
+//    func pickerViewController(_ picker: PickerViewController, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return pickerParams[row]["title"] as? String
+//    }
+//
+//}
 
 //MARK: - Date Picker Controller Delegate
 extension ViewController: DatePickerViewControllerDelegate {
@@ -337,6 +339,11 @@ extension ViewController: DatePickerViewControllerDelegate {
 
 //MARK: - Image Zoom Controller Delegate
 extension ViewController: ImageZoomControllerDelegate {
+    
+}
+
+// MARK: - HUDAlert Delegate
+extension ViewController: HUDAlertViewControllerDelegate {
     
 }
 

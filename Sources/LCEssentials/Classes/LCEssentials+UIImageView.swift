@@ -48,54 +48,65 @@ public extension UIImageView {
         set { objc_setAssociatedObject(self, &UIImageView.urlKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 
-    func donwloadImageAsync(with urlString: String?, alternativeImage: UIImage, completion: (() -> Void)? = nil) {
-        // cancel prior task, if any
+    func downloadAsync(with urlString: String?, alternativeImage: UIImage, numberOfRetry: Int = 0, completion: ((Bool) -> Void)? = nil) {
 
         weak var oldTask = currentTask
         currentTask = nil
         oldTask?.cancel()
-
-        // reset imageview's image
-
-        self.image = alternativeImage
-
-        // allow supplying of `nil` to remove old image and then return immediately
+        
+        DispatchQueue.main.async {
+            self.image = alternativeImage
+        }
 
         guard let urlString = urlString else { return }
 
-        // check cache
-
         if let cachedImage = ImageCache.shared.image(forKey: urlString) {
-            self.image = cachedImage
-            completion?()
+            DispatchQueue.main.async {
+                self.image = cachedImage
+            }
+            completion?(true)
             return
         }
 
-        // download
-
-        let url = URL(string: urlString)!
+        guard let url = URL(string: urlString) else { currentTask = nil; print("ERROR: loadImageAsync - invalid URL"); return; }
         currentURL = url
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             self?.currentTask = nil
 
-            //error handling
-
             if let error = error {
-                // don't bother reporting cancelation errors
-                self?.image = alternativeImage
+                
+                DispatchQueue.main.async {
+                    self?.image = alternativeImage
+                }
                 if (error as NSError).domain == NSURLErrorDomain && (error as NSError).code == NSURLErrorCancelled {
-                    completion?()
+                    print("ERROR: loadImageAsync - \(error.localizedDescription)")
+                    if numberOfRetry == 0 {
+                        completion?(false)
+                    } else {
+                        let retry = (numberOfRetry - 1)
+                        self?.downloadAsync(with: urlString, alternativeImage: alternativeImage, numberOfRetry: retry, completion: completion)
+                    }
                     return
                 }
                 
-                printError(title: "loadImageAsync", msg: error.localizedDescription)
-                completion?()
+                print("ERROR: loadImageAsync - \(error.localizedDescription)")
+                if numberOfRetry == 0 {
+                    completion?(false)
+                } else {
+                    let retry = (numberOfRetry - 1)
+                    self?.downloadAsync(with: urlString, alternativeImage: alternativeImage, numberOfRetry: retry, completion: completion)
+                }
                 return
             }
 
             guard let data = data, let downloadedImage = UIImage(data: data) else {
-                printError(title: "loadImageAsync", msg: "unable to extract image")
-                completion?()
+                print("ERROR: loadImageAsync - unable to extract image")
+                if numberOfRetry == 0 {
+                    completion?(false)
+                } else {
+                    let retry = (numberOfRetry - 1)
+                    self?.downloadAsync(with: urlString, alternativeImage: alternativeImage, numberOfRetry: retry, completion: completion)
+                }
                 return
             }
 
@@ -104,20 +115,15 @@ public extension UIImageView {
             if url == self?.currentURL {
                 DispatchQueue.main.async {
                     self?.image = downloadedImage
-                    completion?()
+                    completion?(true)
                 }
             }
         }
-
-        // save and start new task
 
         currentTask = task
         task.resume()
     }
     
-    
-    
-
     @IBInspectable var imageColor: UIColor! {
         set {
             super.tintColor = newValue

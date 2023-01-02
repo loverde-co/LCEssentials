@@ -38,34 +38,4 @@ public extension NSString {
 
         return randomString
     }
-
-    func removeCurrencyBRFormat(_ string:NSString) -> NSString {
-
-        //let string       = "4567,89"
-        var toArray         = string.components(separatedBy: "R$ ")
-        var backToString    = toArray.joined(separator: "")
-        toArray             = backToString.components(separatedBy: ".")
-        backToString        = toArray.joined(separator: "")
-        toArray             = backToString.components(separatedBy: ",")
-        backToString        = toArray.joined(separator: ".")
-
-        return backToString as NSString
-    }
-
-    func createDirectory(_ directoryName: NSString) -> Bool {
-
-        let documentsPath = URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
-        let logsPath = documentsPath.appendingPathComponent(directoryName as String)
-        do {
-            try FileManager.default.createDirectory(atPath: logsPath.path, withIntermediateDirectories: true, attributes: nil)
-            return true
-        } catch let error as NSError {
-            NSLog("Unable to create directory \(error.debugDescription)")
-            return false
-        }
-
-
-    }
-
-
 }

@@ -37,14 +37,14 @@ public class ReachabilityManager: NSObject {
     
     // 3. Boolean to track network reachability
     public var isNetworkAvailable : Bool {
-        return reachabilityStatus != .none
+        return reachabilityStatus != .unavailable
     }
     
     // 4. Tracks current NetworkStatus
-    var reachabilityStatus: Reachability.Connection = .none
+    var reachabilityStatus: Reachability.Connection = .unavailable
     
     // 5. Reachibility instance for Network status monitoring
-    let reachability = Reachability()!
+    let reachability: Reachability? = nil
     
     // 6. Array of delegates which are interested to listen to network status change
     var listeners = [NetworkStatusListener]()
@@ -55,7 +55,7 @@ public class ReachabilityManager: NSObject {
     @objc public func reachabilityChanged(notification: Notification) {
         let reachability = notification.object as! Reachability
         switch reachability.connection {
-        case .none:
+        case .unavailable:
             debugPrint("Network became unreachable")
         case .wifi:
             debugPrint("Network reachable through WiFi")
@@ -77,7 +77,7 @@ public class ReachabilityManager: NSObject {
                                                name: Notification.Name.reachabilityChanged,
                                                object: reachability)
         do{
-            try reachability.startNotifier()
+            try reachability?.startNotifier()
         }catch{
             debugPrint("Could not start reachability notifier")
         }
@@ -85,7 +85,7 @@ public class ReachabilityManager: NSObject {
     
     /// Stops monitoring the network availability status
     public func stopMonitoring(){
-        reachability.stopNotifier()
+        reachability?.stopNotifier()
         NotificationCenter.default.removeObserver(self, name: Notification.Name.reachabilityChanged,
                                                   object: reachability)
     }

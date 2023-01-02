@@ -41,7 +41,7 @@ public class UITableViewAnimator {
 
 public extension UITableView {
 
-    /// SwifterSwift: Reload data with a completion handler.
+    /// Reload data with a completion handler.
     ///
     /// - Parameter completion: completion handler to run after reloadData finishes.
     func reloadData(_ completion: @escaping () -> Void) {
@@ -69,7 +69,7 @@ public extension UITableView {
         }
     }
 
-    /// SwifterSwift: Dequeue reusable UITableViewCell using class name
+    /// Dequeue reusable UITableViewCell using class name
     ///
     /// - Parameter name: UITableViewCell type
     /// - Returns: UITableViewCell object with associated class name.
@@ -80,7 +80,7 @@ public extension UITableView {
         return cell
     }
 
-    /// SwifterSwift: Dequeue reusable UITableViewCell using class name for indexPath
+    /// Dequeue reusable UITableViewCell using class name for indexPath
     ///
     /// - Parameters:
     ///   - name: UITableViewCell type.
@@ -93,7 +93,7 @@ public extension UITableView {
         return cell
     }
 
-    /// SwifterSwift: Dequeue reusable UITableViewHeaderFooterView using class name
+    /// Dequeue reusable UITableViewHeaderFooterView using class name
     ///
     /// - Parameter name: UITableViewHeaderFooterView type
     /// - Returns: UITableViewHeaderFooterView object with associated class name.
@@ -104,7 +104,7 @@ public extension UITableView {
         return headerFooterView
     }
 
-    /// SwifterSwift: Check whether IndexPath is valid within the tableView
+    /// Check whether IndexPath is valid within the tableView
     ///
     /// - Parameter indexPath: An IndexPath to check
     /// - Returns: Boolean value for valid or invalid IndexPath
@@ -115,7 +115,7 @@ public extension UITableView {
             indexPath.row < numberOfRows(inSection: indexPath.section)
     }
 
-    /// SwifterSwift: Safely scroll to possibly invalid IndexPath
+    /// Safely scroll to possibly invalid IndexPath
     ///
     /// - Parameters:
     ///   - indexPath: Target IndexPath to scroll to
@@ -129,14 +129,14 @@ public extension UITableView {
 }
 
 extension UITableViewCell {
+    
     public static var identifier: String {
-        
         return "id"+String(describing: self)
     }
+    
     public func prepareDisclosureIndicator() {
         for case let button as UIButton in subviews {
-            let image = button.backgroundImage(for: .normal)?.withRenderingMode(.
-                alwaysTemplate)
+            let image = button.backgroundImage(for: .normal)?.withRenderingMode(.alwaysTemplate)
             button.setBackgroundImage(image, for: .normal)
         }
     }

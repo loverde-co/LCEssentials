@@ -35,7 +35,7 @@ public extension Array where Element: Equatable {
         return uniqueValues
     }
 
-    /// SwifterSwift: Remove all instances of an item from array.
+    /// Remove all instances of an item from array.
     ///
     ///        [1, 2, 2, 3, 4, 5].removeAll(2) -> [1, 3, 4, 5]
     ///        ["h", "e", "l", "l", "o"].removeAll("l") -> ["h", "e", "o"]
@@ -48,7 +48,7 @@ public extension Array where Element: Equatable {
         return self
     }
 
-    /// SwifterSwift: Remove all instances contained in items parameter from array.
+    /// Remove all instances contained in items parameter from array.
     ///
     ///        [1, 2, 2, 3, 4, 5].removeAll([2,5]) -> [1, 3, 4]
     ///        ["h", "e", "l", "l", "o"].removeAll(["l", "h"]) -> ["e", "o"]
@@ -62,7 +62,7 @@ public extension Array where Element: Equatable {
         return self
     }
 
-    /// SwifterSwift: Remove all duplicate elements from Array.
+    /// Remove all duplicate elements from Array.
     ///
     ///        [1, 2, 2, 3, 4, 5].removeDuplicates() -> [1, 2, 3, 4, 5]
     ///        ["h", "e", "l", "l", "o"]. removeDuplicates() -> ["h", "e", "l", "o"]
@@ -79,7 +79,7 @@ public extension Array where Element: Equatable {
         return self
     }
 
-    /// SwifterSwift: Return array with all duplicate elements removed.
+    /// Return array with all duplicate elements removed.
     ///
     ///     [1, 1, 2, 2, 3, 3, 3, 4, 5].withoutDuplicates() -> [1, 2, 3, 4, 5])
     ///     ["h", "e", "l", "l", "o"].withoutDuplicates() -> ["h", "e", "l", "o"])
@@ -95,7 +95,7 @@ public extension Array where Element: Equatable {
         }
     }
 
-    /// SwifterSwift: Returns an array with all duplicate elements removed using KeyPath to compare.
+    /// Returns an array with all duplicate elements removed using KeyPath to compare.
     ///
     /// - Parameter path: Key path to compare, the value must be Equatable.
     /// - Returns: an array of unique elements.
@@ -107,7 +107,7 @@ public extension Array where Element: Equatable {
         }
     }
 
-    /// SwifterSwift: Returns an array with all duplicate elements removed using KeyPath to compare.
+    /// Returns an array with all duplicate elements removed using KeyPath to compare.
     ///
     /// - Parameter path: Key path to compare, the value must be Hashable.
     /// - Returns: an array of unique elements.

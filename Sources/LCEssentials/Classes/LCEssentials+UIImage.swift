@@ -26,7 +26,7 @@ import UIKit
 #if os(iOS) || os(macOS)
 public extension UIImage {
     //Extension Required by RoundedButton to create UIImage from UIColor
-    class func imageWithColor(color: UIColor) -> UIImage {
+    func imageWithColor(color: UIColor) -> UIImage {
         let rect: CGRect = CGRect(origin: .zero, size: CGSize(width: 1, height: 1))
         UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), false, 1.0)
         color.setFill()

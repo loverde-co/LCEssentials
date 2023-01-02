@@ -30,7 +30,7 @@ public extension Dictionary {
         rhs.forEach { lhs[$0] = $1}
     }
 
-    /// SwifterSwift: Remove keys contained in the sequence from the dictionary
+    /// Remove keys contained in the sequence from the dictionary
     ///
     ///        let dict: [String: String] = ["key1": "value1", "key2": "value2", "key3": "value3"]
     ///        let result = dict-["key1", "key2"]
@@ -48,7 +48,7 @@ public extension Dictionary {
         return result
     }
 
-    /// SwifterSwift: Remove keys contained in the sequence from the dictionary
+    /// Remove keys contained in the sequence from the dictionary
     ///
     ///        var dict: [String: String] = ["key1": "value1", "key2": "value2", "key3": "value3"]
     ///        dict-=["key1", "key2"]
@@ -81,7 +81,7 @@ public extension Dictionary {
         return jsonString
     }
 
-    /// SwifterSwift: Check if key exists in dictionary.
+    /// Check if key exists in dictionary.
     ///
     ///        let dict: [String: Any] = ["testKey": "testValue", "testArrayKey": [1, 2, 3, 4, 5]]
     ///        dict.has(key: "testKey") -> true
@@ -93,7 +93,7 @@ public extension Dictionary {
         return index(forKey: key) != nil
     }
 
-    /// SwifterSwift: Remove all keys contained in the keys parameter from the dictionary.
+    /// Remove all keys contained in the keys parameter from the dictionary.
     ///
     ///        var dict : [String: String] = ["key1" : "value1", "key2" : "value2", "key3" : "value3"]
     ///        dict.removeAll(keys: ["key1", "key2"])
@@ -106,7 +106,7 @@ public extension Dictionary {
         keys.forEach { removeValue(forKey: $0) }
     }
 
-    /// SwifterSwift: Remove a value for a random key from the dictionary.
+    /// Remove a value for a random key from the dictionary.
     @discardableResult
     mutating func removeValueForRandomKey() -> Value? {
         guard let randomKey = keys.randomElement() else { return nil }
@@ -127,7 +127,7 @@ public extension Dictionary {
 // MARK: - Methods (Value: Equatable)
 public extension Dictionary where Value: Equatable {
 
-    /// SwifterSwift: Returns an array of all keys that have the given value in dictionary.
+    /// Returns an array of all keys that have the given value in dictionary.
     ///
     ///        let dict = ["key1": "value1", "key2": "value1", "key3": "value2"]
     ///        dict.keys(forValue: "value1") -> ["key1", "key2"]
@@ -145,7 +145,7 @@ public extension Dictionary where Value: Equatable {
 // MARK: - Methods (ExpressibleByStringLiteral)
 public extension Dictionary where Key: StringProtocol {
 
-    /// SwifterSwift: Lowercase all keys in dictionary.
+    /// Lowercase all keys in dictionary.
     ///
     ///        var dict = ["tEstKeY": "value"]
     ///        dict.lowercaseAllKeys()

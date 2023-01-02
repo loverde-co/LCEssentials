@@ -66,7 +66,8 @@ public extension UIView {
         case bottom
         case leading
         case trailing
-        case heigth
+        case height
+        case heightGreaterThanOrEqualTo
         case width
         case centerX
         case centerY
@@ -136,7 +137,7 @@ public extension UIView {
        return self.superview?.convert(self.frame, to: nil)
     }
     
-    /// Loverde Co: Border color of view; also inspectable from Storyboard.
+    /// Loverde Co: Border color of view
     var borderColor: UIColor? {
         get {
             guard let color = layer.borderColor else { return nil }
@@ -153,7 +154,7 @@ public extension UIView {
         }
     }
 
-    /// Loverde Co: Border width of view; also inspectable from Storyboard.
+    /// Loverde Co: Border width of view;
     var borderWidth: CGFloat {
         get {
             return layer.borderWidth
@@ -163,7 +164,7 @@ public extension UIView {
         }
     }
 
-    /// Loverde Co: Corner radius of view; also inspectable from Storyboard.
+    /// Loverde Co: Corner radius of view;
     var cornerRadius: CGFloat {
         get {
             return layer.cornerRadius
@@ -387,21 +388,6 @@ public extension UIView {
         }
         return ["path":dotPath,"layer":layer]
     }
-    
-    func addShadow(shadowView: UIView, shadowWidth: CGFloat, shadowHeight: CGFloat){
-        let shadow = UIViewWithShadow()
-        self.addSubview(shadowView)
-        
-        // Auto layout code using anchors (iOS9+)
-        // set witdh and height constraints if necessary
-        shadow.translatesAutoresizingMaskIntoConstraints = false
-        let horizontalConstraint = shadow.centerXAnchor.constraint(equalTo: shadowView.centerXAnchor)
-        let verticalConstraint = shadow.centerYAnchor.constraint(equalTo: shadowView.centerYAnchor)
-        let widthConstraint = shadow.widthAnchor.constraint(equalToConstant: self.frame.size.width - shadowWidth)
-        let heightConstraint = shadow.heightAnchor.constraint(equalToConstant: shadowView.frame.size.height - shadowHeight)
-        NSLayoutConstraint.activate([horizontalConstraint, verticalConstraint, widthConstraint, heightConstraint])
-        self.bringSubviewToFront(shadowView)
-    }
 
     func applyShadow(color:UIColor, offSet:CGSize, radius:CGFloat, opacity:Float, shouldRasterize:Bool = true, rasterizationScaleTo: CGFloat = UIScreen.main.scale){
 
@@ -425,9 +411,8 @@ public extension UIView {
     ///
     /// - Parameter style: Blur styles available for blur effect objects.
     /// - Parameter alpha: The view’s alpha value.
-    /// - Returns: An object that implements some complex visual effects.
-    func insertBlurView (style: UIBlurEffect.Style, alpha: CGFloat = 0.9) -> UIVisualEffectView {
-        self.backgroundColor = UIColor.clear
+    func insertBlurView (style: UIBlurEffect.Style, color: UIColor = .black, alpha: CGFloat = 0.9) {
+        self.backgroundColor = color
 
         let blurEffect = UIBlurEffect(style: style)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -439,7 +424,6 @@ public extension UIView {
         ]
         
         self.insertSubview(blurEffectView, at: 0)
-        return blurEffectView
     }
     
     /**
@@ -482,7 +466,6 @@ public extension UIView {
      Set y Position
 
      :param: y CGFloat
-     by DaRk-_-D0G
      */
     func setY(y:CGFloat) {
         var frame:CGRect = self.frame
@@ -598,9 +581,12 @@ public extension UIView {
                 self.trailingAnchor.constraint(equalTo: toView.leadingAnchor,
                                                constant: element.constraint).isActive = true
                 
-            case .heigth:
+            case .height:
                 self.heightAnchor.constraint(equalTo: toView.heightAnchor,
                                              constant: element.constraint).isActive = true
+                
+            case .heightGreaterThanOrEqualTo:
+                self.heightAnchor.constraint(greaterThanOrEqualToConstant: element.constraint).isActive = true
                 
             case .width:
                 self.widthAnchor.constraint(equalTo: toView.widthAnchor,
@@ -619,11 +605,11 @@ public extension UIView {
                                           constant: element.constraint).isActive = true
                 
             case .topToTopGreaterThanOrEqualTo:
-                self.topAnchor.constraint(greaterThanOrEqualTo: toView.topAnchor,
+                self.topAnchor.constraint(greaterThanOrEqualTo: (safeArea ? toView.safeAreaLayoutGuide.topAnchor : toView.topAnchor),
                                           constant: element.constraint).isActive = true
                 
             case .bottomGreaterThanOrEqualTo:
-                self.bottomAnchor.constraint(greaterThanOrEqualTo: toView.bottomAnchor,
+                self.bottomAnchor.constraint(greaterThanOrEqualTo: (safeArea ? toView.safeAreaLayoutGuide.bottomAnchor : toView.bottomAnchor),
                                              constant: element.constraint).isActive = true
                 
             case .left:

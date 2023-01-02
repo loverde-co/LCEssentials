@@ -27,9 +27,14 @@ import UIKit
 import QuartzCore
 
 public extension UIViewController {
+    
     var isVisible: Bool {
         // http://stackoverflow.com/questions/2777438/how-to-tell-if-uiviewcontrollers-view-is-visible
         return isViewLoaded && view.window != nil
+    }
+    
+    var isLoaded: Bool {
+        return isVisible
     }
     
     var isModal: Bool {
@@ -107,54 +112,6 @@ public extension UIViewController {
         self.navigationController?.popToViewController(jump, animated: true)
         CATransaction.commit()
         
-    }
-    
-    //MARK: Keyboard Listener
-    func systemKeyboardShow(height:CGFloat, animationDuration:TimeInterval, animationCurve:UIView.AnimationOptions) -> Void {
-        return
-    }
-    
-    func systemKeyboardHide() -> Void {
-        return
-    }
-    
-    @objc private func keyboardWillShow(_ notification : Notification?) -> Void {
-            
-        if let info = notification?.userInfo {
-            //
-            let curveUserInfoKey    = UIResponder.keyboardAnimationCurveUserInfoKey
-            let durationUserInfoKey = UIResponder.keyboardAnimationDurationUserInfoKey
-            let frameEndUserInfoKey = UIResponder.keyboardFrameEndUserInfoKey
-            //
-            var animationCurve:UIView.AnimationOptions = .curveEaseOut
-            var animationDuration:TimeInterval = 0.25
-            var height:CGFloat = 0.0
-            
-            //  Getting keyboard animation.
-            if let curve = info[curveUserInfoKey] as? UIView.AnimationOptions {
-                animationCurve = curve
-            }
-            
-            //  Getting keyboard animation duration
-            if let duration = info[durationUserInfoKey] as? TimeInterval {
-                animationDuration = duration
-            }
-            
-            //  Getting UIKeyboardSize.
-            if let kbFrame = info[frameEndUserInfoKey] as? CGRect {
-                height = kbFrame.size.height
-            }
-            
-            DispatchQueue.main.async {
-                self.systemKeyboardShow(height: height, animationDuration: animationDuration, animationCurve: animationCurve)
-            }
-        }
-    }
-        
-    @objc private func keyboardWillHide(_ notification : Notification?) -> Void {
-        DispatchQueue.main.async {
-            self.systemKeyboardHide()
-        }
     }
     
     /// - Parameters:

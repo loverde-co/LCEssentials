@@ -23,7 +23,7 @@
 import UIKit
 
 public extension Optional {
-    /// SwifterSwift: Get self of default value (if self is nil).
+    /// Get self of default value (if self is nil).
     ///
     ///        let foo: String? = nil
     ///        print(foo.unwrapped(or: "bar")) -> "bar"
@@ -38,7 +38,7 @@ public extension Optional {
         return self ?? defaultValue
     }
 
-    /// SwifterSwift: Gets the wrapped value of an optional. If the optional is `nil`, throw a custom error.
+    /// Gets the wrapped value of an optional. If the optional is `nil`, throw a custom error.
     ///
     ///        let foo: String? = nil
     ///        try print(foo.unwrapped(or: MyError.notFound)) -> error: MyError.notFound
@@ -54,7 +54,7 @@ public extension Optional {
         return wrapped
     }
 
-    /// SwifterSwift: Runs a block to Wrapped if not nil
+    /// Runs a block to Wrapped if not nil
     ///
     ///        let foo: String? = nil
     ///        foo.run { unwrappedFoo in

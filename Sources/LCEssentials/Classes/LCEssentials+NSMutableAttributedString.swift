@@ -145,8 +145,10 @@ public extension NSMutableAttributedString {
         self.append(self)
     }
     
-    func attributtedString() -> NSMutableAttributedString {
-        return self
+    func attributtedString() -> NSAttributedString {
+        let range = self.string.range(of: self.string) ?? Range<String.Index>(uncheckedBounds: (self.string.startIndex, upper: self.string.endIndex))
+        let nsRange = self.string.nsRange(from: range) ?? NSRange()
+        return self.attributedSubstring(from: nsRange)
     }
 
     @discardableResult func normal(_ text: String) -> NSMutableAttributedString {
@@ -169,6 +171,7 @@ public extension NSMutableAttributedString {
     ///   - linkURL: URL string that you whant to grab.
     /// - Returns:
     /// True if text exist. Otherwise, false
+    /// Use "didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange)" to handle link touch on a Label
     func setAsLink(textToFind: String, linkURL: String) -> Bool {
 
         let foundRange = self.mutableString.range(of: textToFind)

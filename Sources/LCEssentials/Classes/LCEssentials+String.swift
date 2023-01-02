@@ -24,7 +24,7 @@ import Foundation
 import UIKit
 
 public extension String {
-    /// SwifterSwift: Check if string is a valid URL.
+    /// Check if string is a valid URL.
     ///
     ///        "https://google.com".isValidUrl -> true
     ///
@@ -33,7 +33,7 @@ public extension String {
     }
 
     #if canImport(Foundation)
-    /// SwifterSwift: Check if string is a valid https URL.
+    /// Check if string is a valid https URL.
     ///
     ///        "https://google.com".isValidHttpsUrl -> true
     ///
@@ -44,7 +44,7 @@ public extension String {
     #endif
 
     #if canImport(Foundation)
-    /// SwifterSwift: Check if string is a valid http URL.
+    /// Check if string is a valid http URL.
     ///
     ///        "http://google.com".isValidHttpUrl -> true
     ///
@@ -54,7 +54,7 @@ public extension String {
     }
     #endif
     
-    /// SwifterSwift.: Readable string from a URL string.
+    /// Readable string from a URL string.
     ///
     ///        "it's%20easy%20to%20decode%20strings".urlDecoded -> "it's easy to decode strings"
     ///
@@ -69,7 +69,7 @@ public extension String {
     var urlEncoded: String {
         return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
-    /// SwifterSwift.: String without spaces and new lines.
+    /// String without spaces and new lines.
     ///
     ///        "   \n Swifter   \n  Swift  ".withoutSpacesAndNewLines -> "SwifterSwift"
     ///
@@ -82,7 +82,7 @@ public extension String {
     func replaceURL(_ withDict: [String:Any]) -> String {
         var strOutput = self
         for (key, Value) in withDict {
-            strOutput = strOutput.replaceFirst(of: "{\(key)}", with: "\(Value)")
+            strOutput = strOutput.replacingOccurrences(of: "{\(key)}", with: "\(Value)")
         }
         return strOutput
     }
@@ -196,7 +196,7 @@ public extension String {
         return self.range(of: "<[^>]+>", options: .regularExpression, range: nil, locale: nil) != nil
     }
 
-    /// SwifterSwift.: Lorem ipsum string of given length.
+    /// Lorem ipsum string of given length.
     ///
     /// - Parameter length: number of characters to limit lorem ipsum to (default is 445 - full lorem ipsum).
     /// - Returns: Lorem ipsum dolor sit amet... string.
@@ -237,7 +237,7 @@ public extension String {
         return dv1 == numbers[12] && dv2 == numbers[13]
     }
 
-    /// SwifterSwift.: Returns a string by padding to fit the length parameter size with another string in the start.
+    /// Returns a string by padding to fit the length parameter size with another string in the start.
     ///
     ///   "hue".paddingStart(10) -> "       hue"
     ///   "hue".paddingStart(10, with: "br") -> "brbrbrbhue"
@@ -259,7 +259,7 @@ public extension String {
             return padding[padding.startIndex..<padding.index(padding.startIndex, offsetBy: padLength)] + self
         }
     }
-    /// SwifterSwift.: Returns a string by padding to fit the length parameter size with another string in the end.
+    /// Returns a string by padding to fit the length parameter size with another string in the end.
     ///
     ///   "hue".paddingEnd(10) -> "hue       "
     ///   "hue".paddingEnd(10, with: "br") -> "huebrbrbrb"
@@ -299,14 +299,14 @@ public extension String {
         return nil
     }
 
-    mutating func insertAtIndexEnd(string:String, ind:Int) {
-        self.insert(contentsOf: string, at:self.index(self.endIndex, offsetBy: ind) )
+    mutating func insertAtIndexEnd(string: String, ind: Int) {
+        self.insert(contentsOf: string, at: self.index(self.endIndex, offsetBy: ind) )
     }
     
-    mutating func insertAtIndexStart(string:String, ind:Int) {
-        self.insert(contentsOf: string, at:self.index(self.endIndex, offsetBy: ind) )
+    mutating func insertAtIndexStart(string: String, ind: Int) {
+        self.insert(contentsOf: string, at: self.index(self.endIndex, offsetBy: ind) )
     }
-    /// SwifterSwift.: Convert URL string to readable string.
+    /// Convert URL string to readable string.
     ///
     ///        var str = "it's%20easy%20to%20decode%20strings"
     ///        str.urlDecode()
@@ -319,7 +319,7 @@ public extension String {
         }
         return self
     }
-    /// SwifterSwift: Escape string.
+    /// Escape string.
     ///
     ///        var str = "it's easy to encode strings"
     ///        str.urlEncode()
@@ -419,7 +419,9 @@ public extension String {
     /// - Parameters:
     ///   - withCurrFormatt: Give a input formatt as it comes in String.
     ///   - Returns: Date object.
-    func date(withCurrFormatt: String = "yyyy-MM-dd HH:mm:ss", localeIdentifier: String = "pt-BR", timeZone:TimeZone? = TimeZone.current) -> Date? {
+    func date(withCurrFormatt: String = "yyyy-MM-dd HH:mm:ss",
+              localeIdentifier: String = "pt-BR",
+              timeZone: TimeZone? = TimeZone.current) -> Date? {
 
         let updatedString:String = self.replacingOccurrences(of: " 0000", with: " +0000")
         let dateFormatter:DateFormatter = DateFormatter.init()
@@ -442,7 +444,11 @@ public extension String {
     ///   - newFormatt: Give a new formatt you want in String
     /// - Returns:
     /// Date object.
-    func date(withCurrFormatt: String = "yyyy-MM-dd HH:mm:ss", newFormatt: String = "yyyy-MM-dd HH:mm:ss", localeIdentifier: String = "pt-BR", timeZone:TimeZone? = TimeZone.current) -> Date? {
+    func date(withCurrFormatt: String = "yyyy-MM-dd HH:mm:ss",
+              newFormatt: String = "yyyy-MM-dd HH:mm:ss",
+              localeIdentifier: String = "pt-BR",
+              timeZone: TimeZone? = TimeZone.current) -> Date? {
+        
         let date = self.date(withCurrFormatt: withCurrFormatt, localeIdentifier: localeIdentifier, timeZone: timeZone)
         let strDate = date?.string(stringFormat: newFormatt, localeIdentifier: localeIdentifier, timeZone: timeZone)
         return strDate?.date(withCurrFormatt: newFormatt, localeIdentifier: localeIdentifier, timeZone: timeZone)
@@ -518,7 +524,7 @@ public extension String {
         return newStr
     }
 
-    /// SwifterSwift.: Truncate string (cut it to a given number of characters).
+    /// Truncate string (cut it to a given number of characters).
     ///
     ///        var str = "This is a very long sentence"
     ///        str.truncate(toLength: 14)
@@ -536,7 +542,7 @@ public extension String {
         return self
     }
 
-    /// SwifterSwift.: Truncated string (limited to a given number of characters).
+    /// Truncated string (limited to a given number of characters).
     ///
     ///        "This is a very long sentence".truncated(toLength: 14) -> "This is a very..."
     ///        "Short sentence".truncated(toLength: 14) -> "Short sentence"
@@ -570,25 +576,28 @@ public extension String {
         return self
     }
 
-    //
-    ///Usage Example: label.text = yourString.html2String
-    var html2AttributedString: NSAttributedString? {
-        guard
-            let data = data(using: String.Encoding.utf8)
-            else { return nil }
+    private var convertHtmlToNSAttributedString: NSAttributedString? {
+        guard let data = data(using: .utf8) else {
+            return nil
+        }
+        
         do {
-            let attributedOptions: [NSAttributedString.DocumentReadingOptionKey: Any] = [
-                NSAttributedString.DocumentReadingOptionKey(rawValue: NSAttributedString.DocumentAttributeKey.documentType.rawValue): NSAttributedString.DocumentType.html,
-                NSAttributedString.DocumentReadingOptionKey(rawValue: NSAttributedString.DocumentAttributeKey.characterEncoding.rawValue): String.Encoding.utf8.rawValue
-            ]
-            return try NSAttributedString(data: data, options: attributedOptions, documentAttributes: nil)
-        } catch let error as NSError {
+            return try NSAttributedString(data: data,
+                                          options: [
+                                            .documentType: NSAttributedString.DocumentType.html,
+                                            .characterEncoding: String.Encoding.utf8.rawValue
+                                          ], documentAttributes: nil)
+        } catch {
             print(error.localizedDescription)
-            return  nil
+            return nil
         }
     }
-    var html2String: String {
-        return html2AttributedString?.string ?? ""
+    
+    var convertToHTML: NSAttributedString? {
+        return convertHtmlToAttributedStringWithCSS(font: nil,
+                                                    csscolor: "",
+                                                    lineheight: 0,
+                                                    csstextalign: "")
     }
     
     /// Converte String para HTML com CSS.
@@ -598,15 +607,15 @@ public extension String {
     ///   - csscolor: Cor da font em formato ASCII.
     ///   - lineheight: Quantas linhas o texto pode conter. Digite 0 (zero) caso queira dinâmico.
     ///   - csstextalign: Alinhamento do texto em formato CSS.
-    ///   - linkColor: Adiciona uma cor separada para a tag de link em HTML.
+    ///   - customCSS: Adiciona CSS customizado (Opcional).
     /// - Returns:
     /// Retorna um NSAttributedString convertido.
-    func convertToHtml(font: UIFont?,
-                       csscolor: String = "black",
-                       lineheight: Int = 0,
-                       csstextalign: String = "left",
-                       linkColor: String = "blue") -> NSAttributedString? {
-        guard let font = font else { return html2AttributedString }
+    func convertHtmlToAttributedStringWithCSS(font: UIFont?,
+                                              csscolor: String,
+                                              lineheight: Int,
+                                              csstextalign: String,
+                                              customCSS: String? = nil) -> NSAttributedString? {
+        guard let font = font else { return convertHtmlToNSAttributedString }
         
         let modifiedString = """
         <style>
@@ -615,7 +624,7 @@ public extension String {
                 color: \(csscolor);
                 line-height: \(lineheight)px;
                 text-align: \(csstextalign); }
-            a{ color: \(linkColor); }
+            \(customCSS ?? "")
         </style>\(self)
         """;
         
@@ -662,7 +671,7 @@ public extension String {
     func toURL() -> NSURL? {
         return NSURL(string: self)
     }
-    /// SwifterSwift.: Float value from string (if applicable).
+    /// Float value from string (if applicable).
     ///
     /// - Parameter locale: Locale (default is Locale.current)
     /// - Returns: Optional Float value from given string.
@@ -672,7 +681,7 @@ public extension String {
         formatter.allowsFloats = true
         return formatter.number(from: self)?.floatValue
     }
-    /// SwifterSwift.: Double value from string (if applicable).
+    /// Double value from string (if applicable).
     ///
     /// - Parameter locale: Locale (default is Locale.current)
     /// - Returns: Optional Double value from given string.
@@ -682,7 +691,7 @@ public extension String {
         formatter.allowsFloats = true
         return formatter.number(from: self)?.doubleValue
     }
-    /// SwifterSwift.: Returns a localized string, with an optional comment for translators.
+    /// Returns a localized string, with an optional comment for translators.
     ///
     ///        "Hello world".localized -> Hallo Welt
     ///
@@ -690,7 +699,7 @@ public extension String {
         return NSLocalizedString(self, comment: comment)
     }
 
-    /// SwifterSwift: First character of string (if applicable).
+    /// First character of string (if applicable).
     ///
     ///        "Hello".firstCharacterAsString -> Optional("H")
     ///        "".firstCharacterAsString -> nil
@@ -700,7 +709,7 @@ public extension String {
         return String(first)
     }
 
-    /// SwifterSwift: Last character of string (if applicable).
+    /// Last character of string (if applicable).
     ///
     ///        "Hello".lastCharacterAsString -> Optional("o")
     ///        "".lastCharacterAsString -> nil
@@ -709,7 +718,7 @@ public extension String {
         guard let last = last else { return nil }
         return String(last)
     }
-    /// SwifterSwift.: Transforms the string into a slug string.
+    /// Transforms the string into a slug string.
     ///
     ///        "Swift is amazing".toSlug() -> "swift-is-amazing"
     ///
@@ -736,7 +745,7 @@ public extension String {
 
         return filtered.replacingOccurrences(of: "--", with: "-")
     }
-    /// SwifterSwift.: Check if string contains one or more instance of substring.
+    /// Check if string contains one or more instance of substring.
     ///
     ///        "Hello World!".contain("O") -> false
     ///        "Hello World!".contain("o", caseSensitive: false) -> true
@@ -751,7 +760,7 @@ public extension String {
         }
         return range(of: string) != nil
     }
-    /// SwifterSwift.: Removes spaces and new lines in beginning and end of string.
+    /// Removes spaces and new lines in beginning and end of string.
     ///
     ///        var str = "  \n Hello World \n\n\n"
     ///        str.trim()
@@ -767,106 +776,22 @@ public extension String {
     ///
     /// - Parameter toText: String you want to maks
     /// - Parameter mask: Using mask like sharp ##-#####(###)
-    func applyMask(inputMask:String?, maxLenght:Int, range:NSRange, textFieldString:String, replacementString:String, charactersRestriction:String?) -> String? {
-        
-        // Prevent crashing undo bug
-        if (range.length + range.location > textFieldString.count) {
-            return nil
-        }
-        
-        //Mask validation:
-        if let mask:String = inputMask {
-            
-            var changedString:String = (textFieldString as NSString).replacingCharacters(in: range, with: replacementString)
-            
-            if changedString == "" {
-                return ""
-            }
-            
-            var ignore:Bool = false
-            
-            let subString:String = (textFieldString as NSString).substring(with: range)
-            let rangeSub:Range? = subString.rangeOfCharacter(from: CharacterSet.init(charactersIn: "0123456789"))
-            
-            if ((range.length == 1) && (replacementString.count < range.length) && (rangeSub == nil)) {
-                
-                var location:Int = changedString.count - 1
-                
-                if (location > 0) {
-                    
-                    for index in stride(from: location, through: 1, by: -1) {
-                        
-                        if (CharacterSet.init(charactersIn: "0123456789").contains(UnicodeScalar((changedString as NSString).character(at: index))!)) {
-                            location = index;
-                            break
-                        }
-                    }
-                    changedString = (changedString as NSString).substring(to: location)
-                    
-                }else {
-                    ignore = true
-                }
-            }
-            
-            if (ignore) {
-                return nil
-            }else {
-                return applyMask(toText: changedString, mask: mask)
-            }
-            
-        }else{
-            
-            //Max lenght validation:
-            if (maxLenght > 0) {
-                
-                let newLength:Int = textFieldString.count + replacementString.count - range.length
-                if (newLength > maxLenght) {
-                    return nil
-                }
-            }
-            
-            //Characters validation:
-            if let chars:String = charactersRestriction {
-                
-                let characterset = CharacterSet(charactersIn: chars)
-                if replacementString.rangeOfCharacter(from: characterset.inverted) != nil {
-                    //O texto possui caracteres inválidos
-                    return nil
-                }else{
-                    var newText = (textFieldString as NSString).replacingCharacters(in: range, with: replacementString)
-                    newText = self.removeMask(fromText:  "~˜^ˆ'`¨", charsMask: newText)
-                    return newText
-                }
-                
-            }else{
-                //Normal success return
-                let newText = (textFieldString as NSString).replacingCharacters(in: range, with: replacementString)
-                return newText
-            }
-            
-        }
-        
-    }
-    
-    /// Loverde Co.: Add mask to a text - Very simple to use
-    ///
-    /// - Parameter toText: String you want to maks
-    /// - Parameter mask: Using mask like sharp ##-#####(###)
     func applyMask(toText: String, mask: String) -> String {
 
         let toTextNSString = toText as NSString
         let maskNSString = mask as NSString
         
-        var onOriginal:Int = 0
-        var onFilter:Int = 0
-        var onOutput:Int = 0
-        var outputString = [Character](repeating: "\0", count:maskNSString.length)
+        var onOriginal: Int = 0
+        var onFilter: Int = 0
+        var onOutput: Int = 0
+        var outputString = [Character](repeating: "\0", count: maskNSString.length)
         var done:Bool = false
 
         while (onFilter < maskNSString.length && !done) {
 
-            let filterChar:Character = Character(UnicodeScalar(maskNSString.character(at: onFilter))!)
-            let originalChar:Character = onOriginal >= toTextNSString.length ? "\0" : Character(UnicodeScalar(toTextNSString.character(at: onOriginal))!)
+            let filterChar: Character = Character(UnicodeScalar(maskNSString.character(at: onFilter)) ?? UnicodeScalar.init(0))
+            let originalChar: Character = onOriginal >= toTextNSString.length ? "\0" :
+            Character(UnicodeScalar(toTextNSString.character(at: onOriginal))!)
 
             switch filterChar {
             case "#":
@@ -904,81 +829,30 @@ public extension String {
         return String(outputString).replacingOccurrences(of: "\0", with: "")
     }
     
-    /// Loverde Co.: Add mask to a text - Very simple to use
-    ///
-    /// - Parameter toText: String you want to maks
-    /// - Parameter mask: Using mask like sharp ##-#####(###)
-    func applyMask(mask:String = "#####-####", toText: String) -> String {
-        let cleanPhoneNumber = toText.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
-
-        var result = ""
-        var index = cleanPhoneNumber.startIndex
-        for ch in mask {
-            if index == cleanPhoneNumber.endIndex {
-                break
-            }
-            if ch == "#" {
-                result.append(cleanPhoneNumber[index])
-                index = cleanPhoneNumber.index(after: index)
-            } else {
-                result.append(ch)
-            }
-        }
-        return result
-    }
-    
-    /// Loverde Co.: Remove mask from a text - Very simple to use
-    ///
-    /// - Parameter fromText: String you want to remove maks
-    /// - Parameter charsMask: Used mask like sharp ##-#####(###)
-    func removeMask(fromText:String, charsMask:String) -> String{
-
-        var resultString = fromText;
-        //
-        for character in charsMask {
-            let str:String = String(character)
-            resultString = resultString.replacingOccurrences(of: str, with: "")
-        }
-        //
-        return resultString;
-    }
-    
     func stringByAddingPercentEncodingForRFC3986() -> String {
         let allowedQueryParamAndKey =  CharacterSet(charactersIn: ";/?:@&=+$, ").inverted
         return addingPercentEncoding(withAllowedCharacters: allowedQueryParamAndKey)!
     }
-    var removingWhitespacesAndNewlines: String {
-        return components(separatedBy: .whitespacesAndNewlines).joined(separator: "")
-    }
-    func replaceFirst(of pattern:String,
-                             with replacement:String) -> String {
-        if let range = self.range(of: pattern){
-            return self.replacingCharacters(in: range, with: replacement)
-        }else{
-            return self
-        }
-    }
     
-    func replaceAll(of pattern:String,
-                           with replacement:String,
-                           options: NSRegularExpression.Options = []) -> String{
+    func replaceAll(of pattern: String,
+                    with replacement: String,
+                    options: NSRegularExpression.Options = []) -> String{
         do{
             let regex = try NSRegularExpression(pattern: pattern, options: [])
             let range = NSRange(0..<self.utf16.count)
             return regex.stringByReplacingMatches(in: self, options: [],
-                                                  range: range, withTemplate: replacement)
+                                                  range: range,
+                                                  withTemplate: replacement)
         }catch{
-            NSLog("replaceAll error: \(error)")
+            print("replaceAll error: %@", error)
             return self
         }
     }
 }
 
 
-extension Character
-{
-    func unicodeScalarCodePoint() -> UInt32
-    {
+public extension Character {
+    func unicodeScalarCodePoint() -> UInt32 {
         let characterString = String(self)
         let scalars = characterString.unicodeScalars
         

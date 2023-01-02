@@ -62,7 +62,7 @@ public extension Date {
     ///   - localeIdentifier: Locale your time
     ///   - timeZone: Specify your time zone
     ///   - Returns: String object.
-    func string(stringFormat:String, localeIdentifier: String = "pt-BR", timeZone:TimeZone? = TimeZone.current) -> String {
+    func string(stringFormat: String, localeIdentifier: String = "pt-BR", timeZone: TimeZone? = TimeZone.current) -> String {
 
         let dateFormatter:DateFormatter = DateFormatter.init()
         let calendar:Calendar = Calendar.init(identifier: Calendar.Identifier.gregorian)
@@ -148,11 +148,11 @@ public extension Date {
     
     func getCorrectDateFromLocalTimezone() -> Date? {
         let currDate = Calendar.current.dateComponents(in: .current, from: Date())
-        var secs = "\(currDate.second!)"
-        if currDate.second! < 10 {
-            secs = "0\(currDate.second!)"
+        var secs = "\(currDate.second ?? 0)"
+        if (currDate.second ?? 0 ) < 10 {
+            secs = "0\(currDate.second ?? 0)"
         }
-        let currDateStr = "\(currDate.year!)-\(currDate.month!)-\(currDate.day!) \(currDate.hour!):\(currDate.minute!):\( secs )"
+        let currDateStr = "\(currDate.year ?? 0)-\(currDate.month ?? 0)-\(currDate.day ?? 0) \(currDate.hour ?? 0):\(currDate.minute ?? 0):\( secs )"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.timeZone = TimeZone(abbreviation: "GMT")
@@ -168,13 +168,13 @@ public extension Date {
         
         if years {
             components = calendar.dateComponents( [.year], from: startDate, to: endDate)
-            return components.year!
+            return components.year ?? 0
         }else if months {
             components = calendar.dateComponents( [.month], from: startDate, to: endDate)
-            return components.month!
+            return components.month ?? 0
         }else{
             components = calendar.dateComponents( [.day], from: startDate, to: endDate)
-            return components.day!
+            return components.day ?? 0
         }
     }
     
@@ -182,7 +182,7 @@ public extension Date {
     fileprivate var components: DateComponents {
         return Calendar.current.dateComponents(
             [.minute, .hour, .day, .weekOfYear, .month, .year, .second],
-            from: Calendar.current.date(byAdding: .second, value: -1, to: Date())!,
+            from: Calendar.current.date(byAdding: .second, value: -1, to: Date()) ?? Date(),
             to: self
         )
     }

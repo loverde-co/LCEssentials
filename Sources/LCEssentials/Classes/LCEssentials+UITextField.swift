@@ -26,7 +26,6 @@ import UIKit
 
 public extension UITextField {
 
-    @IBInspectable
     var placeholderColor: UIColor {
         get {
             return attributedPlaceholder?.attribute(.foregroundColor, at: 0, effectiveRange: nil) as? UIColor ?? .clear;
@@ -38,7 +37,7 @@ public extension UITextField {
         }
     }
     
-    /// SwifterSwift: Add padding to the left of the textfield rect.
+    /// Add padding to the left of the textfield rect.
     ///
     /// - Parameter padding: amount of padding to apply to the left of the textfield rect.
     func addPaddingLeft(_ padding: CGFloat) {
@@ -47,7 +46,7 @@ public extension UITextField {
         leftViewMode = .always
     }
 
-    /// SwifterSwift: Add padding to the left of the textfield rect.
+    /// Add padding to the left of the textfield rect.
     ///
     /// - Parameters:
     ///   - image: left image

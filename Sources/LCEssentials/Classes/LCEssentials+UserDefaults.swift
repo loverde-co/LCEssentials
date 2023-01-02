@@ -45,7 +45,7 @@ public extension UserDefaults {
         get{ bool(forKey: UserDefaultsKeys.isFirstTimeOnApp.rawValue) }
     }
     
-    /// SwifterSwift: Retrieves a Codable object from UserDefaults.
+    /// Retrieves a Codable object from UserDefaults.
     ///
     /// - Parameters:
     ///   - type: Class that conforms to the Codable protocol.
@@ -57,7 +57,7 @@ public extension UserDefaults {
         return try? decoder.decode(type.self, from: data)
     }
 
-    /// SwifterSwift: Allows storing of Codable objects to UserDefaults.
+    /// Allows storing of Codable objects to UserDefaults.
     ///
     /// - Parameters:
     ///   - object: Codable object to store.
@@ -70,7 +70,7 @@ public extension UserDefaults {
     }
     
     func removeSavedObject(forKey: String) -> Bool {
-        if let _ = object(forKey: forKey) as? String {
+        if object(forKey: forKey) is String {
             DispatchQueue.main.async {
                 self.removeObject(forKey: forKey)
                 self.synchronize()

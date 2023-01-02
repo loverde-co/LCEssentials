@@ -75,6 +75,8 @@
 		A4F396BDDA94981C5345E188BEF268D4 /* AttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2F12A829BAD3637E6A1F3F978E7B46 /* AttachmentCell.swift */; };
 		A738362D8F62081003887EFC73291E71 /* LCEssentials+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F186714DEBD8DE19D1BFD32FEF4CFB /* LCEssentials+UserDefaults.swift */; };
 		A867B6083DABD77C29D9B2AC13C269BC /* InputBarAccessoryViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4D5A250FE2EBF1EF427B589F60D1D9 /* InputBarAccessoryViewDelegate.swift */; };
+		B10D1EC429465E84003F8B18 /* LCEssentials+UITapGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10D1EC329465E84003F8B18 /* LCEssentials+UITapGestureRecognizer.swift */; };
+		B10D1EC829468509003F8B18 /* HUDAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10D1EC729468509003F8B18 /* HUDAlertView.swift */; };
 		B1B2DAB5292412C900524317 /* LCEssentials+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B2DAB4292412C900524317 /* LCEssentials+UIApplication.swift */; };
 		BC7416E7654730545E3DD471C5B9BD0E /* LCEssentials+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EB274E1A221DF4029A45C4B0593303 /* LCEssentials+Dictionary.swift */; };
 		BCEA9DD26F0584E21D3747954E042071 /* InputBarAccessoryView+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A8E9BC891604B95D85D5181C3D9FF /* InputBarAccessoryView+Availability.swift */; };
@@ -89,7 +91,6 @@
 		D56C1CF7BE30A23BC80897D0C3608707 /* LCEssentials+EncodableDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4966C5584BFF4E061184AF0159F8FCD2 /* LCEssentials+EncodableDecodable.swift */; };
 		D600927C267AD2CBE01304AD19D582FC /* LCEssentials+NSAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FD5DBE234F1BD99B2441D3FCEB2DE3 /* LCEssentials+NSAttributedString.swift */; };
 		D8AFF5D87DCFD109B4A47D006CD6CD3E /* LCEssentials+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2CB322FE90C1571EFF532317E811C9 /* LCEssentials+UILabel.swift */; };
-		D97B7BC512B5ED574F4E4FBA47BFC003 /* LCEffx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052A55049294F64FA970A6FF7077A705 /* LCEffx.swift */; };
 		D9B7DA3ECE38D188EF19127872F11B90 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 436BAA54A31999B53B3CC7115C55FE50 /* Foundation.framework */; };
 		DBE330D32644A819E145F80EC38A6DFE /* LCEssentials+Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63BBC14BD583258A3E190E34D24B3866 /* LCEssentials+Bool.swift */; };
 		DEB274B035AC01A77ACFE1835D1ACC47 /* LCEssentials+UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BE2640109050FF2B24A515A7DC5CBC /* LCEssentials+UICollectionView.swift */; };
@@ -133,7 +134,6 @@
 		00D9964C1B1518097773CB1E0F54E786 /* LCEssentials.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = LCEssentials.modulemap; sourceTree = "<group>"; };
 		00F8ED59CAFA365D8077A94E52E67E36 /* Pods-LCEssentialsExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LCEssentialsExample.release.xcconfig"; sourceTree = "<group>"; };
 		04BE2640109050FF2B24A515A7DC5CBC /* LCEssentials+UICollectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UICollectionView.swift"; sourceTree = "<group>"; };
-		052A55049294F64FA970A6FF7077A705 /* LCEffx.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LCEffx.swift; sourceTree = "<group>"; };
 		055DE5EA2CDBFE312825D88BDE05580A /* alert@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "alert@2x.png"; sourceTree = "<group>"; };
 		084A43BD480926BFBEB1DA76879712BF /* AttachmentManagerDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AttachmentManagerDelegate.swift; path = Sources/Plugins/AttachmentManager/Protocols/AttachmentManagerDelegate.swift; sourceTree = "<group>"; };
 		08A7C36A0647C5A5C244D3E0B2AA7CEA /* LCEssentials+URL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+URL.swift"; sourceTree = "<group>"; };
@@ -217,6 +217,8 @@
 		AAF1013E6983536EF5148BFD70F5807A /* LCEssentials.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LCEssentials.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB1115E0156FC2200F36DC005E6D8C5C /* Pods-LCEssentialsExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LCEssentialsExample.debug.xcconfig"; sourceTree = "<group>"; };
 		AC2D99281AC4D5FC721CA34E87E2908A /* Pods-LCEssentialsExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LCEssentialsExample-dummy.m"; sourceTree = "<group>"; };
+		B10D1EC329465E84003F8B18 /* LCEssentials+UITapGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UITapGestureRecognizer.swift"; sourceTree = "<group>"; };
+		B10D1EC729468509003F8B18 /* HUDAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDAlertView.swift; sourceTree = "<group>"; };
 		B1B2DAB4292412C900524317 /* LCEssentials+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UIApplication.swift"; sourceTree = "<group>"; };
 		B2D2E9D3302375CE92AF8B772304D134 /* AutocompleteTableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AutocompleteTableView.swift; path = Sources/Plugins/AutocompleteManager/Views/AutocompleteTableView.swift; sourceTree = "<group>"; };
 		B44D4EDB4B23682C77BC053C0EF37DD8 /* alert@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "alert@3x.png"; sourceTree = "<group>"; };
@@ -307,7 +309,6 @@
 			children = (
 				46BA8C2F296268CE633158BC91CD4303 /* GifHelper.swift */,
 				18AE20E4D7BBFFDCE1AF434661C7AFE6 /* LCDesignables.swift */,
-				052A55049294F64FA970A6FF7077A705 /* LCEffx.swift */,
 				6EC0EB14FD79BF3AFE27A9F965A444D8 /* LCEssentials.swift */,
 				E6D8DB549ADB7457321E82E6F213AC85 /* LCEssentials+API.swift */,
 				30BD6CE1334A46C9C0942DD57E6A7C14 /* LCEssentials+Array.swift */,
@@ -339,6 +340,7 @@
 				1D02060C90F626DD791CD5726393990C /* LCEssentials+UIStackView.swift */,
 				28A8B05B48CF68075851D5BC3F5DC05D /* LCEssentials+UITabBarController.swift */,
 				8F1C7F0E6A0653E2A68FE623D6A5AFF6 /* LCEssentials+UITableView.swift */,
+				B10D1EC329465E84003F8B18 /* LCEssentials+UITapGestureRecognizer.swift */,
 				D12148F67F6103871AD597F6230B58AB /* LCEssentials+UITextField.swift */,
 				2DCC24D90C6A825773870E3FA7DE2742 /* LCEssentials+UIView.swift */,
 				FE72FFBA9490AD7123DF6F60FF7AF981 /* LCEssentials+UIViewController.swift */,
@@ -425,6 +427,7 @@
 			isa = PBXGroup;
 			children = (
 				6518055A0722CFF4AA422B8D0BD47E45 /* HUDAlertController.swift */,
+				B10D1EC729468509003F8B18 /* HUDAlertView.swift */,
 			);
 			name = HUDAlert;
 			path = Sources/LCEssentials/HUDAlert;
@@ -896,7 +899,6 @@
 				5AC6D80534600D515EBE17F5959F05E1 /* ImagePickerController.swift in Sources */,
 				2B8781782317236D46E858F3AFF05C4C /* ImageZoom.swift in Sources */,
 				37317BD01D78388A7D0C0E243385C42A /* LCDesignables.swift in Sources */,
-				D97B7BC512B5ED574F4E4FBA47BFC003 /* LCEffx.swift in Sources */,
 				1A8BDE92B20DCA51BC50B2FD76DC7F28 /* LCEMessages.swift in Sources */,
 				185C6DB41C228FED643100DE3BA8288D /* LCENotificationRunTime.swift in Sources */,
 				2A1B6EA7B234722AC730C6A74A23E419 /* LCEssentials+API.swift in Sources */,
@@ -909,6 +911,7 @@
 				D56C1CF7BE30A23BC80897D0C3608707 /* LCEssentials+EncodableDecodable.swift in Sources */,
 				1416D9739B4A1577E75430EAA1198AC8 /* LCEssentials+FileManager.swift in Sources */,
 				65263EA1BC360980193F56617BC14608 /* LCEssentials+Float.swift in Sources */,
+				B10D1EC829468509003F8B18 /* HUDAlertView.swift in Sources */,
 				D600927C267AD2CBE01304AD19D582FC /* LCEssentials+NSAttributedString.swift in Sources */,
 				3370C87984F94F6BFDBD383A52C0B432 /* LCEssentials+NSMutableAttributedString.swift in Sources */,
 				E45EB87716DA3AF9F71E0286AA554FAD /* LCEssentials+NSString.swift in Sources */,
@@ -930,6 +933,7 @@
 				0F6B8DBF2FCA3DE49F4489D448366509 /* LCEssentials+UIScrollView.swift in Sources */,
 				2EB16A68CF697EDE611483B750C8D453 /* LCEssentials+UIStackView.swift in Sources */,
 				36D6FF8C4A57C03BE4DFFE1930359347 /* LCEssentials+UITabBarController.swift in Sources */,
+				B10D1EC429465E84003F8B18 /* LCEssentials+UITapGestureRecognizer.swift in Sources */,
 				F28CD340404A67ED2A0AB99AE5E0EA95 /* LCEssentials+UITableView.swift in Sources */,
 				2EB8B4C5F7FDF81B01509976B93AC3FD /* LCEssentials+UITextField.swift in Sources */,
 				5419B19E16CF4C5CB6BB4583033121C1 /* LCEssentials+UIView.swift in Sources */,

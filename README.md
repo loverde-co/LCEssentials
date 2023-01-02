@@ -21,14 +21,11 @@ Installation
 You can use [CocoaPods](http://cocoapods.org/) to install `LCEssentials` by adding it to your `Podfile`:
 
 ```ruby
-platform :ios, '11.4'
+platform :ios, '12.1'
 use_frameworks!
 
 # Swift 5.0
 pod 'LCEssentials'
-
-# Swift 5.0 for watchOS
-pod 'LCEssentialsWatch'
 
 # Swift 4.2
 pod 'LCEssentials', '~> 0.4.6.3'
@@ -76,10 +73,14 @@ self.navigationController?.popViewControllerWithHandler {
     //Do some stuff after pop
 }
 ```
-* See the custom [PickerViewController](PickerViewController.md) 
-* See the custom [DatePickerViewController](DatePickerViewController.md) 
-* See the custom [ImageZoomController](ImageZoomController.md) 
-* See the custom [NotificationsController](NotificationsController.md) 
+## Another components
+> **TEMPORARY DISABLED**
+> 
+> * See the custom [PickerViewController](PickerViewController.md) 
+> * See the custom [DatePickerViewController](DatePickerViewController.md) 
+> * See the custom [ImageZoomController](ImageZoomController.md) 
+> * See the custom [NotificationsController](NotificationsController.md) 
+
 * See the custom [HUDAlert](HUDAlert.md) 
 
 * If you whant **ONLY** LCEssentials without this others controllers above, just add this to your podfile
@@ -95,7 +96,7 @@ And then import `LCEssentials ` wherever you import UIKit
 import LCEssentials
 ```
 
-Author of v1.0
+Author of v0.7.0
 ----
 
 Any question or doubts, please send thru email

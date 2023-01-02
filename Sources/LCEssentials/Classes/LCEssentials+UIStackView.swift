@@ -47,12 +47,6 @@ public extension UIStackView {
         self.layoutMargins = layoutMargins
         self.isLayoutMarginsRelativeArrangement = isMarginsRelative
     }
-
-    func addArrangedSubviews(_ views: [UIView]) {
-        for view in views {
-            addArrangedSubview(view)
-        }
-    }
     
     func addArrangedSubviews(_ views: [UIView], translateAutoresizing: Bool = false) {
         views.forEach { subview in
@@ -63,10 +57,17 @@ public extension UIStackView {
     
     func removeAllArrangedSubviews() {
         arrangedSubviews.forEach {
-            self.removeArrangedSubview($0)
-            NSLayoutConstraint.deactivate($0.constraints)
-            $0.removeFromSuperview()
+            removeSubview(view: $0)
         }
+    }
+    
+    /// Remove specific view from it
+    ///
+    /// - Parameter view: view to be removed.
+    func removeSubview(view: UIView) {
+        removeArrangedSubview(view)
+        NSLayoutConstraint.deactivate(view.constraints)
+        view.removeFromSuperview()
     }
 
     private func addSpace(height: CGFloat? = nil, width: CGFloat? = nil, backgroundColor: UIColor = .clear) {

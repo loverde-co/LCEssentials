@@ -26,7 +26,7 @@ import UIKit
 // MARK: - Methods
 public extension UIScrollView {
 
-    /// SwifterSwift: Takes a snapshot of an entire ScrollView
+    /// Takes a snapshot of an entire ScrollView
     ///
     ///    AnySubclassOfUIScroolView().snapshot
     ///    UITableView().snapshot

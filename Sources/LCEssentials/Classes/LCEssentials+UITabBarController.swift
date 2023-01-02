@@ -24,12 +24,22 @@ import Foundation
 #if os(iOS) || os(macOS)
 import UIKit
 
-@IBDesignable open class CustomTabBadge: UILabel {
+public class CustomTabBadge: UILabel {
     
+    public init(font: UIFont = UIFont(name: "Helvetica-Light", size: 11) ?? UIFont()) {
+        super.init(frame: .zero)
+        
+        self.font = font
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
+
 public extension UITabBarController {
 
-    func setBadges(badgeValues: [Int]) {
+    func setBadges(badgeValues: [Int], font: UIFont = UIFont(name: "Helvetica-Light", size: 11) ?? UIFont()) {
 
         for view in self.tabBar.subviews {
             if view is CustomTabBadge {
@@ -39,18 +49,20 @@ public extension UITabBarController {
 
         for index in 0...badgeValues.count-1 {
             if badgeValues[index] != 0 {
-                addBadge(index: index, value: badgeValues[index], color: .red, font: UIFont(name: "Helvetica-Light", size: 11)!)
+                addBadge(index: index,
+                         value: badgeValues[index],
+                         color: .red,
+                         font: font)
             }
         }
     }
 
     func addBadge(index: Int, value: Int, color: UIColor, font: UIFont) {
-        let badgeView = CustomTabBadge()
+        let badgeView = CustomTabBadge(font: font)
 
         badgeView.clipsToBounds = true
         badgeView.textColor = UIColor.white
         badgeView.textAlignment = .center
-        badgeView.font = font
         badgeView.text = String(value)
         badgeView.backgroundColor = color
         badgeView.tag = index
@@ -75,8 +87,9 @@ public extension UITabBarController {
 
         for view in self.tabBar.subviews {
             if view is CustomTabBadge {
-                let badgeView = view as! CustomTabBadge
-                self.positionBadge(badgeView: badgeView, items:tabbarButtons, index: badgeView.tag)
+                if let badgeView = view as? CustomTabBadge {
+                    self.positionBadge(badgeView: badgeView, items: tabbarButtons, index: badgeView.tag)
+                }
             }
         }
     }

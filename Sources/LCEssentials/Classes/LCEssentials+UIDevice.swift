@@ -39,6 +39,10 @@ public extension UIDevice {
         }
         return 0
     }
+    
+    static var hasNotch: Bool {
+        return (self.topNotch > 0 && self.bottomNotch > 0)
+    }
 
     var modelName: String {
         var systemInfo = utsname()
@@ -111,33 +115,9 @@ public extension UIDevice {
         case "AppleTV5,3":                              return "Apple TV"
         case "AppleTV6,2":                              return "Apple TV 4K"
         case "AudioAccessory1,1":                       return "HomePod"
-        case "i386", "x86_64":                          return "Simulator"
+        case "i386", "x86_64":                          return "Simulator \(identifier)"
         default:                                        return identifier
         }
-        #elseif os(tvOS)
-        switch identifier {
-        case "AppleTV5,3": return "Apple TV 4"
-        case "AppleTV6,2": return "Apple TV 4K"
-        case "i386", "x86_64": return "Simulator \(mapToDevice(identifier: ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] ?? "tvOS"))"
-        default: return identifier
-        }
-//        #elseif os(watchOS)
-//        switch identifier {
-//        case "Watch1,1", "Watch1,2":                    return "Apple Watch 38mm"
-//        case "Watch2,6":                                return "Apple Watch S1 38mm"
-//        case "Watch2,7":                                return "Apple Watch S1 42mm"
-//        case "Watch2,3":                                return "Apple Watch S2 38mm"
-//        case "Watch2,4":                                return "Apple Watch S2 42mm"
-//        case "Watch3,1", "Watch3,3":                    return "Apple Watch S3 38mm"
-//        case "Watch3,2", "Watch3,4":                    return "Apple Watch S3 42mm"
-//        case "Watch4,1", "Watch4,3":                    return "Apple Watch S4 40mm"
-//        case "Watch4,2", "Watch4,4":                    return "Apple Watch S4 44mm"
-//        case "Watch5,1", "Watch5,3":                    return "Apple Watch S5 40mm"
-//        case "Watch5,2", "Watch5,4":                    return "Apple Watch S5 44mm"
-//        case "AudioAccessory1,1":                       return "HomePod"
-//        case "i386", "x86_64":                          return "Simulator"
-//        default:                                        return identifier
-//        }
         #endif
     }
 }

@@ -33,7 +33,7 @@ class SecondVC: UIViewController {
     
     var delegate: LCESingletonDelegate? = nil
     
-    let message: LCEMessages? = LCEMessages.instantiate()
+    //let message: LCEMessages? = LCEMessages.instantiate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,30 +49,30 @@ class SecondVC: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        message?.removeObserverForKeyboard()
+        //message?.removeObserverForKeyboard()
     }
 
     func setupView(){
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
-        message?.addObserverForKeyboard()
-        message?.delegate = self
-        message?.setDirection = .bottom
-        message?.setDuration = .fiveSecs
-        message?.tapToDismiss = true
-        message?.setBackgroundColor = .darkGray
+//        message?.addObserverForKeyboard()
+//        message?.delegate = self
+//        message?.setDirection = .bottom
+//        message?.setDuration = .fiveSecs
+//        message?.tapToDismiss = true
+//        message?.setBackgroundColor = .darkGray
     
         let md5Data = Data.MD5(string: md5String)
         let toHex = md5Data.toHexString()
         printLog(title: "MD5", msg: toHex)
         self.lblMD5.text = "Original message: \(md5String)\n\nMD5 output: "+toHex
         
-        LCEssentials.backgroundThread(delay: 10, completion:  {
-            let attrString = NSMutableAttributedString()
-            attrString.customize("First line title", size: 20, color: .blue)
-            attrString.customize("\nSecond line description", size: 14, color: .lightGray)
-            self.lblMD5.attributedText = attrString
-        })
+//        LCEssentials.backgroundThread(delay: 10, completion:  {
+//            let attrString = NSMutableAttributedString()
+//            attrString.customize("First line title", size: 20, color: .blue)
+//            attrString.customize("\nSecond line description", size: 14, color: .lightGray)
+//            self.lblMD5.attributedText = attrString
+//        })
         
         shadowView.cornerRadius(radius: 8)
         var color = UIColor.black
@@ -92,7 +92,7 @@ class SecondVC: UIViewController {
     }
     
     @IBAction func openAlert(){
-        message?.show(message: "Testing message BOTTOM with loading", withImage: nil, showLoading: true)
+        //message?.show(message: "Testing message BOTTOM with loading", withImage: nil, showLoading: true)
         LCEssentials.backgroundThread(delay: 1, completion: {
             self.txtField.becomeFirstResponder()
         })
