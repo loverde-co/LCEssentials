@@ -105,9 +105,15 @@ public extension UIView {
 
     var bottomConstraint: NSLayoutConstraint? {
         get {
-            return constraints.first(where: {
-                $0.firstAttribute == .bottom && $0.relation == .equal
-            })
+            return constraints(on: bottomAnchor).first
+        }
+        
+        set { setNeedsLayout() }
+    }
+    
+    var topConstraint: NSLayoutConstraint? {
+        get {
+            return constraints(on: topAnchor).first
         }
         
         set { setNeedsLayout() }
@@ -129,11 +135,11 @@ public extension UIView {
         }
     }
     
-    var globalPoint :CGPoint? {
+    var globalPoint: CGPoint? {
        return self.superview?.convert(self.frame.origin, to: nil)
     }
 
-    var globalFrame :CGRect? {
+    var globalFrame: CGRect? {
        return self.superview?.convert(self.frame, to: nil)
     }
     
@@ -284,6 +290,21 @@ public extension UIView {
         return Bundle.main.loadNibNamed(nibName, owner: owner, options: options)
     }
     
+    func constraints(on anchor: NSLayoutYAxisAnchor) -> [NSLayoutConstraint] {
+        guard let superview = superview else { return [] }
+        return superview.constraints.filtered(view: self, anchor: anchor)
+    }
+    
+    func constraints(on anchor: NSLayoutXAxisAnchor) -> [NSLayoutConstraint] {
+        guard let superview = superview else { return [] }
+        return superview.constraints.filtered(view: self, anchor: anchor)
+    }
+    
+    func constraints(on anchor: NSLayoutDimension) -> [NSLayoutConstraint] {
+        guard let superview = superview else { return [] }
+        return constraints.filtered(view: self, anchor: anchor) + superview.constraints.filtered(view: self, anchor: anchor)
+    }
+    
     func addBorders(for edges:[UIRectEdge] = [.all], width:CGFloat = 1, color: UIColor = .black) {
         if edges.contains(.all) {
             layer.borderWidth = width
@@ -377,7 +398,13 @@ public extension UIView {
         self.layer.masksToBounds = true
     }
 
-    func drawCircle(inCoord x: CGFloat, y: CGFloat, with radius: CGFloat, strokeColor:UIColor = UIColor.red, fillColor:UIColor = UIColor.gray, isEmpty: Bool = false) -> [String:Any] {
+    func drawCircle(inCoord x: CGFloat,
+                    y: CGFloat,
+                    with radius: CGFloat,
+                    strokeColor: UIColor = UIColor.red,
+                    fillColor: UIColor = UIColor.gray,
+                    isEmpty: Bool = false) -> [String:Any] {
+        
         let dotPath = UIBezierPath(ovalIn: CGRect(x: x,y: y, width: radius, height: radius))
         let layer = CAShapeLayer()
         if !isEmpty {
@@ -386,10 +413,14 @@ public extension UIView {
             layer.fillColor = fillColor.cgColor
             self.layer.addSublayer(layer)
         }
-        return ["path":dotPath,"layer":layer]
+        return ["path": dotPath,"layer": layer]
     }
 
-    func applyShadow(color:UIColor, offSet:CGSize, radius:CGFloat, opacity:Float, shouldRasterize:Bool = true, rasterizationScaleTo: CGFloat = UIScreen.main.scale){
+    func applyShadow(color: UIColor, offSet:CGSize,
+                     radius: CGFloat,
+                     opacity: Float,
+                     shouldRasterize: Bool = true,
+                     rasterizationScaleTo: CGFloat = UIScreen.main.scale){
 
         self.layer.masksToBounds = false
         self.layer.shadowColor = color.cgColor
@@ -411,7 +442,9 @@ public extension UIView {
     ///
     /// - Parameter style: Blur styles available for blur effect objects.
     /// - Parameter alpha: The view’s alpha value.
-    func insertBlurView (style: UIBlurEffect.Style, color: UIColor = .black, alpha: CGFloat = 0.9) {
+    func insertBlurView(style: UIBlurEffect.Style,
+                        color: UIColor = .black,
+                        alpha: CGFloat = 0.9) {
         self.backgroundColor = color
 
         let blurEffect = UIBlurEffect(style: style)
@@ -529,6 +562,17 @@ public extension UIView {
         }
     }
     
+    /// Apply constraint to a View more easily.
+    ///
+    ///        "MyView.applyConstraints(AnotherView, applyAnchor: [(AnchorType.leading, 10.0), AnchorType.height, 0.0])"
+    ///        "MyView.applyConstraints(ContainerView, applyAnchor: [(AnchorType.all, 0.0)])"
+    ///
+    /// - Parameters:
+    ///   - toView: The View you whant to constraint to.
+    ///   - applyAnchor: Array of ENUM AnchorType and constraint value (CGFloat) to apply to "toView"
+    ///   - safeArea: Bool in case you whant top and bottom to be applied to Safe Area Layout Guide. Default is FALSE
+    /// - Returns:
+    /// All active constraints you apply.
     func applyConstraints(_ toView: UIView,
                           applyAnchor: [(anchor: AnchorType, constraint: CGFloat)],
                           safeArea: Bool = false) {
@@ -623,7 +667,122 @@ public extension UIView {
         }
     }
     
+    /// Apply constraint to a View more easily.
+    ///
+    ///        "MyView.applyConstraints(AnotherView, applyAnchor: (AnchorType.leading, 10.0))"
+    ///        "MyView.applyConstraints(ContainerView, applyAnchor: (AnchorType.all, 0.0))"
+    ///
+    /// - Parameters:
+    ///   - toView: The View you whant to constraint to.
+    ///   - applyAnchor: A tuple of enum AnchorType and CGFloat value to apply constraint to "toView"
+    ///   - safeArea: Bool in case you whant top and bottom to be applied to Safe Area Layout Guide. Default is FALSE
+    /// - Returns:
+    /// All active constraints you apply.
+    func applyConstraints(_ toView: UIView,
+                          applyAnchor: (anchor: AnchorType, constraint: CGFloat),
+                          safeArea: Bool = false) {
+        
+        switch applyAnchor.anchor {
+        case .all:
+            let topAnchor: NSLayoutConstraint
+            if #available(iOS 11.0, *) {
+                topAnchor = self.topAnchor.constraint(equalTo: (safeArea ? toView.safeAreaLayoutGuide.topAnchor : toView.topAnchor),
+                                                      constant: applyAnchor.constraint)
+                topAnchor.identifier = "topAnchor"
+                topAnchor.isActive = true
+            } else {
+                topAnchor = self.topAnchor.constraint(equalTo: toView.topAnchor,
+                                                      constant: applyAnchor.constraint)
+                topAnchor.identifier = "topAnchor"
+                topAnchor.isActive = true
+            }
+            self.leadingAnchor.constraint(equalTo: toView.leadingAnchor,
+                                          constant: applyAnchor.constraint).isActive = true
+            self.trailingAnchor.constraint(equalTo: toView.trailingAnchor,
+                                           constant: applyAnchor.constraint).isActive = true
+            self.bottomAnchor.constraint(equalTo: toView.bottomAnchor,
+                                         constant: applyAnchor.constraint).isActive = true
+        case .top:
+            if #available(iOS 11.0, *) {
+                self.topAnchor.constraint(equalTo: (safeArea ? toView.safeAreaLayoutGuide.topAnchor : toView.topAnchor),
+                                          constant: applyAnchor.constraint).isActive = true
+            } else {
+                self.topAnchor.constraint(equalTo: toView.topAnchor,
+                                          constant: applyAnchor.constraint).isActive = true
+            }
+            
+        case .bottom:
+            self.bottomAnchor.constraint(equalTo: toView.bottomAnchor,
+                                         constant: applyAnchor.constraint).isActive = true
+            
+        case .bottomOf:
+            self.topAnchor.constraint(equalTo: toView.bottomAnchor,
+                                      constant: applyAnchor.constraint).isActive = true
+            
+        case .leading:
+            self.leadingAnchor.constraint(equalTo: toView.leadingAnchor,
+                                          constant: applyAnchor.constraint).isActive = true
+            
+        case .leadingToTrailing:
+            self.leadingAnchor.constraint(equalTo: toView.trailingAnchor,
+                                          constant: applyAnchor.constraint).isActive = true
+            
+        case .trailing:
+            self.trailingAnchor.constraint(equalTo: toView.trailingAnchor,
+                                           constant: applyAnchor.constraint).isActive = true
+            
+        case .trailingToLeading:
+            self.trailingAnchor.constraint(equalTo: toView.leadingAnchor,
+                                           constant: applyAnchor.constraint).isActive = true
+            
+        case .height:
+            self.heightAnchor.constraint(equalTo: toView.heightAnchor,
+                                         constant: applyAnchor.constraint).isActive = true
+            
+        case .heightGreaterThanOrEqualTo:
+            self.heightAnchor.constraint(greaterThanOrEqualToConstant: applyAnchor.constraint).isActive = true
+            
+        case .width:
+            self.widthAnchor.constraint(equalTo: toView.widthAnchor,
+                                        constant: applyAnchor.constraint).isActive = true
+            
+        case .centerX:
+            self.centerXAnchor.constraint(equalTo: toView.centerXAnchor,
+                                          constant: applyAnchor.constraint).isActive = true
+            
+        case .centerY:
+            self.centerYAnchor.constraint(equalTo: toView.centerYAnchor,
+                                          constant: applyAnchor.constraint).isActive = true
+            
+        case .topGreaterThanOrEqualTo:
+            self.topAnchor.constraint(greaterThanOrEqualTo: toView.bottomAnchor,
+                                      constant: applyAnchor.constraint).isActive = true
+            
+        case .topToTopGreaterThanOrEqualTo:
+            if #available(iOS 11.0, *) {
+                self.topAnchor.constraint(greaterThanOrEqualTo: (safeArea ? toView.safeAreaLayoutGuide.topAnchor : toView.topAnchor),
+                                          constant: applyAnchor.constraint).isActive = true
+            } else {
+                self.topAnchor.constraint(greaterThanOrEqualTo: toView.topAnchor,
+                                          constant: applyAnchor.constraint).isActive = true
+            }
+            
+        case .bottomGreaterThanOrEqualTo:
+            self.bottomAnchor.constraint(greaterThanOrEqualTo: toView.bottomAnchor,
+                                         constant: applyAnchor.constraint).isActive = true
+            
+        case .left:
+            self.leftAnchor.constraint(equalTo: toView.leftAnchor,
+                                       constant: applyAnchor.constraint).isActive = true
+            
+        case .right:
+            self.rightAnchor.constraint(equalTo: toView.rightAnchor,
+                                        constant: applyAnchor.constraint).isActive = true
+        }
+    }
+    
     func applyConstraint(_ toScrollView: UIScrollView) {
+        if self is UIScrollView { fatalError("You cannot apply this to self ScrollView.") }
         applyConstraints(toScrollView, applyAnchor: [(.top, 0.0), (.leading, 0.0), (.trailing, 0.0), (.bottom, 0.0)])
         let widthConstraint = widthAnchor.constraint(equalTo: toScrollView.widthAnchor)
         widthConstraint.isActive = true

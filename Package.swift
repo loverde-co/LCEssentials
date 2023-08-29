@@ -6,9 +6,8 @@ import PackageDescription
 let package = Package(
     name: "LCEssentials",
     platforms: [
-        .iOS(.v11),
+        .iOS(.v13),
         .tvOS(.v9),
-        .watchOS(.v2),
         .macOS(.v10_10)
     ],
     products: [

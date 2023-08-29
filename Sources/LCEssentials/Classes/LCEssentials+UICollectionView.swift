@@ -25,7 +25,12 @@ import Foundation
 import UIKit
 
 public extension UICollectionView {
-    func setupCollectionView(spacings: CGFloat = 0, direction: UICollectionView.ScrollDirection = .horizontal, edgesInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0), allowMulpleSelection: Bool = false){
+    
+    func setupCollectionView(spacings: CGFloat = 0,
+                             direction: UICollectionView.ScrollDirection = .horizontal,
+                             edgesInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
+                             allowMulpleSelection: Bool = false) {
+        
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = edgesInset
         layout.minimumInteritemSpacing = spacings
@@ -34,10 +39,12 @@ public extension UICollectionView {
         self.collectionViewLayout = layout
         self.allowsMultipleSelection = allowMulpleSelection
     }
+    
     static var identifier: String {
         return "id"+String(describing: self)
     }
 }
+
 public extension Collection where Indices.Iterator.Element == Index {
     subscript (exist index: Index) -> Iterator.Element? {
         return indices.contains(index) ? self[index] : nil

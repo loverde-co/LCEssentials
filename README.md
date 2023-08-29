@@ -77,10 +77,10 @@ self.navigationController?.popViewControllerWithHandler {
 > **TEMPORARY DISABLED**
 > 
 > * See the custom [PickerViewController](PickerViewController.md) 
-> * See the custom [DatePickerViewController](DatePickerViewController.md) 
-> * See the custom [ImageZoomController](ImageZoomController.md) 
+> * See the custom [DatePickerViewController](DatePickerViewController.md)
 > * See the custom [NotificationsController](NotificationsController.md) 
-
+ 
+* See the custom [ImageZoomController](ImageZoomController.md) 
 * See the custom [HUDAlert](HUDAlert.md) 
 
 * If you whant **ONLY** LCEssentials without this others controllers above, just add this to your podfile

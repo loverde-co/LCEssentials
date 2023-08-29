@@ -136,6 +136,30 @@ public extension String {
         }
     }
     
+    var JSONStringToDictionary: [String:Any]? {
+        if let data = self.data(using: .utf8) {
+             do {
+                 let jsonString = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                 return jsonString
+             } catch {
+                 printError(title: "JSON STRING", msg: error.localizedDescription)
+                 return nil
+             }
+        }else{
+            return nil
+        }
+    }
+    
+    var currencyStringToDouble: Double {
+        let formatter = NumberFormatter()
+        let str = self.replacingOccurrences(of: " ", with: "")
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "pt_br")
+        let number = formatter.number(from: str)
+        
+        return number?.doubleValue ?? 0.0
+    }
+    
     var removeSpecialChars: String {
         let okayChars = Set("abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLKMNOPQRSTUVWXYZ1234567890-")
         return self.filter {okayChars.contains($0) }
@@ -478,15 +502,6 @@ public extension String {
 
         return ceil(boundingBox.width)
     }
-
-    func encodeImageToBase64(refImage: UIImage) -> String{
-        let jpegCompressionQuality: CGFloat = 0.6
-        if let base64String = refImage.jpegData(compressionQuality: jpegCompressionQuality){
-            let strBase64 = base64String.base64EncodedString(options: .endLineWithLineFeed)
-            return strBase64
-        }
-        return ""
-    }
     #endif
     
     func exponentize(str: String) -> String {
@@ -642,30 +657,6 @@ public extension String {
             print(error.localizedDescription)
             return nil
         }
-    }
-    
-    func JSONStringToDictionary() -> [String:Any]? {
-        if let data = self.data(using: .utf8) {
-             do {
-                 let jsonString = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-                 return jsonString
-             } catch {
-                 printError(title: "JSON STRING", msg: error.localizedDescription)
-                 return nil
-             }
-        }else{
-            return nil
-        }
-    }
-    
-    var currencyStringToDouble: Double {
-        let formatter = NumberFormatter()
-        let str = self.replacingOccurrences(of: " ", with: "")
-        formatter.numberStyle = .currency
-        formatter.locale = Locale(identifier: "pt_br")
-        let number = formatter.number(from: str)
-        
-        return number?.doubleValue ?? 0.0
     }
     
     func toURL() -> NSURL? {

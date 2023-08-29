@@ -35,6 +35,36 @@ public extension UIImageView {
         return self
     }
     
+    var encodeToBase64: String? {
+       let jpegCompressionQuality: CGFloat = 0.6
+       if let base64String = self.image?.jpegData(compressionQuality: jpegCompressionQuality) {
+           let strBase64 = base64String.base64EncodedString(options: .endLineWithLineFeed)
+           return strBase64
+       }
+      return nil
+    }
+    
+    func addAspectRatioConstraint() {
+        removeAspectRatioConstraint()
+        if let image = self.image, image.size.height > 0 {
+            let aspectRatio = image.size.width / image.size.height
+            let constraint = NSLayoutConstraint(item: self, attribute: .width,
+                                                relatedBy: .equal,
+                                                toItem: self, attribute: .height,
+                                                multiplier: aspectRatio, constant: 0.0)
+            addConstraint(constraint)
+        }
+    }
+    
+    
+    func removeAspectRatioConstraint() {
+        for constraint in self.constraints
+        where (constraint.firstItem as? UIImageView) == self
+        && (constraint.secondItem as? UIImageView) == self {
+            removeConstraint(constraint)
+        }
+    }
+    
     private static var taskKey = 0
     private static var urlKey = 0
 

@@ -41,7 +41,7 @@ import LCEssentials
 ```swift
 class MyCustomViewController: UIViewController, HUDAlertControllerDelegate {
 	
-       let controller: HUDAlertController = HUDAlertController.instantiate()
+       let controller: HUDAlertController = HUDAlertController()
        
     override func viewDidLoad(){
         super.viewDidLoad()

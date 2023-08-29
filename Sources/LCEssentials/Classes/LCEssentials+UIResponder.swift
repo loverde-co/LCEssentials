@@ -30,7 +30,7 @@ public extension UIResponder {
             return self.next as? UIViewController
         } else {
             if self.next != nil {
-                return (self.next!).getParentViewController()
+                return self.next?.getParentViewController()
             }
             else {return nil}
         }

@@ -41,7 +41,7 @@ public struct API {
                                       userInfo: [ NSLocalizedDescriptionKey: LCEssentials.DEFAULT_ERROR_MSG ])
     
     public static var persistConnectionDelay: Double = 3
-    public static var headers: [String: String]!
+    public static var headers: [String: String] = [:]
     public static var defaultParams: [String:Any] = [String: Any]()
     public static var defaultHeaders: [String: String] = ["Accept": "application/json",
                                                           "Content-Type": "application/json; charset=UTF-8",
@@ -86,7 +86,7 @@ public struct API {
                 request.httpMethod = method.rawValue
                 
                 // - Put Default Headers togheter with user defined params
-                if let _ = headers {
+                if !headers.isEmpty {
                     headers += defaultHeaders
                     
                     // - Add it to request
@@ -113,18 +113,18 @@ public struct API {
                         //printLog(title: "FILE", msg: LCEssentials.sourceFileName(filePath: file)+" LINE: \(line) COLUMN: \(column)")
                         printLog(title: "METHOD", msg: method.rawValue)
                         printLog(title: "REQUEST", msg: String(describing: request))
-                        printLog(title: "HEADERS", msg: request.allHTTPHeaderFields!.debugDescription)
+                        printLog(title: "HEADERS", msg: request.allHTTPHeaderFields?.debugDescription ?? "")
                         
                         //
-                        if let data = request.httpBody, let prettyJson = data.prettyJson {
+                        if let dataBody = request.httpBody, let prettyJson = dataBody.prettyJson {
                             printLog(title: "PARAMETERS", msg: prettyJson)
-                        } else {
-                            printLog(title: "PARAMETERS", msg: String(data: data ?? Data(), encoding: .utf8) ?? "-")
+                        } else if let dataBody = request.httpBody {
+                            printLog(title: "PARAMETERS", msg: String(data: dataBody, encoding: .utf8) ?? "-")
                         }
                         //
                         printLog(title: "STATUS CODE", msg: String(describing: code))
                         //
-                        if let data2 = data, let prettyJson = data2.prettyJson {
+                        if let dataResponse = data, let prettyJson = dataResponse.prettyJson {
                             printLog(title: "RESPONSE", msg: prettyJson)
                         } else {
                             printLog(title: "RESPONSE", msg: String(data: data ?? Data(), encoding: .utf8) ?? "-")

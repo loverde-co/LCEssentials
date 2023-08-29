@@ -21,12 +21,13 @@
  
 
 import Foundation
+import UIKit
 
 #if os(iOS) || os(macOS)
 public extension UITapGestureRecognizer {
     
-    func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
-        
+    func didTapAttributedTextInLabel(label: UILabel, textToTouch: String) -> Bool {
+        let targetRange = NSString().range(of: textToTouch)
         let layoutManager = NSLayoutManager()
         let textContainer = NSTextContainer(size: CGSize.zero)
         let textStorage = NSTextStorage(attributedString: label.attributedText!)

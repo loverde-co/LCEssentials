@@ -2,19 +2,15 @@ PODS:
   - InputBarAccessoryView (5.1.0):
     - InputBarAccessoryView/Core (= 5.1.0)
   - InputBarAccessoryView/Core (5.1.0)
-  - LCEssentials (0.5.7):
-    - LCEssentials/Classes (= 0.5.7)
-    - LCEssentials/HUDAlert (= 0.5.7)
-    - LCEssentials/ImagePicker (= 0.5.7)
-    - LCEssentials/ImagesZoom (= 0.5.7)
-    - LCEssentials/Notifications (= 0.5.7)
-    - LCEssentials/PickerViews (= 0.5.7)
-  - LCEssentials/Classes (0.5.7)
-  - LCEssentials/HUDAlert (0.5.7)
-  - LCEssentials/ImagePicker (0.5.7)
-  - LCEssentials/ImagesZoom (0.5.7)
-  - LCEssentials/Notifications (0.5.7)
-  - LCEssentials/PickerViews (0.5.7)
+  - LCEssentials (0.7.0):
+    - LCEssentials/Classes (= 0.7.0)
+    - LCEssentials/HUDAlert (= 0.7.0)
+    - LCEssentials/ImagePicker (= 0.7.0)
+    - LCEssentials/ImageZoom (= 0.7.0)
+  - LCEssentials/Classes (0.7.0)
+  - LCEssentials/HUDAlert (0.7.0)
+  - LCEssentials/ImagePicker (0.7.0)
+  - LCEssentials/ImageZoom (0.7.0)
 
 DEPENDENCIES:
   - InputBarAccessoryView
@@ -30,8 +26,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   InputBarAccessoryView: 19953f486a23e846e9487099f92bbe3456e46ce5
-  LCEssentials: 53e6a0f641a882cb651db67d63b63a1f7722b9b5
+  LCEssentials: 63da2d0680c167ff8ecd177a325d83e9c06480c3
 
-PODFILE CHECKSUM: 0be0b257840b103f6eef1e5d9bc155dbf81f4bb8
+PODFILE CHECKSUM: 481206beee92304b7971fd70b0ed55b2ff1d0847
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.12.1

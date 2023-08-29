@@ -40,7 +40,7 @@ class ViewController: UIViewController {
 //    let pickerController: PickerViewController = PickerViewController.instantiate()
 //    lazy var pickerParams: [[String: Any]] = [["title": "First Choice", "row": 0], ["title": "Sec Choice", "row": 1], ["title": "Third Choice", "row": 2]]
     
-    let datePickerController: DatePickerViewController = DatePickerViewController.instantiate()
+//    let datePickerController: DatePickerViewController = DatePickerViewController.instantiate()
     
     var delegate: LCESingletonDelegate? = nil
     
@@ -91,11 +91,11 @@ class ViewController: UIViewController {
 
         
         //MARK: - Set Date Picker Controller
-        datePickerController.delegate = self
-        datePickerController.setWidth = self.view.bounds.width
-        datePickerController.setDistanceFromBottom = 50
-        //datePickerController.minimumDate = Date()
-        datePickerController.touchToClose = true
+//        datePickerController.delegate = self
+//        datePickerController.setWidth = self.view.bounds.width
+//        datePickerController.setDistanceFromBottom = 50
+//        //datePickerController.minimumDate = Date()
+//        datePickerController.touchToClose = true
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -114,54 +114,54 @@ extension ViewController {
 
     //MARK: - Open Date Picker Controller
     func openDatePickerController(){
-        if datePickerController.isHidden {
-            datePickerController.show()
-        }
+//        if datePickerController.isHidden {
+//            datePickerController.show()
+//        }
     }
     
     //MARK: - Notification Runtime Controller
     func openNotificationRuntime(){
-        let notif = LCENotificationRunTime.instantiate()
-        notif.delegate = self
-        notif.anyData = nil //If you need grab any data to handler on Delegate
-        notif.setDesc = "Description on received message"
-        notif.setTitle = "Title on received message"
-        notif.setImage = nil //If you need to set a image on left
-        notif.setHeight = UIDevice.bottomNotch >= 20 ? 130 : 100
-        notif.show()
+//        let notif = LCENotificationRunTime.instantiate()
+//        notif.delegate = self
+//        notif.anyData = nil //If you need grab any data to handler on Delegate
+//        notif.setDesc = "Description on received message"
+//        notif.setTitle = "Title on received message"
+//        notif.setImage = nil //If you need to set a image on left
+//        notif.setHeight = UIDevice.bottomNotch >= 20 ? 130 : 100
+//        notif.show()
     }
     
     //MARK: - Messages Alert Bottom
     func openMessageAlert(){
-        let message = LCEMessages()
-        message.delegate = self
-        message.addObserverForKeyboard()
-        message.direction = .bottom
-        message.duration = .fiveSecs
-        message.tapToDismiss = true
-        message.backgroundColor = .darkGray
-        message.descriptionLabelString = "Testing message bottom with loading"
-        message.show(loading: true)
+//        let message = LCEMessages()
+//        message.delegate = self
+//        message.addObserverForKeyboard()
+//        message.direction = .bottom
+//        message.duration = .fiveSecs
+//        message.tapToDismiss = true
+//        message.backgroundColor = .darkGray
+//        message.descriptionLabelString = "Testing message bottom with loading"
+//        message.show(loading: true)
     }
     
     //MARK: - Messages Alert TOP
     func openMessageAlertTop(){
-        let message = LCEMessages()
-        message.delegate = self
-        message.direction = .top
-        message.duration = .fiveSecs
-        message.tapToDismiss = true
-        message.backgroundColor = .darkGray
-        message.descriptionLabelString = "Testing message TOP with loading"
-        message.show(loading: true)
+//        let message = LCEMessages()
+//        message.delegate = self
+//        message.direction = .top
+//        message.duration = .fiveSecs
+//        message.tapToDismiss = true
+//        message.backgroundColor = .darkGray
+//        message.descriptionLabelString = "Testing message TOP with loading"
+//        message.show(loading: true)
     }
     
     //MARK: - Image Zoom
     func openImageZoom(){
-        let imageZoomController: ImageZoomController = ImageZoomController.instantiate()
+        guard let image = UIImage(named: "loverde_company_logo_full") else { return }
+        let imageZoomController: ImageZoomController = ImageZoomController(image)
         imageZoomController.delegate = self
-        imageZoomController.setImage = #imageLiteral(resourceName: "office_example_image_zoom.jpg")
-        self.present(imageZoomController, animated: true, completion: nil)
+        imageZoomController.present()
     }
     
     //MARK: - Singleton usage example
@@ -215,21 +215,21 @@ extension ViewController {
 }
 
 //MARK: - Messages Delegate
-extension ViewController: LCEMessagesDelegate {
-    func messages(didTapOnMessage: LCEMessages) {
-        
-    }
-}
+//extension ViewController: LCEMessagesDelegate {
+//    func messages(didTapOnMessage: LCEMessages) {
+//        
+//    }
+//}
 
 //MARK: - Notification Runtime Delegate
-extension ViewController: LCENotifiactionRunTimeDelegate {
-    func messages(didTapOnMessage: LCENotificationRunTime, withData: Any?) {
-        printInfo(title: "TAPPED ON NOTIFICATION RUNTIME", msg: "")
-    }
-    func messages(didSwipeOnMessage: LCENotificationRunTime, withData: Any?) {
-        printInfo(title: "SWIPPED NOTIFICATION RUNTIME", msg: "")
-    }
-}
+//extension ViewController: LCENotifiactionRunTimeDelegate {
+//    func messages(didTapOnMessage: LCENotificationRunTime, withData: Any?) {
+//        printInfo(title: "TAPPED ON NOTIFICATION RUNTIME", msg: "")
+//    }
+//    func messages(didSwipeOnMessage: LCENotificationRunTime, withData: Any?) {
+//        printInfo(title: "SWIPPED NOTIFICATION RUNTIME", msg: "")
+//    }
+//}
 
 
 //MARK: - TableView Delegate
@@ -323,19 +323,19 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 //}
 
 //MARK: - Date Picker Controller Delegate
-extension ViewController: DatePickerViewControllerDelegate {
-    func datePickerViewController(didConfirm picker: DatePickerViewController, withValue: String) {
-        printInfo(title: "Date Picker", msg: withValue)
-    }
-    
-    func datePickerViewController(didCancel picker: DatePickerViewController) {
-        printInfo(title: "Date Picker", msg: "CANCEL")
-    }
-    
-    func datePickerViewController(didEndScrollPicker picker: DatePickerViewController, withValue: String) {
-        printInfo(title: "Date Picker - Scroll to date", msg: withValue)
-    }
-}
+//extension ViewController: DatePickerViewControllerDelegate {
+//    func datePickerViewController(didConfirm picker: DatePickerViewController, withValue: String) {
+//        printInfo(title: "Date Picker", msg: withValue)
+//    }
+//
+//    func datePickerViewController(didCancel picker: DatePickerViewController) {
+//        printInfo(title: "Date Picker", msg: "CANCEL")
+//    }
+//
+//    func datePickerViewController(didEndScrollPicker picker: DatePickerViewController, withValue: String) {
+//        printInfo(title: "Date Picker - Scroll to date", msg: withValue)
+//    }
+//}
 
 //MARK: - Image Zoom Controller Delegate
 extension ViewController: ImageZoomControllerDelegate {

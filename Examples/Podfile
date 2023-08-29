@@ -1,6 +1,6 @@
 def shared_pods
   source 'https://github.com/CocoaPods/Specs.git'
-  platform :ios, '11.4'
+  platform :ios, '13.0'
   use_frameworks!
   # project 'Examples/LCEssentials.xcodeproj'
 
@@ -12,12 +12,16 @@ end
 
 target 'LCEssentialsExample' do
   shared_pods
-end
-
-post_install do |installer|
-  installer.pods_project.build_configurations.each do |config|
-    config.build_settings.delete('CODE_SIGNING_ALLOWED')
-    config.build_settings.delete('CODE_SIGNING_REQUIRED')
+  
+  post_install do |installer|
+  installer.generated_projects.each do |project|
+    project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+        end
+      end
+    end
   end
 end
 

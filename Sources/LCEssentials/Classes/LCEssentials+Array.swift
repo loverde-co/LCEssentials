@@ -1,5 +1,5 @@
 //  
-// Copyright (c) 2018 Loverde Co.
+// Copyright (c) 2023 Loverde Co.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,7 @@
  
 
 import Foundation
+import UIKit
 
 // MARK: - Methods (Equatable)
 public extension Array where Element: Equatable {
@@ -33,6 +34,11 @@ public extension Array where Element: Equatable {
             }
         }
         return uniqueValues
+    }
+    
+    /// Returns an array without nil elements.
+    var removeNilElements: [Element] {
+        return self.compactMap { $0 }
     }
 
     /// Remove all instances of an item from array.
@@ -114,5 +120,24 @@ public extension Array where Element: Equatable {
     func withoutDuplicates<E: Hashable>(keyPath path: KeyPath<Element, E>) -> [Element] {
         var set = Set<E>()
         return filter { set.insert($0[keyPath: path]).inserted }
+    }
+}
+
+extension Array where Element == NSLayoutConstraint {
+
+    func filtered(view: UIView, anchor: NSLayoutYAxisAnchor) -> [NSLayoutConstraint] {
+        return filter { constraint in
+            constraint.matches(view: view, anchor: anchor)
+        }
+    }
+    func filtered(view: UIView, anchor: NSLayoutXAxisAnchor) -> [NSLayoutConstraint] {
+        return filter { constraint in
+            constraint.matches(view: view, anchor: anchor)
+        }
+    }
+    func filtered(view: UIView, anchor: NSLayoutDimension) -> [NSLayoutConstraint] {
+        return filter { constraint in
+            constraint.matches(view: view, anchor: anchor)
+        }
     }
 }

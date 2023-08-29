@@ -1,5 +1,5 @@
 //  
-// Copyright (c) 2020 Loverde Co.
+// Copyright (c) 2023 Loverde Co.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,21 @@ public protocol ImagePickerControllerDelegate: AnyObject {
     func imagePicker(didSelect image: UIImage?)
 }
 
-public class ImagePickerController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+public class ImagePickerController: UIViewController, UINavigationControllerDelegate {
     
     private var isAlertOpen: Bool = false
     private var imagePickerController: UIImagePickerController = UIImagePickerController()
-    public var delegate: ImagePickerControllerDelegate?
+    public weak var delegate: ImagePickerControllerDelegate?
     public var isEditable: Bool = false
 
+    public init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,27 +85,6 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
     }
     
     
-    //MARK: - UIImagePicker Delegate
-    @objc public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        self.delegate?.imagePicker(didSelect: nil)
-        picker.dismiss(animated: true, completion: {
-            self.dismiss(animated: false, completion: nil)
-        })
-    }
-    
-    @objc public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        //print("ESCOLHEU OU TIROU FOTO: \(info.debugDescription)")
-        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            self.delegate?.imagePicker(didSelect: image)
-        }else if let image = info[ UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            self.delegate?.imagePicker(didSelect: image)
-        }
-        picker.dismiss(animated: true, completion: {
-            self.dismiss(animated: false, completion: nil)
-        })
-    }
-    
-    
     private func openAlerts(forCamera:Bool = true, forAlbum:Bool = true){
         let alert = UIAlertController(title: "Choose an option", message: nil, preferredStyle: .actionSheet)
         if forCamera {
@@ -131,7 +118,7 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
     }
     
     private func openCameraDevice(){
-        if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerController.SourceType.camera)){
+        if(UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera)){
             self.imagePickerController.sourceType = UIImagePickerController.SourceType.camera
             self.modalPresentationStyle = .fullScreen
             self.present(self.imagePickerController, animated: true, completion: nil)
@@ -194,6 +181,30 @@ public class ImagePickerController: UIViewController, UIImagePickerControllerDel
                     }
                 }
             }
+        })
+    }
+}
+
+//MARK: - UIImagePicker Delegate
+
+extension ImagePickerController: UIImagePickerControllerDelegate {
+    
+    @objc public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.delegate?.imagePicker(didSelect: nil)
+        picker.dismiss(animated: true, completion: {
+            self.dismiss(animated: false, completion: nil)
+        })
+    }
+    
+    @objc public func imagePickerController(_ picker: UIImagePickerController,
+                                            didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            self.delegate?.imagePicker(didSelect: image)
+        }else if let image = info[ UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.delegate?.imagePicker(didSelect: image)
+        }
+        picker.dismiss(animated: true, completion: {
+            self.dismiss(animated: false, completion: nil)
         })
     }
 }

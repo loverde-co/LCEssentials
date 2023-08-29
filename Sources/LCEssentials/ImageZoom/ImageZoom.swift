@@ -1,5 +1,5 @@
 //  
-// Copyright (c) 2020 Loverde Co.
+// Copyright (c) 2023 Loverde Co.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,59 +27,122 @@ import UIKit
     @objc optional func imageZoomController(controller: ImageZoomController, didClose image: UIImage?)
 }
 
-public class ImageZoomController: UIViewController, UIScrollViewDelegate {
-
-    @IBOutlet weak var img: UIImageView!
-    @IBOutlet weak var scrollView: UIScrollView!
-    public var setImage: UIImage!
+public class ImageZoomController: UIViewController {
+    
+    fileprivate lazy var blackView: UIView = {
+        $0.isOpaque = true
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = UIColor.black
+        $0.alpha = 0.8
+        return $0
+    }(UIView())
+    
+    fileprivate lazy var scrollView: UIScrollView = {
+        $0.isOpaque = true
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.delegate = self
+        return $0
+    }(UIScrollView())
+    
+    fileprivate lazy var closeButton: UIButton = {
+        $0.isOpaque = true
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 13.0, *) {
+            $0.setImage(UIImage(systemName: "xmark"), for: .normal)
+            $0.tintColor = UIColor.white
+        }
+        $0.width(size: 50.0)
+        $0.height(size: 50.0)
+        $0.addTarget(self, action: #selector(self.close), for: .touchUpInside)
+        return $0
+    }(UIButton(type: .custom))
+    
+    lazy var imageView: UIImageView = {
+        $0.isOpaque = true
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.isUserInteractionEnabled = true
+        return $0
+    }(UIImageView())
+    
     public var minimumZoomScale: CGFloat = 1.0
     public var maximumZoomScale: CGFloat = 6.0
     public var addGestureToDismiss: Bool = true
-    public var delegate : ImageZoomControllerDelegate?
-    
+    public weak var delegate: ImageZoomControllerDelegate?
+
     private var minimumVelocityToHide: CGFloat = 1500
     private var minimumScreenRatioToHide: CGFloat = 0.5
     private var animationDuration: TimeInterval = 0.2
-     
+
+    
+    public init(_ withImage: UIImage) {
+        super.init(nibName: nil, bundle: nil)
+        
+        self.addComponentsAndConstraints()
+        
+        self.imageView.image = withImage
+        self.imageView.addAspectRatioConstraint()
+        
+        self.scrollView.minimumZoomScale = self.minimumZoomScale
+        self.scrollView.maximumZoomScale = self.maximumZoomScale
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override public func viewDidLoad() {
-         super.viewDidLoad()
-     }
+        super.viewDidLoad()
+    }
 
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setupView()
-    }
-    
-    private func setupView(){
-        self.img.image = setImage
-        self.scrollView.minimumZoomScale = self.minimumZoomScale
-        self.scrollView.maximumZoomScale = self.maximumZoomScale
+        
         if addGestureToDismiss {
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(onPan(_:)))
             view.addGestureRecognizer(panGesture)
         }
     }
     
-    static public func instantiate() -> ImageZoomController {
-        let instance: ImageZoomController = ImageZoomController.instantiate(storyBoard: "ImageZoomController", identifier: ImageZoomController.identifier)
-        instance.loadView()
-        return instance
+    fileprivate func addComponentsAndConstraints() {
+        
+        scrollView.addSubview(imageView)
+        view.addSubviews([blackView, scrollView, closeButton])
+        
+        blackView.applyConstraints(view, applyAnchor: [(UIView.AnchorType.all, 0.0)])
+        
+        scrollView.applyConstraints(view, applyAnchor: [(UIView.AnchorType.all, 0.0)], safeArea: true)
+        
+        imageView.height(min: 200)
+        imageView.applyConstraints(scrollView, applyAnchor: [(UIView.AnchorType.centerX, 0.0),
+                                                             (UIView.AnchorType.centerY, 0.0)])
+        
+        closeButton.applyConstraints(view, applyAnchor: [(UIView.AnchorType.leading, 20.0),
+                                                         (UIView.AnchorType.top, 0.0)],
+                                     safeArea: true)
     }
     
-    public func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        delegate?.imageZoomController?(controller: self, didZoom: self.setImage)
+    public func present(completion: (()->())? = nil) {
+        guard let viewController = LCEssentials.getTopViewController(aboveBars: true) else {
+            fatalError("Ops! Look like it doesnt have a ViewController")
+        }
+        self.modalTransitionStyle = .coverVertical
+        self.modalPresentationStyle = .overFullScreen
+        viewController.present(self, animated: true) {
+            completion?()
+        }
     }
-     
-     @IBAction private func close(){
-        delegate?.imageZoomController?(controller: self, didClose: self.setImage)
-         self.dismiss(animated: true) {
-         }
-     }
-     
-    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return self.img
+    
+    public func dismiss(completion: (()->())? = nil) {
+        self.dismiss(animated: true) {
+            completion?()
+        }
     }
-
+    
+    @objc private func close(){
+        delegate?.imageZoomController?(controller: self, didClose: self.imageView.image)
+        self.dismiss()
+    }
+    
     private func slideViewVerticallyTo(_ y: CGFloat) {
         self.view.frame.origin = CGPoint(x: 0, y: y)
     }
@@ -123,6 +186,17 @@ public class ImageZoomController: UIViewController, UIScrollViewDelegate {
                     self.slideViewVerticallyTo(0)
                 })
         }
+    }
+}
+
+extension ImageZoomController: UIScrollViewDelegate {
+    
+    public func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        delegate?.imageZoomController?(controller: self, didZoom: self.imageView.image)
+    }
+
+    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return self.imageView
     }
 }
 #endif

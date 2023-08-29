@@ -41,7 +41,7 @@ import LCEssentials
 ```swift
 class MyCustomViewController: UIViewController, ImageZoomControllerDelegate {
 	
-       let imageZoomController: ImageZoomController = ImageZoomController.instantiate()
+       let imageZoomController: ImageZoomController = ImageZoomController()
        
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -49,9 +49,10 @@ class MyCustomViewController: UIViewController, ImageZoomControllerDelegate {
     }
 	
     func showImage(){
+        guard let image = UIImage(named: "some_image") else { return }
+        let imageZoomController: ImageZoomController = ImageZoomController(image)
         imageZoomController.delegate = self
-        imageZoomController.setImage = #imageLiteral(resourceName: "example_image_zoom")
-        self.present(imageZoomController, animated: true, completion: nil)
+        imageZoomController.present()
     }
 	
     // You can use multiple instance of it!

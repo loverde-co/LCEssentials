@@ -1,5 +1,5 @@
-////  
-//// Copyright (c) 2019 Loverde Co.
+////
+//// Copyright (c) 2023 Loverde Co.
 ////
 //// Permission is hereby granted, free of charge, to any person obtaining a copy
 //// of this software and associated documentation files (the "Software"), to deal
@@ -20,32 +20,117 @@
 //// THE SOFTWARE.
 // 
 //
+//// MARK: - Framework headers
 //import UIKit
+//
+//// MARK: - Protocols
 //
 //#if os(iOS) || os(macOS)
 //@objc public protocol PickerViewControllerDelegate {
-//    @objc func pickerViewController(_ picker: PickerViewController, didSelectRow row: Int, inComponent component: Int)
-//    @objc func pickerViewController(didDone picker: PickerViewController, didSelectRow row: Int, inComponent component: Int)
+//    @objc func pickerViewController(_ picker: PickerViewController,
+//                                    didSelectRow row: Int,
+//                                    inComponent component: Int)
+//
+//    @objc func pickerViewController(didDone picker: PickerViewController,
+//                                    didSelectRow row: Int,
+//                                    inComponent component: Int)
+//
 //    @objc func pickerViewController(didCancel picker: PickerViewController)
+//
 //    @objc func pickerViewController(numberOfComponents inPicker: PickerViewController) -> Int
-//    @objc func pickerViewController(_ picker: PickerViewController, rowHeightForComponent component: Int) -> CGFloat
-//    @objc func pickerViewController(_ picker: PickerViewController, numberOfRowsInComponent component: Int) -> Int
-//    @objc func pickerViewController(_ picker: PickerViewController, titleForRow row: Int, forComponent component: Int) -> String?
-//    @objc optional func pickerViewController(_ picker: PickerViewController, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
+//
+//    @objc func pickerViewController(_ picker: PickerViewController,
+//                                    rowHeightForComponent component: Int) -> CGFloat
+//
+//    @objc func pickerViewController(_ picker: PickerViewController,
+//                                    numberOfRowsInComponent component: Int) -> Int
+//
+//    @objc func pickerViewController(_ picker: PickerViewController,
+//                                    titleForRow row: Int,
+//                                    forComponent component: Int) -> String?
+//
+//    @objc optional func pickerViewController(_ picker: PickerViewController,
+//                                             viewForRow row: Int,
+//                                             forComponent component: Int,
+//                                             reusing view: UIView?) -> UIView
 //}
 //
-//public class PickerViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
-//    
-//    @IBOutlet var pickerView: UIPickerView!
-//    @IBOutlet private var viewPicker: UIView!
-//    @IBOutlet private var viewBlackBG: UIView!
-//    @IBOutlet var btConfirm: UIButton!
-//    @IBOutlet var btCancel: UIButton!
-//    @IBOutlet var barView: UIView!
-//    @IBOutlet var borderTop: UIView!
-//    @IBOutlet var borderBottom: UIView!
-//    
+//// MARK: - Interface Headers
+//
+//
+//// MARK: - Local Defines / ENUMS
+//
+//
+//// MARK: - Class
+//
+//public final class PickerViewController: UIViewController {
+//
+//    // MARK: - Private properties
+//
+//    fileprivate lazy var backgroundBlured: UIView = {
+//        $0.insertBlurView(style: .dark, color: .black, alpha: 0.8)
+//        $0.isOpaque = true
+//        $0.translatesAutoresizingMaskIntoConstraints = false
+//        return $0
+//    }(UIView())
+//
+//    fileprivate lazy var viewPicker: UIView = {
+//        $0.isOpaque = true
+//        $0.translatesAutoresizingMaskIntoConstraints = false
+//        return $0
+//    }(UIView())
+//
+//    fileprivate var _font: UIFont? = UIFont(name: "Helvetica", size: 24.0)
+//    fileprivate var fontColor: UIColor = .black
+//
+//    fileprivate var selectedFont: UIFont? = UIFont(name: "Helvetica", size: 24.0)
+//    fileprivate var selectedFontColor: UIColor = .black
+//    fileprivate var selectedBacgoundColor: UIColor = .clear
+//
+//    // MARK: - Internal properties
+//
+//    var pickerView: UIPickerView = {
+//        $0.isOpaque = true
+//        $0.translatesAutoresizingMaskIntoConstraints = false
+//        return $0
+//    }(UIPickerView())
+//
+//    lazy var confirmButton: UIButton = {
+//        $0.isOpaque = true
+//        $0.translatesAutoresizingMaskIntoConstraints = false
+//        return $0
+//    }(UIButton(type: .custom))
+//
+//    lazy var cancelButton: UIButton = {
+//        $0.isOpaque = true
+//        $0.translatesAutoresizingMaskIntoConstraints = false
+//        return $0
+//    }(UIButton(type: .custom))
+//
+//    // MARK: - Public properties
+//
+//    public lazy var toolBarView: UIView = {
+//        $0.isOpaque = true
+//        $0.translatesAutoresizingMaskIntoConstraints = false
+//        return $0
+//    }(UIView())
+//
+//    public lazy var borderTopBarView: UIView = {
+//        $0.isOpaque = true
+//        $0.translatesAutoresizingMaskIntoConstraints = false
+//        return $0
+//    }(UIView())
+//
+//    public lazy var borderBottomBarView: UIView = {
+//        $0.isOpaque = true
+//        $0.translatesAutoresizingMaskIntoConstraints = false
+//        return $0
+//    }(UIView())
+//
+//
 //    public var setSelectedRowIndex: Int = 0
+//
+//
 //    public var setFontName: String = "Helvetica"
 //    public var setFontSize: CGFloat = 24
 //    public var setFontColor: UIColor = .black
@@ -70,36 +155,68 @@
 //    public var setColumFirstFontSize: CGFloat = 18
 //    public var setColumSecFontName: String = "Helvetica"
 //    public var setColumSecFontSize: CGFloat = 18
-//    
+//
 //    public var delegate : PickerViewControllerDelegate!
-//    
+//
+//
+//    // MARK: - Initializers
+//
+//
+//    // MARK: - Super Class Overrides
+//
 //    override public func viewDidLoad() {
 //        super.viewDidLoad()
 //    }
-//    
+//
 //    public override func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(animated)
 //        self.configLayout()
 //    }
-//    
+//
 //    override public func didReceiveMemoryWarning() {
 //        super.didReceiveMemoryWarning()
 //        // Dispose of any resources that can be recreated.
 //    }
-//    
+//
+//
+//    // MARK: - Private methods
+//
+//    // MARK: - Internal methods
+//
 //    @objc func handleTap(_ sender: UITapGestureRecognizer) {
 //        if sender.state == .ended, touchToClose {
 //            self.hidde()
 //        }
 //        sender.cancelsTouchesInView = false
 //    }
-//    
-//    static public func instantiate() -> PickerViewController {
-//        let instance:PickerViewController = PickerViewController.instantiate(storyBoard: "PickerViews")
-//        instance.loadView()
-//        return instance
+//
+//    // MARK: - Public methods
+//
+//    public func setFont(_ font: UIFont, color: UIColor = .black) {
+//        self._font = font
+//        self.fontColor = color
 //    }
-//    
+//
+//    public func setConfirmButton(title: String = "Done",
+//                                        font: UIFont? = nil,
+//                                        textColor: UIColor = .blue,
+//                                        backgroundColor: UIColor = .clear) {
+//
+//        self.confirmButton.titleLabel?.font = font
+//        self.confirmButton.setTitle(title, for: .normal)
+//        self.confirmButton.setTitleColor(textColor, for: .normal)
+//    }
+//
+//    public func setCancelButton(title: String = "Cancel",
+//                                        font: UIFont? = nil,
+//                                        textColor: UIColor = .blue,
+//                                        backgroundColor: UIColor = .clear) {
+//
+//        self.cancelButton.titleLabel?.font = font
+//        self.cancelButton.setTitle(title, for: .normal)
+//        self.cancelButton.setTitleColor(textColor, for: .normal)
+//    }
+//
 //    //MARK: - Methods
 //    private func configLayout(){
 //        self.viewPicker.frame = CGRect(x: 0, y: self.view.bounds.height, width: self.setWidth, height: self.setHeight)
@@ -128,7 +245,7 @@
 //        }
 //        pickerView.reloadAllComponents()
 //    }
-//    
+//
 //    public func show(){
 //        //viewPicker.removeFromSuperview()
 //        var controller: UIViewController!
@@ -149,7 +266,7 @@
 //            fatalError("Ops! Missing delegate!")
 //        }
 //    }
-//    
+//
 //    public func hidde(){
 //        viewBlackBG.removeGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:))))
 //        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveLinear],
@@ -162,50 +279,54 @@
 //            controller?.dismiss(animated: true, completion: nil)
 //        })
 //    }
-//    
+//
 //    public func reloadAllComponents(){
 //        self.pickerView.reloadAllComponents()
 //    }
-//    
+//
 //    @IBAction func done(_ sender: Any){
 //        hidde()
 //        delegate.pickerViewController(didDone: self, didSelectRow: self.pickerView.selectedRow(inComponent: 0), inComponent: 0)
 //    }
-//    
+//
 //    @IBAction func cancel(_ sender: Any){
 //        hidde()
 //        delegate.pickerViewController(didCancel: self)
 //    }
-//    
-//    //MARK: - UIPickerView Delegate and DataSource
+//}
+//
+////MARK: - UIPickerView Delegate and DataSource
+//
+//extension PickerViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+//
 //    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
 //        return delegate.pickerViewController(self, numberOfRowsInComponent: component)
 //    }
-//    
+//
 //    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 //        pickerView.reloadAllComponents()
 //        pickerView.tag = row
 //        delegate.pickerViewController(self, didSelectRow: row, inComponent: component)
 //    }
-//    
+//
 //    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
 //        return delegate.pickerViewController(self, titleForRow: row, forComponent: component)
 //    }
-//    
+//
 //    public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-//        
+//
 //        if let settedView = self.delegate.pickerViewController?(self, viewForRow: row, forComponent: component, reusing: view) {
 //            return settedView
 //        }
-//        
+//
 //        var label: UILabel = UILabel.init()
-//        
+//
 //        if let v = view {
-//            
+//
 //            label = v as! UILabel
-//            
+//
 //        } else {
-//            
+//
 //            label = UILabel.init(frame: CGRect.init(x: 0.0, y: -1.0, width: pickerView.frame.size.width, height: self.delegate.pickerViewController(self, rowHeightForComponent: component)))
 //            label.backgroundColor = UIColor.white
 //            label.textAlignment = .center
@@ -213,9 +334,9 @@
 //            label.adjustsFontSizeToFitWidth = true
 //            label.tag = 99
 //        }
-//        
+//
 //        var text: String = ""
-//        
+//
 //        if let del = self.delegate, let str = del.pickerViewController(self, titleForRow: row, forComponent: component) {
 //            text = str
 //        }
@@ -239,19 +360,19 @@
 //        }
 //        //
 //        label.attributedText = attrStr
-//        
+//
 //        return label
 //    }
-//    
+//
 //    @available(iOS 2.0, *)
 //    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
 //        return delegate.pickerViewController(numberOfComponents: self)
 //    }
-//    
+//
 //    public func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
 //        return delegate.pickerViewController(self, rowHeightForComponent: component)
 //    }
-//    
+//
 //    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
 //        // Trait collection has already changed
 //        if #available(iOS 12.0, *) {

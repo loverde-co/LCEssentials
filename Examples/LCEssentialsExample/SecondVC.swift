@@ -108,6 +108,6 @@ extension SecondVC: LCESingletonDelegate {
     }
 }
 
-extension SecondVC: LCEMessagesDelegate {
-    
-}
+//extension SecondVC: LCEMessagesDelegate {
+//    
+//}
