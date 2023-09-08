@@ -121,22 +121,22 @@ public final class HUDAlertView: UIView {
         
         // MARK: - Add Constraints
         
-        rotatinProgress.applyConstraints(containerView, applyAnchor: [(AnchorType.top, 10.0), (AnchorType.centerX, 0.0)])
+        rotatinProgress.setConstraints(containerView, applyAnchor: [(AnchorType.top, 10.0), (AnchorType.centerX, 0.0)])
         rotatinProgress.width(size: 40)
         rotatinProgress.height(size: 40)
         
-        titleLabel.applyConstraints(rotatinProgress, applyAnchor: [(AnchorType.bottomOf, 8.0)])
-        titleLabel.applyConstraints(containerView, applyAnchor: [(AnchorType.leading, 10.0), (AnchorType.trailing, -10.0)])
+        titleLabel.setConstraints(rotatinProgress, applyAnchor: [(AnchorType.bottomOf, 8.0)])
+        titleLabel.setConstraints(containerView, applyAnchor: [(AnchorType.leading, 10.0), (AnchorType.trailing, -10.0)])
         
-        descLabel.applyConstraints(titleLabel, applyAnchor: [(AnchorType.bottomOf, 8.0)])
-        descLabel.applyConstraints(containerView, applyAnchor: [(AnchorType.leading, 10.0), (AnchorType.trailing, -10.0)])
+        descLabel.setConstraints(titleLabel, applyAnchor: [(AnchorType.bottomOf, 8.0)])
+        descLabel.setConstraints(containerView, applyAnchor: [(AnchorType.leading, 10.0), (AnchorType.trailing, -10.0)])
         
-        stackButtons.applyConstraints(descLabel, applyAnchor: [(AnchorType.bottomOf, 8.0)])
-        stackButtons.applyConstraints(containerView, applyAnchor: [(AnchorType.leading, 10.0),
+        stackButtons.setConstraints(descLabel, applyAnchor: [(AnchorType.bottomOf, 8.0)])
+        stackButtons.setConstraints(containerView, applyAnchor: [(AnchorType.leading, 10.0),
                                                                    (AnchorType.trailing, -10.0),
                                                                    (AnchorType.bottom, -8.0)])
         
-        containerView.applyConstraints(self, applyAnchor: [(AnchorType.topToTopGreaterThanOrEqualTo, 20.0),
+        containerView.setConstraints(self, applyAnchor: [(AnchorType.topToTopGreaterThanOrEqualTo, 20.0),
                                                            (AnchorType.leading, 40.0),
                                                            (AnchorType.trailing, -40.0),
                                                            (AnchorType.centerY, 0.0),

@@ -35,6 +35,7 @@ public extension UIStackView {
                      distribution: UIStackView.Distribution = .fill,
                      layoutMargins: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
                      isMarginsRelative: Bool = true) {
+        
         if let arrangedSubviews = arrangedSubviews {
             self.init(arrangedSubviews: arrangedSubviews)
         } else {
@@ -55,18 +56,20 @@ public extension UIStackView {
         }
     }
     
-    func removeAllArrangedSubviews() {
+    func removeAllArrangedSubviews(deactivateConstraints: Bool = true) {
         arrangedSubviews.forEach {
-            removeSubview(view: $0)
+            removeSubview(view: $0, deactivateConstraints: deactivateConstraints)
         }
     }
     
     /// Remove specific view from it
     ///
     /// - Parameter view: view to be removed.
-    func removeSubview(view: UIView) {
+    func removeSubview(view: UIView, deactivateConstraints: Bool = true) {
         removeArrangedSubview(view)
-        NSLayoutConstraint.deactivate(view.constraints)
+        if deactivateConstraints {
+            NSLayoutConstraint.deactivate(view.constraints)
+        }
         view.removeFromSuperview()
     }
 

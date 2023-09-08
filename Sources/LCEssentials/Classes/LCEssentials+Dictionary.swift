@@ -24,7 +24,28 @@ import Foundation
 import UIKit
 
 public extension Dictionary {
+    
+    var queryString: String {
+       var output: String = ""
+       for (key,value) in self {
+           output +=  "\(key)=\(value)&"
+       }
+       output = String(output.dropLast())
+       return output
+    }
 
+    var convertToJSON: String {
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted)
+            if let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue) as? String {
+                return jsonString
+            }
+            return "Data to String with UFT8 Encoded error parsing"
+        } catch {
+            return "\(error.localizedDescription)"
+        }
+    }
+    
     //MARK: - Append Dictionary
     static func += (lhs: inout [Key: Value], rhs: [Key: Value]) {
         rhs.forEach { lhs[$0] = $1}
@@ -67,18 +88,9 @@ public extension Dictionary {
     ///
     /// - returns: Object: Codable/Decodable
     func toObjetct<T: Codable>() -> T {
-        let jsonString = self.toJSON()
+        let jsonString = self.convertToJSON
         let output: T = try! JSONHelper.decode(jsonString)
         return output
-    }
-    
-    /// - LoverdeCo: Convert Dictonary to JSON
-    ///
-    /// - returns: JSON String
-    func toJSON() -> String {
-        let jsonData = try! JSONSerialization.data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted)
-        let jsonString = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String
-        return jsonString
     }
 
     /// Check if key exists in dictionary.
@@ -111,15 +123,6 @@ public extension Dictionary {
     mutating func removeValueForRandomKey() -> Value? {
         guard let randomKey = keys.randomElement() else { return nil }
         return removeValue(forKey: randomKey)
-    }
-    
-    var queryString: String {
-       var output: String = ""
-       for (key,value) in self {
-           output +=  "\(key)=\(value)&"
-       }
-       output = String(output.dropLast())
-       return output
     }
 }
 

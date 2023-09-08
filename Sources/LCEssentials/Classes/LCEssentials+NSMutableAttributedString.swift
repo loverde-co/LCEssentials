@@ -156,31 +156,6 @@ public extension NSMutableAttributedString {
         self.append(normal)
         return self
     }
-    
-    /// Set a link to an specific text inside this attribute.
-    ///
-    ///        "let attributedString = NSMutableAttributedString(string:"I love stackoverflow!")
-    ///        let linkWasSet = attributedString.setAsLink("stackoverflow", linkURL: "http://stackoverflow.com")
-    ///        if linkWasSet {
-    ///           // adjust more attributedString properties
-    ///           // Dont open here, cause crash
-    ///        }"
-    ///
-    /// - Parameters:
-    ///   - textToFind: A text to transform as link.
-    ///   - linkURL: URL string that you whant to grab.
-    /// - Returns:
-    /// True if text exist. Otherwise, false
-    /// Use "didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange)" to handle link touch on a Label
-    func setAsLink(textToFind: String, linkURL: String) -> Bool {
-
-        let foundRange = self.mutableString.range(of: textToFind)
-        if foundRange.location != NSNotFound {
-            self.addAttribute(NSAttributedString.Key.link, value: linkURL, range: foundRange)
-            return true
-        }
-        return false
-    }
 
     func height(withConstrainedWidth width: CGFloat) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)

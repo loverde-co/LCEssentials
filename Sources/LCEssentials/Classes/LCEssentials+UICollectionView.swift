@@ -26,22 +26,39 @@ import UIKit
 
 public extension UICollectionView {
     
-    func setupCollectionView(spacings: CGFloat = 0,
+    func setupCollectionView(flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout(),
+                             spacings: CGFloat = 0,
                              direction: UICollectionView.ScrollDirection = .horizontal,
                              edgesInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
-                             allowMulpleSelection: Bool = false) {
+                             allowMulpleSelection: Bool = false,
+                             automaticSize: CGSize? = nil) {
         
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let layout: UICollectionViewFlowLayout = flowLayout
         layout.sectionInset = edgesInset
         layout.minimumInteritemSpacing = spacings
         layout.minimumLineSpacing = spacings
         layout.scrollDirection = direction
+        if let automaticSize = automaticSize {
+            layout.estimatedItemSize = automaticSize
+        }
+        self.contentInsetAdjustmentBehavior = .always
         self.collectionViewLayout = layout
         self.allowsMultipleSelection = allowMulpleSelection
     }
     
     static var identifier: String {
         return "id"+String(describing: self)
+    }
+    
+    /// Reload data with a completion handler.
+    ///
+    /// - Parameter completion: completion handler to run after reloadData finishes.
+    func reloadData(_ completion: @escaping () -> Void) {
+        UIView.animate(withDuration: 0, animations: {
+            self.reloadData()
+        }, completion: { _ in
+            completion()
+        })
     }
 }
 

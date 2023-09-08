@@ -21,12 +21,20 @@
  
 
 import Foundation
-import var CommonCrypto.CC_MD5_DIGEST_LENGTH
-import func CommonCrypto.CC_MD5
-import typealias CommonCrypto.CC_LONG
+import CryptoKit
 
 
 extension Data {
+    
+    var toDictionay: Dictionary<String, Any>? {
+        do {
+            return try JSONSerialization.jsonObject(with: self, options: []) as? [String: Any]
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+    
     public func toHexString() -> String {
         return `lazy`.reduce("") {
             var s = String($1, radix: 16)
@@ -41,23 +49,13 @@ extension Data {
     /////Test:
     ///let md5Data = Data.MD5(string:"Hello")
     ///
-    ///let md5Hex =  md5Data..toHexString()
+    ///let md5Hex =  md5Data.toHexString()
     ///print("md5Hex: \(md5Hex)")
     public static func MD5(string: String) -> Data {
-        let length = Int(CC_MD5_DIGEST_LENGTH)
-        let messageData = string.data(using:.utf8)!
-        var digestData = Data(count: length)
-
-        _ = digestData.withUnsafeMutableBytes { digestBytes -> UInt8 in
-            messageData.withUnsafeBytes { messageBytes -> UInt8 in
-                if let messageBytesBaseAddress = messageBytes.baseAddress, let digestBytesBlindMemory = digestBytes.bindMemory(to: UInt8.self).baseAddress {
-                    let messageLength = CC_LONG(messageData.count)
-                    CC_MD5(messageBytesBaseAddress, messageLength, digestBytesBlindMemory)
-                }
-                return 0
-            }
-        }
-        return digestData
+        let messageData = string.data(using: .utf8)!
+        let digestData = Insecure.MD5.hash (data: messageData)
+        let digestHex = String(digestData.map { String(format: "%02hhx", $0) }.joined().prefix(32))
+        return Data(digestHex.utf8)
     }
     
     var prettyJson: String? {

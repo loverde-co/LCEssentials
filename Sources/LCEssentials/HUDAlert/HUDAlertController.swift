@@ -126,7 +126,7 @@ public class HUDAlertViewController: UIViewController {
             self.customView.rotatinProgress.heightConstraint?.constant = 0
         }
         
-        self.customView.containerView.cornerRadius(radius: 8)
+        self.customView.containerView.cornerRadius = 8
         self.customView.titleLabel.text = title
         self.customView.descLabel.text = description
         self.actions.removeAll()
@@ -143,7 +143,7 @@ public class HUDAlertViewController: UIViewController {
                     $0.tag = index
                     $0.isExclusiveTouch = true
                     $0.isUserInteractionEnabled = true
-                    $0.cornerRadius(radius: 5)
+                    $0.cornerRadius = 5
                     $0.height(size: 47.0)
                     $0.addTarget(self, action: #selector(self.actionButton(sender:)), for: .touchUpInside)
                     return $0

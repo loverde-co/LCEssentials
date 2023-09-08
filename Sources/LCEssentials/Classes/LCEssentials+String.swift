@@ -77,16 +77,6 @@ public extension String {
         return replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\n", with: "")
     }
     
-    /// Loverde Co.: Replace Dictionaryes parameters to URL String.
-    @discardableResult
-    func replaceURL(_ withDict: [String:Any]) -> String {
-        var strOutput = self
-        for (key, Value) in withDict {
-            strOutput = strOutput.replacingOccurrences(of: "{\(key)}", with: "\(Value)")
-        }
-        return strOutput
-    }
-    
     var isEmail: Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,20}"
         let emailTest  = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
@@ -94,7 +84,7 @@ public extension String {
     }
     
     var isCPF: Bool {
-        let cpf = self.onlyNumbers()
+        let cpf = self.onlyNumbers
         guard cpf.count == 11 else { return false }
 
         let i1 = cpf.index(cpf.startIndex, offsetBy: 9)
@@ -219,6 +209,60 @@ public extension String {
     var isHTML: Bool {
         return self.range(of: "<[^>]+>", options: .regularExpression, range: nil, locale: nil) != nil
     }
+    
+    var onlyNumbers: String {
+        guard !isEmpty else { return "" }
+        return replacingOccurrences(of: "\\D",
+                                    with: "",
+                                    options: .regularExpression,
+                                    range: startIndex..<endIndex)
+    }
+    
+    var isValidCNPJ: Bool {
+        let numbers = compactMap({ $0.wholeNumberValue })
+        guard numbers.count == 14 && Set(numbers).count != 1 else { return false }
+        func digitCalculator(_ slice: ArraySlice<Int>) -> Int {
+            var number = 1
+            let digit = 11 - slice.reversed().reduce(into: 0) {
+                number += 1
+                $0 += $1 * number
+                if number == 9 { number = 1 }
+            } % 11
+            return digit % 10
+        }
+        let dv1 = digitCalculator(numbers.prefix(12))
+        let dv2 = digitCalculator(numbers.prefix(13))
+        return dv1 == numbers[12] && dv2 == numbers[13]
+    }
+    
+    var currentTimeZone : String {
+        let date = NSDate();
+        let formatter = DateFormatter();
+        formatter.dateFormat = "ZZZ";
+        let defaultTimeZoneStr = formatter.string(from: date as Date);
+
+        return defaultTimeZoneStr;
+    }
+    
+    var first: String {
+        return String(prefix(1))
+    }
+    var last: String {
+        return String(suffix(1))
+    }
+    var uppercaseFirst: String {
+        return first.uppercased() + String(dropFirst())
+    }
+    
+    /// Loverde Co.: Replace Dictionaryes parameters to URL String.
+    @discardableResult
+    func replaceURL(_ withDict: [String:Any]) -> String {
+        var strOutput = self
+        for (key, Value) in withDict {
+            strOutput = strOutput.replacingOccurrences(of: "{\(key)}", with: "\(Value)")
+        }
+        return strOutput
+    }
 
     /// Lorem ipsum string of given length.
     ///
@@ -235,30 +279,6 @@ public extension String {
             return String(loremIpsum[loremIpsum.startIndex..<loremIpsum.index(loremIpsum.startIndex, offsetBy: length)])
         }
         return loremIpsum
-    }
-
-    func onlyNumbers() -> String {
-        guard !isEmpty else { return "" }
-        return replacingOccurrences(of: "\\D",
-                                    with: "",
-                                    options: .regularExpression,
-                                    range: startIndex..<endIndex)
-    }
-    var isValidCNPJ: Bool {
-        let numbers = compactMap({ $0.wholeNumberValue })
-        guard numbers.count == 14 && Set(numbers).count != 1 else { return false }
-        func digitCalculator(_ slice: ArraySlice<Int>) -> Int {
-            var number = 1
-            let digit = 11 - slice.reversed().reduce(into: 0) {
-                number += 1
-                $0 += $1 * number
-                if number == 9 { number = 1 }
-            } % 11
-            return digit % 10
-        }
-        let dv1 = digitCalculator(numbers.prefix(12))
-        let dv2 = digitCalculator(numbers.prefix(13))
-        return dv1 == numbers[12] && dv2 == numbers[13]
     }
 
     /// Returns a string by padding to fit the length parameter size with another string in the start.
@@ -304,15 +324,6 @@ public extension String {
             }
             return self + padding[padding.startIndex..<padding.index(padding.startIndex, offsetBy: padLength)]
         }
-    }
-    
-    var currentTimeZone : String {
-        let date = NSDate();
-        let formatter = DateFormatter();
-        formatter.dateFormat = "ZZZ";
-        let defaultTimeZoneStr = formatter.string(from: date as Date);
-
-        return defaultTimeZoneStr;
     }
 
     func nsRange(from range: Range<String.Index>) -> NSRange? {
@@ -476,16 +487,6 @@ public extension String {
         let date = self.date(withCurrFormatt: withCurrFormatt, localeIdentifier: localeIdentifier, timeZone: timeZone)
         let strDate = date?.string(stringFormat: newFormatt, localeIdentifier: localeIdentifier, timeZone: timeZone)
         return strDate?.date(withCurrFormatt: newFormatt, localeIdentifier: localeIdentifier, timeZone: timeZone)
-    }
-
-    var first: String {
-        return String(prefix(1))
-    }
-    var last: String {
-        return String(suffix(1))
-    }
-    var uppercaseFirst: String {
-        return first.uppercased() + String(dropFirst())
     }
 
     #if os(iOS) || os(macOS)
@@ -834,7 +835,7 @@ public extension String {
             return regex.stringByReplacingMatches(in: self, options: [],
                                                   range: range,
                                                   withTemplate: replacement)
-        }catch{
+        } catch {
             print("replaceAll error: %@", error)
             return self
         }

@@ -108,15 +108,15 @@ public class ImageZoomController: UIViewController {
         scrollView.addSubview(imageView)
         view.addSubviews([blackView, scrollView, closeButton])
         
-        blackView.applyConstraints(view, applyAnchor: [(UIView.AnchorType.all, 0.0)])
+        blackView.setConstraints(view, applyAnchor: [(UIView.AnchorType.all, 0.0)])
         
-        scrollView.applyConstraints(view, applyAnchor: [(UIView.AnchorType.all, 0.0)], safeArea: true)
+        scrollView.setConstraints(view, applyAnchor: [(UIView.AnchorType.all, 0.0)], safeArea: true)
         
         imageView.height(min: 200)
-        imageView.applyConstraints(scrollView, applyAnchor: [(UIView.AnchorType.centerX, 0.0),
+        imageView.setConstraints(scrollView, applyAnchor: [(UIView.AnchorType.centerX, 0.0),
                                                              (UIView.AnchorType.centerY, 0.0)])
         
-        closeButton.applyConstraints(view, applyAnchor: [(UIView.AnchorType.leading, 20.0),
+        closeButton.setConstraints(view, applyAnchor: [(UIView.AnchorType.leading, 20.0),
                                                          (UIView.AnchorType.top, 0.0)],
                                      safeArea: true)
     }

@@ -31,6 +31,6 @@ public extension Encodable {
         return (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(self))) as? [String: Any] ?? [:]
     }
     var json: String {
-        return self.dictionary.toJSON()
+        return self.dictionary.convertToJSON
     }
 }

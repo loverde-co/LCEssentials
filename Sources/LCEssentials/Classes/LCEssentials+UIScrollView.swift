@@ -25,6 +25,10 @@ import UIKit
 
 // MARK: - Methods
 public extension UIScrollView {
+    
+    enum orientation {
+        case horizontal, vertical
+    }
 
     /// Takes a snapshot of an entire ScrollView
     ///

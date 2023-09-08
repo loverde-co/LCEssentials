@@ -37,7 +37,7 @@ func ^^ (radix: Float, power: Float) -> Float {
 
 
 /// Loverde Co: Custom Logs
-public func printLog(title:String, msg:String, prettyPrint: Bool = false){
+public func printLog(title: String, msg: String, prettyPrint: Bool = false){
     if prettyPrint {
         print("\n<=========================  \(title) - START =========================>")
         print(msg)
@@ -106,13 +106,6 @@ public struct LCEssentials {
     /// - LoverdeCo: App's bundle ID (if applicable).
     public static var appBundleID: String? {
         return Bundle.main.bundleIdentifier
-    }
-    #endif
-    
-    #if os(iOS)
-    /// - LoverdeCo: StatusBar height
-    public static var statusBarHeight: CGFloat {
-        return UIApplication.shared.statusBarFrame.height
     }
     #endif
     
@@ -216,18 +209,6 @@ public struct LCEssentials {
     #endif
     
     #if os(iOS)
-    /// - LoverdeCo: Current status bar network activity indicator state.
-    public static var isNetworkActivityIndicatorVisible: Bool {
-        get {
-            return UIApplication.shared.isNetworkActivityIndicatorVisible
-        }
-        set {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = newValue
-        }
-    }
-    #endif
-    
-    #if os(iOS)
     /// - LoverdeCo: Check if device is iPad.
     public static var isPad: Bool {
         return UIDevice.current.userInterfaceIdiom == .pad
@@ -262,41 +243,56 @@ public struct LCEssentials {
     ///- LoverdeCo: Status bar visibility state.
     public static var isStatusBarHidden: Bool {
         get {
-            return UIApplication.shared.isStatusBarHidden
+            if #available(iOS 13.0, *) {
+                let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+                return window?.windowScene?.statusBarManager?.isStatusBarHidden ?? true
+            } else {
+                return UIApplication.shared.isStatusBarHidden
+            }
         }
-//        set {
-//            UIApplication.shared.isStatusBarHidden = newValue
-//        }
     }
     #endif
     
     #if os(iOS) || os(tvOS)
     /// - LoverdeCo: Key window (read only, if applicable).
-    public static var keyWindow: UIView? {
-        return UIApplication.shared.keyWindow
+    public static var keyWindow: UIWindow? {
+        if #available(iOS 13.0, *) {
+            return UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        } else {
+            return UIApplication.shared.keyWindow
+        }
     }
     #endif
     
     #if os(iOS) || os(tvOS)
     /// - LoverdeCo: Most top view controller (if applicable).
-    public static func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController, aboveBars: Bool = true) -> UIViewController? {
-
-        if let nav = base as? UINavigationController {
+    public static func getTopViewController(base: UIViewController? = UIViewController(),
+                                            aboveBars: Bool = true) -> UIViewController? {
+        var viewController = base
+        if #available(iOS 13.0, *) {
+            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            viewController = window?.rootViewController
+        } else {
+            viewController = UIApplication.shared.keyWindow?.rootViewController
+        }
+        
+        if let nav = viewController as? UINavigationController {
             if aboveBars {
                 return nav
             }
             return getTopViewController(base: nav.visibleViewController)
 
-        } else if let tab = base as? UITabBarController, let selected = tab.selectedViewController {
+        } else if let tab = viewController as? UITabBarController,
+                    let selected = tab.selectedViewController {
             if aboveBars {
                 return tab
             }
             return getTopViewController(base: selected)
 
-        } else if let presented = base?.presentedViewController {
+        } else if let presented = viewController?.presentedViewController {
             return getTopViewController(base: presented)
         }
-        return base
+        return viewController
     }
     #endif
     
@@ -304,20 +300,6 @@ public struct LCEssentials {
     /// - LoverdeCo: Shared instance UIApplication.
     public static var sharedApplication: UIApplication {
         return UIApplication.shared
-    }
-    #endif
-    
-    #if os(iOS)
-    ///- LoverdeCo: Current status bar style (if applicable).
-    public static var statusBarStyle: UIStatusBarStyle? {
-        get {
-            return UIApplication.shared.statusBarStyle
-        }
-//        set {
-//            if let style = newValue {
-//                UIApplication.shared.statusBarStyle = style
-//            }
-//        }
     }
     #endif
     
@@ -345,7 +327,8 @@ public extension LCEssentials {
     ///   - url: String with url you want to share
     static func shareApp(message:String = "", url: String = ""){
         let textToShare = message
-        let root = UIApplication.shared.keyWindow?.rootViewController
+        let root = self.getTopViewController(aboveBars: true)
+        
         var objectsToShare = [textToShare] as [Any]
         if let myWebsite = NSURL(string: url) {
             objectsToShare.append(myWebsite)
@@ -388,18 +371,27 @@ public extension LCEssentials {
     
     #if os(iOS) || os(macOS)
     //MARK: - Set Root View Controller
-    static func setRootViewController(to viewController: UIViewController, duration: TimeInterval = 0.6, options: UIView.AnimationOptions = .transitionCrossDissolve, completion: (() -> Void)? = nil){
-        let snapshot = (UIApplication.shared.keyWindow?.snapshotView(afterScreenUpdates: true))!
-        viewController.view.addSubview(snapshot)
-
-        UIApplication.shared.keyWindow?.rootViewController = viewController
-        UIView.transition(with: snapshot, duration: duration, options: options, animations: {
-            snapshot.layer.opacity = 0
-        },
-        completion: { status in
-            snapshot.removeFromSuperview()
-            completion?()
-        })
+    static func setRootViewController(to viewController: UIViewController,
+                                      duration: TimeInterval = 0.6,
+                                      options: UIView.AnimationOptions = .transitionCrossDissolve,
+                                      completion: ((Bool) -> Void)? = nil) {
+        
+        if let snapshot = self.keyWindow?.snapshotView(afterScreenUpdates: true) {
+            viewController.view.addSubview(snapshot)
+            
+            self.keyWindow?.rootViewController = viewController
+            UIView.transition(with: snapshot,
+                              duration: duration,
+                              options: options,
+                              animations: {
+                snapshot.layer.opacity = 0
+            }, completion: { status in
+                snapshot.removeFromSuperview()
+                completion?(true)
+            })
+        } else {
+            completion?(false)
+        }
     }
     #endif
     
@@ -410,7 +402,10 @@ public extension LCEssentials {
     ///   - queue: a queue that completion closure should be executed on (default is DispatchQueue.main).
     ///   - completion: closure to be executed after delay.
     ///   - Returns: DispatchWorkItem task. You can call .cancel() on it to cancel delayed execution.
-    @discardableResult static func delay(milliseconds: Double, queue: DispatchQueue = .main, completion: @escaping () -> Void) -> DispatchWorkItem {
+    @discardableResult static func delay(milliseconds: Double,
+                                         queue: DispatchQueue = .main,
+                                         completion: @escaping () -> Void) -> DispatchWorkItem {
+        
         let task = DispatchWorkItem { completion() }
         queue.asyncAfter(deadline: .now() + (milliseconds/1000), execute: task)
         return task
@@ -422,7 +417,9 @@ public extension LCEssentials {
     ///   - millisecondsOffset: allow execution of method if it was not called since millisecondsOffset.
     ///   - queue: a queue that action closure should be executed on (default is DispatchQueue.main).
     ///   - action: closure to be executed in a debounced way.
-    static func debounce(millisecondsDelay: Int, queue: DispatchQueue = .main, action: @escaping (() -> Void)) -> () -> Void {
+    static func debounce(millisecondsDelay: Int,
+                         queue: DispatchQueue = .main,
+                         action: @escaping (() -> Void)) -> () -> Void {
         // http://stackoverflow.com/questions/27116684/how-can-i-debounce-a-method-call
         var lastFireTime = DispatchTime.now()
         let dispatchDelay = DispatchTimeInterval.milliseconds(millisecondsDelay)

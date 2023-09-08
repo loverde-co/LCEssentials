@@ -74,7 +74,7 @@ class SecondVC: UIViewController {
 //            self.lblMD5.attributedText = attrString
 //        })
         
-        shadowView.cornerRadius(radius: 8)
+        shadowView.cornerRadius = 8
         var color = UIColor.black
         var opacity: Float = 0.3
         if #available(iOS 12.0, *) {

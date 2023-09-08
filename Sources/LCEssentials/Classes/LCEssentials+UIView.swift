@@ -217,10 +217,6 @@ public extension UIView {
         }
     }
     
-    func copyElement<T: UIView>() -> T {
-        return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as! T
-    }
-    
     func addSubview(_ subview: UIView, constraints: Bool = false) {
         addSubview(subview)
         subview.translatesAutoresizingMaskIntoConstraints = constraints
@@ -303,99 +299,6 @@ public extension UIView {
     func constraints(on anchor: NSLayoutDimension) -> [NSLayoutConstraint] {
         guard let superview = superview else { return [] }
         return constraints.filtered(view: self, anchor: anchor) + superview.constraints.filtered(view: self, anchor: anchor)
-    }
-    
-    func addBorders(for edges:[UIRectEdge] = [.all], width:CGFloat = 1, color: UIColor = .black) {
-        if edges.contains(.all) {
-            layer.borderWidth = width
-            layer.borderColor = color.cgColor
-        } else {
-            let allSpecificBorders:[UIRectEdge] = [.top, .bottom, .left, .right]
-
-            for edge in allSpecificBorders {
-                if let v = viewWithTag(Int(edge.rawValue)) {
-                    v.removeFromSuperview()
-                }
-
-                if edges.contains(edge) {
-                    let v = UIView()
-                    v.tag = Int(edge.rawValue)
-                    v.backgroundColor = color
-                    v.translatesAutoresizingMaskIntoConstraints = false
-                    addSubview(v)
-
-                    var horizontalVisualFormat = "H:"
-                    var verticalVisualFormat = "V:"
-
-                    switch edge {
-                    case UIRectEdge.bottom:
-                        horizontalVisualFormat += "|-(0)-[v]-(0)-|"
-                        verticalVisualFormat += "[v(\(width))]-(0)-|"
-                    case UIRectEdge.top:
-                        horizontalVisualFormat += "|-(0)-[v]-(0)-|"
-                        verticalVisualFormat += "|-(0)-[v(\(width))]"
-                    case UIRectEdge.left:
-                        horizontalVisualFormat += "|-(0)-[v(\(width))]"
-                        verticalVisualFormat += "|-(0)-[v]-(0)-|"
-                    case UIRectEdge.right:
-                        horizontalVisualFormat += "[v(\(width))]-(0)-|"
-                        verticalVisualFormat += "|-(0)-[v]-(0)-|"
-                    default:
-                        break
-                    }
-
-                    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: horizontalVisualFormat, options: .directionLeadingToTrailing, metrics: nil, views: ["v": v]))
-                    self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: verticalVisualFormat, options: .directionLeadingToTrailing, metrics: nil, views: ["v": v]))
-                }
-            }
-        }
-    }
-    
-    func addCornerRadius(topLeft: Bool = false, topRight: Bool = false, bottomLeft:Bool = false, bottomRight:Bool = false, radius: CGFloat = 8){
-        var maskCorns: CACornerMask = []
-        var path: UIBezierPath = UIBezierPath(roundedRect: (self.bounds), byRoundingCorners: [], cornerRadii: CGSize(width: radius, height: radius))
-        var rectCorners: UIRectCorner = []
-        if topLeft && topRight && bottomLeft && bottomRight {
-            maskCorns = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-            path = UIBezierPath(roundedRect: (self.bounds),
-                                byRoundingCorners: [.topRight, .topLeft, .bottomLeft, .bottomRight],
-                                cornerRadii: CGSize(width: radius, height: radius))
-        }else{
-            if topRight {
-                maskCorns.insert(.layerMaxXMinYCorner)
-                rectCorners.insert(.topRight)
-            }
-            if topLeft {
-                maskCorns.insert(.layerMinXMinYCorner)
-                rectCorners.insert(.topLeft)
-            }
-            if bottomLeft {
-                maskCorns.insert(.layerMinXMaxYCorner)
-                rectCorners.insert(.bottomLeft)
-            }
-            if bottomRight {
-                maskCorns.insert(.layerMaxXMaxYCorner)
-                rectCorners.insert(.bottomRight)
-            }
-            let newPath = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: rectCorners, cornerRadii: CGSize(width: radius, height: radius))
-            path.append(newPath)
-        }
-        if #available(iOS 11.0, *) {
-            self.clipsToBounds = true
-            self.layer.cornerRadius = radius
-            self.layer.maskedCorners = maskCorns
-        } else {
-            self.clipsToBounds = true
-            let maskLayer = CAShapeLayer()
-            
-            maskLayer.path = path.cgPath
-            self.layer.mask = maskLayer
-        }
-    }
-    
-    func cornerRadius(radius: CGFloat) {
-        self.layer.cornerRadius = radius
-        self.layer.masksToBounds = true
     }
 
     func drawCircle(inCoord x: CGFloat,
@@ -564,8 +467,8 @@ public extension UIView {
     
     /// Apply constraint to a View more easily.
     ///
-    ///        "MyView.applyConstraints(AnotherView, applyAnchor: [(AnchorType.leading, 10.0), AnchorType.height, 0.0])"
-    ///        "MyView.applyConstraints(ContainerView, applyAnchor: [(AnchorType.all, 0.0)])"
+    ///        "MyView.setConstraints(AnotherView, applyAnchor: [(AnchorType.leading, 10.0), AnchorType.height, 0.0])"
+    ///        "MyView.setConstraints(ContainerView, applyAnchor: [(AnchorType.all, 0.0)])"
     ///
     /// - Parameters:
     ///   - toView: The View you whant to constraint to.
@@ -573,9 +476,9 @@ public extension UIView {
     ///   - safeArea: Bool in case you whant top and bottom to be applied to Safe Area Layout Guide. Default is FALSE
     /// - Returns:
     /// All active constraints you apply.
-    func applyConstraints(_ toView: UIView,
-                          applyAnchor: [(anchor: AnchorType, constraint: CGFloat)],
-                          safeArea: Bool = false) {
+    func setConstraints(_ toView: UIView,
+                        applyAnchor: [(anchor: AnchorType, constraint: CGFloat)],
+                        safeArea: Bool = false) {
         applyAnchor.forEach { element in
             switch element.anchor {
             case .all:
@@ -678,9 +581,9 @@ public extension UIView {
     ///   - safeArea: Bool in case you whant top and bottom to be applied to Safe Area Layout Guide. Default is FALSE
     /// - Returns:
     /// All active constraints you apply.
-    func applyConstraints(_ toView: UIView,
-                          applyAnchor: (anchor: AnchorType, constraint: CGFloat),
-                          safeArea: Bool = false) {
+    func setConstraints(_ toView: UIView,
+                        applyAnchor: (anchor: AnchorType, constraint: CGFloat),
+                        safeArea: Bool = false) {
         
         switch applyAnchor.anchor {
         case .all:
@@ -781,16 +684,26 @@ public extension UIView {
         }
     }
     
-    func applyConstraint(_ toScrollView: UIScrollView) {
+    func applyConstraint(_ toScrollView: UIScrollView, orientation: UIScrollView.orientation = .vertical) {
         if self is UIScrollView { fatalError("You cannot apply this to self ScrollView.") }
-        applyConstraints(toScrollView, applyAnchor: [(.top, 0.0), (.leading, 0.0), (.trailing, 0.0), (.bottom, 0.0)])
-        let widthConstraint = widthAnchor.constraint(equalTo: toScrollView.widthAnchor)
-        widthConstraint.isActive = true
         
+        self.setConstraints(toScrollView, applyAnchor: [(AnchorType.top, 0.0),
+                                                        (AnchorType.leading, 0.0),
+                                                        (AnchorType.trailing, 0.0),
+                                                        (AnchorType.bottom, 0.0)])
+        
+        let widthConstraint = widthAnchor.constraint(equalTo: toScrollView.widthAnchor)
         let heigthConstraint = heightAnchor.constraint(equalTo: toScrollView.heightAnchor)
-        heigthConstraint.priority = UILayoutPriority(250.0)
+        
+        switch orientation {
+        case .horizontal:
+            widthConstraint.priority = UILayoutPriority(250.0)
+        case .vertical:
+            heigthConstraint.priority = UILayoutPriority(250.0)
+        }
+        
+        widthConstraint.isActive = true
         heigthConstraint.isActive = true
     }
 }
 #endif
-
