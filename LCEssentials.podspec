@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'LCEssentials'
-  s.version          = '0.7.2'
+  s.version          = '0.7.3'
   s.summary          = 'This is a repository of essential scripts written in Swift for Loverde Co.'
  
   s.description      = <<-DESC
@@ -16,9 +16,10 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
   #s.platform         = :watchos, '4.0'
   s.ios.deployment_target = '12.1'
   #s.watchos.deployment_target = '5.0'
-#  s.ios.source_files     = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/PickerViews/*.{swift}', 'Sources/LCEssentials/Notifications/*.{swift}', 'Sources/LCEssentials/ImageZoom/*.{swift}', 'Sources/LCEssentials/ImagePicker/*.{swift}', 'Sources/LCEssentials/HUDAlert/*.{swift}'
-#  s.ios.resources        = ['Sources/LCEssentials/PickerViews/Storyboards/*.{storyboard}', 'Sources/LCEssentials/Notifications/Storyboard/*.{storyboard}', 'Sources/LCEssentials/Notifications/Storyboard/*.{png}', 'Sources/LCEssentials/ImageZoom/Storyboard/*.{storyboard}', 'Sources/LCEssentials/ImagePicker/Storyboard/*.{storyboard}', 'Sources/LCEssentials/HUDAlert/Storyboard/*.{storyboard}']
-  s.ios.source_files     = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/HUDAlert/*.{swift}', 'Sources/LCEssentials/ImageZoom/*.{swift}', 'Sources/LCEssentials/ImagePicker/*.{swift}'
+  s.ios.source_files     = 'Sources/LCEssentials/Classes/*.{swift}',
+                           'Sources/LCEssentials/HUDAlert/*.{swift}',
+                           'Sources/LCEssentials/ImageZoom/*.{swift}',
+                           'Sources/LCEssentials/ImagePicker/*.{swift}'
   #s.watchos.source_files     = 'Sources/LCEssentials/Classes/*.{swift}'
 
   # LCEMinimal Extensions

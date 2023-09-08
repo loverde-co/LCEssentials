@@ -24,6 +24,33 @@ import Foundation
 import UIKit
 
 public extension String {
+    
+    // MARK: - Variables
+    
+    private var convertHtmlToNSAttributedString: NSAttributedString? {
+        guard let data = data(using: .utf8) else {
+            return nil
+        }
+        
+        do {
+            return try NSAttributedString(data: data,
+                                          options: [
+                                            .documentType: NSAttributedString.DocumentType.html,
+                                            .characterEncoding: String.Encoding.utf8.rawValue
+                                          ], documentAttributes: nil)
+        } catch {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+    
+    var convertToHTML: NSAttributedString? {
+        return convertHtmlToAttributedStringWithCSS(font: nil,
+                                                    csscolor: "",
+                                                    lineheight: 0,
+                                                    csstextalign: "")
+    }
+    
     /// Check if string is a valid URL.
     ///
     ///        "https://google.com".isValidUrl -> true
@@ -183,6 +210,10 @@ public extension String {
         return components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
     }
     
+    var data: Data {
+        return Data(self.utf8)
+    }
+    
     /// Retorna a URL encontrada na string, caso exista. Se não, retorna nulo
     ///
     ///        let string = "Meu www.algumsite.com.br tem tudo que voce precisa."
@@ -253,6 +284,12 @@ public extension String {
     var uppercaseFirst: String {
         return first.uppercased() + String(dropFirst())
     }
+    
+    var toURL: NSURL? {
+        return NSURL(string: self)
+    }
+    
+    // MARK: - Methods
     
     /// Loverde Co.: Replace Dictionaryes parameters to URL String.
     @discardableResult
@@ -591,30 +628,6 @@ public extension String {
         }
         return self
     }
-
-    private var convertHtmlToNSAttributedString: NSAttributedString? {
-        guard let data = data(using: .utf8) else {
-            return nil
-        }
-        
-        do {
-            return try NSAttributedString(data: data,
-                                          options: [
-                                            .documentType: NSAttributedString.DocumentType.html,
-                                            .characterEncoding: String.Encoding.utf8.rawValue
-                                          ], documentAttributes: nil)
-        } catch {
-            print(error.localizedDescription)
-            return nil
-        }
-    }
-    
-    var convertToHTML: NSAttributedString? {
-        return convertHtmlToAttributedStringWithCSS(font: nil,
-                                                    csscolor: "",
-                                                    lineheight: 0,
-                                                    csstextalign: "")
-    }
     
     /// Converte String para HTML com CSS.
     ///
@@ -660,9 +673,6 @@ public extension String {
         }
     }
     
-    func toURL() -> NSURL? {
-        return NSURL(string: self)
-    }
     /// Float value from string (if applicable).
     ///
     /// - Parameter locale: Locale (default is Locale.current)

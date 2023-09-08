@@ -33,4 +33,8 @@ public extension Encodable {
     var json: String {
         return self.dictionary.convertToJSON
     }
+    
+    var data: Data {
+        return self.json.data
+    }
 }

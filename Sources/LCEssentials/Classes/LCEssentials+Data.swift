@@ -24,7 +24,7 @@ import Foundation
 import CryptoKit
 
 
-extension Data {
+public extension Data {
     
     var toDictionay: Dictionary<String, Any>? {
         do {
@@ -35,7 +35,17 @@ extension Data {
         }
     }
     
-    public func toHexString() -> String {
+    func object<T: Codable>() -> T? {
+        do {
+            let outPut: T = try JSONHelper.decode(data: self)
+            return outPut
+        } catch {
+            printError(title: "DATA DECODE ERROR", msg: error.localizedDescription, prettyPrint: true)
+            return nil
+        }
+    }
+    
+    func toHexString() -> String {
         return `lazy`.reduce("") {
             var s = String($1, radix: 16)
             if s.count == 1 {
@@ -52,7 +62,7 @@ extension Data {
     ///let md5Hex =  md5Data.toHexString()
     ///print("md5Hex: \(md5Hex)")
     @available (iOS 13.0, *)
-    public static func MD5(string: String) -> Data {
+    static func MD5(string: String) -> Data {
         let messageData = string.data(using: .utf8)!
         let digestData = Insecure.MD5.hash (data: messageData)
         let digestHex = String(digestData.map { String(format: "%02hhx", $0) }.joined().prefix(32))
