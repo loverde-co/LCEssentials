@@ -98,7 +98,7 @@ public struct API {
                         request.addValue(value, forHTTPHeaderField: key)
                     }
                 }
-                let task = URLSession.shared.dataTask(with: request) {data, response, error in
+                let task = URLSession.shared.dataTask(with: request) { data, response, error in
                     var code: Int = LCEssentials.DEFAULT_ERROR_CODE
                     if let httpResponse = response as? HTTPURLResponse {
                         code = httpResponse.statusCode
@@ -106,7 +106,7 @@ public struct API {
                     
                     // - Debug LOG
                     if debug {
-                        self.displayLOG(method: method, request: request, data: data, statusCode: code)
+                        self.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
                     }
                     guard let data = data, error == nil else {
                         
@@ -154,7 +154,7 @@ extension Error {
 
 extension API {
     
-    fileprivate func displayLOG(method: httpMethod, request: URLRequest, data: Data?, statusCode: Int) {
+    fileprivate static func displayLOG(method: httpMethod, request: URLRequest, data: Data?, statusCode: Int, error: Error?) {
         ///
          print("\n<=========================  INTERNET CONNECTION - START =========================>")
          printLog(title: "DATE AND TIME", msg: Date().debugDescription)
@@ -171,7 +171,7 @@ extension API {
              printLog(title: "PARAMETERS", msg: String(data: dataBody, encoding: .utf8) ?? "-")
          }
          //
-         printLog(title: "STATUS CODE", msg: String(describing: code))
+         printLog(title: "STATUS CODE", msg: String(describing: statusCode))
          //
          if let dataResponse = data, let prettyJson = dataResponse.prettyJson {
              printLog(title: "RESPONSE", msg: prettyJson)
@@ -182,23 +182,25 @@ extension API {
          if let error = error {
              if error.statusCode == NSURLErrorTimedOut {
                  printError(title: "RESPONSE ERROR TIMEOUT", msg: "DESCRICAO: \(error.localizedDescription)")
-             }else
-             if error.statusCode == NSURLErrorNotConnectedToInternet {
+                 
+             } else if error.statusCode == NSURLErrorNotConnectedToInternet {
                  printError(title: "RESPONSE ERROR NO INTERNET", msg: "DESCRICAO: \(error.localizedDescription)")
-             }else
-             if error.statusCode == NSURLErrorNetworkConnectionLost {
+                 
+             } else if error.statusCode == NSURLErrorNetworkConnectionLost {
                  printError(title: "RESPONSE ERROR CONNECTION LOST", msg: "DESCRICAO: \(error.localizedDescription)")
-             }else
-             if error.statusCode == NSURLErrorCancelledReasonUserForceQuitApplication {
+                 
+             } else if error.statusCode == NSURLErrorCancelledReasonUserForceQuitApplication {
                  printError(title: "RESPONSE ERROR APP QUIT", msg: "DESCRICAO: \(error.localizedDescription)")
-             }else
-             if error.statusCode == NSURLErrorCancelledReasonBackgroundUpdatesDisabled {
+                 
+             } else if error.statusCode == NSURLErrorCancelledReasonBackgroundUpdatesDisabled {
                  printError(title: "RESPONSE ERROR BG DISABLED", msg: "DESCRICAO: \(error.localizedDescription)")
-             }else
-             if error.statusCode == NSURLErrorBackgroundSessionWasDisconnected {
+                 
+             } else if error.statusCode == NSURLErrorBackgroundSessionWasDisconnected {
                  printError(title: "RESPONSE ERROR BG SESSION DISCONNECTED", msg: "DESCRICAO: \(error.localizedDescription)")
-             }else{
+                 
+             } else {
                  printError(title: "ERROR GENERAL", msg: error.localizedDescription)
+                 
              }
          }else if let data = data, statusCode != 200 {
              // - Check if is JSON result

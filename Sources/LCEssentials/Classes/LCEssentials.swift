@@ -196,7 +196,7 @@ public struct LCEssentials {
     /// - LoverdeCo: Check if app is running in TestFlight mode.
     public static var isInTestFlight: Bool {
         // http://stackoverflow.com/questions/12431994/detect-testflight
-        return Bundle.main.appStoreReceiptURL?.path.contains("sandboxReceipt") == true
+        return Bundle.main.appStoreReceiptURL?.path.contains("sandboxReceipt", caseSensitive: false) == true
     }
     #endif
     

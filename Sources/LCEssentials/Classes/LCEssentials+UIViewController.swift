@@ -102,9 +102,9 @@ public extension UIViewController {
             return
         }
         guard let jump = jumpToController else {
-            self.navigationController?.popViewControllerWithHandler {
+            self.navigationController?.popViewController(animated: true, {
                 completion()
-            }
+            })
             return
         }
         CATransaction.begin()

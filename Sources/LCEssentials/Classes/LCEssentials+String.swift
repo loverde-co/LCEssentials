@@ -406,75 +406,6 @@ public extension String {
         return self
     }
     
-    /// Sliced string from a start index with length.
-    ///
-    ///        "Hello World".slicing(from: 6, length: 5) -> "World"
-    ///
-    /// - Parameters:
-    ///   - index: string index the slicing should start from.
-    ///   - length: amount of characters to be sliced after given index.
-    /// - Returns: sliced substring of length number of characters (if applicable) (example: "Hello World".slicing(from:
-    /// 6, length: 5) -> "World").
-    func slicing(from index: Int, length: Int) -> String? {
-        guard length >= 0, index >= 0, index < count else { return nil }
-        guard index.advanced(by: length) <= count else {
-            return self[safe: index..<count]
-        }
-        guard length > 0 else { return "" }
-        return self[safe: index..<index.advanced(by: length)]
-    }
-    
-    /// Slice given string from a start index with length (if applicable).
-    ///
-    ///        var str = "Hello World"
-    ///        str.slice(from: 6, length: 5)
-    ///        print(str) // prints "World"
-    ///
-    /// - Parameters:
-    ///   - index: string index the slicing should start from.
-    ///   - length: amount of characters to be sliced after given index.
-    @discardableResult
-    mutating func slice(from index: Int, length: Int) -> String {
-        if let str = slicing(from: index, length: length) {
-            self = String(str)
-        }
-        return self
-    }
-    
-    /// Slice given string from a start index to an end index (if applicable).
-    ///
-    ///        var str = "Hello World"
-    ///        str.slice(from: 6, to: 11)
-    ///        print(str) // prints "World"
-    ///
-    /// - Parameters:
-    ///   - start: string index the slicing should start from.
-    ///   - end: string index the slicing should end at.
-    @discardableResult
-    mutating func slice(from start: Int, to end: Int) -> String {
-        guard end >= start else { return self }
-        if let str = self[safe: start..<end] {
-            self = str
-        }
-        return self
-    }
-    
-    /// Slice given string from a start index (if applicable).
-    ///
-    ///        var str = "Hello World"
-    ///        str.slice(at: 6)
-    ///        print(str) // prints "World"
-    ///
-    /// - Parameter index: string index the slicing should start from.
-    @discardableResult
-    mutating func slice(at index: Int) -> String {
-        guard index < count else { return self }
-        if let str = self[safe: index..<count] {
-            self = str
-        }
-        return self
-    }
-    
     /// Returns a string by padding to fit the length parameter size with another string in the start.
     ///
     ///   "hue".paddingStart(10) -> "       hue"
@@ -679,7 +610,7 @@ public extension String {
               timeZone: TimeZone? = TimeZone.current) -> Date? {
         
         let date = self.date(withCurrFormatt: withCurrFormatt, localeIdentifier: localeIdentifier, timeZone: timeZone)
-        let strDate = date?.string(stringFormat: newFormatt, localeIdentifier: localeIdentifier, timeZone: timeZone)
+        let strDate = date?.string(withFormat: newFormatt)
         return strDate?.date(withCurrFormatt: newFormatt, localeIdentifier: localeIdentifier, timeZone: timeZone)
     }
 
@@ -903,21 +834,6 @@ public extension String {
         }
 
         return filtered.replacingOccurrences(of: "--", with: "-")
-    }
-    /// Check if string contains one or more instance of substring.
-    ///
-    ///        "Hello World!".contain("O") -> false
-    ///        "Hello World!".contain("o", caseSensitive: false) -> true
-    ///
-    /// - Parameters:
-    ///   - string: substring to search for.
-    ///   - caseSensitive: set true for case sensitive search (default is true).
-    /// - Returns: true if string contains one or more instance of substring.
-    func contains(_ string: String, caseSensitive: Bool = true) -> Bool {
-        if !caseSensitive {
-            return range(of: string, options: .caseInsensitive) != nil
-        }
-        return range(of: string) != nil
     }
     /// Removes spaces and new lines in beginning and end of string.
     ///
