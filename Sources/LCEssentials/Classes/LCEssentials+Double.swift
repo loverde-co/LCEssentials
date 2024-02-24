@@ -1,5 +1,5 @@
 //  
-// Copyright (c) 2018 Loverde Co.
+// Copyright (c) 2023 Loverde Co.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,26 +20,46 @@
 // THE SOFTWARE.
  
 
-import Foundation
+#if canImport(CoreGraphics)
+import CoreGraphics
+#endif
 
-public extension NSString {
+#if os(macOS) || os(iOS)
+import Darwin
+#elseif os(Linux)
+import Glibc
+#endif
 
-    var string: String? {
-        return self as? String
+// MARK: - Properties
+
+public extension Double {
+    
+    var int: Int {
+        return Int(self)
     }
     
-    func randomAlphaNumericString(_ length: Int = 8) -> String {
-
-        let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        let allowedCharsCount = UInt32(allowedChars.count)
-        var randomString = ""
-
-        for _ in (0..<length) {
-            let randomNum = Int(arc4random_uniform(allowedCharsCount))
-            let newCharacter = allowedChars[allowedChars.index(allowedChars.startIndex, offsetBy: randomNum)]
-            randomString += String(newCharacter)
-        }
-
-        return randomString
+    var float: Float {
+        return Float(self)
     }
+
+    #if canImport(CoreGraphics)
+    var cgFloat: CGFloat {
+        return CGFloat(self)
+    }
+    #endif
+}
+
+// MARK: - Operators
+
+precedencegroup PowerPrecedence { higherThan: MultiplicationPrecedence }
+infix operator **: PowerPrecedence
+/// Value of exponentiation.
+///
+/// - Parameters:
+///   - lhs: base double.
+///   - rhs: exponent double.
+/// - Returns: exponentiation result (example: 4.4 ** 0.5 = 2.0976176963).
+public func ** (lhs: Double, rhs: Double) -> Double {
+    // http://nshipster.com/swift-operators/
+    return pow(lhs, rhs)
 }

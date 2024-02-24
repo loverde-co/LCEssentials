@@ -164,7 +164,7 @@ public extension UIImage {
         return self
     }
 
-    /// SwifterSwift: Create a new image from a base 64 string.
+    /// Create a new image from a base 64 string.
     ///
     /// - Parameters:
     ///   - base64String: a base-64 `String`, representing the image

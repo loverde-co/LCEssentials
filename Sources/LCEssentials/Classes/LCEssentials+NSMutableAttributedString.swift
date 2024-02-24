@@ -141,10 +141,6 @@ public extension NSMutableAttributedString {
         return self
     }
     
-    func makeAttributted(){
-        self.append(self)
-    }
-    
     func attributtedString() -> NSAttributedString {
         let range = self.string.range(of: self.string) ?? Range<String.Index>(uncheckedBounds: (self.string.startIndex, upper: self.string.endIndex))
         let nsRange = self.string.nsRange(from: range) ?? NSRange()
@@ -155,6 +151,15 @@ public extension NSMutableAttributedString {
         let normal =  NSAttributedString(string: text)
         self.append(normal)
         return self
+    }
+    
+    func canSetAsLink(textToFind: String, linkURL: String) -> Bool {
+        let foundRange = self.mutableString.range(of: textToFind)
+        if foundRange.location != NSNotFound {
+            self.addAttribute(NSAttributedString.Key.link, value: linkURL, range: foundRange)
+            return true
+        }
+        return false
     }
 
     func height(withConstrainedWidth width: CGFloat) -> CGFloat {

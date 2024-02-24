@@ -85,54 +85,34 @@ public extension UIView {
         return String(describing: self)
     }
     
-    var heightConstraint: NSLayoutConstraint? {
-        get {
-            return constraints.first(where: {
-                $0.firstAttribute == .height && $0.relation == .equal
-            })
-        }
-        set { setNeedsLayout() }
-    }
-    
+    /// First width constraint for this view.
     var widthConstraint: NSLayoutConstraint? {
-        get {
-            return constraints.first(where: {
-                $0.firstAttribute == .width && $0.relation == .equal
-            })
-        }
-        set { setNeedsLayout() }
-    }
-
-    var bottomConstraint: NSLayoutConstraint? {
-        get {
-            return constraints(on: bottomAnchor).first
-        }
-        
-        set { setNeedsLayout() }
+        findConstraint(attribute: .width, for: self)
     }
     
-    var topConstraint: NSLayoutConstraint? {
-        get {
-            return constraints(on: topAnchor).first
-        }
-        
-        set { setNeedsLayout() }
+    /// First height constraint for this view.
+    var heightConstraint: NSLayoutConstraint? {
+        findConstraint(attribute: .height, for: self)
     }
     
+    /// First leading constraint for this view.
     var leadingConstraint: NSLayoutConstraint? {
-        get {
-            return constraints.first(where: {
-                $0.firstAttribute == .leading && $0.relation == .equal
-            })
-        }
+        findConstraint(attribute: .leading, for: self)
     }
     
-    var trailingConstraints: NSLayoutConstraint? {
-        get {
-            return constraints.first(where: {
-                $0.firstAttribute == .trailing && $0.relation == .equal
-            })
-        }
+    /// First trailing constraint for this view.
+    var trailingConstraint: NSLayoutConstraint? {
+        findConstraint(attribute: .trailing, for: self)
+    }
+    
+    /// First top constraint for this view.
+    var topConstraint: NSLayoutConstraint? {
+        findConstraint(attribute: .top, for: self)
+    }
+    
+    /// First bottom constraint for this view.
+    var bottomConstraint: NSLayoutConstraint? {
+        findConstraint(attribute: .bottom, for: self)
     }
     
     var globalPoint: CGPoint? {
@@ -201,6 +181,18 @@ public extension UIView {
         return UIGraphicsGetImageFromCurrentImageContext()
     }
     
+    /// Get view's parent view controller
+    var parentViewController: UIViewController? {
+        weak var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder!.next
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
+    
     /// Loverde Co: transform UIView to UIImage
     func asImage() -> UIImage {
         if #available(iOS 10.0, *) {
@@ -227,6 +219,23 @@ public extension UIView {
             addSubview(subview)
             subview.translatesAutoresizingMaskIntoConstraints = constraints
         }
+    }
+    
+    /// Returns all the subviews of a given type recursively in the
+    /// view hierarchy rooted on the view it its called.
+    ///
+    /// - Parameter ofType: Class of the view to search.
+    /// - Returns: All subviews with a specified type.
+    func subviews<T>(ofType _: T.Type) -> [T] {
+        var views = [T]()
+        for subview in subviews {
+            if let view = subview as? T {
+                views.append(view)
+            } else if !subview.subviews.isEmpty {
+                views.append(contentsOf: subview.subviews(ofType: T.self))
+            }
+        }
+        return views
     }
     
     @discardableResult
@@ -262,28 +271,19 @@ public extension UIView {
         return constraint
     }
     
-    @discardableResult
-    func centerX(to: UIView, padding: CGFloat? = 0) -> NSLayoutConstraint {
-        let constraint: NSLayoutConstraint
-        constraint = centerXAnchor.constraint(equalTo: to.centerXAnchor, constant: padding ?? 0)
-        constraint.isActive = true
-        return constraint
-    }
-    
-    @discardableResult
-    func centerY(to: UIView, padding: CGFloat? = nil) -> NSLayoutConstraint {
-        let constraint: NSLayoutConstraint
-        constraint = centerYAnchor.constraint(equalTo: to.centerYAnchor, constant: padding ?? 0)
-        constraint.isActive = true
-        return constraint
-    }
-    
-    static func instantiate(withNibName: String? = nil, owner: Any? = nil, options: [UINib.OptionsKey : Any]? = nil) -> [Any]? {
-        var nibName = self.className
-        if let settedNibName = withNibName {
-            nibName = settedNibName
+    /// Search constraints until we find one for the given view
+    /// and attribute. This will enumerate ancestors since constraints are
+    /// always added to the common ancestor.
+    ///
+    /// - Parameter attribute: the attribute to find.
+    /// - Parameter at: the view to find.
+    /// - Returns: matching constraint.
+    func findConstraint(attribute: NSLayoutConstraint.Attribute, for view: UIView) -> NSLayoutConstraint? {
+        let constraint = constraints.first {
+            ($0.firstAttribute == attribute && $0.firstItem as? UIView == view) ||
+            ($0.secondAttribute == attribute && $0.secondItem as? UIView == view)
         }
-        return Bundle.main.loadNibNamed(nibName, owner: owner, options: options)
+        return constraint ?? superview?.findConstraint(attribute: attribute, for: view)
     }
     
     func constraints(on anchor: NSLayoutYAxisAnchor) -> [NSLayoutConstraint] {

@@ -194,6 +194,30 @@ public extension String {
         return self.components(separatedBy: CharacterSet.alphanumerics.inverted).joined()
     }
     
+    /// Check if string contains only letters.
+    ///
+    ///        "abc".isAlphabetic -> true
+    ///        "123abc".isAlphabetic -> false
+    ///
+    var isAlphabetic: Bool {
+        let hasLetters = rangeOfCharacter(from: .letters, options: .numeric, range: nil) != nil
+        let hasNumbers = rangeOfCharacter(from: .decimalDigits, options: .literal, range: nil) != nil
+        return hasLetters && !hasNumbers
+    }
+    
+    /// Check if string contains at least one letter and one number.
+    ///
+    ///        // useful for passwords
+    ///        "123abc".isAlphaNumeric -> true
+    ///        "abc".isAlphaNumeric -> false
+    ///
+    var isAlphaNumeric: Bool {
+        let hasLetters = rangeOfCharacter(from: .letters, options: .numeric, range: nil) != nil
+        let hasNumbers = rangeOfCharacter(from: .decimalDigits, options: .literal, range: nil) != nil
+        let comps = components(separatedBy: .alphanumerics)
+        return comps.joined(separator: "").count == 0 && hasLetters && hasNumbers
+    }
+    
     var alphanumericWithWhiteSpace: String {
         return self.components(separatedBy: CharacterSet.alphanumerics.union(.whitespaces).inverted).joined()
     }
@@ -289,6 +313,22 @@ public extension String {
         return NSURL(string: self)
     }
     
+    /// Integer value from string (if applicable).
+    ///
+    ///        "101".int -> 101
+    ///
+    var int: Int? {
+        return Int(self)
+    }
+    
+    /// NSString from a string.
+    var nsString: NSString {
+        return NSString(string: self)
+    }
+    
+    /// The full `NSRange` of the string.
+    var fullNSRange: NSRange { NSRange(startIndex..<endIndex, in: self) }
+    
     // MARK: - Methods
     
     /// Loverde Co.: Replace Dictionaryes parameters to URL String.
@@ -317,7 +357,124 @@ public extension String {
         }
         return loremIpsum
     }
+#if canImport(Foundation)
+    /// An array of all words in a string.
+    ///
+    ///        "Swift is amazing".words() -> ["Swift", "is", "amazing"]
+    ///
+    /// - Returns: The words contained in a string.
+    func words() -> [String] {
+        // https://stackoverflow.com/questions/42822838
+        let characterSet = CharacterSet.whitespacesAndNewlines.union(.punctuationCharacters)
+        let comps = components(separatedBy: characterSet)
+        return comps.filter { !$0.isEmpty }
+    }
+    /// Count of words in a string.
+    ///
+    ///        "Swift is amazing".wordsCount() -> 3
+    ///
+    /// - Returns: The count of words contained in a string.
+    func wordCount() -> Int {
+        // https://stackoverflow.com/questions/42822838
+        let characterSet = CharacterSet.whitespacesAndNewlines.union(.punctuationCharacters)
+        let comps = components(separatedBy: characterSet)
+        let words = comps.filter { !$0.isEmpty }
+        return words.count
+    }
+    /// Check if string contains one or more instance of substring.
+    ///
+    ///        "Hello World!".contain("O") -> false
+    ///        "Hello World!".contain("o", caseSensitive: false) -> true
+    ///
+    /// - Parameters:
+    ///   - string: substring to search for.
+    ///   - caseSensitive: set true for case sensitive search (default is true).
+    /// - Returns: true if string contains one or more instance of substring.
+    func contains(_ string: String, caseSensitive: Bool = true) -> Bool {
+        if !caseSensitive {
+            return range(of: string, options: .caseInsensitive) != nil
+        }
+        return range(of: string) != nil
+    }
+#endif
 
+    /// Reverse string.
+    @discardableResult
+    mutating func reverse() -> String {
+        let chars: [Character] = reversed()
+        self = String(chars)
+        return self
+    }
+    
+    /// Sliced string from a start index with length.
+    ///
+    ///        "Hello World".slicing(from: 6, length: 5) -> "World"
+    ///
+    /// - Parameters:
+    ///   - index: string index the slicing should start from.
+    ///   - length: amount of characters to be sliced after given index.
+    /// - Returns: sliced substring of length number of characters (if applicable) (example: "Hello World".slicing(from:
+    /// 6, length: 5) -> "World").
+    func slicing(from index: Int, length: Int) -> String? {
+        guard length >= 0, index >= 0, index < count else { return nil }
+        guard index.advanced(by: length) <= count else {
+            return self[safe: index..<count]
+        }
+        guard length > 0 else { return "" }
+        return self[safe: index..<index.advanced(by: length)]
+    }
+    
+    /// Slice given string from a start index with length (if applicable).
+    ///
+    ///        var str = "Hello World"
+    ///        str.slice(from: 6, length: 5)
+    ///        print(str) // prints "World"
+    ///
+    /// - Parameters:
+    ///   - index: string index the slicing should start from.
+    ///   - length: amount of characters to be sliced after given index.
+    @discardableResult
+    mutating func slice(from index: Int, length: Int) -> String {
+        if let str = slicing(from: index, length: length) {
+            self = String(str)
+        }
+        return self
+    }
+    
+    /// Slice given string from a start index to an end index (if applicable).
+    ///
+    ///        var str = "Hello World"
+    ///        str.slice(from: 6, to: 11)
+    ///        print(str) // prints "World"
+    ///
+    /// - Parameters:
+    ///   - start: string index the slicing should start from.
+    ///   - end: string index the slicing should end at.
+    @discardableResult
+    mutating func slice(from start: Int, to end: Int) -> String {
+        guard end >= start else { return self }
+        if let str = self[safe: start..<end] {
+            self = str
+        }
+        return self
+    }
+    
+    /// Slice given string from a start index (if applicable).
+    ///
+    ///        var str = "Hello World"
+    ///        str.slice(at: 6)
+    ///        print(str) // prints "World"
+    ///
+    /// - Parameter index: string index the slicing should start from.
+    @discardableResult
+    mutating func slice(at index: Int) -> String {
+        guard index < count else { return self }
+        if let str = self[safe: index..<count] {
+            self = str
+        }
+        return self
+    }
+    
     /// Returns a string by padding to fit the length parameter size with another string in the start.
     ///
     ///   "hue".paddingStart(10) -> "       hue"

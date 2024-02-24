@@ -107,22 +107,22 @@ public extension FileManager {
             print("Error: \(error.localizedDescription)")
             return nil
         }
-        
-        func directoryExistsAtPath(_ path: String) -> Bool {
-            var isDirectory = ObjCBool(true)
-            let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
-            return exists && isDirectory.boolValue
-        }
-        
-        func convertToURL(path:String)-> URL?{
-            let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path
-            do {
-                _ = try FileManager.default.contentsOfDirectory(atPath: "\(docs)/\(path)")
-                return URL(fileURLWithPath: "\(docs)/\(path)", isDirectory: true)
-            } catch let error {
-                print("Error: \(error.localizedDescription)")
-                return nil
-            }
+    }
+    func directoryExistsAtPath(_ path: String) -> Bool {
+        var isDirectory = ObjCBool(true)
+        let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
+        return exists && isDirectory.boolValue
+    }
+    
+    func convertToURL(path:String)-> URL?{
+        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].path
+        do {
+            _ = try FileManager.default.contentsOfDirectory(atPath: "\(docs)/\(path)")
+            return URL(fileURLWithPath: "\(docs)/\(path)", isDirectory: true)
+        } catch let error {
+            print("Error: \(error.localizedDescription)")
+            return nil
         }
     }
+    
 }

@@ -84,7 +84,32 @@ public extension Array where Element: Equatable {
         }
         return self
     }
+    
+    /// Insert an element at the beginning of array.
+    ///
+    ///        [2, 3, 4, 5].prepend(1) -> [1, 2, 3, 4, 5]
+    ///        ["e", "l", "l", "o"].prepend("h") -> ["h", "e", "l", "l", "o"]
+    ///
+    /// - Parameter newElement: element to insert.
+    mutating func prepend(_ newElement: Element) {
+        insert(newElement, at: 0)
+    }
 
+    /// Safely swap values at given index positions.
+    ///
+    ///        [1, 2, 3, 4, 5].safeSwap(from: 3, to: 0) -> [4, 2, 3, 1, 5]
+    ///        ["h", "e", "l", "l", "o"].safeSwap(from: 1, to: 0) -> ["e", "h", "l", "l", "o"]
+    ///
+    /// - Parameters:
+    ///   - index: index of first element.
+    ///   - otherIndex: index of other element.
+    mutating func safeSwap(from index: Index, to otherIndex: Index) {
+        guard index != otherIndex else { return }
+        guard startIndex..<endIndex ~= index else { return }
+        guard startIndex..<endIndex ~= otherIndex else { return }
+        swapAt(index, otherIndex)
+    }
+    
     /// Return array with all duplicate elements removed.
     ///
     ///     [1, 1, 2, 2, 3, 3, 3, 4, 5].withoutDuplicates() -> [1, 2, 3, 4, 5])

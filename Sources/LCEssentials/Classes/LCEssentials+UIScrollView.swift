@@ -50,48 +50,120 @@ public extension UIScrollView {
         return UIGraphicsGetImageFromCurrentImageContext()
     }
     
+    /// The currently visible region of the scroll view.
+    var visibleRect: CGRect {
+        let contentWidth = contentSize.width - contentOffset.x
+        let contentHeight = contentSize.height - contentOffset.y
+        return CGRect(origin: contentOffset,
+                      size: CGSize(width: min(min(bounds.size.width, contentSize.width), contentWidth),
+                                   height: min(min(bounds.size.height, contentSize.height), contentHeight)))
+    }
+    
     var offsetInPage: CGFloat {
         let page = contentOffset.y / frame.size.height
         return page - floor(page)
     }
-    
-    func scrollToTop() {
-        let desiredOffset = CGPoint(x: 0, y: -contentInset.top)
-        setContentOffset(desiredOffset, animated: true)
-    }
-    
-    func screenshot() -> UIImage? {
-        let savedContentOffset = contentOffset
-        let savedFrame = frame
-        
-        UIGraphicsBeginImageContext(contentSize)
-        contentOffset = .zero
-        frame = CGRect(x: 0, y: 0, width: contentSize.width, height: contentSize.height)
-        
-        guard let context = UIGraphicsGetCurrentContext() else { return nil }
-        
-        layer.render(in: context)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext();
-        
-        contentOffset = savedContentOffset
-        frame = savedFrame
-        
-        return image
-    }
-    
-    func scrollToBottom(animated: Bool) {
-         if self.contentSize.height < self.bounds.size.height { return }
-         let bottomOffset = CGPoint(x: 0, y: self.contentSize.height - self.bounds.size.height)
-         self.setContentOffset(bottomOffset, animated: animated)
-      }
-    
-    func scrollToView(view: UIView, animated: Bool) {
-        if let origin = view.superview {
-            let childStartPoint = origin.convert(view.frame.origin, to: self)
-            self.scrollRectToVisible(CGRect(x: 0, y: childStartPoint.y, width: 1, height: self.frame.height), animated: animated)
-        }
-    }
 }
 
+public extension UIScrollView {
+    /// Scroll to the top-most content offset.
+    /// - Parameter animated: `true` to animate the transition at a constant velocity to the new offset, `false` to make
+    /// the transition immediate.
+    func scrollToTop(animated: Bool = true) {
+        setContentOffset(CGPoint(x: contentOffset.x, y: -contentInset.top), animated: animated)
+    }
+
+    /// Scroll to the left-most content offset.
+    /// - Parameter animated: `true` to animate the transition at a constant velocity to the new offset, `false` to make
+    /// the transition immediate.
+    func scrollToLeft(animated: Bool = true) {
+        setContentOffset(CGPoint(x: -contentInset.left, y: contentOffset.y), animated: animated)
+    }
+
+    /// Scroll to the bottom-most content offset.
+    /// - Parameter animated: `true` to animate the transition at a constant velocity to the new offset, `false` to make
+    /// the transition immediate.
+    func scrollToBottom(animated: Bool = true) {
+        setContentOffset(
+            CGPoint(x: contentOffset.x, y: max(0, contentSize.height - bounds.height) + contentInset.bottom),
+            animated: animated)
+    }
+
+    /// Scroll to the right-most content offset.
+    /// - Parameter animated: `true` to animate the transition at a constant velocity to the new offset, `false` to make
+    /// the transition immediate.
+    func scrollToRight(animated: Bool = true) {
+        setContentOffset(
+            CGPoint(x: max(0, contentSize.width - bounds.width) + contentInset.right, y: contentOffset.y),
+            animated: animated)
+    }
+
+    /// Scroll up one page of the scroll view.
+    /// If `isPagingEnabled` is `true`, the previous page location is used.
+    /// - Parameter animated: `true` to animate the transition at a constant velocity to the new offset, `false` to make
+    /// the transition immediate.
+    func scrollUp(animated: Bool = true) {
+        let minY = -contentInset.top
+        var y = max(minY, contentOffset.y - bounds.height)
+        #if !os(tvOS)
+        if isPagingEnabled,
+           bounds.height != 0 {
+            let page = max(0, ((y + contentInset.top) / bounds.height).rounded(.down))
+            y = max(minY, page * bounds.height - contentInset.top)
+        }
+        #endif
+        setContentOffset(CGPoint(x: contentOffset.x, y: y), animated: animated)
+    }
+
+    /// Scroll left one page of the scroll view.
+    /// If `isPagingEnabled` is `true`, the previous page location is used.
+    /// - Parameter animated: `true` to animate the transition at a constant velocity to the new offset, `false` to make
+    /// the transition immediate.
+    func scrollLeft(animated: Bool = true) {
+        let minX = -contentInset.left
+        var x = max(minX, contentOffset.x - bounds.width)
+        #if !os(tvOS)
+        if isPagingEnabled,
+           bounds.width != 0 {
+            let page = ((x + contentInset.left) / bounds.width).rounded(.down)
+            x = max(minX, page * bounds.width - contentInset.left)
+        }
+        #endif
+        setContentOffset(CGPoint(x: x, y: contentOffset.y), animated: animated)
+    }
+
+    /// Scroll down one page of the scroll view.
+    /// If `isPagingEnabled` is `true`, the next page location is used.
+    /// - Parameter animated: `true` to animate the transition at a constant velocity to the new offset, `false` to make
+    /// the transition immediate.
+    func scrollDown(animated: Bool = true) {
+        let maxY = max(0, contentSize.height - bounds.height) + contentInset.bottom
+        var y = min(maxY, contentOffset.y + bounds.height)
+        #if !os(tvOS)
+        if isPagingEnabled,
+           bounds.height != 0 {
+            let page = ((y + contentInset.top) / bounds.height).rounded(.down)
+            y = min(maxY, page * bounds.height - contentInset.top)
+        }
+        #endif
+        setContentOffset(CGPoint(x: contentOffset.x, y: y), animated: animated)
+    }
+
+    /// Scroll right one page of the scroll view.
+    /// If `isPagingEnabled` is `true`, the next page location is used.
+    /// - Parameter animated: `true` to animate the transition at a constant velocity to the new offset, `false` to make
+    /// the transition immediate.
+    func scrollRight(animated: Bool = true) {
+        let maxX = max(0, contentSize.width - bounds.width) + contentInset.right
+        var x = min(maxX, contentOffset.x + bounds.width)
+        #if !os(tvOS)
+        if isPagingEnabled,
+           bounds.width != 0 {
+            let page = ((x + contentInset.left) / bounds.width).rounded(.down)
+            x = min(maxX, page * bounds.width - contentInset.left)
+        }
+        #endif
+        setContentOffset(CGPoint(x: x, y: contentOffset.y), animated: animated)
+    }
+}
 #endif

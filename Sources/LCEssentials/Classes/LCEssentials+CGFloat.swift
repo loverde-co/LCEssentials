@@ -1,5 +1,5 @@
 //  
-// Copyright (c) 2020 Loverde Co.
+// Copyright (c) 2023 Loverde Co.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,46 +22,67 @@
 
 #if canImport(CoreGraphics)
 import CoreGraphics
+
+#if canImport(Foundation)
+import Foundation
 #endif
 
-#if os(macOS) || os(iOS)
-import Darwin
-#elseif os(Linux)
-import Glibc
-#endif
+// MARK: - Properties
 
-public extension Float {
-    
+public extension CGFloat {
+    /// Absolute of CGFloat value.
+    var abs: CGFloat {
+        return Swift.abs(self)
+    }
+
+    #if canImport(Foundation)
+    /// Ceil of CGFloat value.
+    var ceil: CGFloat {
+        return Foundation.ceil(self)
+    }
+    #endif
+
+    /// Radian value of degree input.
+    var degreesToRadians: CGFloat {
+        return .pi * self / 180.0
+    }
+
+    #if canImport(Foundation)
+    /// Floor of CGFloat value.
+    var floor: CGFloat {
+        return Foundation.floor(self)
+    }
+    #endif
+
+    /// Check if CGFloat is positive.
+    var isPositive: Bool {
+        return self > 0
+    }
+
+    /// Check if CGFloat is negative.
+    var isNegative: Bool {
+        return self < 0
+    }
+
+    /// Int.
     var int: Int {
         return Int(self)
     }
-    
+
+    /// Float.
+    var float: Float {
+        return Float(self)
+    }
+
+    /// Double.
     var double: Double {
         return Double(self)
     }
-    
-#if canImport(CoreGraphics)
-    var cgFloat: CGFloat {
-        return CGFloat(self)
-    }
-#endif
-    
-    /// Rounds the double to decimal places value
-    func rounded(toPlaces places:Int) -> Float {
-        let divisor = pow(10.0, Float(places))
-        return (self * divisor).rounded() / divisor
+
+    /// Degree value of radian input.
+    var radiansToDegrees: CGFloat {
+        return self * 180 / CGFloat.pi
     }
 }
 
-precedencegroup PowerPrecedence { higherThan: MultiplicationPrecedence }
-infix operator **: PowerPrecedence
-/// Value of exponentiation.
-///
-/// - Parameters:
-///   - lhs: base float.
-///   - rhs: exponent float.
-/// - Returns: exponentiation result (4.4 ** 0.5 = 2.0976176963).
-public func ** (lhs: Float, rhs: Float) -> Float {
-    // http://nshipster.com/swift-operators/
-    return pow(lhs, rhs)
-}
+#endif

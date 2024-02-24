@@ -97,8 +97,7 @@ public struct LCEssentials {
     #if !os(macOS)
     /// - LoverdeCo: App's name (if applicable).
     public static var appDisplayName: String? {
-        // http://stackoverflow.com/questions/28254377/get-app-name-in-swift
-        return Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String
+        return UIApplication.shared.displayName
     }
     #endif
     
@@ -112,7 +111,7 @@ public struct LCEssentials {
     #if !os(macOS)
     /// - LoverdeCo: App current build number (if applicable).
     public static var appBuild: String? {
-        return Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String
+        return UIApplication.shared.buildNumber
     }
     #endif
     
@@ -131,7 +130,7 @@ public struct LCEssentials {
     #if !os(macOS)
     /// - LoverdeCo: App's current version (if applicable).
     public static var appVersion: String? {
-        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        return UIApplication.shared.version
     }
     #endif
     

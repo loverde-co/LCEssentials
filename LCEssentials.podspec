@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'LCEssentials'
-  s.version          = '0.7.5'
+  s.version          = '0.7.6'
   s.summary          = 'This is a repository of essential scripts written in Swift for Loverde Co.'
  
   s.description      = <<-DESC
@@ -20,12 +20,6 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
                            'Sources/LCEssentials/HUDAlert/*.{swift}',
                            'Sources/LCEssentials/ImageZoom/*.{swift}',
                            'Sources/LCEssentials/ImagePicker/*.{swift}'
-  s.ios.resource_bundles = {
-    'LCEssentials' => ['Sources/LCEssentials/Classes/*.{swift}',
-                      'Sources/LCEssentials/HUDAlert/*.{swift}',
-                      'Sources/LCEssentials/ImageZoom/*.{swift}',
-                      'Sources/LCEssentials/ImagePicker/*.{swift}']
-  }
   #s.watchos.source_files     = 'Sources/LCEssentials/Classes/*.{swift}'
 
   # LCEMinimal Extensions
