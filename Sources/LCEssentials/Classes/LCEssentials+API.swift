@@ -38,7 +38,7 @@ public enum httpMethod: String {
 public struct API {
     static let defaultError = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN,
                                       code: LCEssentials.DEFAULT_ERROR_CODE,
-                                      userInfo: [ NSLocalizedDescriptionKey: LCEssentials.DEFAULT_ERROR_MSG ])
+                                      userInfo: [NSLocalizedDescriptionKey: LCEssentials.DEFAULT_ERROR_MSG])
     
     public static var persistConnectionDelay: Double = 3
     public static var headers: [String: String] = [:]
@@ -47,6 +47,8 @@ public struct API {
                                                           "Content-Type": "application/json; charset=UTF-8",
                                                           "Accept-Encoding": "gzip"]
     public static var url: String = ""
+    
+    public init(){}
     
     /// Loverde Co.: API Requests made simple way
     ///
@@ -145,7 +147,7 @@ public struct API {
 }
 
 extension Error {
-    var statusCode: Int {
+    public var statusCode: Int {
         get{
             return self._code
         }
