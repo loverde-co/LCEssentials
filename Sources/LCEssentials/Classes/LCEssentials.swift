@@ -37,7 +37,7 @@ func ^^ (radix: Float, power: Float) -> Float {
 
 
 /// Loverde Co: Custom Logs
-public func printLog(title: String, msg: String, prettyPrint: Bool = false){
+public func printLog(title: String, msg: Any, prettyPrint: Bool = false){
     if prettyPrint {
         print("\n<=========================  \(title) - START =========================>")
         print(msg)
@@ -47,7 +47,7 @@ public func printLog(title: String, msg: String, prettyPrint: Bool = false){
     }
 }
 
-public func printInfo(title: String, msg: String, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
+public func printInfo(title: String, msg: Any, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
     if prettyPrint {
         print("\n<=========================  ℹ️ INFO: \(title) - START =========================>")
         print("[\(file): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
@@ -57,7 +57,7 @@ public func printInfo(title: String, msg: String, prettyPrint: Bool = false, fun
         print("ℹ️ INFO: \(title): \(msg)")
     }
 }
-public func printWarn(title: String, msg: String, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
+public func printWarn(title: String, msg: Any, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
     if prettyPrint {
         print("\n<=========================  ⚠️ WARN: \(title) - START =========================>")
         print("[\(file): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
@@ -67,7 +67,7 @@ public func printWarn(title: String, msg: String, prettyPrint: Bool = false, fun
         print("⚠️ WARN: \(title): \(msg)")
     }
 }
-public func printError(title: String, msg: String, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
+public func printError(title: String, msg: Any, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
     if prettyPrint {
         print("\n<=========================  🚫 ERROR: \(title) - START =========================>")
         print("[\(file): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
