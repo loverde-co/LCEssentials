@@ -2,9 +2,9 @@
 ![](loverde_company_logo_full.png)  
 Custom Notifications for Loverde Co. Essentials Swift Scripts
 ----
-> Writen in Swift 4.2 - XCode 11.3
+> Writen in Swift 5.0 - XCode 15.3
 > 
-> iOS 11.+
+> iOS 15.+
 > 
 ----
 
@@ -23,7 +23,7 @@ Installation
 You can use [CocoaPods](http://cocoapods.org/) to install `LCENotifications` by adding it to your `Podfile`:
 
 ```ruby
-platform :ios, '10.0'
+platform :ios, '15.0'
 use_frameworks!
 pod 'LCEssentials/Notifications'
 ```
@@ -108,7 +108,7 @@ class MyCustomViewController: UIViewController, LCEMessagesDelegate {
 }
 ```
 
-Author of v1.0
+Author of v0.8.0
 ----
 
 Any question or doubts, please send thru email

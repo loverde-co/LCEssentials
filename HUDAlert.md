@@ -2,9 +2,9 @@
 ![](loverde_company_logo_full.png)  
 Custom HUD and Alert Controller for Loverde Co. Essentials Swift Scripts
 ----
-> Writen in Swift 5.* - XCode 11.*
+> Writen in Swift 5.* - XCode 15.*
 > 
-> iOS 11.*
+> iOS 15.*
 > 
 ----
 
@@ -21,7 +21,7 @@ Installation
 You can use [CocoaPods](http://cocoapods.org/) to install `LCImageZoom` by adding it to your `Podfile`:
 
 ```ruby
-platform :ios, '11.0'
+platform :ios, '15.0'
 use_frameworks!
 pod 'LCEssentials/HUDAlert'
 ```
@@ -90,7 +90,7 @@ class MyCustomViewController: UIViewController, HUDAlertControllerDelegate {
 ```
 
 
-Author of v1.0
+Author of v0.8.0
 ----
 
 Any question or doubts, please send thru email

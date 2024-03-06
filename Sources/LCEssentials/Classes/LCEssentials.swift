@@ -31,7 +31,7 @@ import WatchKit
 
 precedencegroup PowerPrecedence { higherThan: MultiplicationPrecedence }
 infix operator ^^ : PowerPrecedence
-func ^^ (radix: Float, power: Float) -> Float {
+public func ^^ (radix: Float, power: Float) -> Float {
     return Float(pow(Double(radix), Double(power)))
 }
 

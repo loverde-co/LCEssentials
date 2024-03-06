@@ -173,8 +173,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "UIViewAlertForUnsatisfiableConstraints"
                   moduleName = "UIKitCore"
-                  usesParentBreakpointCondition = "Yes"
-                  offsetFromSymbolStart = "0">
+                  usesParentBreakpointCondition = "Yes">
                </Location>
             </Locations>
          </BreakpointContent>

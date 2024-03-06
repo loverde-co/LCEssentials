@@ -21,7 +21,7 @@ Installation
 You can use [CocoaPods](http://cocoapods.org/) to install `LCEssentials` by adding it to your `Podfile`:
 
 ```ruby
-platform :ios, '12.1'
+platform :ios, '15.0'
 use_frameworks!
 
 # Swift 5.0
@@ -86,7 +86,7 @@ self.navigationController?.popViewControllerWithHandler {
 * If you whant **ONLY** LCEssentials without this others controllers above, just add this to your podfile
 
 ```ruby
-platform :ios, '11.4'
+platform :ios, '15.0'
 use_frameworks!
 pod 'LCEssentials/Classes'
 ```
@@ -96,7 +96,7 @@ And then import `LCEssentials ` wherever you import UIKit
 import LCEssentials
 ```
 
-Author of v0.7.0
+Author of v0.8.0
 ----
 
 Any question or doubts, please send thru email
