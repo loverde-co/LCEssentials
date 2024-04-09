@@ -1,5 +1,5 @@
 //  
-// Copyright (c) 2020 Loverde Co.
+// Copyright (c) 2024 Loverde Co.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,34 +22,12 @@
 
 import Foundation
 
-//MARK: - Codables convertions
-public extension Encodable {
-    subscript(key: String) -> Any? {
-        return dictionary[key]
-    }
-    var dictionary: [String: Any] {
-        return (try? JSONSerialization.jsonObject(with: JSONEncoder().encode(self))) as? [String: Any] ?? [:]
-    }
-    var json: String {
-        return self.dictionary.convertToJSON
-    }
-    
-    var data: Data {
-        return self.json.data
-    }
+extension LosslessStringConvertible {
+    var string: String { .init(self) }
 }
 
-extension JSONDecoder {
-    
-    public static func decode<T: Codable>(dictionary: Any) -> T? {
-        do {
-            let json = try JSONSerialization.data(withJSONObject: dictionary)
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            return try decoder.decode(T.self, from: json)
-        } catch {
-            printError(title: "JSONDecoder.decode", msg: error, prettyPrint: true)
-            return nil
-        }
-    }
+extension Sequence where Element == UInt8 {
+    var data: Data { .init(self) }
+    var base64Decoded: Data? { Data(base64Encoded: data) }
+    var string: String? { String(bytes: self, encoding: .utf8) }
 }

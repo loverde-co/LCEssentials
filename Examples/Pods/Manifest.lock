@@ -1,13 +1,9 @@
 PODS:
-  - LCEssentials (0.7.6):
-    - LCEssentials/Classes (= 0.7.6)
-    - LCEssentials/HUDAlert (= 0.7.6)
-    - LCEssentials/ImagePicker (= 0.7.6)
-    - LCEssentials/ImageZoom (= 0.7.6)
-  - LCEssentials/Classes (0.7.6)
-  - LCEssentials/HUDAlert (0.7.6)
-  - LCEssentials/ImagePicker (0.7.6)
-  - LCEssentials/ImageZoom (0.7.6)
+  - LCEssentials (0.8.0):
+    - LCEssentials/Classes (= 0.8.0)
+    - LCEssentials/HUDAlert (= 0.8.0)
+    - LCEssentials/ImagePicker (= 0.8.0)
+    - LCEssentials/ImageZoom (= 0.8.0)
 
 DEPENDENCIES:
   - LCEssentials (from `../`)
@@ -17,7 +13,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LCEssentials: 3a7ea8dc463dbb070b1bfe63b2983d8c39fd3e1c
+  LCEssentials: 486927a38f320f0c99787b528a3a946cc24e3ef1
 
 PODFILE CHECKSUM: c7337a811b94cf18d7d6dc4dc24404cce8749ab4
 

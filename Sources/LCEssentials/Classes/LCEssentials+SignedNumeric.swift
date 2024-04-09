@@ -41,6 +41,14 @@ public extension SignedNumeric {
         // swiftlint:disable:next force_cast
         return formatter.string(from: self as! NSNumber)
     }
+    
+    func asCurrency(locale: Locale = Locale.init(identifier: "pt_BR")) -> String? {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = locale
+        // swiftlint:disable:next force_cast
+        return formatter.string(from: self as! NSNumber)
+    }
     #endif
 }
 

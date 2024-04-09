@@ -144,6 +144,92 @@ public struct API {
             completion(Result.failure(error))
         }
     }
+    
+    public static func resquest<T: Codable>(_ params: [String: Any],
+                                            _ method: httpMethod,
+                                            jsonEncoding: Bool = true,
+                                            debug: Bool = true,
+                                            persistConnection: Bool = false) async throws -> T {
+        
+        if let urlReq = URL(string: url.replaceURL(params)) {
+            var request = URLRequest(url: urlReq, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 20)
+            if method == .post {
+                var newParams = defaultParams
+                newParams += params
+                if jsonEncoding {
+                    let requestObject = try JSONSerialization.data(withJSONObject: newParams)
+                    request.httpBody = requestObject
+                }else{
+                    var bodyComponents = URLComponents()
+                    newParams.forEach({ (key, value) in
+                        bodyComponents.queryItems?.append(URLQueryItem(name: key, value: value as? String))
+                    })
+                    request.httpBody = bodyComponents.query?.data(using: .utf8)
+                }
+            }
+            request.httpMethod = method.rawValue
+            
+            // - Put Default Headers togheter with user defined params
+            if !headers.isEmpty {
+                headers += defaultHeaders
+                
+                // - Add it to request
+                headers.forEach { (key, value) in
+                    request.addValue(value, forHTTPHeaderField: key)
+                }
+            }else{
+                defaultHeaders.forEach { (key, value) in
+                    request.addValue(value, forHTTPHeaderField: key)
+                }
+            }
+            do {
+                let (data, response) = try await URLSession.shared.data(for: request)
+                var code: Int = LCEssentials.DEFAULT_ERROR_CODE
+                if let httpResponse = response as? HTTPURLResponse {
+                    code = httpResponse.statusCode
+                }
+                
+                var error: Error?
+                
+                if code < 199 && code > 299 {
+                    error = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN,
+                                    code: code,
+                                    userInfo: [NSLocalizedDescriptionKey: response.debugDescription])
+                }
+                // - Debug LOG
+                if debug {
+                    self.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
+                }
+                if error != nil {
+                    if persistConnection {
+                        printError(title: "INTERNET CONNECTION ERROR", msg: "WILL PERSIST")
+                        let persist: T = try await self.resquest(params,
+                                                                 method,
+                                                                 jsonEncoding: jsonEncoding,
+                                                                 debug: debug,
+                                                                 persistConnection: persistConnection)
+                        return persist
+                    } else {
+                        if let error {
+                            throw error
+                        }
+                    }
+                } else {
+                    // - Check if is JSON result
+                    if let jsonString = String(data: data, encoding: .utf8) {
+                        return try JSONHelper<T>.decode(jsonString)
+                    }else{
+                        return try JSONHelper<T>.decode(data: data)
+                    }
+                }
+            } catch {
+                throw error
+            }
+        }
+        throw NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN,
+                      code: LCEssentials.DEFAULT_ERROR_CODE,
+                      userInfo: [NSLocalizedDescriptionKey: LCEssentials.DEFAULT_ERROR_MSG])
+    }
 }
 
 extension Error {
