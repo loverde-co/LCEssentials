@@ -480,4 +480,16 @@ public struct JSONHelper<T: Codable> {
     public static func decode(fromURL url: URL) throws -> T {
         return try decode(data: try! Data(contentsOf: url))
     }
+    
+    public static func decode(dictionary: Any) throws -> T {
+        do {
+            let json = try JSONSerialization.data(withJSONObject: dictionary)
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            return try decoder.decode(T.self, from: json)
+        } catch {
+            printError(title: "JSONDecoder.decode<T: Codable>", msg: error, prettyPrint: true)
+            throw error
+        }
+    }
 }

@@ -48,7 +48,7 @@ extension JSONDecoder {
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             return try decoder.decode(T.self, from: json)
         } catch {
-            printError(title: "JSONDecoder.decode", msg: error, prettyPrint: true)
+            printError(title: "JSONDecoder.decode<T: Codable>", msg: error, prettyPrint: true)
             return nil
         }
     }

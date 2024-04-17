@@ -148,11 +148,12 @@ public struct API {
     public static func resquest<T: Codable>(_ params: [String: Any],
                                             _ method: httpMethod,
                                             jsonEncoding: Bool = true,
+                                            convertFromDictionary: Bool = false,
                                             debug: Bool = true,
                                             persistConnection: Bool = false) async throws -> T {
         
         if let urlReq = URL(string: url.replaceURL(params)) {
-            var request = URLRequest(url: urlReq, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 20)
+            var request = URLRequest(url: urlReq, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
             if method == .post {
                 var newParams = defaultParams
                 newParams += params
@@ -184,23 +185,32 @@ public struct API {
             }
             do {
                 let (data, response) = try await URLSession.shared.data(for: request)
+                
                 var code: Int = LCEssentials.DEFAULT_ERROR_CODE
-                if let httpResponse = response as? HTTPURLResponse {
-                    code = httpResponse.statusCode
-                }
-                
-                var error: Error?
-                
-                if code < 199 && code > 299 {
-                    error = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN,
-                                    code: code,
-                                    userInfo: [NSLocalizedDescriptionKey: response.debugDescription])
-                }
-                // - Debug LOG
-                if debug {
-                    self.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
-                }
-                if error != nil {
+                let httpResponse = response as? HTTPURLResponse ?? HTTPURLResponse()
+                code = httpResponse.statusCode
+                let error = URLError(URLError.Code(rawValue: code))
+                switch code {
+                case 200..<300:
+                    // - Debug LOG
+                    if debug {
+                        self.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
+                    }
+                    
+                    // - Check if is JSON result
+                    if convertFromDictionary {
+                        return try JSONHelper<T>.decode(dictionary: [String: Any].self)
+                    }
+                    if let jsonString = String(data: data, encoding: .utf8) {
+                        return try JSONHelper<T>.decode(jsonString)
+                    }else{
+                        return try JSONHelper<T>.decode(data: data)
+                    }
+                case 400..<500:
+                    // - Debug LOG
+                    if debug {
+                        self.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
+                    }
                     if persistConnection {
                         printError(title: "INTERNET CONNECTION ERROR", msg: "WILL PERSIST")
                         let persist: T = try await self.resquest(params,
@@ -210,17 +220,14 @@ public struct API {
                                                                  persistConnection: persistConnection)
                         return persist
                     } else {
-                        if let error {
-                            throw error
-                        }
+                        throw error
                     }
-                } else {
-                    // - Check if is JSON result
-                    if let jsonString = String(data: data, encoding: .utf8) {
-                        return try JSONHelper<T>.decode(jsonString)
-                    }else{
-                        return try JSONHelper<T>.decode(data: data)
+                default:
+                    // - Debug LOG
+                    if debug {
+                        self.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
                     }
+                    throw error
                 }
             } catch {
                 throw error
@@ -246,8 +253,6 @@ extension API {
         ///
          print("\n<=========================  INTERNET CONNECTION - START =========================>")
          printLog(title: "DATE AND TIME", msg: Date().debugDescription)
-         //printLog(title: "FUNCTION", msg: function)
-         //printLog(title: "FILE", msg: LCEssentials.sourceFileName(filePath: file)+" LINE: \(line) COLUMN: \(column)")
          printLog(title: "METHOD", msg: method.rawValue)
          printLog(title: "REQUEST", msg: String(describing: request))
          printLog(title: "HEADERS", msg: request.allHTTPHeaderFields?.debugDescription ?? "")
@@ -287,7 +292,7 @@ extension API {
                  printError(title: "RESPONSE ERROR BG SESSION DISCONNECTED", msg: "DESCRICAO: \(error.localizedDescription)")
                  
              } else {
-                 printError(title: "ERROR GENERAL", msg: error.localizedDescription)
+                 printError(title: "GENERAL", msg: error.localizedDescription)
                  
              }
          }else if let data = data, statusCode != 200 {

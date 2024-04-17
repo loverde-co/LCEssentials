@@ -321,6 +321,14 @@ public extension String {
         return Int(self)
     }
     
+    var float: Float? {
+        return Float(self)
+    }
+    
+    var double: Double? {
+        return Double(self)
+    }
+    
     /// NSString from a string.
     var nsString: NSString {
         return NSString(string: self)
@@ -333,7 +341,7 @@ public extension String {
     
     /// Loverde Co.: Replace Dictionaryes parameters to URL String.
     @discardableResult
-    func replaceURL(_ withDict: [String:Any]) -> String {
+    func replaceURL(_ withDict: [String: Any]) -> String {
         var strOutput = self
         for (key, Value) in withDict {
             strOutput = strOutput.replacingOccurrences(of: "{\(key)}", with: "\(Value)")
