@@ -66,6 +66,7 @@
 		A5AF21FF2A94D3E39E61E78FB071F3C3 /* LCEssentials+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811523CA1416B1E7F365683355F51F19 /* LCEssentials+Date.swift */; };
 		A93934B45F51011B749B8641A5A9FABB /* LCEssentials+UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1913BEF758C280C6807A53D0AC4288 /* LCEssentials+UIDevice.swift */; };
 		AE2A523FD574D733B659E018098BDFB8 /* LCEssentials+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8869A989D297D00C1F95DEEB325C5 /* LCEssentials+Dictionary.swift */; };
+		B1C5F4432BEFDE2700343136 /* LCEssentials+NSError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C5F4422BEFDE2700343136 /* LCEssentials+NSError.swift */; };
 		B644DFEFA350D3F21724DDDCABE0846D /* LCEssentials+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D99247D9BC0AEF68889E5847A4EB305 /* LCEssentials+UILabel.swift */; };
 		BC68EBDED47EE331A6C1EA82696089ED /* LCEssentials+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436BCA9F22B1442F359A7251C32C16BA /* LCEssentials+Comparable.swift */; };
 		BE9FBF9674803D50B506C954210DD9D0 /* LCEssentials+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428FE5691046F034D13FB8C845C9AF6A /* LCEssentials+API.swift */; };
@@ -113,7 +114,7 @@
 		40768AC55331EB106FE5CA755BE572CA /* LCEssentials.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = LCEssentials.debug.xcconfig; sourceTree = "<group>"; };
 		428FE5691046F034D13FB8C845C9AF6A /* LCEssentials+API.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+API.swift"; sourceTree = "<group>"; };
 		436BCA9F22B1442F359A7251C32C16BA /* LCEssentials+Comparable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Comparable.swift"; sourceTree = "<group>"; };
-		4468D35A74F99D59F7208EFE77EBF5F0 /* LICENSE.md */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE.md; sourceTree = "<group>"; };
+		4468D35A74F99D59F7208EFE77EBF5F0 /* LICENSE.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		44A57774E5804C1CB31CF143BEEFA689 /* LCEssentials+NSLayoutConstraints.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+NSLayoutConstraints.swift"; sourceTree = "<group>"; };
 		4AF71A50430ABB4421DCADF525E872DC /* LCEssentials+Int.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Int.swift"; sourceTree = "<group>"; };
 		4E1913BEF758C280C6807A53D0AC4288 /* LCEssentials+UIDevice.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UIDevice.swift"; sourceTree = "<group>"; };
@@ -135,7 +136,7 @@
 		77131D33EA8A5E38DF38E3D09993A0D9 /* LCEssentials+UIStackView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UIStackView.swift"; sourceTree = "<group>"; };
 		7D92B1F042C02D737B5152947412C315 /* LCEssentials+Float.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Float.swift"; sourceTree = "<group>"; };
 		7FD1D7A0CDBC415924F5AB0708B7C9D9 /* LCEssentials+EncodableDecodable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+EncodableDecodable.swift"; sourceTree = "<group>"; };
-		80365D4DB0483B0AC811357651B70C0D /* LCEssentials.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = LCEssentials.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		80365D4DB0483B0AC811357651B70C0D /* LCEssentials.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = LCEssentials.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		811523CA1416B1E7F365683355F51F19 /* LCEssentials+Date.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Date.swift"; sourceTree = "<group>"; };
 		846EE8D9E70BB1E67ED62335A47FD26D /* Pods-LCEssentialsExample-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-LCEssentialsExample-umbrella.h"; sourceTree = "<group>"; };
 		8829A8F11290EC1A563168DD025FF9FF /* LCEssentials-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LCEssentials-prefix.pch"; sourceTree = "<group>"; };
@@ -144,13 +145,14 @@
 		8FECB843A2334B30307F48996E1BDA35 /* LCEssentials+Array.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Array.swift"; sourceTree = "<group>"; };
 		9111A34D899C682845ECD08BF59FCEBC /* LCEssentials+UITextField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UITextField.swift"; sourceTree = "<group>"; };
 		9BEE3C9E8C45C8E2DF702F39E9EB0113 /* LCEssentials+ReachabilityManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+ReachabilityManager.swift"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A1C1E24D85072C3B5A6577378564212E /* LCEssentials+Bool.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Bool.swift"; sourceTree = "<group>"; };
 		AAC844F0B81D8840416E7AE3E897729E /* LCEssentials+CGFloat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+CGFloat.swift"; sourceTree = "<group>"; };
 		AAF1013E6983536EF5148BFD70F5807A /* LCEssentials */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = LCEssentials; path = LCEssentials.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB1115E0156FC2200F36DC005E6D8C5C /* Pods-LCEssentialsExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LCEssentialsExample.debug.xcconfig"; sourceTree = "<group>"; };
 		AC2D99281AC4D5FC721CA34E87E2908A /* Pods-LCEssentialsExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LCEssentialsExample-dummy.m"; sourceTree = "<group>"; };
 		AF025927759869CC5FD418A31C266047 /* LCEssentials+UserDefaults.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UserDefaults.swift"; sourceTree = "<group>"; };
+		B1C5F4422BEFDE2700343136 /* LCEssentials+NSError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+NSError.swift"; sourceTree = "<group>"; };
 		B3308E3CC2C4BE34D376B75B2F66C132 /* LCEssentials-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LCEssentials-umbrella.h"; sourceTree = "<group>"; };
 		B5EE5931A68D35189A7F08191EDA2FFE /* LCEssentials+BidirectionalCollection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+BidirectionalCollection.swift"; sourceTree = "<group>"; };
 		B7A027C2A76221435DA48E8DF0189BAC /* LCEssentials+SignedNumeric.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+SignedNumeric.swift"; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 				4AF71A50430ABB4421DCADF525E872DC /* LCEssentials+Int.swift */,
 				080FC2F108AD2150BA0C5F75549BC770 /* LCEssentials+LosslessStringConvertible.swift */,
 				DE68C5EFEF305798BD4669178F5E2398 /* LCEssentials+NSAttributedString.swift */,
+				B1C5F4422BEFDE2700343136 /* LCEssentials+NSError.swift */,
 				44A57774E5804C1CB31CF143BEEFA689 /* LCEssentials+NSLayoutConstraints.swift */,
 				BAC88D98958881C2A6985B693198C9C6 /* LCEssentials+NSMutableAttributedString.swift */,
 				E2ADDFB2BE28CB373C87B2F60567A767 /* LCEssentials+NSString.swift */,
@@ -565,6 +568,7 @@
 				8C107CD0C8AA544931E5E2AE8EE880B3 /* LCEssentials+UIScrollView.swift in Sources */,
 				6573E33946E7F86CDABA82B9D55EF8F2 /* LCEssentials+UIStackView.swift in Sources */,
 				2114F05C4A6D1CE6C2FE50A909846146 /* LCEssentials+UITabBarController.swift in Sources */,
+				B1C5F4432BEFDE2700343136 /* LCEssentials+NSError.swift in Sources */,
 				E11817A36FECE16F69AF2F533580E74C /* LCEssentials+UITableView.swift in Sources */,
 				2358EB09FB0CCC48952AD3E90FC0C2D5 /* LCEssentials+UITapGestureRecognizer.swift in Sources */,
 				91AF747B1427DA2142FEA98E7EC02E19 /* LCEssentials+UITextField.swift in Sources */,

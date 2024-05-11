@@ -72,6 +72,22 @@ public extension Int {
         return CGFloat(self)
     }
     #endif
+    
+    var satsToBTC: Double {
+        return (self / 100_000_000).double
+    }
+    
+    var convertToBTC: Double {
+        return satsToBTC
+    }
+    
+    var toBTC: Double {
+        return satsToBTC
+    }
+    
+    var timestampToDate: Date {
+        return Date(timeIntervalSince1970: TimeInterval(self))
+    }
 
     /// String formatted for values over ±1000 (example: 1k, -2k, 100k, 1kk, -5kk..).
     var kFormatted: String {

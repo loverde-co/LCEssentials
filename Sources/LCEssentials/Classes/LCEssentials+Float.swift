@@ -46,6 +46,18 @@ public extension Float {
     }
 #endif
     
+    var satsToBTC: Double {
+        return (self / 100_000_000).double
+    }
+    
+    var convertToBTC: Double {
+        return satsToBTC
+    }
+    
+    var toBTC: Double {
+        return satsToBTC
+    }
+    
     /// Rounds the double to decimal places value
     func rounded(toPlaces places:Int) -> Float {
         let divisor = pow(10.0, Float(places))

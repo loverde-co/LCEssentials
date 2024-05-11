@@ -238,6 +238,17 @@ public extension UIView {
         return views
     }
     
+    func findAView<T: UIView>(_ ofType: T.Type) -> T? {
+        if let finded = subviews.first(where: { $0 is T }) as? T {
+            return finded
+        } else {
+            for view in subviews {
+                return view.findAView(ofType)
+            }
+        }
+        return nil
+    }
+    
     @discardableResult
     func height(size: CGFloat) -> NSLayoutConstraint {
         

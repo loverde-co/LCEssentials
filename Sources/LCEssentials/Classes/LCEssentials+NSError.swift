@@ -1,5 +1,5 @@
 //  
-// Copyright (c) 2023 Loverde Co.
+// Copyright (c) 2024 Loverde Co.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,58 +20,22 @@
 // THE SOFTWARE.
  
 
-#if canImport(CoreGraphics)
-import CoreGraphics
-#endif
+import Foundation
 
-#if os(macOS) || os(iOS)
-import Darwin
-#elseif os(Linux)
-import Glibc
-#endif
-
-// MARK: - Properties
-
-public extension Double {
-    
-    var int: Int {
-        return Int(self)
+extension NSError {
+    public static func createErrorWith(code: Int, description: String, reasonForError: String) -> NSError {
+        let userInfo: [String : Any] =
+        [
+            NSLocalizedDescriptionKey :  NSLocalizedString("Generic Error",
+                                                           value: description,
+                                                           comment: "") ,
+            NSLocalizedFailureReasonErrorKey : NSLocalizedString("Generic Error",
+                                                                 value: reasonForError,
+                                                                 comment: "")
+        ]
+        
+        return NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN,
+                       code: code,
+                       userInfo: userInfo)
     }
-    
-    var float: Float {
-        return Float(self)
-    }
-
-    #if canImport(CoreGraphics)
-    var cgFloat: CGFloat {
-        return CGFloat(self)
-    }
-    #endif
-    
-    var satsToBTC: Double {
-        return (self / 100_000_000)
-    }
-    
-    var convertToBTC: Double {
-        return satsToBTC
-    }
-    
-    var toBTC: Double {
-        return satsToBTC
-    }
-}
-
-// MARK: - Operators
-
-precedencegroup PowerPrecedence { higherThan: MultiplicationPrecedence }
-infix operator **: PowerPrecedence
-/// Value of exponentiation.
-///
-/// - Parameters:
-///   - lhs: base double.
-///   - rhs: exponent double.
-/// - Returns: exponentiation result (example: 4.4 ** 0.5 = 2.0976176963).
-public func ** (lhs: Double, rhs: Double) -> Double {
-    // http://nshipster.com/swift-operators/
-    return pow(lhs, rhs)
 }

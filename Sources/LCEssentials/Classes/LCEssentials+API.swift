@@ -194,16 +194,18 @@ public struct API {
                 case 200..<300:
                     // - Debug LOG
                     if debug {
-                        self.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
+                        self.displayLOG(method: method, request: request, data: data, statusCode: code, error: nil)
                     }
                     
                     // - Check if is JSON result
-                    if convertFromDictionary {
-                        return try JSONHelper<T>.decode(dictionary: [String: Any].self)
-                    }
                     if let jsonString = String(data: data, encoding: .utf8) {
                         return try JSONHelper<T>.decode(jsonString)
-                    }else{
+                    } else {
+                        do {
+                            return try JSONHelper<T>.decode(dictionary: [String: Any].self)
+                        } catch {
+                            printError(title: "PARSE DICT", msg: error)
+                        }
                         return try JSONHelper<T>.decode(data: data)
                     }
                 case 400..<500:

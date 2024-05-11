@@ -22,9 +22,18 @@
 
 import Foundation
 import CryptoKit
+import CommonCrypto
 
 
 public extension Data {
+    
+    var prettyJson: String? {
+        guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
+              let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]),
+              let prettyPrintedString = String(data: data, encoding:.utf8) else { return nil }
+        
+        return prettyPrintedString
+    }
     
     var toDictionay: Dictionary<String, Any>? {
         do {
@@ -33,6 +42,49 @@ public extension Data {
             print(error.localizedDescription)
             return nil
         }
+    }
+    
+    init?(hexString: String) {
+        let cleanHex = hexString.replacingOccurrences(of: " ", with: "")
+        let length = cleanHex.count / 2
+        var data = Data(capacity: length)
+        
+        for i in 0..<length {
+            let start = cleanHex.index(cleanHex.startIndex, offsetBy: i*2)
+            let end = cleanHex.index(start, offsetBy: 2)
+            guard let byte = UInt8(cleanHex[start..<end], radix: 16) else {
+                return nil
+            }
+            data.append(byte)
+        }
+        
+        self = data
+    }
+    
+    func hmacSHA512(key: Data) -> Data {
+        var hmac = HMAC<SHA512>.init(key: SymmetricKey(data: key))
+        hmac.update(data: self)
+        return Data(hmac.finalize())
+    }
+    
+    func sha512() -> Data {
+        var digest = [UInt8](repeating: 0, count: Int(CC_SHA512_DIGEST_LENGTH))
+        self.withUnsafeBytes {
+            _ = CC_SHA512($0.baseAddress, CC_LONG(self.count), &digest)
+        }
+        return Data(digest)
+    }
+    
+    func xor(with other: Data) -> Data {
+        return Data(zip(self, other).map { $0 ^ $1 })
+    }
+    
+    func sha256() -> Data {
+        var digest = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+        self.withUnsafeBytes {
+            _ = CC_SHA256($0.baseAddress, CC_LONG(self.count), &digest)
+        }
+        return Data(digest)
     }
     
     func object<T: Codable>() -> T? {
@@ -67,13 +119,5 @@ public extension Data {
         let digestData = Insecure.MD5.hash (data: messageData)
         let digestHex = String(digestData.map { String(format: "%02hhx", $0) }.joined().prefix(32))
         return Data(digestHex.utf8)
-    }
-    
-    var prettyJson: String? {
-        guard let object = try? JSONSerialization.jsonObject(with: self, options: []),
-              let data = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted]),
-              let prettyPrintedString = String(data: data, encoding:.utf8) else { return nil }
-        
-        return prettyPrintedString
     }
 }
