@@ -55,16 +55,16 @@ public final class LCSnackBarView: UIView {
     
     // MARK: - Private properties
     
-//    private lazy var containerStackView: UIStackView = {
-//        $0.axis = .horizontal
-//        $0.distribution = .fillProportionally
-//        $0.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-//        $0.isLayoutMarginsRelativeArrangement = true
-//        $0.translatesAutoresizingMaskIntoConstraints = false
-//        $0.borderColor = .red
-//        $0.borderWidth = 1
-//        return $0
-//    }(UIStackView())
+    private lazy var containerStackView: UIStackView = {
+        $0.axis = .horizontal
+        $0.distribution = .fillProportionally
+        $0.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.borderColor = .red
+        $0.borderWidth = 1
+        return $0
+    }(UIStackView())
     
     private lazy var descriptionLabel: UILabel = {
         $0.font = .systemFont(ofSize: 12, weight: .regular)
@@ -272,7 +272,7 @@ public extension LCSnackBarView {
                        delay: 0.6,
                        options: .curveEaseInOut) { [weak self] in
             self?.layoutIfNeeded()
-            //self?.containerStackView.layoutIfNeeded()
+            self?.containerStackView.layoutIfNeeded()
             self?.isHidden = false
             if self?._orientation == .top {
                 self?.frame.origin.y += (self?._height ?? 0) + distance
@@ -294,12 +294,12 @@ public extension LCSnackBarView {
     private func closeSnackBar(controller: UIViewController, completion: @escaping (() -> Void)) {
         let distance = CGFloat(_style == .rounded ? (_orientation == .top ? UIDevice.topNotch : UIDevice.bottomNotch) : 0)
         layoutIfNeeded()
-        //containerStackView.layoutIfNeeded()
+        containerStackView.layoutIfNeeded()
         UIView.animate(withDuration: 0.6,
                        delay: 0.6,
                        options: .curveEaseInOut) { [weak self] in
             self?.layoutIfNeeded()
-            //self?.containerStackView.layoutIfNeeded()
+            self?.containerStackView.layoutIfNeeded()
             if self?._orientation == .top {
                 self?.frame.origin.y -= (self?._height ?? 0) + distance
             } else {
@@ -323,27 +323,20 @@ public extension LCSnackBarView {
     
     private func addComponentsAndConstraints() {
         
-//        // MARK: - Add Subviews
-//      
-        addSubview(descriptionLabel, translatesAutoresizingMaskIntoConstraints: false)
-//        containerStackView
-//            .addArrangedSubviews([descriptionLabel])
-//        
-//        addSubviews([containerStackView])
-//        
-//        // MARK: - Add Constraints
-//        
-        descriptionLabel
+        // MARK: - Add Subviews
+        
+        containerStackView
+            .addArrangedSubviews([descriptionLabel])
+        
+        addSubviews([containerStackView])
+        
+        // MARK: - Add Constraints
+        
+        containerStackView
             .setConstraintsTo(self, .top, 10)
             .setConstraints(.leading, 10)
             .setConstraints(.trailing, -10)
             .setConstraints(.bottom, -10)
-        
-//        containerStackView
-//            .setConstraintsTo(self, .top, 10, true)
-//            .setConstraints(.leading, 10)
-//            .setConstraints(.trailing, -10)
-//            .setConstraints(.bottom, -10, true)
     }
 }
 
