@@ -144,7 +144,7 @@ public class HUDAlertViewController: UIViewController {
                     $0.isExclusiveTouch = true
                     $0.isUserInteractionEnabled = true
                     $0.cornerRadius = 5
-                    $0.height(size: 47.0)
+                    $0.setHeight(size: 47.0)
                     $0.addTarget(self, action: #selector(self.actionButton(sender:)), for: .touchUpInside)
                     return $0
                 }(UIButton(type: .custom))

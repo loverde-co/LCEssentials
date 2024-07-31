@@ -36,9 +36,9 @@ public enum httpMethod: String {
 }
 /// Loverde Co.: API generic struct for simple requests
 public struct API {
-    static let defaultError = NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN,
-                                      code: LCEssentials.DEFAULT_ERROR_CODE,
-                                      userInfo: [NSLocalizedDescriptionKey: LCEssentials.DEFAULT_ERROR_MSG])
+    static let defaultError = NSError.createErrorWith(code: LCEssentials.DEFAULT_ERROR_CODE,
+                                                      description: LCEssentials.DEFAULT_ERROR_MSG,
+                                                      reasonForError: LCEssentials.DEFAULT_ERROR_MSG)
     
     public static var persistConnectionDelay: Double = 3
     public static var headers: [String: String] = [:]
@@ -199,14 +199,15 @@ public struct API {
                     
                     // - Check if is JSON result
                     if let jsonString = String(data: data, encoding: .utf8) {
-                        return try JSONHelper<T>.decode(jsonString)
+                        let outPut: T = try JSONDecoder.decode(jsonString)
+                        return outPut
                     } else {
                         do {
-                            return try JSONHelper<T>.decode(dictionary: [String: Any].self)
+                            return try JSONDecoder.decode<T>(dictionary: [String: Any].self)
                         } catch {
                             printError(title: "PARSE DICT", msg: error)
                         }
-                        return try JSONHelper<T>.decode(data: data)
+                        return try JSONDecoder.decode<T>(data: data)
                     }
                 case 400..<500:
                     // - Debug LOG
@@ -235,9 +236,7 @@ public struct API {
                 throw error
             }
         }
-        throw NSError(domain: LCEssentials.DEFAULT_ERROR_DOMAIN,
-                      code: LCEssentials.DEFAULT_ERROR_CODE,
-                      userInfo: [NSLocalizedDescriptionKey: LCEssentials.DEFAULT_ERROR_MSG])
+        throw defaultError
     }
 }
 
@@ -275,27 +274,27 @@ extension API {
          }
          //
          if let error = error {
-             if error.statusCode == NSURLErrorTimedOut {
+             switch error.statusCode {
+             case NSURLErrorTimedOut:
                  printError(title: "RESPONSE ERROR TIMEOUT", msg: "DESCRICAO: \(error.localizedDescription)")
                  
-             } else if error.statusCode == NSURLErrorNotConnectedToInternet {
+             case NSURLErrorNotConnectedToInternet:
                  printError(title: "RESPONSE ERROR NO INTERNET", msg: "DESCRICAO: \(error.localizedDescription)")
                  
-             } else if error.statusCode == NSURLErrorNetworkConnectionLost {
+             case NSURLErrorNetworkConnectionLost:
                  printError(title: "RESPONSE ERROR CONNECTION LOST", msg: "DESCRICAO: \(error.localizedDescription)")
                  
-             } else if error.statusCode == NSURLErrorCancelledReasonUserForceQuitApplication {
+             case NSURLErrorCancelledReasonUserForceQuitApplication:
                  printError(title: "RESPONSE ERROR APP QUIT", msg: "DESCRICAO: \(error.localizedDescription)")
                  
-             } else if error.statusCode == NSURLErrorCancelledReasonBackgroundUpdatesDisabled {
+             case NSURLErrorCancelledReasonBackgroundUpdatesDisabled:
                  printError(title: "RESPONSE ERROR BG DISABLED", msg: "DESCRICAO: \(error.localizedDescription)")
                  
-             } else if error.statusCode == NSURLErrorBackgroundSessionWasDisconnected {
+             case NSURLErrorBackgroundSessionWasDisconnected:
                  printError(title: "RESPONSE ERROR BG SESSION DISCONNECTED", msg: "DESCRICAO: \(error.localizedDescription)")
                  
-             } else {
+             default:
                  printError(title: "GENERAL", msg: error.localizedDescription)
-                 
              }
          }else if let data = data, statusCode != 200 {
              // - Check if is JSON result

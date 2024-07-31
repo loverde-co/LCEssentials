@@ -26,6 +26,11 @@ import Foundation
 import UIKit
 import QuartzCore
 
+public enum ToastPosition {
+    case top
+    case down
+}
+
 public extension UIViewController {
     
     var isVisible: Bool {
@@ -130,6 +135,38 @@ public extension UIViewController {
     /// Unassign as listener from all notifications.
     func removeNotificationsObserver() {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    func show(toastWith message: String,
+              font: UIFont = UIFont.systemFont(ofSize: 12),
+              toastPosition: ToastPosition,
+              backgroundColor: UIColor = .black,
+              textColor: UIColor = .white,
+              duration: TimeInterval = 3.0) {
+
+        let yPostition = toastPosition == .top ? (UIDevice.hasNotch ? 44 : 24) : self.view.frame.size.height - 44 - 16//margin
+
+        let frame = CGRect(x: 30,
+                           y: yPostition,
+                           width: UIScreen.main.bounds.width - 60,
+                           height: 44)
+
+        let toast = UILabel(frame: frame)
+        toast.backgroundColor = backgroundColor.withAlphaComponent(0.7)
+        toast.textColor = textColor
+        toast.textAlignment = .center;
+        toast.font = font
+        toast.text = message
+        toast.alpha = 1.0
+        toast.layer.cornerRadius = 10;
+        toast.clipsToBounds  =  true
+        self.view.addSubview(toast)
+
+        UIView.animate(withDuration: duration, delay: 4, options: .curveEaseInOut, animations: {
+            toast.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toast.removeFromSuperview()
+        })
     }
 }
 #endif

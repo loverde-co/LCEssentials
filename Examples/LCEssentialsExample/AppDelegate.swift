@@ -21,15 +21,35 @@
  
 
 import UIKit
-//import LCEssentials
+import LCEssentials
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    var window: UIWindow?
     var protectView: UIView = UIView()
 
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        if #available(iOS 13.0, *) {
+            // In iOS 13 setup is done in SceneDelegate
+        } else {
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window?.frame = UIScreen.main.bounds
+            let navigationController = UINavigationController(rootViewController: ViewController())
+            window?.rootViewController = navigationController
+        }
+        
+        return true
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        if #available(iOS 13.0, *) {
+            // In iOS 13 setup is done in SceneDelegate
+        } else {
+            window?.makeKeyAndVisible()
+        }
         
         return true
     }

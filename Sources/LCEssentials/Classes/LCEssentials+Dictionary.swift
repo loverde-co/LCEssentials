@@ -138,7 +138,7 @@ public extension Dictionary {
     /// - returns: Object: Codable/Decodable
     func toObjetct<T: Codable>() -> T {
         let jsonString = self.convertToJSON
-        let output: T = try! JSONHelper.decode(jsonString)
+        let output: T = try! JSONDecoder.decode(jsonString)
         return output
     }
 

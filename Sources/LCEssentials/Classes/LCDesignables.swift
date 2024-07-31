@@ -117,8 +117,8 @@ public class RotatingCircularGradientProgressBar: UIView {
 //MARK: - UIPageControll
 @IBDesignable open class UIPageControlCustom: UIPageControl {
     
-    private var color: UIColor!
-    private var size: CGFloat! // 7.0 is great for border
+    public var color: UIColor = .black
+    public var size: CGFloat = 7.0
     
     open var borderSize: CGFloat = 0.0 {
         didSet {
@@ -128,63 +128,6 @@ public class RotatingCircularGradientProgressBar: UIView {
                 self.pageIndicatorTintColor = UIColor.init(patternImage: image!)
             }
         }
-    }
-}
-
-//MARK: - UILabel
-@IBDesignable open class CustomUILabel: UILabel {
-    var topInset: CGFloat = 0.0
-    var bottomInset: CGFloat = 0.0
-    var leftInset: CGFloat = 0.0
-    var rightInset: CGFloat = 0.0
-
-    open override func drawText(in rect: CGRect) {
-        let insets = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
-        var newRect = rect
-        if let stringText = text {
-            let stringTextAsNSString = stringText as NSString
-            let labelStringSize = stringTextAsNSString.boundingRect(with: CGSize(width: self.frame.width,height: CGFloat.greatestFiniteMagnitude),
-                                                                    options: NSStringDrawingOptions.usesLineFragmentOrigin,
-                                                                    attributes: [NSAttributedString.Key.font: font!],
-                                                                    context: nil).size
-            newRect = CGRect(x:0,y: 0,width: self.frame.width, height:ceil(labelStringSize.height))
-        
-        }
-        super.drawText(in: newRect.inset(by: insets))
-    }
-
-    open override var intrinsicContentSize: CGSize {
-        let size = super.intrinsicContentSize
-        return CGSize(width: size.width + leftInset + rightInset,
-                      height: size.height + topInset + bottomInset)
-    }
-
-    open override var bounds: CGRect {
-        didSet {
-            // ensures this works within stack views if multi-line
-            preferredMaxLayoutWidth = bounds.width - (leftInset + rightInset)
-        }
-    }
-    
-    override open func prepareForInterfaceBuilder() {
-        super.prepareForInterfaceBuilder()
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.black.cgColor
-    }
-    
-    open var strikeThroughString: String = "" {
-        didSet {
-            self.attributedText = makeStrikeThorugh(string: self.text! as NSString, term: (strikeThroughString as NSString))
-        }
-    }
-    
-    func makeStrikeThorugh(string: NSString, term: NSString) -> NSAttributedString {
-        let output = NSMutableAttributedString(string: String(string))
-        let underlineRange = string.range(of: String(term))
-        output.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 0, range: NSMakeRange(0, string.length))
-        output.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: underlineRange)
-        
-        return output
     }
 }
 

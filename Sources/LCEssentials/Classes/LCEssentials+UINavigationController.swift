@@ -40,6 +40,19 @@ public extension UINavigationController {
         CATransaction.commit()
     }
     
+    /// Pop To a ViewController with completion handler.
+    ///
+    /// - Parameters:
+    ///   - animated: Set this value to true to animate the transition (default is true).
+    ///   - completion: optional completion handler (default is nil).
+    func popToViewController(_ viewController: UIViewController, animated: Bool = true, _ completion: (() -> Void)? = nil) {
+        // https://github.com/cotkjaer/UserInterface/blob/master/UserInterface/UIViewController.swift
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        popToViewController(viewController, animated: animated)
+        CATransaction.commit()
+    }
+    
     /// Push ViewController with completion handler.
     ///
     /// - Parameters:

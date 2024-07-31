@@ -25,7 +25,7 @@ import Foundation
 public extension NSString {
 
     var string: String? {
-        return self as? String
+        return String(describing: self)
     }
     
     func randomAlphaNumericString(_ length: Int = 8) -> String {

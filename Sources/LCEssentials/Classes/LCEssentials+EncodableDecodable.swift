@@ -41,7 +41,34 @@ public extension Encodable {
 
 extension JSONDecoder {
     
-    public static func decode<T: Codable>(dictionary: Any) -> T? {
+    /// - LoverdeCo: Decode JSON Data to Object
+    ///
+    /// - Parameter data: Data
+    /// - returns: Object: Codable/Decodable
+    public static func decode<T: Codable>(data: Data) throws -> T {
+        return try JSONDecoder().decode(T.self, from: data)
+    }
+    
+    /// - LoverdeCo: Decode JSON String to Object
+    ///
+    /// - Parameter json: String
+    /// - returns: Object: Codable/Decodable
+    public static func decode<T: Codable>(_ json: String, using encoding: String.Encoding = .utf8) throws -> T {
+        guard let data = json.data(using: encoding) else {
+            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        }
+        return try decode(data: data)
+    }
+    
+    /// - LoverdeCo: Decode JSON URL to Object
+    ///
+    /// - Parameter url: URL
+    /// - returns: Object: Codable/Decodable
+    public static func decode<T: Codable>(fromURL url: URL) throws -> T {
+        return try decode(data: try! Data(contentsOf: url))
+    }
+    
+    public static func decode<T: Codable>(dictionary: Any) throws -> T {
         do {
             let json = try JSONSerialization.data(withJSONObject: dictionary)
             let decoder = JSONDecoder()
@@ -49,7 +76,7 @@ extension JSONDecoder {
             return try decoder.decode(T.self, from: json)
         } catch {
             printError(title: "JSONDecoder.decode<T: Codable>", msg: error, prettyPrint: true)
-            return nil
+            throw error
         }
     }
 }

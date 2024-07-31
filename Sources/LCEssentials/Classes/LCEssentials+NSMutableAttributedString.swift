@@ -24,10 +24,6 @@ import Foundation
 #if os(iOS) || os(macOS)
 import UIKit
 
-public enum AttributtedAlignment {
-    case center, left, right
-}
-
 public extension NSMutableAttributedString {
     @discardableResult func customize(_ text: String,
                                       withFont font: UIFont,
@@ -83,9 +79,25 @@ public extension NSMutableAttributedString {
         }
         return self
     }
+    
+    @discardableResult
+    func strikethrough(_ text: String, changeCurrentText: Bool = false) -> Self {
+        let attrs: [NSAttributedString.Key: Any] = [
+            .strikethroughStyle: NSUnderlineStyle.single.rawValue,
+        ]
+        if changeCurrentText {
+            self.addAttributes(attrs, range: self.mutableString.range(of: text))
+        } else {
+            let customStr = NSMutableAttributedString(string: "\(text)", attributes: attrs)
+            self.append(customStr)
+        }
+        
+        return self
+    }
 
     @discardableResult func linkTouch(_ text: String,
-                                      url: String, withFont font: UIFont,
+                                      url: String, 
+                                      withFont font: UIFont,
                                       color: UIColor = UIColor.blue,
                                       changeCurrentText: Bool = false) -> NSMutableAttributedString {
         

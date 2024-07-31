@@ -78,10 +78,10 @@ public extension UIStackView {
         spaceView.backgroundColor = backgroundColor
         spaceView.translatesAutoresizingMaskIntoConstraints = false
         if let height = height {
-            spaceView.height(size: height)
+            spaceView.setHeight(size: height)
         }
         if let width = width {
-            spaceView.width(size: width)
+            spaceView.setWidth(size: width)
         }
         addArrangedSubview(spaceView)
     }

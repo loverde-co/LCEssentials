@@ -154,14 +154,6 @@ public extension UIImageView {
         task.resume()
     }
     
-    @IBInspectable var imageColor: UIColor! {
-        set {
-            super.tintColor = newValue
-        }
-        get {
-            return super.tintColor
-        }
-    }
     /// SwifterSwift: Make image view blurry
     ///
     /// - Parameter style: UIBlurEffectStyle (default is .light).

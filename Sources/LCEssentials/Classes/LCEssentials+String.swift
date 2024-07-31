@@ -711,6 +711,15 @@ public extension String {
         return self.replacingCharacters(in: start ..< end, with: replacementString)
     }
     
+    func findAndReplace<Target, Replacement>(from this: Target, to that: Replacement) -> String
+    where Target : StringProtocol, Replacement : StringProtocol {
+        return self.replacingOccurrences(of: this, with: that)
+    }
+    
+    func replace(from: String, to: String) -> String {
+        return self.findAndReplace(from: from, to: to)
+    }
+    
     func replacingLastOccurrenceOfString(_ searchString: String, with replacementString: String, caseInsensitive: Bool = true) -> String {
         let options: String.CompareOptions
         if caseInsensitive {

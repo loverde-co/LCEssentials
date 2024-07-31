@@ -66,16 +66,18 @@ public extension UIView {
         case bottom
         case leading
         case trailing
-        case height
-        case heightGreaterThanOrEqualTo
+        case heigth
         case width
         case centerX
         case centerY
         case bottomOf
         case leadingToTrailing
+        case leadingToTrailingGreaterThanOrEqualTo
         case trailingToLeading
+        case trailingToLeadingGreaterThanOrEqualTo
         case topGreaterThanOrEqualTo
         case bottomGreaterThanOrEqualTo
+        case bottomLessThanOrEqualTo
         case topToTopGreaterThanOrEqualTo
         case left
         case right
@@ -83,6 +85,15 @@ public extension UIView {
     
     static var className: String {
         return String(describing: self)
+    }
+    
+    var objectReference: Any? {
+        get { self.accessibilityElements?.first }
+        set {
+            if let value = newValue {
+                self.accessibilityElements = [value]
+            }
+        }
     }
     
     /// First width constraint for this view.
@@ -113,6 +124,14 @@ public extension UIView {
     /// First bottom constraint for this view.
     var bottomConstraint: NSLayoutConstraint? {
         findConstraint(attribute: .bottom, for: self)
+    }
+    
+    var centerYConstraints: NSLayoutConstraint? {
+        findConstraint(attribute: .centerY, for: self)
+    }
+    
+    var centerXConstraints: NSLayoutConstraint? {
+        findConstraint(attribute: .centerX, for: self)
     }
     
     var globalPoint: CGPoint? {
@@ -193,6 +212,18 @@ public extension UIView {
         return nil
     }
     
+    /// Loverde Co: Get view's absolute position
+    var absolutePosition: CGRect {
+        if #available(iOS 15, *), let window = UIApplication.shared.connectedScenes.compactMap({ ($0 as? UIWindowScene)?.keyWindow }).last {
+            return self.convert(self.bounds, to: window)
+        } else if #available(iOS 13, *), let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first {
+            return self.convert(self.bounds, to: window)
+        } else if let window = UIApplication.shared.keyWindow {
+            return self.convert(self.bounds, to: window)
+        }
+        return .zero
+    }
+    
     /// Loverde Co: transform UIView to UIImage
     func asImage() -> UIImage {
         if #available(iOS 10.0, *) {
@@ -209,15 +240,14 @@ public extension UIView {
         }
     }
     
-    func addSubview(_ subview: UIView, constraints: Bool = false) {
+    func addSubview(_ subview: UIView, translatesAutoresizingMaskIntoConstraints: Bool = false) {
         addSubview(subview)
-        subview.translatesAutoresizingMaskIntoConstraints = constraints
+        subview.translatesAutoresizingMaskIntoConstraints = translatesAutoresizingMaskIntoConstraints
     }
     
-    func addSubviews(_ subviews: [UIView], constraints: Bool = false) {
+    func addSubviews(_ subviews: [UIView], translatesAutoresizingMaskIntoConstraints: Bool = false) {
         for subview in subviews {
-            addSubview(subview)
-            subview.translatesAutoresizingMaskIntoConstraints = constraints
+            self.addSubview(subview, translatesAutoresizingMaskIntoConstraints: translatesAutoresizingMaskIntoConstraints)
         }
     }
     
@@ -238,7 +268,7 @@ public extension UIView {
         return views
     }
     
-    func findAView<T: UIView>(_ ofType: T.Type) -> T? {
+    func findAView<T>(_ ofType: T.Type) -> T? {
         if let finded = subviews.first(where: { $0 is T }) as? T {
             return finded
         } else {
@@ -250,8 +280,7 @@ public extension UIView {
     }
     
     @discardableResult
-    func height(size: CGFloat) -> NSLayoutConstraint {
-        
+    func setHeight(size: CGFloat) -> NSLayoutConstraint {
         let constraint: NSLayoutConstraint
         constraint = heightAnchor.constraint(equalToConstant: size)
         constraint.isActive = true
@@ -259,7 +288,7 @@ public extension UIView {
     }
     
     @discardableResult
-    func height(min: CGFloat) -> NSLayoutConstraint {
+    func setHeight(min: CGFloat) -> NSLayoutConstraint {
         let constraint: NSLayoutConstraint
         constraint = heightAnchor.constraint(greaterThanOrEqualToConstant: min)
         constraint.isActive = true
@@ -267,7 +296,7 @@ public extension UIView {
     }
     
     @discardableResult
-    func width(size: CGFloat) -> NSLayoutConstraint {
+    func setWidth(size: CGFloat) -> NSLayoutConstraint {
         let constraint: NSLayoutConstraint
         constraint = widthAnchor.constraint(equalToConstant: size)
         constraint.isActive = true
@@ -275,7 +304,7 @@ public extension UIView {
     }
     
     @discardableResult
-    func width(min: CGFloat) -> NSLayoutConstraint {
+    func setWidth(min: CGFloat) -> NSLayoutConstraint {
         let constraint: NSLayoutConstraint
         constraint = widthAnchor.constraint(greaterThanOrEqualToConstant: min)
         constraint.isActive = true
@@ -404,7 +433,7 @@ public extension UIView {
 
      :param: x CGFloat
      */
-    func setX(x:CGFloat) {
+    func setX(x: CGFloat) {
         var frame:CGRect = self.frame
         frame.origin.x = x
         self.frame = frame
@@ -414,7 +443,7 @@ public extension UIView {
 
      :param: y CGFloat
      */
-    func setY(y:CGFloat) {
+    func setY(y: CGFloat) {
         var frame:CGRect = self.frame
         frame.origin.y = y
         self.frame = frame
@@ -424,7 +453,7 @@ public extension UIView {
 
      :param: width CGFloat
      */
-    func setWidth(width:CGFloat) {
+    func setWidth(width: CGFloat) {
         var frame:CGRect = self.frame
         frame.size.width = width
         self.frame = frame
@@ -434,7 +463,7 @@ public extension UIView {
 
      :param: height CGFloat
      */
-    func setHeight(height:CGFloat) {
+    func setHeight(height: CGFloat) {
         var frame:CGRect = self.frame
         frame.size.height = height
         self.frame = frame
@@ -478,242 +507,188 @@ public extension UIView {
     
     /// Apply constraint to a View more easily.
     ///
-    ///        "MyView.setConstraints(AnotherView, applyAnchor: [(AnchorType.leading, 10.0), AnchorType.height, 0.0])"
-    ///        "MyView.setConstraints(ContainerView, applyAnchor: [(AnchorType.all, 0.0)])"
+    ///        "MyView.setConstraintsTo(parentView: AnotherView, anchorType: AnchorType.leading, value: 10.0)"
+    ///        "MyView.setConstraintsTo(parentView: AnotherView,
+    ///                              anchorType: AnchorType.leading,
+    ///                              value: 10.0)
+    ///                .setConstraintsTo(parentView: AnotherView,
+    ///                              anchorType: AnchorType.trailing,
+    ///                              value: -10.0)"
     ///
     /// - Parameters:
-    ///   - toView: The View you whant to constraint to.
-    ///   - applyAnchor: Array of ENUM AnchorType and constraint value (CGFloat) to apply to "toView"
+    ///   - parentView: The View you whant to constraint to.
+    ///   - anchorType: AnchorType you whant to apply"
+    ///   - value: CGFloat value for that constraints to
     ///   - safeArea: Bool in case you whant top and bottom to be applied to Safe Area Layout Guide. Default is FALSE
     /// - Returns:
     /// All active constraints you apply.
-    func setConstraints(_ toView: UIView,
-                        applyAnchor: [(anchor: AnchorType, constraint: CGFloat)],
-                        safeArea: Bool = false) {
-        applyAnchor.forEach { element in
-            switch element.anchor {
-            case .all:
-                if #available(iOS 11.0, *) {
-                    self.topAnchor.constraint(equalTo: (safeArea ? toView.safeAreaLayoutGuide.topAnchor : toView.topAnchor),
-                                              constant: element.constraint).isActive = true
-                } else {
-                    self.topAnchor.constraint(equalTo: toView.topAnchor,
-                                              constant: element.constraint).isActive = true
-                }
-                self.leadingAnchor.constraint(equalTo: toView.leadingAnchor,
-                                              constant: element.constraint).isActive = true
-                self.trailingAnchor.constraint(equalTo: toView.trailingAnchor,
-                                               constant: element.constraint).isActive = true
-                self.bottomAnchor.constraint(equalTo: toView.bottomAnchor,
-                                             constant: element.constraint).isActive = true
-            case .top:
-                if #available(iOS 11.0, *) {
-                    self.topAnchor.constraint(equalTo: (safeArea ? toView.safeAreaLayoutGuide.topAnchor : toView.topAnchor),
-                                              constant: element.constraint).isActive = true
-                } else {
-                    self.topAnchor.constraint(equalTo: toView.topAnchor,
-                                              constant: element.constraint).isActive = true
-                }
-                
-            case .bottom:
-                self.bottomAnchor.constraint(equalTo: toView.bottomAnchor,
-                                             constant: element.constraint).isActive = true
-                
-            case .bottomOf:
-                self.topAnchor.constraint(equalTo: toView.bottomAnchor,
-                                          constant: element.constraint).isActive = true
-                
-            case .leading:
-                self.leadingAnchor.constraint(equalTo: toView.leadingAnchor,
-                                              constant: element.constraint).isActive = true
-                
-            case .leadingToTrailing:
-                self.leadingAnchor.constraint(equalTo: toView.trailingAnchor,
-                                              constant: element.constraint).isActive = true
-                
-            case .trailing:
-                self.trailingAnchor.constraint(equalTo: toView.trailingAnchor,
-                                               constant: element.constraint).isActive = true
-                
-            case .trailingToLeading:
-                self.trailingAnchor.constraint(equalTo: toView.leadingAnchor,
-                                               constant: element.constraint).isActive = true
-                
-            case .height:
-                self.heightAnchor.constraint(equalTo: toView.heightAnchor,
-                                             constant: element.constraint).isActive = true
-                
-            case .heightGreaterThanOrEqualTo:
-                self.heightAnchor.constraint(greaterThanOrEqualToConstant: element.constraint).isActive = true
-                
-            case .width:
-                self.widthAnchor.constraint(equalTo: toView.widthAnchor,
-                                            constant: element.constraint).isActive = true
-                
-            case .centerX:
-                self.centerXAnchor.constraint(equalTo: toView.centerXAnchor,
-                                              constant: element.constraint).isActive = true
-                
-            case .centerY:
-                self.centerYAnchor.constraint(equalTo: toView.centerYAnchor,
-                                              constant: element.constraint).isActive = true
-                
-            case .topGreaterThanOrEqualTo:
-                self.topAnchor.constraint(greaterThanOrEqualTo: toView.bottomAnchor,
-                                          constant: element.constraint).isActive = true
-                
-            case .topToTopGreaterThanOrEqualTo:
-                self.topAnchor.constraint(greaterThanOrEqualTo: (safeArea ? toView.safeAreaLayoutGuide.topAnchor : toView.topAnchor),
-                                          constant: element.constraint).isActive = true
-                
-            case .bottomGreaterThanOrEqualTo:
-                self.bottomAnchor.constraint(greaterThanOrEqualTo: (safeArea ? toView.safeAreaLayoutGuide.bottomAnchor : toView.bottomAnchor),
-                                             constant: element.constraint).isActive = true
-                
-            case .left:
-                self.leftAnchor.constraint(equalTo: toView.leftAnchor,
-                                           constant: element.constraint).isActive = true
-                
-            case .right:
-                self.rightAnchor.constraint(equalTo: toView.rightAnchor,
-                                            constant: element.constraint).isActive = true
-            }
-        }
-    }
-    
-    /// Apply constraint to a View more easily.
     ///
-    ///        "MyView.applyConstraints(AnotherView, applyAnchor: (AnchorType.leading, 10.0))"
-    ///        "MyView.applyConstraints(ContainerView, applyAnchor: (AnchorType.all, 0.0))"
-    ///
-    /// - Parameters:
-    ///   - toView: The View you whant to constraint to.
-    ///   - applyAnchor: A tuple of enum AnchorType and CGFloat value to apply constraint to "toView"
-    ///   - safeArea: Bool in case you whant top and bottom to be applied to Safe Area Layout Guide. Default is FALSE
-    /// - Returns:
-    /// All active constraints you apply.
-    func setConstraints(_ toView: UIView,
-                        applyAnchor: (anchor: AnchorType, constraint: CGFloat),
-                        safeArea: Bool = false) {
-        
-        switch applyAnchor.anchor {
+    @discardableResult
+    func setConstraintsTo(parentView: UIView, anchorType: AnchorType, value: CGFloat, safeArea: Bool = false) -> Self {
+        self.objectReference = parentView
+        switch anchorType {
         case .all:
             let topAnchor: NSLayoutConstraint
             if #available(iOS 11.0, *) {
-                topAnchor = self.topAnchor.constraint(equalTo: (safeArea ? toView.safeAreaLayoutGuide.topAnchor : toView.topAnchor),
-                                                      constant: applyAnchor.constraint)
+                topAnchor = self.topAnchor.constraint(equalTo: (safeArea ? parentView.safeAreaLayoutGuide.topAnchor : parentView.topAnchor),
+                                                      constant: value)
                 topAnchor.identifier = "topAnchor"
                 topAnchor.isActive = true
             } else {
-                topAnchor = self.topAnchor.constraint(equalTo: toView.topAnchor,
-                                                      constant: applyAnchor.constraint)
+                topAnchor = self.topAnchor.constraint(equalTo: parentView.topAnchor,
+                                                      constant: value)
                 topAnchor.identifier = "topAnchor"
                 topAnchor.isActive = true
             }
-            self.leadingAnchor.constraint(equalTo: toView.leadingAnchor,
-                                          constant: applyAnchor.constraint).isActive = true
-            self.trailingAnchor.constraint(equalTo: toView.trailingAnchor,
-                                           constant: applyAnchor.constraint).isActive = true
-            self.bottomAnchor.constraint(equalTo: toView.bottomAnchor,
-                                         constant: applyAnchor.constraint).isActive = true
+            var negativeValue = value
+            switch value {
+            case _ where value < 0:
+                break
+            case 0:
+                break
+            case _ where value > 0:
+                negativeValue = -negativeValue
+            default:
+                break
+            }
+            self.leadingAnchor.constraint(equalTo: parentView.leadingAnchor,
+                                          constant: value).isActive = true
+            self.trailingAnchor.constraint(equalTo: parentView.trailingAnchor,
+                                           constant: negativeValue).isActive = true
+            self.bottomAnchor.constraint(equalTo: parentView.bottomAnchor,
+                                         constant: negativeValue).isActive = true
         case .top:
             if #available(iOS 11.0, *) {
-                self.topAnchor.constraint(equalTo: (safeArea ? toView.safeAreaLayoutGuide.topAnchor : toView.topAnchor),
-                                          constant: applyAnchor.constraint).isActive = true
+                self.topAnchor.constraint(equalTo: (safeArea ? parentView.safeAreaLayoutGuide.topAnchor : parentView.topAnchor),
+                                          constant: value).isActive = true
             } else {
-                self.topAnchor.constraint(equalTo: toView.topAnchor,
-                                          constant: applyAnchor.constraint).isActive = true
+                self.topAnchor.constraint(equalTo: parentView.topAnchor,
+                                          constant: value).isActive = true
             }
-            
         case .bottom:
-            self.bottomAnchor.constraint(equalTo: toView.bottomAnchor,
-                                         constant: applyAnchor.constraint).isActive = true
+            self.bottomAnchor.constraint(equalTo: parentView.bottomAnchor,
+                                         constant: value).isActive = true
             
         case .bottomOf:
-            self.topAnchor.constraint(equalTo: toView.bottomAnchor,
-                                      constant: applyAnchor.constraint).isActive = true
+            self.topAnchor.constraint(equalTo: parentView.bottomAnchor,
+                                      constant: value).isActive = true
             
         case .leading:
-            self.leadingAnchor.constraint(equalTo: toView.leadingAnchor,
-                                          constant: applyAnchor.constraint).isActive = true
+            self.leadingAnchor.constraint(equalTo: parentView.leadingAnchor,
+                                          constant: value).isActive = true
             
         case .leadingToTrailing:
-            self.leadingAnchor.constraint(equalTo: toView.trailingAnchor,
-                                          constant: applyAnchor.constraint).isActive = true
+            self.leadingAnchor.constraint(equalTo: parentView.trailingAnchor,
+                                          constant: value).isActive = true
+            
+        case .leadingToTrailingGreaterThanOrEqualTo:
+            self.leadingAnchor.constraint(greaterThanOrEqualTo: parentView.trailingAnchor,
+                                          constant: value).isActive = true
             
         case .trailing:
-            self.trailingAnchor.constraint(equalTo: toView.trailingAnchor,
-                                           constant: applyAnchor.constraint).isActive = true
+            self.trailingAnchor.constraint(equalTo: parentView.trailingAnchor,
+                                           constant: value).isActive = true
             
         case .trailingToLeading:
-            self.trailingAnchor.constraint(equalTo: toView.leadingAnchor,
-                                           constant: applyAnchor.constraint).isActive = true
+            self.trailingAnchor.constraint(equalTo: parentView.leadingAnchor,
+                                           constant: value).isActive = true
             
-        case .height:
-            self.heightAnchor.constraint(equalTo: toView.heightAnchor,
-                                         constant: applyAnchor.constraint).isActive = true
+        case .trailingToLeadingGreaterThanOrEqualTo:
+            self.trailingAnchor.constraint(greaterThanOrEqualTo: parentView.leadingAnchor,
+                                           constant: value).isActive = true
             
-        case .heightGreaterThanOrEqualTo:
-            self.heightAnchor.constraint(greaterThanOrEqualToConstant: applyAnchor.constraint).isActive = true
+        case .heigth:
+            self.heightAnchor.constraint(equalTo: parentView.heightAnchor,
+                                         constant: value).isActive = true
             
         case .width:
-            self.widthAnchor.constraint(equalTo: toView.widthAnchor,
-                                        constant: applyAnchor.constraint).isActive = true
+            self.widthAnchor.constraint(equalTo: parentView.widthAnchor,
+                                        constant: value).isActive = true
             
         case .centerX:
-            self.centerXAnchor.constraint(equalTo: toView.centerXAnchor,
-                                          constant: applyAnchor.constraint).isActive = true
+            self.centerXAnchor.constraint(equalTo: parentView.centerXAnchor,
+                                          constant: value).isActive = true
             
         case .centerY:
-            self.centerYAnchor.constraint(equalTo: toView.centerYAnchor,
-                                          constant: applyAnchor.constraint).isActive = true
+            self.centerYAnchor.constraint(equalTo: parentView.centerYAnchor,
+                                          constant: value).isActive = true
             
         case .topGreaterThanOrEqualTo:
-            self.topAnchor.constraint(greaterThanOrEqualTo: toView.bottomAnchor,
-                                      constant: applyAnchor.constraint).isActive = true
+            self.topAnchor.constraint(greaterThanOrEqualTo: parentView.bottomAnchor,
+                                      constant: value).isActive = true
             
         case .topToTopGreaterThanOrEqualTo:
             if #available(iOS 11.0, *) {
-                self.topAnchor.constraint(greaterThanOrEqualTo: (safeArea ? toView.safeAreaLayoutGuide.topAnchor : toView.topAnchor),
-                                          constant: applyAnchor.constraint).isActive = true
+                self.topAnchor.constraint(greaterThanOrEqualTo: (safeArea ? parentView.safeAreaLayoutGuide.topAnchor : parentView.topAnchor),
+                                          constant: value).isActive = true
             } else {
-                self.topAnchor.constraint(greaterThanOrEqualTo: toView.topAnchor,
-                                          constant: applyAnchor.constraint).isActive = true
+                self.topAnchor.constraint(greaterThanOrEqualTo: parentView.topAnchor,
+                                          constant: value).isActive = true
             }
             
         case .bottomGreaterThanOrEqualTo:
-            self.bottomAnchor.constraint(greaterThanOrEqualTo: toView.bottomAnchor,
-                                         constant: applyAnchor.constraint).isActive = true
+            self.bottomAnchor.constraint(greaterThanOrEqualTo: parentView.bottomAnchor,
+                                         constant: value).isActive = true
+            
+        case .bottomLessThanOrEqualTo:
+            self.bottomAnchor.constraint(lessThanOrEqualTo: parentView.bottomAnchor,
+                                         constant: value).isActive = true
             
         case .left:
-            self.leftAnchor.constraint(equalTo: toView.leftAnchor,
-                                       constant: applyAnchor.constraint).isActive = true
+            self.leftAnchor.constraint(equalTo: parentView.leftAnchor,
+                                       constant: value).isActive = true
             
         case .right:
-            self.rightAnchor.constraint(equalTo: toView.rightAnchor,
-                                        constant: applyAnchor.constraint).isActive = true
+            self.rightAnchor.constraint(equalTo: parentView.rightAnchor,
+                                        constant: value).isActive = true
         }
+        return self
     }
     
-    func applyConstraint(_ toScrollView: UIScrollView, orientation: UIScrollView.orientation = .vertical) {
-        if self is UIScrollView { fatalError("You cannot apply this to self ScrollView.") }
+    @discardableResult
+    func setConstraintsTo(_ parentView: UIView,
+                       _ anchorType: AnchorType,
+                       _ value: CGFloat,
+                       _ safeArea: Bool = false) -> Self {
         
-        self.setConstraints(toScrollView, applyAnchor: [(AnchorType.top, 0.0),
-                                                        (AnchorType.leading, 0.0),
-                                                        (AnchorType.trailing, 0.0),
-                                                        (AnchorType.bottom, 0.0)])
+        return self.setConstraintsTo(parentView: parentView,
+                                     anchorType: anchorType,
+                                     value: value,
+                                     safeArea: safeArea)
+    }
+    
+    @discardableResult
+    func setConstraintsTo(anchorType: AnchorType, value: CGFloat, safeArea: Bool = false) -> UIView {
+        guard let currentView = self.objectReference as? UIView
+        else { fatalError("Ops! Faltou o parentView. Utilize constraintsTo(parentView... primeiro.") }
+        self.setConstraintsTo(parentView: currentView, anchorType: anchorType, value: value, safeArea: safeArea)
+        return self
+    }
+    
+    @discardableResult
+    func setConstraints(_ anchorType: AnchorType, _ value: CGFloat, _ safeArea: Bool = false) -> UIView {
+        return self.setConstraintsTo(anchorType: anchorType,
+                                     value: value,
+                                     safeArea: safeArea)
+    }
+    
+    func setConstraints(_ toScrollView: UIScrollView, direction: UICollectionView.ScrollDirection = .vertical) {
+        if self is UIScrollView { fatalError("You cannot apply this to self ScrollView.") }
+        self.setConstraintsTo(toScrollView, .top, 0)
+            .setConstraints(.leading, 0)
+            .setConstraints(.trailing, 0)
+            .setConstraints(.bottom, 0)
         
         let widthConstraint = widthAnchor.constraint(equalTo: toScrollView.widthAnchor)
-        let heigthConstraint = heightAnchor.constraint(equalTo: toScrollView.heightAnchor)
-        
-        switch orientation {
-        case .horizontal:
+        if direction == .horizontal {
             widthConstraint.priority = UILayoutPriority(250.0)
-        case .vertical:
+        }
+        widthConstraint.isActive = true
+        
+        let heigthConstraint = heightAnchor.constraint(equalTo: toScrollView.heightAnchor)
+        if direction == .vertical {
             heigthConstraint.priority = UILayoutPriority(250.0)
         }
-        
-        widthConstraint.isActive = true
         heigthConstraint.isActive = true
     }
 }

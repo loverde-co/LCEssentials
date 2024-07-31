@@ -121,27 +121,35 @@ public final class HUDAlertView: UIView {
         
         // MARK: - Add Constraints
         
-        rotatinProgress.setConstraints(containerView, applyAnchor: [(AnchorType.top, 10.0), (AnchorType.centerX, 0.0)])
-        rotatinProgress.width(size: 40)
-        rotatinProgress.height(size: 40)
+        rotatinProgress
+            .setConstraintsTo(containerView, .top, 10)
+            .setConstraints(.centerX, 0)
+        rotatinProgress.setWidth(size: 40)
+        rotatinProgress.setHeight(size: 40)
         
-        titleLabel.setConstraints(rotatinProgress, applyAnchor: [(AnchorType.bottomOf, 8.0)])
-        titleLabel.setConstraints(containerView, applyAnchor: [(AnchorType.leading, 10.0), (AnchorType.trailing, -10.0)])
+        titleLabel
+            .setConstraintsTo(rotatinProgress, .bottomOf, 8)
+            .setConstraintsTo(containerView, .leading, 10)
+            .setConstraints(.trailing, -10)
         
-        descLabel.setConstraints(titleLabel, applyAnchor: [(AnchorType.bottomOf, 8.0)])
-        descLabel.setConstraints(containerView, applyAnchor: [(AnchorType.leading, 10.0), (AnchorType.trailing, -10.0)])
+        descLabel
+            .setConstraintsTo(titleLabel, .bottomOf, 8)
+            .setConstraintsTo(containerView, .leading, 10)
+            .setConstraints(.trailing, -10)
         
-        stackButtons.setConstraints(descLabel, applyAnchor: [(AnchorType.bottomOf, 8.0)])
-        stackButtons.setConstraints(containerView, applyAnchor: [(AnchorType.leading, 10.0),
-                                                                   (AnchorType.trailing, -10.0),
-                                                                   (AnchorType.bottom, -8.0)])
+        stackButtons
+            .setConstraintsTo(descLabel, .bottomOf, 8)
+            .setConstraintsTo(containerView, .leading, 10)
+            .setConstraints(.leading, 10)
+            .setConstraints(.trailing, -10)
+            .setConstraints(.bottom, -8)
         
-        containerView.setConstraints(self, applyAnchor: [(AnchorType.topToTopGreaterThanOrEqualTo, 20.0),
-                                                           (AnchorType.leading, 40.0),
-                                                           (AnchorType.trailing, -40.0),
-                                                           (AnchorType.centerY, 0.0),
-                                                           (AnchorType.centerX, 0.0)],
-                                       safeArea: true)
+        containerView
+            .setConstraintsTo(self, .topToTopGreaterThanOrEqualTo, 20, true)
+            .setConstraints(.leading, 40)
+            .setConstraints(.trailing, -40)
+            .setConstraints(.centerX, 0)
+            .setConstraints(.centerY, 0)
     }
     
     // MARK: - Internal methods

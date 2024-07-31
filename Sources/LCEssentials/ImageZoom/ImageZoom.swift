@@ -51,8 +51,8 @@ public class ImageZoomController: UIViewController {
             $0.setImage(UIImage(systemName: "xmark"), for: .normal)
             $0.tintColor = UIColor.white
         }
-        $0.width(size: 50.0)
-        $0.height(size: 50.0)
+        $0.setWidth(size: 50.0)
+        $0.setHeight(size: 50.0)
         $0.addTarget(self, action: #selector(self.close), for: .touchUpInside)
         return $0
     }(UIButton(type: .custom))
@@ -105,20 +105,23 @@ public class ImageZoomController: UIViewController {
     
     fileprivate func addComponentsAndConstraints() {
         
-        scrollView.addSubview(imageView)
+        scrollView.addSubview(imageView, translatesAutoresizingMaskIntoConstraints: false)
         view.addSubviews([blackView, scrollView, closeButton])
         
-        blackView.setConstraints(view, applyAnchor: [(UIView.AnchorType.all, 0.0)])
+        blackView
+            .setConstraintsTo(view, .all, 0, true)
         
-        scrollView.setConstraints(view, applyAnchor: [(UIView.AnchorType.all, 0.0)], safeArea: true)
+        scrollView
+            .setConstraintsTo(view, .all, 0, true)
         
-        imageView.height(min: 200)
-        imageView.setConstraints(scrollView, applyAnchor: [(UIView.AnchorType.centerX, 0.0),
-                                                             (UIView.AnchorType.centerY, 0.0)])
+        imageView.setHeight(min: 200)
+        imageView
+            .setConstraintsTo(scrollView, .centerX, 0)
+            .setConstraints(.centerY, 0)
         
-        closeButton.setConstraints(view, applyAnchor: [(UIView.AnchorType.leading, 20.0),
-                                                         (UIView.AnchorType.top, 0.0)],
-                                     safeArea: true)
+        closeButton
+            .setConstraintsTo(view, .leading, 20, true)
+            .setConstraints(.top, 0)
     }
     
     public func present(completion: (()->())? = nil) {

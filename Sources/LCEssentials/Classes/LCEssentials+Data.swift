@@ -89,7 +89,7 @@ public extension Data {
     
     func object<T: Codable>() -> T? {
         do {
-            let outPut: T = try JSONHelper.decode(data: self)
+            let outPut: T = try JSONDecoder.decode(data: self)
             return outPut
         } catch {
             printError(title: "DATA DECODE ERROR", msg: error.localizedDescription, prettyPrint: true)

@@ -28,14 +28,14 @@ public extension UIDevice {
     
     static var topNotch: CGFloat {
         if #available(iOS 11.0, *) {
-            return UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
+            return LCEssentials.keyWindow?.safeAreaInsets.top ?? 0
         }
         return 0
     }
     
     static var bottomNotch: CGFloat {
         if #available(iOS 11.0, *) {
-            return UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
+            return LCEssentials.keyWindow?.safeAreaInsets.bottom ?? 0
         }
         return 0
     }

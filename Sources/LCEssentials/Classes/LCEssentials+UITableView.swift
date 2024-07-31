@@ -104,6 +104,13 @@ public extension UITableView {
         return headerFooterView
     }
 
+    func dequeueCell<T: UITableViewCell>(indexPath: IndexPath) -> T {
+        guard let cell = self.dequeueReusableCell(withIdentifier: T.identifier, for: indexPath) as? T else {
+            fatalError("Couldn't find UITableViewCell for \(String(describing: T.className)), make sure the view is registered with table view")
+        }
+        return cell
+    }
+    
     /// Check whether IndexPath is valid within the tableView
     ///
     /// - Parameter indexPath: An IndexPath to check

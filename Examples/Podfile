@@ -1,6 +1,6 @@
 def shared_pods
   source 'https://github.com/CocoaPods/Specs.git'
-  platform :ios, '13.0'
+  platform :ios, '15.0'
   use_frameworks!
   # project 'Examples/LCEssentials.xcodeproj'
 
@@ -17,7 +17,7 @@ target 'LCEssentialsExample' do
     project.targets.each do |target|
       target.build_configurations.each do |config|
         config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
         end
       end
     end

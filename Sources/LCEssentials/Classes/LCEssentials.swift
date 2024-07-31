@@ -97,7 +97,7 @@ public struct LCEssentials {
     #if !os(macOS)
     /// - LoverdeCo: App's name (if applicable).
     public static var appDisplayName: String? {
-        return UIApplication.shared.displayName
+        return UIApplication.displayName
     }
     #endif
     
@@ -111,7 +111,7 @@ public struct LCEssentials {
     #if !os(macOS)
     /// - LoverdeCo: App current build number (if applicable).
     public static var appBuild: String? {
-        return UIApplication.shared.buildNumber
+        return UIApplication.buildNumber
     }
     #endif
     
@@ -130,7 +130,7 @@ public struct LCEssentials {
     #if !os(macOS)
     /// - LoverdeCo: App's current version (if applicable).
     public static var appVersion: String? {
-        return UIApplication.shared.version
+        return UIApplication.version
     }
     #endif
     
@@ -184,19 +184,13 @@ public struct LCEssentials {
     
     /// - LoverdeCo: Check if app is running in debug mode.
     public static var isInDebuggingMode: Bool {
-        // http://stackoverflow.com/questions/9063100/xcode-ios-how-to-determine-whether-code-is-running-in-debug-release-build
-        #if DEBUG
-        return true
-        #else
-        return false
-        #endif
+        return UIApplication.inferredEnvironment == .debug
     }
     
     #if !os(macOS)
     /// - LoverdeCo: Check if app is running in TestFlight mode.
     public static var isInTestFlight: Bool {
-        // http://stackoverflow.com/questions/12431994/detect-testflight
-        return Bundle.main.appStoreReceiptURL?.path.contains("sandboxReceipt", caseSensitive: false) == true
+        return UIApplication.inferredEnvironment == .testFlight
     }
     #endif
     
@@ -243,7 +237,7 @@ public struct LCEssentials {
     public static var isStatusBarHidden: Bool {
         get {
             if #available(iOS 13.0, *) {
-                let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+                let window = LCEssentials.keyWindow
                 return window?.windowScene?.statusBarManager?.isStatusBarHidden ?? true
             } else {
                 return UIApplication.shared.isStatusBarHidden
@@ -324,7 +318,7 @@ public extension LCEssentials {
     /// - Parameters:
     ///   - message: String with message you whant to send
     ///   - url: String with url you want to share
-    static func shareApp(message:String = "", url: String = ""){
+    static func shareApp(message: String = "", url: String = ""){
         let textToShare = message
         let root = self.getTopViewController(aboveBars: true)
         
@@ -343,18 +337,14 @@ public extension LCEssentials {
     /// - Parameters:
     ///   - number: string phone number
     static func call(_ number: String!) {
-        if let url = URL(string: "tel://" + number) {
-            UIApplication.shared.canOpenURL(url)
-        }
+        UIApplication.openURL(urlStr: "tel://" + number)
     }
     /// - LoverdeCo: Open link on Safari
     ///
     /// - Parameters:
     ///   - urlStr: url string to open
     static func openSafari(_ urlStr: String){
-        if let url = URL(string: urlStr) {
-            UIApplication.shared.canOpenURL(url)
-        }
+        UIApplication.openURL(urlStr: urlStr)
     }
     #endif
     
@@ -448,48 +438,4 @@ public extension LCEssentials {
         }
     }
     #endif
-}
-
-
-//MARK: - JSON Helper Codable/Decodable
-public struct JSONHelper<T: Codable> {
-    
-    /// - LoverdeCo: Decode JSON Data to Object
-    ///
-    /// - Parameter data: Data
-    /// - returns: Object: Codable/Decodable
-    public static func decode(data: Data) throws -> T {
-        return try JSONDecoder().decode(T.self, from: data)
-    }
-    
-    /// - LoverdeCo: Decode JSON String to Object
-    ///
-    /// - Parameter json: String
-    /// - returns: Object: Codable/Decodable
-    public static func decode(_ json: String, using encoding: String.Encoding = .utf8) throws -> T {
-        guard let data = json.data(using: encoding) else {
-            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
-        }
-        return try decode(data: data)
-    }
-    
-    /// - LoverdeCo: Decode JSON URL to Object
-    ///
-    /// - Parameter url: URL
-    /// - returns: Object: Codable/Decodable
-    public static func decode(fromURL url: URL) throws -> T {
-        return try decode(data: try! Data(contentsOf: url))
-    }
-    
-    public static func decode(dictionary: Any) throws -> T {
-        do {
-            let json = try JSONSerialization.data(withJSONObject: dictionary)
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            return try decoder.decode(T.self, from: json)
-        } catch {
-            printError(title: "JSONDecoder.decode<T: Codable>", msg: error, prettyPrint: true)
-            throw error
-        }
-    }
 }
