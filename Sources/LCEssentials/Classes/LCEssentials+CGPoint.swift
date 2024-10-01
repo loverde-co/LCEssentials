@@ -1,5 +1,5 @@
 //  
-// Copyright (c) 2018 Loverde Co.
+// Copyright (c) 2024 Loverde Co.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,26 +21,17 @@
  
 
 import Foundation
-#if os(iOS) || os(macOS)
-import UIKit
 
-public extension UIResponder {
+#if canImport(SwiftUI)
+extension CGPoint: Hashable {
+    // Implementação manual de Hashable
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(x)
+        hasher.combine(y)
+    }
     
-    var getParentViewController: UIViewController? {
-        if next is UIViewController {
-            return next as? UIViewController
-        } else {
-            if next != nil {
-                return next?.getParentViewController
-            }
-            else { return nil }
-        }
+    static func == (lhs: CGPoint, rhs: CGPoint) -> Bool {
+        return lhs.x == rhs.x && lhs.y == rhs.y
     }
 }
-//HOW TO USE
-//let vc = UIViewController()
-//let view = UIView()
-//vc.view.addSubview(view)
-//view.getParentViewController //provide reference to vc
-
 #endif

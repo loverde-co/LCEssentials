@@ -6,7 +6,6 @@ def shared_pods
 
   # - Swift Essentials
   pod 'LCEssentials', :path => '../'
-  #pod 'InputBarAccessoryView'
 end
 
 target 'LCEssentialsExample' do

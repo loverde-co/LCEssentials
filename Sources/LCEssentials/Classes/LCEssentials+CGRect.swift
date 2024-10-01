@@ -29,6 +29,19 @@ public extension CGRect {
     /// Return center of rect.
     var center: CGPoint { CGPoint(x: midX, y: midY) }
 }
+#if canImport(SwiftUI)
+extension CGRect: Hashable {
+    // Implementação manual de Hashable
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(origin)
+        hasher.combine(size)
+    }
+    
+    static func == (lhs: CGRect, rhs: CGRect) -> Bool {
+        return lhs.origin == rhs.origin && lhs.size == rhs.size
+    }
+}
+#endif
 
 // MARK: - Initializers
 

@@ -51,8 +51,6 @@ public class ImageZoomController: UIViewController {
             $0.setImage(UIImage(systemName: "xmark"), for: .normal)
             $0.tintColor = UIColor.white
         }
-        $0.setWidth(size: 50.0)
-        $0.setHeight(size: 50.0)
         $0.addTarget(self, action: #selector(self.close), for: .touchUpInside)
         return $0
     }(UIButton(type: .custom))
@@ -122,6 +120,8 @@ public class ImageZoomController: UIViewController {
         closeButton
             .setConstraintsTo(view, .leading, 20, true)
             .setConstraints(.top, 0)
+            .setWidth(size: 50.0)
+            .setHeight(size: 50.0)
     }
     
     public func present(completion: (()->())? = nil) {

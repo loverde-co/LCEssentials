@@ -83,7 +83,7 @@ class ViewController: UIViewController {
                 printLog(title: "JSON ERROR", msg: error.localizedDescription)
                 break
             case .success(let json):
-                printLog(title: "JSON OUTPUT", msg: (json as! String), prettyPrint: true)
+                printLog(title: "JSON OUTPUT", msg: json, prettyPrint: true)
                 break
             }
         }
@@ -117,14 +117,6 @@ extension ViewController {
     
     //MARK: - Notification Runtime Controller
     func openNotificationRuntime(){
-//        let notif = LCENotificationRunTime.instantiate()
-//        notif.delegate = self
-//        notif.anyData = nil //If you need grab any data to handler on Delegate
-//        notif.setDesc = "Description on received message"
-//        notif.setTitle = "Title on received message"
-//        notif.setImage = nil //If you need to set a image on left
-//        notif.setHeight = UIDevice.bottomNotch >= 20 ? 130 : 100
-//        notif.show()
     }
     
     //MARK: - Messages Alert Bottom
@@ -135,18 +127,8 @@ extension ViewController {
             .configure(textFont: .systemFont(ofSize: 16.0, weight: .regular), alignment: .left)
             .configure(textColor: .black)
             .configure(backgroundColor: UIColor(hex: "#CCCCCC"))
+            .configure(imageIconBefore: UIImageView(image: UIImage.init(systemName: "exclamationmark.triangle.fill")), withTintColor: .red)
             .present()
-        
-        
-//        let message = LCEMessages()
-//        message.delegate = self
-//        message.addObserverForKeyboard()
-//        message.direction = .bottom
-//        message.duration = .fiveSecs
-//        message.tapToDismiss = true
-//        message.backgroundColor = .darkGray
-//        message.descriptionLabelString = "Testing message bottom with loading"
-//        message.show(loading: true)
     }
     
     //MARK: - Messages Alert TOP
@@ -154,7 +136,7 @@ extension ViewController {
         let snackbar = LCSnackBarView(style: .rounded, orientation: .top)
         snackbar
             .configure(text: "Ola jovens, sabiam que a vida o universo e tudo mais, faz perte de tudo da vida\nbreakline aqui")
-            .configure(textFont: .systemFont(ofSize: 16.0, weight: .regular), alignment: .right)
+            .configure(textFont: .systemFont(ofSize: 16.0, weight: .regular), alignment: .left)
             .configure(textColor: .black)
             .configure(backgroundColor: UIColor(hex: "#CCCCCC"))
             .present()

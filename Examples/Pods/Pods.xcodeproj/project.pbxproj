@@ -66,6 +66,7 @@
 		A5AF21FF2A94D3E39E61E78FB071F3C3 /* LCEssentials+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811523CA1416B1E7F365683355F51F19 /* LCEssentials+Date.swift */; };
 		A93934B45F51011B749B8641A5A9FABB /* LCEssentials+UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1913BEF758C280C6807A53D0AC4288 /* LCEssentials+UIDevice.swift */; };
 		AE2A523FD574D733B659E018098BDFB8 /* LCEssentials+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8869A989D297D00C1F95DEEB325C5 /* LCEssentials+Dictionary.swift */; };
+		B1C593F42CA987CB00A1B690 /* LCEssentials+CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C593F32CA987CB00A1B690 /* LCEssentials+CGPoint.swift */; };
 		B1C5F4432BEFDE2700343136 /* LCEssentials+NSError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C5F4422BEFDE2700343136 /* LCEssentials+NSError.swift */; };
 		B644DFEFA350D3F21724DDDCABE0846D /* LCEssentials+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D99247D9BC0AEF68889E5847A4EB305 /* LCEssentials+UILabel.swift */; };
 		BC68EBDED47EE331A6C1EA82696089ED /* LCEssentials+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436BCA9F22B1442F359A7251C32C16BA /* LCEssentials+Comparable.swift */; };
@@ -152,6 +153,7 @@
 		AB1115E0156FC2200F36DC005E6D8C5C /* Pods-LCEssentialsExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LCEssentialsExample.debug.xcconfig"; sourceTree = "<group>"; };
 		AC2D99281AC4D5FC721CA34E87E2908A /* Pods-LCEssentialsExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LCEssentialsExample-dummy.m"; sourceTree = "<group>"; };
 		AF025927759869CC5FD418A31C266047 /* LCEssentials+UserDefaults.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UserDefaults.swift"; sourceTree = "<group>"; };
+		B1C593F32CA987CB00A1B690 /* LCEssentials+CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+CGPoint.swift"; sourceTree = "<group>"; };
 		B1C5F4422BEFDE2700343136 /* LCEssentials+NSError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+NSError.swift"; sourceTree = "<group>"; };
 		B3308E3CC2C4BE34D376B75B2F66C132 /* LCEssentials-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LCEssentials-umbrella.h"; sourceTree = "<group>"; };
 		B5EE5931A68D35189A7F08191EDA2FFE /* LCEssentials+BidirectionalCollection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+BidirectionalCollection.swift"; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				88D03A3B0FC8632CD8A23633F7367480 /* LCEssentials+BinaryInteger.swift */,
 				A1C1E24D85072C3B5A6577378564212E /* LCEssentials+Bool.swift */,
 				AAC844F0B81D8840416E7AE3E897729E /* LCEssentials+CGFloat.swift */,
+				B1C593F32CA987CB00A1B690 /* LCEssentials+CGPoint.swift */,
 				75A980A25C8235E25EFCC0246B731B3B /* LCEssentials+CGRect.swift */,
 				6E62C7CCB260FFB171844CA898FCF28F /* LCEssentials+CGSize.swift */,
 				CFD06105977F2608EF1F7234CA20C032 /* LCEssentials+Character.swift */,
@@ -527,6 +530,7 @@
 				5923C740012737DAC3FA24149135E746 /* LCEssentials+BidirectionalCollection.swift in Sources */,
 				F872D4ADFB41D9424744073E9C8262A7 /* LCEssentials+BinaryFloatingPoint.swift in Sources */,
 				51EA154D1ABA17A25CB6D202756719A4 /* LCEssentials+BinaryInteger.swift in Sources */,
+				B1C593F42CA987CB00A1B690 /* LCEssentials+CGPoint.swift in Sources */,
 				7E9F580FD7530E228C80CA144FBC72CC /* LCEssentials+Bool.swift in Sources */,
 				3958FF1C57219A7EE9C3CF2BF49D162C /* LCEssentials+CGFloat.swift in Sources */,
 				42520D6AB81613F7F00B9E6F2204383B /* LCEssentials+CGRect.swift in Sources */,

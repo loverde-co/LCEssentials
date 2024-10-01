@@ -18,13 +18,62 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
+#if canImport(SwiftUI)
+import Network
+
+// An enum to handle the network status
+public enum NetworkStatus: String {
+    case connected
+    case disconnected
+}
+
+// @StateObject var monitor = Monitor()
+// Text(monitor.status.rawValue)
+/// LCEMonitorManager is a simple class to monitor your connection for some tasks that you need
+///
+/// Usage example:
+///
+///```swift
+///@StateObject var monitor = LCEMonitorManager()
+///Text(monitor.status.rawValue)
+///```
+/// >important: Remember to instance ``LCEMonitorManager`` and then, verify whenever you need to know if there is connection
+///
+public final class LCEMonitorManager: ObservableObject {
+    private let monitor = NWPathMonitor()
+    private let queue = DispatchQueue(label: "LCEMonitorManager")
+
+    @Published public var status: NetworkStatus = .connected
+
+    public init(showLog: Bool = false) {
+        monitor.pathUpdateHandler = { [weak self] path in
+            guard let self = self else { return }
+
+            // Monitor runs on a background thread so we need to publish
+            // on the main thread
+            DispatchQueue.main.async {
+                if path.status == .satisfied {
+                    self.status = .connected
+
+                } else {
+                    print("No connection.")
+                    self.status = .disconnected
+                }
+                if showLog {
+                    printInfo(title: "LCEMonitorManager", msg: path.status)
+                }
+            }
+        }
+        monitor.start(queue: queue)
+    }
+}
+
+#elseif os(iOS) || os(macOS)
 //
 // ORIGINAL SOURCE: https://medium.com/@sauvik_dolui/network-reachability-status-monitoring-on-ios-part-2-80421fc44fa
- 
-
 import Foundation
 
-#if os(iOS) || os(macOS)
 /// Protocol for listenig network status change
 public protocol NetworkStatusListener : AnyObject {
     func networkStatusDidChange(status: Reachability.Connection)

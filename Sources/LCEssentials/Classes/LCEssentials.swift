@@ -37,44 +37,110 @@ public func ^^ (radix: Float, power: Float) -> Float {
 
 
 /// Loverde Co: Custom Logs
-public func printLog(title: String, msg: Any, prettyPrint: Bool = false){
+public func printLog(
+    title: String,
+    msg: Any,
+    prettyPrint: Bool = false
+){
     if prettyPrint {
-        print("\n<=========================  \(title) - START =========================>")
-        print(msg)
-        print("\n<=========================  \(title) - END ===========================>")
+        print(
+            "\n<=========================  \(title) - START =========================>"
+        )
+        print(
+            msg
+        )
+        print(
+            "\n<=========================  \(title) - END ===========================>"
+        )
     }else{
-        print("\(title): \(msg)")
+        print(
+            "\(title): \(msg)"
+        )
     }
 }
 
-public func printInfo(title: String, msg: Any, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
+public func printInfo(
+    title: String,
+    msg: Any,
+    prettyPrint: Bool = false,
+    function: String = #function,
+    file: String = #file,
+    line: Int = #line,
+    column: Int = #column
+){
     if prettyPrint {
-        print("\n<=========================  ℹ️ INFO: \(title) - START =========================>")
-        print("[\(file): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
-        print(msg)
-        print("\n<=========================  ℹ️ INFO: \(title) - END ===========================>")
+        print(
+            "\n<=========================  ℹ️ INFO: \(title) - START =========================>"
+        )
+        print(
+            "[\(file): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n"
+        )
+        print(
+            msg
+        )
+        print(
+            "\n<=========================  ℹ️ INFO: \(title) - END ===========================>"
+        )
     }else{
-        print("ℹ️ INFO: \(title): \(msg)")
+        print(
+            "ℹ️ INFO: \(title): \(msg)"
+        )
     }
 }
-public func printWarn(title: String, msg: Any, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
+public func printWarn(
+    title: String,
+    msg: Any,
+    prettyPrint: Bool = false,
+    function: String = #function,
+    file: String = #file,
+    line: Int = #line,
+    column: Int = #column
+){
     if prettyPrint {
-        print("\n<=========================  ⚠️ WARN: \(title) - START =========================>")
-        print("[\(file): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
-        print(msg)
-        print("\n<=========================  ⚠️ WARN: \(title) - END ===========================>")
+        print(
+            "\n<=========================  ⚠️ WARN: \(title) - START =========================>"
+        )
+        print(
+            "[\(file): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n"
+        )
+        print(
+            msg
+        )
+        print(
+            "\n<=========================  ⚠️ WARN: \(title) - END ===========================>"
+        )
     }else{
-        print("⚠️ WARN: \(title): \(msg)")
+        print(
+            "⚠️ WARN: \(title): \(msg)"
+        )
     }
 }
-public func printError(title: String, msg: Any, prettyPrint: Bool = false, function: String = #function, file: String = #file, line: Int = #line, column: Int = #column){
+public func printError(
+    title: String,
+    msg: Any,
+    prettyPrint: Bool = false,
+    function: String = #function,
+    file: String = #file,
+    line: Int = #line,
+    column: Int = #column
+){
     if prettyPrint {
-        print("\n<=========================  🚫 ERROR: \(title) - START =========================>")
-        print("[\(file): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n")
-        print(msg)
-        print("\n<=========================  🚫 ERROR: \(title) - END ===========================>")
+        print(
+            "\n<=========================  🚫 ERROR: \(title) - START =========================>"
+        )
+        print(
+            "[\(file): FUNC: \(function): LINE: \(line) - COLUMN: \(column)]\n"
+        )
+        print(
+            msg
+        )
+        print(
+            "\n<=========================  🚫 ERROR: \(title) - END ===========================>"
+        )
     }else{
-        print("🚫 ERROR: \(title): \(msg)")
+        print(
+            "🚫 ERROR: \(title): \(msg)"
+        )
     }
 }
 
@@ -391,10 +457,10 @@ public extension LCEssentials {
     ///   - queue: a queue that completion closure should be executed on (default is DispatchQueue.main).
     ///   - completion: closure to be executed after delay.
     ///   - Returns: DispatchWorkItem task. You can call .cancel() on it to cancel delayed execution.
-    @discardableResult static func delay(milliseconds: Double,
-                                         queue: DispatchQueue = .main,
-                                         completion: @escaping () -> Void) -> DispatchWorkItem {
-        
+    @discardableResult 
+    static func delay(milliseconds: Double,
+                      queue: DispatchQueue = .main,
+                      completion: @escaping () -> Void) -> DispatchWorkItem {
         let task = DispatchWorkItem { completion() }
         queue.asyncAfter(deadline: .now() + (milliseconds/1000), execute: task)
         return task

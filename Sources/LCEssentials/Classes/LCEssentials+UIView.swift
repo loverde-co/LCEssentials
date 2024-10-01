@@ -58,19 +58,22 @@ public enum EnumBorderSide {
     case top, bottom, left, right
 }
 
+fileprivate weak var kvo_viewReference: UIView?
+
 public extension UIView {
     
     enum AnchorType {
         case all
         case top
+        case topToBottom
         case bottom
+        case bottomToTop
         case leading
         case trailing
         case heigth
         case width
         case centerX
         case centerY
-        case bottomOf
         case leadingToTrailing
         case leadingToTrailingGreaterThanOrEqualTo
         case trailingToLeading
@@ -87,12 +90,12 @@ public extension UIView {
         return String(describing: self)
     }
     
-    var objectReference: Any? {
-        get { self.accessibilityElements?.first }
+    var viewReference: UIView? {
+        get {
+            kvo_viewReference
+        }
         set {
-            if let value = newValue {
-                self.accessibilityElements = [value]
-            }
+            kvo_viewReference = newValue
         }
     }
     
@@ -280,35 +283,27 @@ public extension UIView {
     }
     
     @discardableResult
-    func setHeight(size: CGFloat) -> NSLayoutConstraint {
-        let constraint: NSLayoutConstraint
-        constraint = heightAnchor.constraint(equalToConstant: size)
-        constraint.isActive = true
-        return constraint
+    func setHeight(size: CGFloat) -> Self {
+        heightAnchor.constraint(equalToConstant: size).isActive = true
+        return self
     }
     
     @discardableResult
-    func setHeight(min: CGFloat) -> NSLayoutConstraint {
-        let constraint: NSLayoutConstraint
-        constraint = heightAnchor.constraint(greaterThanOrEqualToConstant: min)
-        constraint.isActive = true
-        return constraint
+    func setHeight(min: CGFloat) -> Self {
+        heightAnchor.constraint(greaterThanOrEqualToConstant: min).isActive = true
+        return self
     }
     
     @discardableResult
-    func setWidth(size: CGFloat) -> NSLayoutConstraint {
-        let constraint: NSLayoutConstraint
-        constraint = widthAnchor.constraint(equalToConstant: size)
-        constraint.isActive = true
-        return constraint
+    func setWidth(size: CGFloat) -> Self {
+        widthAnchor.constraint(equalToConstant: size).isActive = true
+        return self
     }
     
     @discardableResult
-    func setWidth(min: CGFloat) -> NSLayoutConstraint {
-        let constraint: NSLayoutConstraint
-        constraint = widthAnchor.constraint(greaterThanOrEqualToConstant: min)
-        constraint.isActive = true
-        return constraint
+    func setWidth(min: CGFloat) -> Self {
+        widthAnchor.constraint(greaterThanOrEqualToConstant: min).isActive = true
+        return self
     }
     
     /// Search constraints until we find one for the given view
@@ -348,7 +343,7 @@ public extension UIView {
                     fillColor: UIColor = UIColor.gray,
                     isEmpty: Bool = false) -> [String:Any] {
         
-        let dotPath = UIBezierPath(ovalIn: CGRect(x: x,y: y, width: radius, height: radius))
+        let dotPath = UIBezierPath(ovalIn: CGRect(x: x, y: y, width: radius, height: radius))
         let layer = CAShapeLayer()
         if !isEmpty {
             layer.path = dotPath.cgPath
@@ -453,7 +448,7 @@ public extension UIView {
 
      :param: width CGFloat
      */
-    func setWidth(width: CGFloat) {
+    func setFrameWidth(width: CGFloat) {
         var frame:CGRect = self.frame
         frame.size.width = width
         self.frame = frame
@@ -463,10 +458,28 @@ public extension UIView {
 
      :param: height CGFloat
      */
-    func setHeight(height: CGFloat) {
+    func setFrameHeight(height: CGFloat) {
         var frame:CGRect = self.frame
         frame.size.height = height
         self.frame = frame
+    }
+    
+    func setWidth(_ toView: UIView? = nil, constant: CGFloat, _ multiplier: CGFloat = 0) -> Self {
+        if let toView = toView {
+            widthAnchor.constraint(equalTo: toView.widthAnchor, multiplier: multiplier, constant: constant).isActive = true
+        } else if multiplier == 0 {
+            widthAnchor.constraint(equalToConstant: constant).isActive = true
+        }
+        return self
+    }
+    
+    func setHeight(_ toView: UIView? = nil, constant: CGFloat, _ multiplier: CGFloat = 0) -> Self {
+        if let toView = toView {
+            heightAnchor.constraint(equalTo: toView.heightAnchor, multiplier: multiplier, constant: constant).isActive = true
+        } else if multiplier == 0 {
+            heightAnchor.constraint(equalToConstant: constant).isActive = true
+        }
+        return self
     }
     
     // - LoverdeCo: Add radius to view
@@ -507,13 +520,14 @@ public extension UIView {
     
     /// Apply constraint to a View more easily.
     ///
-    ///        "MyView.setConstraintsTo(parentView: AnotherView, anchorType: AnchorType.leading, value: 10.0)"
-    ///        "MyView.setConstraintsTo(parentView: AnotherView,
-    ///                              anchorType: AnchorType.leading,
-    ///                              value: 10.0)
-    ///                .setConstraintsTo(parentView: AnotherView,
-    ///                              anchorType: AnchorType.trailing,
-    ///                              value: -10.0)"
+    /// ```swift
+    /// MyView.setConstraintsTo(parentView: AnotherView, anchorType: AnchorType.leading, value: 10.0)
+    /// MyView.setConstraintsTo(anchorType: AnchorType.trailing,
+    ///                          value: -10.0)
+    ///        .setConstraintsTo(parentView: SuperMegaView,
+    ///                          anchorType: AnchorType.bottomToTop,
+    ///                          value: -12.0)
+    /// ```
     ///
     /// - Parameters:
     ///   - parentView: The View you whant to constraint to.
@@ -525,7 +539,7 @@ public extension UIView {
     ///
     @discardableResult
     func setConstraintsTo(parentView: UIView, anchorType: AnchorType, value: CGFloat, safeArea: Bool = false) -> Self {
-        self.objectReference = parentView
+        self.viewReference = parentView
         switch anchorType {
         case .all:
             let topAnchor: NSLayoutConstraint
@@ -565,13 +579,18 @@ public extension UIView {
                 self.topAnchor.constraint(equalTo: parentView.topAnchor,
                                           constant: value).isActive = true
             }
+            
+        case .topToBottom:
+            self.topAnchor.constraint(equalTo: parentView.bottomAnchor,
+                                      constant: value).isActive = true
+            
         case .bottom:
             self.bottomAnchor.constraint(equalTo: parentView.bottomAnchor,
                                          constant: value).isActive = true
             
-        case .bottomOf:
-            self.topAnchor.constraint(equalTo: parentView.bottomAnchor,
-                                      constant: value).isActive = true
+        case .bottomToTop:
+            self.bottomAnchor.constraint(equalTo: parentView.topAnchor,
+                                         constant: value).isActive = true
             
         case .leading:
             self.leadingAnchor.constraint(equalTo: parentView.leadingAnchor,
@@ -647,9 +666,9 @@ public extension UIView {
     
     @discardableResult
     func setConstraintsTo(_ parentView: UIView,
-                       _ anchorType: AnchorType,
-                       _ value: CGFloat,
-                       _ safeArea: Bool = false) -> Self {
+                          _ anchorType: AnchorType,
+                          _ value: CGFloat,
+                          _ safeArea: Bool = false) -> Self {
         
         return self.setConstraintsTo(parentView: parentView,
                                      anchorType: anchorType,
@@ -659,7 +678,7 @@ public extension UIView {
     
     @discardableResult
     func setConstraintsTo(anchorType: AnchorType, value: CGFloat, safeArea: Bool = false) -> UIView {
-        guard let currentView = self.objectReference as? UIView
+        guard let currentView = self.viewReference
         else { fatalError("Ops! Faltou o parentView. Utilize constraintsTo(parentView... primeiro.") }
         self.setConstraintsTo(parentView: currentView, anchorType: anchorType, value: value, safeArea: safeArea)
         return self

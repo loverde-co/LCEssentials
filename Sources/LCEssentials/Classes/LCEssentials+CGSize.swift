@@ -42,6 +42,19 @@ public extension CGSize {
         return min(width, height)
     }
 }
+#if canImport(SwiftUI)
+extension CGSize: Hashable {
+    // Implementação manual de Hashable
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(width)
+        hasher.combine(height)
+    }
+    
+    static func == (lhs: CGSize, rhs: CGSize) -> Bool {
+        return lhs.width == rhs.width && lhs.height == rhs.height
+    }
+}
+#endif
 
 // MARK: - Methods
 
