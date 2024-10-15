@@ -18,7 +18,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
+#if canImport(Foundation)
+import Foundation
+#endif
 #if canImport(SwiftUI)
 import Network
 
@@ -72,7 +74,6 @@ public final class LCEMonitorManager: ObservableObject {
 #elseif os(iOS) || os(macOS)
 //
 // ORIGINAL SOURCE: https://medium.com/@sauvik_dolui/network-reachability-status-monitoring-on-ios-part-2-80421fc44fa
-import Foundation
 
 /// Protocol for listenig network status change
 public protocol NetworkStatusListener : AnyObject {
