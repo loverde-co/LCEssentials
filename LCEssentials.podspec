@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'LCEssentials'
-  s.version          = '0.8.5'
+  s.version          = '0.8.6'
   s.summary          = 'This is a repository of essential algorithm written in Swift for Loverde Co.'
  
   s.description      = <<-DESC
@@ -31,18 +31,11 @@ This is a repository of essential algorithm written in Swift for Loverde Co. use
     #sp.watchos.source_files     = 'Sources/LCEssentials/Classes/*.{swift}'
   end
 
-#  # LCEPickerViews Extensions
-#  s.subspec 'PickerViews' do |sp|
-#    sp.source_files  = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/PickerViews/*.{swift}'
-#    sp.ios.resources = ['Sources/LCEssentials/PickerViews/Storyboards/*.{storyboard}']
-#  end
-#
-#  # LCENotifications Extensions
-#  s.subspec 'Notifications' do |sp|
-#    sp.source_files  = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/Notifications/*.{swift}'
-#    sp.ios.resources = ['Sources/LCEssentials/Notifications/Storyboards/*.{storyboard}', 'Sources/LCEssentials/Notifications/Storyboard/*.{png}']
-#  end
-#
+  # LCSnackBarView Extensions
+  s.subspec 'LCSnackBarView' do |sp|
+    sp.source_files  = 'Sources/LCEssentials/Classes/*.{swift}', 'Sources/LCEssentials/Messages/*.{swift}'
+  end
+
   # LCEImageZoom Extensions
   s.subspec 'ImageZoom' do |sp|
     sp.source_files  = 'Sources/LCEssentials/Classes/*.{swift}', 
