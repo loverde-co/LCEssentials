@@ -66,9 +66,9 @@
 		A5AF21FF2A94D3E39E61E78FB071F3C3 /* LCEssentials+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811523CA1416B1E7F365683355F51F19 /* LCEssentials+Date.swift */; };
 		A93934B45F51011B749B8641A5A9FABB /* LCEssentials+UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1913BEF758C280C6807A53D0AC4288 /* LCEssentials+UIDevice.swift */; };
 		AE2A523FD574D733B659E018098BDFB8 /* LCEssentials+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8869A989D297D00C1F95DEEB325C5 /* LCEssentials+Dictionary.swift */; };
+		B115B9662CBEEF3A00450FE8 /* LCSnackBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115B9642CBEEF3A00450FE8 /* LCSnackBarView.swift */; };
 		B1C593F42CA987CB00A1B690 /* LCEssentials+CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C593F32CA987CB00A1B690 /* LCEssentials+CGPoint.swift */; };
 		B1C5F4432BEFDE2700343136 /* LCEssentials+NSError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C5F4422BEFDE2700343136 /* LCEssentials+NSError.swift */; };
-		B1C8A1802C57CF5A00D42F60 /* LCSnackBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C8A17F2C57CF5A00D42F60 /* LCSnackBarView.swift */; };
 		B644DFEFA350D3F21724DDDCABE0846D /* LCEssentials+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D99247D9BC0AEF68889E5847A4EB305 /* LCEssentials+UILabel.swift */; };
 		BC68EBDED47EE331A6C1EA82696089ED /* LCEssentials+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436BCA9F22B1442F359A7251C32C16BA /* LCEssentials+Comparable.swift */; };
 		BE9FBF9674803D50B506C954210DD9D0 /* LCEssentials+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428FE5691046F034D13FB8C845C9AF6A /* LCEssentials+API.swift */; };
@@ -91,7 +91,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008617A9774DBAD27808AD29FDC8341E /* Pods-LCEssentialsExample */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-LCEssentialsExample"; path = Pods_LCEssentialsExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		008617A9774DBAD27808AD29FDC8341E /* Pods_LCEssentialsExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LCEssentialsExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		00F8ED59CAFA365D8077A94E52E67E36 /* Pods-LCEssentialsExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LCEssentialsExample.release.xcconfig"; sourceTree = "<group>"; };
 		038C71667AC79CE3639B5AEC9653924E /* LCEssentials+String.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+String.swift"; sourceTree = "<group>"; };
 		05806E9F650B7EA8A59E6BEADC919662 /* LCEssentials+UICollectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UICollectionView.swift"; sourceTree = "<group>"; };
@@ -150,13 +150,13 @@
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A1C1E24D85072C3B5A6577378564212E /* LCEssentials+Bool.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+Bool.swift"; sourceTree = "<group>"; };
 		AAC844F0B81D8840416E7AE3E897729E /* LCEssentials+CGFloat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+CGFloat.swift"; sourceTree = "<group>"; };
-		AAF1013E6983536EF5148BFD70F5807A /* LCEssentials */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = LCEssentials; path = LCEssentials.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAF1013E6983536EF5148BFD70F5807A /* LCEssentials.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LCEssentials.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB1115E0156FC2200F36DC005E6D8C5C /* Pods-LCEssentialsExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-LCEssentialsExample.debug.xcconfig"; sourceTree = "<group>"; };
 		AC2D99281AC4D5FC721CA34E87E2908A /* Pods-LCEssentialsExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LCEssentialsExample-dummy.m"; sourceTree = "<group>"; };
 		AF025927759869CC5FD418A31C266047 /* LCEssentials+UserDefaults.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UserDefaults.swift"; sourceTree = "<group>"; };
+		B115B9642CBEEF3A00450FE8 /* LCSnackBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSnackBarView.swift; sourceTree = "<group>"; };
 		B1C593F32CA987CB00A1B690 /* LCEssentials+CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+CGPoint.swift"; sourceTree = "<group>"; };
 		B1C5F4422BEFDE2700343136 /* LCEssentials+NSError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+NSError.swift"; sourceTree = "<group>"; };
-		B1C8A17F2C57CF5A00D42F60 /* LCSnackBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSnackBarView.swift; sourceTree = "<group>"; };
 		B3308E3CC2C4BE34D376B75B2F66C132 /* LCEssentials-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LCEssentials-umbrella.h"; sourceTree = "<group>"; };
 		B5EE5931A68D35189A7F08191EDA2FFE /* LCEssentials+BidirectionalCollection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+BidirectionalCollection.swift"; sourceTree = "<group>"; };
 		B7A027C2A76221435DA48E8DF0189BAC /* LCEssentials+SignedNumeric.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+SignedNumeric.swift"; sourceTree = "<group>"; };
@@ -219,8 +219,8 @@
 		2B40946D61344F7F74C4522F7269AAD3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AAF1013E6983536EF5148BFD70F5807A /* LCEssentials */,
-				008617A9774DBAD27808AD29FDC8341E /* Pods-LCEssentialsExample */,
+				AAF1013E6983536EF5148BFD70F5807A /* LCEssentials.framework */,
+				008617A9774DBAD27808AD29FDC8341E /* Pods_LCEssentialsExample.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -346,10 +346,19 @@
 			path = Sources/LCEssentials/Classes;
 			sourceTree = "<group>";
 		};
+		B115B9652CBEEF3A00450FE8 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				B115B9642CBEEF3A00450FE8 /* LCSnackBarView.swift */,
+			);
+			name = Message;
+			path = Sources/LCEssentials/Message;
+			sourceTree = "<group>";
+		};
 		B15F5FF87C6B4D734E8949BD6E0CEC11 /* LCEssentials */ = {
 			isa = PBXGroup;
 			children = (
-				B1C8A17E2C57CCFD00D42F60 /* Message */,
+				B115B9652CBEEF3A00450FE8 /* Message */,
 				AD3497195E54B3CD7FE59382F54CBF72 /* Classes */,
 				A46DA0E0415FE6DC628A1498EC7F1562 /* HUDAlert */,
 				D07E7D6DE608EC7F49598769FA758EC5 /* ImagePicker */,
@@ -359,14 +368,6 @@
 			);
 			name = LCEssentials;
 			path = ../..;
-			sourceTree = "<group>";
-		};
-		B1C8A17E2C57CCFD00D42F60 /* Message */ = {
-			isa = PBXGroup;
-			children = (
-				B1C8A17F2C57CF5A00D42F60 /* LCSnackBarView.swift */,
-			);
-			path = Message;
 			sourceTree = "<group>";
 		};
 		BB2A4E9A5E4B9BBBBE2225329653420F /* Support Files */ = {
@@ -449,7 +450,7 @@
 			);
 			name = LCEssentials;
 			productName = LCEssentials;
-			productReference = AAF1013E6983536EF5148BFD70F5807A /* LCEssentials */;
+			productReference = AAF1013E6983536EF5148BFD70F5807A /* LCEssentials.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		BF51760A356FC56434EFC6F13F7DAEBB /* Pods-LCEssentialsExample */ = {
@@ -468,7 +469,7 @@
 			);
 			name = "Pods-LCEssentialsExample";
 			productName = Pods_LCEssentialsExample;
-			productReference = 008617A9774DBAD27808AD29FDC8341E /* Pods-LCEssentialsExample */;
+			productReference = 008617A9774DBAD27808AD29FDC8341E /* Pods_LCEssentialsExample.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -542,6 +543,7 @@
 				F872D4ADFB41D9424744073E9C8262A7 /* LCEssentials+BinaryFloatingPoint.swift in Sources */,
 				51EA154D1ABA17A25CB6D202756719A4 /* LCEssentials+BinaryInteger.swift in Sources */,
 				B1C593F42CA987CB00A1B690 /* LCEssentials+CGPoint.swift in Sources */,
+				B115B9662CBEEF3A00450FE8 /* LCSnackBarView.swift in Sources */,
 				7E9F580FD7530E228C80CA144FBC72CC /* LCEssentials+Bool.swift in Sources */,
 				3958FF1C57219A7EE9C3CF2BF49D162C /* LCEssentials+CGFloat.swift in Sources */,
 				42520D6AB81613F7F00B9E6F2204383B /* LCEssentials+CGRect.swift in Sources */,
@@ -563,7 +565,6 @@
 				4EB118691377277440F058C3FAB3D52E /* LCEssentials+NSLayoutConstraints.swift in Sources */,
 				6C6A20E82A87AFDB426ADA9A2CB51F34 /* LCEssentials+NSMutableAttributedString.swift in Sources */,
 				020B3B8FADB36388C64AB9300B00B128 /* LCEssentials+NSString.swift in Sources */,
-				B1C8A1802C57CF5A00D42F60 /* LCSnackBarView.swift in Sources */,
 				88CB8FB3BD85B9E8A04F2004B65642DA /* LCEssentials+Optional.swift in Sources */,
 				755DE84E85AE68562FFFFA6CFD80A248 /* LCEssentials+RangeReplaceableCollection.swift in Sources */,
 				4C0DC4E9DE9AADEB1FE8DED3273ECFC7 /* LCEssentials+ReachabilityManager.swift in Sources */,
