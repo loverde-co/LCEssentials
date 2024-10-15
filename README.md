@@ -40,7 +40,7 @@ import LCEssentials
 #### Swift Package  Manager (SPM)
 ``` swift
 dependencies: [
-    .package(url: "https://github.com/loverde-co/LCEssentials.git", .upToNextMajor(from: "0.8.6"))
+    .package(url: "https://github.com/loverde-co/LCEssentials.git", .upToNextMajor(from: "0.8.7"))
 ]
 ```
 
@@ -96,7 +96,7 @@ And then import `LCEssentials ` wherever you import UIKit
 import LCEssentials
 ```
 
-Author of v0.8.6
+Author of v0.8.7
 ----
 
 Any question or doubts, please send thru email

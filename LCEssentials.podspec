@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'LCEssentials'
-  s.version          = '0.8.6'
+  s.version          = '0.8.7'
   s.summary          = 'This is a repository of essential algorithm written in Swift for Loverde Co.'
  
   s.description      = <<-DESC
@@ -19,7 +19,8 @@ This is a repository of essential algorithm written in Swift for Loverde Co. use
   s.ios.source_files     = 'Sources/LCEssentials/Classes/*.{swift}',
                            'Sources/LCEssentials/HUDAlert/*.{swift}',
                            'Sources/LCEssentials/ImageZoom/*.{swift}',
-                           'Sources/LCEssentials/ImagePicker/*.{swift}'
+                           'Sources/LCEssentials/ImagePicker/*.{swift}',
+                           'Sources/LCEssentials/Messages/*.{swift}'
   #s.watchos.source_files     = 'Sources/LCEssentials/Classes/*.{swift}'
   
   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'}
