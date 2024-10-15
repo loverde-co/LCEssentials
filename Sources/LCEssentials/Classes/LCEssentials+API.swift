@@ -145,27 +145,27 @@ public struct API {
         }
     }
     
-    public static func resquest<T: Codable>(_ params: [String: Any],
-                                            _ method: httpMethod,
-                                            jsonEncoding: Bool = true,
-                                            convertFromDictionary: Bool = false,
-                                            debug: Bool = true,
-                                            persistConnection: Bool = false) async throws -> T {
+    public static func request<T: Codable>(_ params: Any,
+                                           _ method: httpMethod,
+                                           jsonEncoding: Bool = true,
+                                           convertFromDictionary: Bool = false,
+                                           debug: Bool = true,
+                                           persistConnection: Bool = false) async throws -> T {
         
-        if let urlReq = URL(string: url.replaceURL(params)) {
+        if let urlReq = URL(string: url.replaceURL(params as? [String: Any] ?? [:] )) {
             var request = URLRequest(url: urlReq, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
             if method == .post {
-                var newParams = defaultParams
-                newParams += params
-                if jsonEncoding {
-                    let requestObject = try JSONSerialization.data(withJSONObject: newParams)
+                if jsonEncoding, let params = params as? [String: Any] {
+                    let requestObject = try JSONSerialization.data(withJSONObject: params)
                     request.httpBody = requestObject
-                }else{
+                } else if let params = params as? [String: Any] {
                     var bodyComponents = URLComponents()
-                    newParams.forEach({ (key, value) in
+                    params.forEach({ (key, value) in
                         bodyComponents.queryItems?.append(URLQueryItem(name: key, value: value as? String))
                     })
                     request.httpBody = bodyComponents.query?.data(using: .utf8)
+                } else if let params = params as? Data {
+                    request.httpBody = params
                 }
             }
             request.httpMethod = method.rawValue
@@ -216,11 +216,11 @@ public struct API {
                     }
                     if persistConnection {
                         printError(title: "INTERNET CONNECTION ERROR", msg: "WILL PERSIST")
-                        let persist: T = try await self.resquest(params,
-                                                                 method,
-                                                                 jsonEncoding: jsonEncoding,
-                                                                 debug: debug,
-                                                                 persistConnection: persistConnection)
+                        let persist: T = try await self.request(params,
+                                                                method,
+                                                                jsonEncoding: jsonEncoding,
+                                                                debug: debug,
+                                                                persistConnection: persistConnection)
                         return persist
                     } else {
                         throw error
