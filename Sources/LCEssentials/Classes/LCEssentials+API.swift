@@ -183,8 +183,12 @@ public struct API {
                     request.addValue(value, forHTTPHeaderField: key)
                 }
             }
+            if debug {
+                self.displayLOG(method: method, request: request, data: nil, statusCode: 0, error: nil)
+            }
             do {
                 let (data, response) = try await URLSession.shared.data(for: request)
+                
                 
                 var code: Int = LCEssentials.DEFAULT_ERROR_CODE
                 let httpResponse = response as? HTTPURLResponse ?? HTTPURLResponse()
@@ -198,16 +202,14 @@ public struct API {
                     }
                     
                     // - Check if is JSON result
-                    if let jsonString = String(data: data, encoding: .utf8) {
-                        let outPut: T = try JSONDecoder.decode(jsonString)
+                    if let jsonString = String(data: data, encoding: .utf8), let outPut: T = try? JSONDecoder.decode(jsonString) {
                         return outPut
-                    } else {
-                        do {
-                            return try JSONDecoder.decode<T>(dictionary: [String: Any].self)
-                        } catch {
-                            printError(title: "PARSE DICT", msg: error)
-                        }
-                        return try JSONDecoder.decode<T>(data: data)
+                    //} else if let dict: T = try? JSONDecoder.decode(dictionary: [String: Any].self) {
+                    //    return dict
+                    } else if let output: T = try? JSONDecoder.decode(data: data) {
+                        return output
+                    } else if let string: T = data.string as? T {
+                        return string
                     }
                 case 400..<500:
                     // - Debug LOG

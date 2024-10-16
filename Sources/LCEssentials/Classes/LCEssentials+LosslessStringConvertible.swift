@@ -22,11 +22,11 @@
 
 import Foundation
 
-extension LosslessStringConvertible {
+public extension LosslessStringConvertible {
     var string: String { .init(self) }
 }
 
-extension Sequence where Element == UInt8 {
+public extension Sequence where Element == UInt8 {
     var data: Data { .init(self) }
     var base64Decoded: Data? { Data(base64Encoded: data) }
     var string: String? { String(bytes: self, encoding: .utf8) }
