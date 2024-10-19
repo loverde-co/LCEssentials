@@ -41,16 +41,14 @@ public struct API {
                                                       reasonForError: LCEssentials.DEFAULT_ERROR_MSG)
     
     public static var persistConnectionDelay: Double = 3
-    public static var headers: [String: String] = [:]
     public static var defaultParams: [String:Any] = [String: Any]()
-    public static var defaultHeaders: [String: String] = ["Accept": "application/json",
-                                                          "Content-Type": "application/json; charset=UTF-8",
-                                                          "Accept-Encoding": "gzip"]
-    public static var url: String = ""
-    public static var timeoutInterval: TimeInterval = 30 // 30secs default
-    public static var networkServiceType: URLRequest.NetworkServiceType = .default
+    var defaultHeaders: [String: String] = ["Accept": "application/json",
+                                            "Content-Type": "application/json; charset=UTF-8",
+                                            "Accept-Encoding": "gzip"]
     
-    public init(){}
+    public static let shared = API()
+    
+    private init(){}
     
     /// Loverde Co.: API Requests made simple way
     ///
@@ -59,22 +57,26 @@ public struct API {
     /// - Parameters: jsonEncoding - bool
     /// - Parameters: debug - bool - show or hide
     /// - Parameters: persistConnection - bool - if error, re do the request
-    public static func request(_ params: [String: Any],
-                               _ method: httpMethod,
-                               jsonEncoding: Bool = true,
-                               debug: Bool = true,
-                               persistConnection: Bool = false,
-                               function: String = #function,
-                               file: String = #file,
-                               line: Int = #line,
-                               column: Int = #column,
-                               completion: @escaping (Result<Any, Swift.Error>) -> ()){
+    public func request(url: String,
+                        _ params: [String: Any] = [:],
+                        _ method: httpMethod,
+                        headers: [String: String] = [:],
+                        jsonEncoding: Bool = true,
+                        debug: Bool = true,
+                        timeoutInterval: TimeInterval = 30,
+                        networkServiceType: URLRequest.NetworkServiceType = .default,
+                        persistConnection: Bool = false,
+                        function: String = #function,
+                        file: String = #file,
+                        line: Int = #line,
+                        column: Int = #column,
+                        completion: @escaping (Result<Any, Swift.Error>) -> ()){
         do {
             // - Check if URL is valid and replace URL params on address
             if let urlReq = URL(string: url.replaceURL(params)) {
                 var request = URLRequest(url: urlReq, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 20)
                 if method == .post {
-                    var newParams = defaultParams
+                    var newParams = API.defaultParams
                     newParams += params
                     if jsonEncoding {
                         let requestObject = try JSONSerialization.data(withJSONObject: newParams)
@@ -93,8 +95,6 @@ public struct API {
                 
                 // - Put Default Headers togheter with user defined params
                 if !headers.isEmpty {
-                    headers += defaultHeaders
-                    
                     // - Add it to request
                     headers.forEach { (key, value) in
                         request.addValue(value, forHTTPHeaderField: key)
@@ -104,7 +104,10 @@ public struct API {
                         request.addValue(value, forHTTPHeaderField: key)
                     }
                 }
-                let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                let task = URLSession.shared.dataTask(with: request) {
+                    data,
+                    response,
+                    error in
                     var code: Int = LCEssentials.DEFAULT_ERROR_CODE
                     if let httpResponse = response as? HTTPURLResponse {
                         code = httpResponse.statusCode
@@ -112,20 +115,29 @@ public struct API {
                     
                     // - Debug LOG
                     if debug {
-                        self.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
+                        API.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
                     }
-                    guard let data = data, error == nil else {
+                    guard let data = data,
+                          error == nil else {
                         
                         // - Case user want to persist connection
                         if persistConnection {
                             printError(title: "INTERNET CONNECTION ERROR", msg: "WILL PERSIST")
-                            LCEssentials.backgroundThread(delay: persistConnectionDelay, completion:  {
-                                self.request(params, method, 
-                                             jsonEncoding: jsonEncoding,
-                                             debug: debug,
-                                             persistConnection: persistConnection) { (result) in
-                                    completion(result)
-                                }
+                            LCEssentials.backgroundThread(
+                                delay: API.persistConnectionDelay,
+                                completion:  {
+                                    self.request(
+                                        url: url,
+                                        params,
+                                        method,
+                                        headers: headers,
+                                        jsonEncoding: jsonEncoding,
+                                        debug: debug,
+                                        timeoutInterval: timeoutInterval,
+                                        networkServiceType: networkServiceType,
+                                        persistConnection: persistConnection,
+                                        completion: completion
+                                    )
                             })
                         }else{
                             if let error = error {
@@ -149,12 +161,15 @@ public struct API {
         }
     }
     
-    public static func request<T: Codable>(_ params: Any,
-                                           _ method: httpMethod,
-                                           jsonEncoding: Bool = true,
-                                           convertFromDictionary: Bool = false,
-                                           debug: Bool = true,
-                                           persistConnection: Bool = false) async throws -> T {
+    public func request<T: Codable>(url: String,
+                                    _ params: Any? = nil,
+                                    _ method: httpMethod,
+                                    headers: [String: String] = [:],
+                                    jsonEncoding: Bool = true,
+                                    debug: Bool = true,
+                                    timeoutInterval: TimeInterval = 30,
+                                    networkServiceType: URLRequest.NetworkServiceType = .default,
+                                    persistConnection: Bool = false) async throws -> T {
         
         if let urlReq = URL(string: url.replaceURL(params as? [String: Any] ?? [:] )) {
             var request = URLRequest(url: urlReq, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
@@ -178,8 +193,6 @@ public struct API {
             
             // - Put Default Headers togheter with user defined params
             if !headers.isEmpty {
-                headers += defaultHeaders
-                
                 // - Add it to request
                 headers.forEach { (key, value) in
                     request.addValue(value, forHTTPHeaderField: key)
@@ -190,7 +203,7 @@ public struct API {
                 }
             }
             if debug {
-                self.displayLOG(method: method, request: request, data: nil, statusCode: 0, error: nil)
+                API.displayLOG(method: method, request: request, data: nil, statusCode: 0, error: nil)
             }
             do {
                 let (data, response) = try await URLSession.shared.data(for: request)
@@ -204,7 +217,7 @@ public struct API {
                 case 200..<300:
                     // - Debug LOG
                     if debug {
-                        self.displayLOG(method: method, request: request, data: data, statusCode: code, error: nil)
+                        API.displayLOG(method: method, request: request, data: data, statusCode: code, error: nil)
                     }
                     
                     // - Check if is JSON result
@@ -220,15 +233,21 @@ public struct API {
                 case 400..<500:
                     // - Debug LOG
                     if debug {
-                        self.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
+                        API.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
                     }
                     if persistConnection {
                         printError(title: "INTERNET CONNECTION ERROR", msg: "WILL PERSIST")
-                        let persist: T = try await self.request(params,
-                                                                method,
-                                                                jsonEncoding: jsonEncoding,
-                                                                debug: debug,
-                                                                persistConnection: persistConnection)
+                        let persist: T = try await self.request(
+                            url: url,
+                            params,
+                            method,
+                            headers: headers,
+                            jsonEncoding: jsonEncoding,
+                            debug: debug,
+                            timeoutInterval: timeoutInterval,
+                            networkServiceType: networkServiceType,
+                            persistConnection: persistConnection
+                        )
                         return persist
                     } else {
                         throw error
@@ -236,7 +255,7 @@ public struct API {
                 default:
                     // - Debug LOG
                     if debug {
-                        self.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
+                        API.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
                     }
                     throw error
                 }
@@ -244,7 +263,7 @@ public struct API {
                 throw error
             }
         }
-        throw defaultError
+        throw API.defaultError
     }
 }
 
