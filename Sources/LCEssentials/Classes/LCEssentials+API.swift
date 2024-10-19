@@ -47,6 +47,8 @@ public struct API {
                                                           "Content-Type": "application/json; charset=UTF-8",
                                                           "Accept-Encoding": "gzip"]
     public static var url: String = ""
+    public static var timeoutInterval: TimeInterval = 30 // 30secs default
+    public static var networkServiceType: URLRequest.NetworkServiceType = .default
     
     public init(){}
     
@@ -86,6 +88,8 @@ public struct API {
                     }
                 }
                 request.httpMethod = method.rawValue
+                request.timeoutInterval = timeoutInterval
+                request.networkServiceType = networkServiceType
                 
                 // - Put Default Headers togheter with user defined params
                 if !headers.isEmpty {
@@ -169,6 +173,8 @@ public struct API {
                 }
             }
             request.httpMethod = method.rawValue
+            request.timeoutInterval = timeoutInterval
+            request.networkServiceType = networkServiceType
             
             // - Put Default Headers togheter with user defined params
             if !headers.isEmpty {
