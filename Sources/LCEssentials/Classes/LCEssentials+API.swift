@@ -22,6 +22,9 @@
 
 import UIKit
 #if os(iOS) || os(watchOS)
+#if canImport(Security)
+import Security
+#endif
 
 public enum Result<Value, Error: Swift.Error> {
     case success(Value)
@@ -205,8 +208,10 @@ public struct API {
             if debug {
                 API.displayLOG(method: method, request: request, data: nil, statusCode: 0, error: nil)
             }
+            
+            let session = URLSession(configuration: .default, delegate: URLSessionDelegateHandler(), delegateQueue: nil)
             do {
-                let (data, response) = try await URLSession.shared.data(for: request)
+                let (data, response) = try await session.data(for: request)
                 
                 
                 var code: Int = LCEssentials.DEFAULT_ERROR_CODE
@@ -266,6 +271,72 @@ public struct API {
         throw API.defaultError
     }
 }
+
+#if canImport(Security)
+private class URLSessionDelegateHandler: NSObject, URLSessionDelegate {
+    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodClientCertificate {
+            // Carregar o certificado do cliente
+            guard let identity = getIdentity(),
+                  let privateKey = getPrivateKey() else {
+                completionHandler(.cancelAuthenticationChallenge, nil)
+                return
+            }
+
+            // Criar o URLCredential com a identidade
+            let credential = URLCredential(identity: identity, certificates: [], persistence: .forSession)
+            completionHandler(.useCredential, credential)
+        } else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+            // Validar o certificado do servidor
+            if let serverTrust = challenge.protectionSpace.serverTrust {
+                let serverCredential = URLCredential(trust: serverTrust)
+                completionHandler(.useCredential, serverCredential)
+            } else {
+                completionHandler(.cancelAuthenticationChallenge, nil)
+            }
+        } else {
+            completionHandler(.performDefaultHandling, nil)
+        }
+    }
+    
+    private func getIdentity() -> SecIdentity? {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassIdentity,
+            kSecReturnRef as String: kCFBooleanTrue as Any,
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecAttrLabel as String: "br.com.loverde.LCEssentials.ClientIdentity" // Use o rótulo que você deu à identidade
+        ]
+        
+        var item: CFTypeRef?
+        let status = SecItemCopyMatching(query as CFDictionary, &item)
+
+        if status == errSecSuccess {
+            return (item as! SecIdentity)
+        } else {
+            return nil
+        }
+    }
+    
+    private func getPrivateKey() -> SecKey? {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassKey,
+            kSecAttrKeyClass as String: kSecAttrKeyClassPrivate,
+            kSecAttrLabel as String: "br.com.loverde.LCEssentials.ClientKey", // Use o rótulo que você deu à chave
+            kSecReturnRef as String: kCFBooleanTrue as Any,
+            kSecMatchLimit as String: kSecMatchLimitOne
+        ]
+        
+        var item: CFTypeRef?
+        let status = SecItemCopyMatching(query as CFDictionary, &item)
+
+        if status == errSecSuccess {
+            return (item as! SecKey)
+        } else {
+            return nil
+        }
+    }
+}
+#endif
 
 extension Error {
     public var statusCode: Int {
