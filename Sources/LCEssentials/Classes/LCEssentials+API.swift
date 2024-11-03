@@ -51,6 +51,9 @@ public struct API {
     
     public static let shared = API()
     
+    private var certData: Data? = nil
+    private var certPassword: String? = nil
+    
     private init(){}
     
     /// Loverde Co.: API Requests made simple way
@@ -118,7 +121,7 @@ public struct API {
                     
                     // - Debug LOG
                     if debug {
-                        API.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
+                        API.requestLOG(method: method, request: request)
                     }
                     guard let data = data,
                           error == nil else {
@@ -206,10 +209,17 @@ public struct API {
                 }
             }
             if debug {
-                API.displayLOG(method: method, request: request, data: nil, statusCode: 0, error: nil)
+                API.requestLOG(method: method, request: request)
             }
             
-            let session = URLSession(configuration: .default, delegate: URLSessionDelegateHandler(), delegateQueue: nil)
+            let session = URLSession(
+                configuration: .default,
+                delegate: URLSessionDelegateHandler(
+                    certData: self.certData,
+                    password: self.certPassword
+                ),
+                delegateQueue: nil
+            )
             do {
                 let (data, response) = try await session.data(for: request)
                 
@@ -222,7 +232,7 @@ public struct API {
                 case 200..<300:
                     // - Debug LOG
                     if debug {
-                        API.displayLOG(method: method, request: request, data: data, statusCode: code, error: nil)
+                        API.responseLOG(method: method, request: request, data: data, statusCode: code, error: nil)
                     }
                     
                     // - Check if is JSON result
@@ -238,7 +248,7 @@ public struct API {
                 case 400..<500:
                     // - Debug LOG
                     if debug {
-                        API.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
+                        API.responseLOG(method: method, request: request, data: data, statusCode: code, error: error)
                     }
                     if persistConnection {
                         printError(title: "INTERNET CONNECTION ERROR", msg: "WILL PERSIST")
@@ -260,7 +270,7 @@ public struct API {
                 default:
                     // - Debug LOG
                     if debug {
-                        API.displayLOG(method: method, request: request, data: data, statusCode: code, error: error)
+                        API.responseLOG(method: method, request: request, data: data, statusCode: code, error: error)
                     }
                     throw error
                 }
@@ -270,21 +280,34 @@ public struct API {
         }
         throw API.defaultError
     }
+    
+    public mutating func setupCertificationRequest(certData: Data, password: String = "") {
+        self.certData = certData
+        self.certPassword = password
+    }
 }
 
 #if canImport(Security)
 private class URLSessionDelegateHandler: NSObject, URLSessionDelegate {
+    
+    private var certData: Data?
+    private var certPass: String?
+    
+    init(certData: Data? = nil, password: String? = nil) {
+        super.init()
+        self.certData = certData
+        self.certPass = password
+    }
     func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodClientCertificate {
             // Carregar o certificado do cliente
-            guard let identity = getIdentity(),
-                  let privateKey = getPrivateKey() else {
-                completionHandler(.cancelAuthenticationChallenge, nil)
+            guard let identity = getIdentity() else {
+                completionHandler(.performDefaultHandling, nil)
                 return
             }
 
             // Criar o URLCredential com a identidade
-            let credential = URLCredential(identity: identity, certificates: [], persistence: .forSession)
+            let credential = URLCredential(identity: identity, certificates: nil, persistence: .forSession)
             completionHandler(.useCredential, credential)
         } else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
             // Validar o certificado do servidor
@@ -300,40 +323,33 @@ private class URLSessionDelegateHandler: NSObject, URLSessionDelegate {
     }
     
     private func getIdentity() -> SecIdentity? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassIdentity,
-            kSecReturnRef as String: kCFBooleanTrue as Any,
-            kSecMatchLimit as String: kSecMatchLimitOne,
-            kSecAttrLabel as String: "br.com.loverde.LCEssentials.ClientIdentity" // Use o rótulo que você deu à identidade
-        ]
-        
-        var item: CFTypeRef?
-        let status = SecItemCopyMatching(query as CFDictionary, &item)
+        guard let certData = self.certData else { return nil }
+        // Especifique a senha usada ao exportar o .p12
+        let options: [String: Any] = [kSecImportExportPassphrase as String: self.certPass ?? ""]
+        var items: CFArray?
 
-        if status == errSecSuccess {
-            return (item as! SecIdentity)
+        // Importar o certificado .p12 para obter a identidade
+        let status = SecPKCS12Import(certData as CFData, options as CFDictionary, &items)
+        
+        if status == errSecSuccess,
+           let item = (items as? [[String: Any]])?.first,
+           let identityRef = item[kSecImportItemIdentity as String] as CFTypeRef?,
+           CFGetTypeID(identityRef) == SecIdentityGetTypeID() {
+            return (identityRef as! SecIdentity)
         } else {
+            print("Erro ao importar a identidade do certificado: \(status)")
             return nil
         }
+
     }
     
-    private func getPrivateKey() -> SecKey? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassKey,
-            kSecAttrKeyClass as String: kSecAttrKeyClassPrivate,
-            kSecAttrLabel as String: "br.com.loverde.LCEssentials.ClientKey", // Use o rótulo que você deu à chave
-            kSecReturnRef as String: kCFBooleanTrue as Any,
-            kSecMatchLimit as String: kSecMatchLimitOne
-        ]
+    private func isPKCS12(data: Data, password: String) -> Bool {
+        let options: [String: Any] = [kSecImportExportPassphrase as String: password]
         
-        var item: CFTypeRef?
-        let status = SecItemCopyMatching(query as CFDictionary, &item)
-
-        if status == errSecSuccess {
-            return (item as! SecKey)
-        } else {
-            return nil
-        }
+        var items: CFArray?
+        let status = SecPKCS12Import(data as CFData, options as CFDictionary, &items)
+        
+        return status == errSecSuccess
     }
 }
 #endif
@@ -348,9 +364,27 @@ extension Error {
 
 extension API {
     
-    fileprivate static func displayLOG(method: httpMethod, request: URLRequest, data: Data?, statusCode: Int, error: Error?) {
+    fileprivate static func requestLOG(method: httpMethod, request: URLRequest) {
+        
+        print("\n<=========================  INTERNET CONNECTION - REQUEST =========================>")
+        printLog(title: "DATE AND TIME", msg: Date().debugDescription)
+        printLog(title: "METHOD", msg: method.rawValue)
+        printLog(title: "REQUEST", msg: String(describing: request))
+        printLog(title: "HEADERS", msg: request.allHTTPHeaderFields?.debugDescription ?? "")
+        
+        //
+        if let dataBody = request.httpBody, let prettyJson = dataBody.prettyJson {
+            printLog(title: "PARAMETERS", msg: prettyJson)
+        } else if let dataBody = request.httpBody {
+            printLog(title: "PARAMETERS", msg: String(data: dataBody, encoding: .utf8) ?? "-")
+        }
+        //
+        print("<======================================================================================>")
+   }
+    
+    fileprivate static func responseLOG(method: httpMethod, request: URLRequest, data: Data?, statusCode: Int, error: Error?) {
         ///
-         print("\n<=========================  INTERNET CONNECTION - START =========================>")
+         print("\n<=========================  INTERNET CONNECTION - RESPONSE =========================>")
          printLog(title: "DATE AND TIME", msg: Date().debugDescription)
          printLog(title: "METHOD", msg: method.rawValue)
          printLog(title: "REQUEST", msg: String(describing: request))
@@ -403,7 +437,7 @@ extension API {
              }
          }
          //
-         print("<=========================  INTERNET CONNECTION - END =========================>")
+        print("<======================================================================================>")
     }
 }
 #endif
