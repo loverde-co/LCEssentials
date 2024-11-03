@@ -39,6 +39,10 @@ public enum httpMethod: String {
 }
 /// Loverde Co.: API generic struct for simple requests
 public struct API {
+    
+    private static var certData: Data?
+    private static var certPassword: String?
+    
     static let defaultError = NSError.createErrorWith(code: LCEssentials.DEFAULT_ERROR_CODE,
                                                       description: LCEssentials.DEFAULT_ERROR_MSG,
                                                       reasonForError: LCEssentials.DEFAULT_ERROR_MSG)
@@ -50,9 +54,6 @@ public struct API {
                                             "Accept-Encoding": "gzip"]
     
     public static let shared = API()
-    
-    private var certData: Data? = nil
-    private var certPassword: String? = nil
     
     private init(){}
     
@@ -215,8 +216,8 @@ public struct API {
             let session = URLSession(
                 configuration: .default,
                 delegate: URLSessionDelegateHandler(
-                    certData: self.certData,
-                    password: self.certPassword
+                    certData: API.certData,
+                    password: API.certPassword
                 ),
                 delegateQueue: nil
             )
@@ -281,9 +282,9 @@ public struct API {
         throw API.defaultError
     }
     
-    public mutating func setupCertificationRequest(certData: Data, password: String = "") {
-        self.certData = certData
-        self.certPassword = password
+    public func setupCertificationRequest(certData: Data, password: String = "") {
+        API.certData = certData
+        API.certPassword = password
     }
 }
 
