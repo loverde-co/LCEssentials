@@ -337,6 +337,17 @@ public extension String {
     /// The full `NSRange` of the string.
     var fullNSRange: NSRange { NSRange(startIndex..<endIndex, in: self) }
     
+    
+    var base64Encode: String? {
+        return data(using: .utf8)?.base64EncodedString()
+    }
+    
+    
+    var base64Decode: String? {
+        guard let data = Data(base64Encoded: self) else { return nil }
+        return String(data: data, encoding: .utf8)
+    }
+    
     // MARK: - Methods
     
     /// Loverde Co.: Replace Dictionaryes parameters to URL String.

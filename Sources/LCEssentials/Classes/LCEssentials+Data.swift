@@ -113,7 +113,7 @@ public extension Data {
     ///
     ///let md5Hex =  md5Data.toHexString()
     ///print("md5Hex: \(md5Hex)")
-    @available (iOS 13.0, *)
+    @available(iOS 13.0, *)
     static func MD5(string: String) -> Data {
         let messageData = string.data(using: .utf8)!
         let digestData = Insecure.MD5.hash (data: messageData)
