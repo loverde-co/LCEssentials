@@ -22,6 +22,9 @@
 
 import Foundation
 import UIKit
+#if canImport(CryptoKit)
+import CryptoKit
+#endif
 
 public extension String {
     
@@ -347,6 +350,32 @@ public extension String {
         guard let data = Data(base64Encoded: self) else { return nil }
         return String(data: data, encoding: .utf8)
     }
+    
+#if canImport(CryptoKit)
+    func encryptAES(key: String) -> String? {
+        guard let data = self.data(using: .utf8), let keyData = key.data(using: .utf8) else { return nil }
+        
+        let iv = AES.GCM.Nonce()
+        do {
+            let sealedBox = try AES.GCM.seal(data, using: SymmetricKey(data: keyData), nonce: iv)
+            return sealedBox.combined?.base64EncodedString()
+        } catch {
+            return nil
+        }
+    }
+
+    func decryptAES(key: String) -> String? {
+        guard let keyData = key.data(using: .utf8), let data = Data(base64Encoded: self) else { return nil }
+        
+        do {
+            let sealedBox = try AES.GCM.SealedBox(combined: data)
+            let decryptedData = try AES.GCM.open(sealedBox, using: SymmetricKey(data: keyData))
+            return String(data: decryptedData, encoding: .utf8)
+        } catch {
+            return nil
+        }
+    }
+#endif
     
     // MARK: - Methods
     
