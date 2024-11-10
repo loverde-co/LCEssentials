@@ -351,31 +351,47 @@ public extension String {
         return String(data: data, encoding: .utf8)
     }
     
-#if canImport(CryptoKit)
-    func encryptAES(key: String) -> String? {
-        guard let data = self.data(using: .utf8), let keyData = key.data(using: .utf8) else { return nil }
+    var encodeBase58: String {
+        let data = self.data(using: .utf8)!
+        let base58Alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+        var result = ""
         
-        let iv = AES.GCM.Nonce()
-        do {
-            let sealedBox = try AES.GCM.seal(data, using: SymmetricKey(data: keyData), nonce: iv)
-            return sealedBox.combined?.base64EncodedString()
-        } catch {
-            return nil
-        }
-    }
-
-    func decryptAES(key: String) -> String? {
-        guard let keyData = key.data(using: .utf8), let data = Data(base64Encoded: self) else { return nil }
+        // Convert the data to a number
+        var number = data.reduce(0) { $0 * 256 + UInt64($1) }
         
-        do {
-            let sealedBox = try AES.GCM.SealedBox(combined: data)
-            let decryptedData = try AES.GCM.open(sealedBox, using: SymmetricKey(data: keyData))
-            return String(data: decryptedData, encoding: .utf8)
-        } catch {
-            return nil
+        // Base 58 encoding process
+        while number > 0 {
+            let remainder = Int(number % 58)
+            result.insert(base58Alphabet[base58Alphabet.index(base58Alphabet.startIndex, offsetBy: remainder)], at: result.startIndex)
+            number /= 58
         }
+        
+        return result
     }
-#endif
+    
+    var decodeBase58: String? {
+        let base58Alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+        var number: UInt64 = 0
+        
+        // Decode the string to a number
+        for char in self {
+            if let index = base58Alphabet.firstIndex(of: char) {
+                let value = base58Alphabet.distance(from: base58Alphabet.startIndex, to: index)
+                number = number * 58 + UInt64(value)
+            } else {
+                return nil // Invalid character in base58 string
+            }
+        }
+        
+        // Convert the number back to data
+        var data = Data()
+        while number > 0 {
+            data.insert(UInt8(number % 256), at: 0)
+            number /= 256
+        }
+        
+        return String(data: data, encoding: .utf8)
+    }
     
     // MARK: - Methods
     
@@ -980,6 +996,32 @@ public extension String {
             return self
         }
     }
+    
+#if canImport(CryptoKit)
+    func encryptAES(key: String) -> String? {
+        guard let data = self.data(using: .utf8), let keyData = key.data(using: .utf8) else { return nil }
+        
+        let iv = AES.GCM.Nonce()
+        do {
+            let sealedBox = try AES.GCM.seal(data, using: SymmetricKey(data: keyData), nonce: iv)
+            return sealedBox.combined?.base64EncodedString()
+        } catch {
+            return nil
+        }
+    }
+
+    func decryptAES(key: String) -> String? {
+        guard let keyData = key.data(using: .utf8), let data = Data(base64Encoded: self) else { return nil }
+        
+        do {
+            let sealedBox = try AES.GCM.SealedBox(combined: data)
+            let decryptedData = try AES.GCM.open(sealedBox, using: SymmetricKey(data: keyData))
+            return String(data: decryptedData, encoding: .utf8)
+        } catch {
+            return nil
+        }
+    }
+#endif
 }
 
 
