@@ -46,7 +46,7 @@ extension JSONDecoder {
     /// - Parameter data: Data
     /// - returns: Object: Codable/Decodable
     public static func decode<T: Codable>(data: Data) throws -> T {
-        var error = NSError()
+        var error = NSError(domain: "", code: 0)
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .useDefaultKeys
         do {
