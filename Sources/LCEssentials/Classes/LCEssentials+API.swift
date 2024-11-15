@@ -20,10 +20,13 @@
 // THE SOFTWARE.
  
 
-import UIKit
+import Foundation
 #if os(iOS) || os(watchOS)
 #if canImport(Security)
 import Security
+#endif
+#if canImport(UIKit)
+import UIKit
 #endif
 
 public enum Result<Value, Error: Swift.Error> {
@@ -236,16 +239,24 @@ public struct API {
                         API.responseLOG(method: method, request: request, data: data, statusCode: code, error: nil)
                     }
                     
-                    // - Check if is JSON result
-                    if let jsonString = String(data: data, encoding: .utf8), let outPut: T = try? JSONDecoder.decode(jsonString) {
+                    // - Check if is JSON result and try decode it
+                    do {
+                        let jsonString = String(data: data, encoding: .utf8) ?? ""
+                        let outPut: T = try JSONDecoder.decode(jsonString)
                         return outPut
-                    //} else if let dict: T = try? JSONDecoder.decode(dictionary: [String: Any].self) {
-                    //    return dict
-                    } else if let output: T = try? JSONDecoder.decode(data: data) {
-                        return output
-                    } else if let string: T = data.string as? T {
-                        return string
+                    } catch {
+                        printWarn(title: "JSONDecoder", msg: error.localizedDescription)
                     }
+                    if let string: T = data.string as? T {
+                        return string
+                    } else {
+                        printWarn(title: "Parse String as Codable", msg: error.localizedDescription)
+                    }
+                    throw NSError.createErrorWith(
+                        code: 0,
+                        description: "Your result protocol cannot be decoded",
+                        reasonForError: "Your result protocol cannot be decoded"
+                    )
                 case 400..<500:
                     // - Debug LOG
                     if debug {
