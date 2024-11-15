@@ -240,28 +240,16 @@ public struct API {
                     }
                     
                     // - Check if is JSON result and try decode it
+                    if let string = data.string as? T, T.self == String.self {
+                        return string
+                    }
+                    // - Normal decoding
                     do {
                         return try JSONDecoder.decode(data: data)
                     } catch {
-                        printWarn(title: "JSONDecoder", msg: error.localizedDescription)
+                        printError(title: "JSONDecoder", msg: error.localizedDescription)
+                        throw error
                     }
-                    do {
-                        let jsonString = String(data: data, encoding: .utf8) ?? ""
-                        let outPut: T = try JSONDecoder.decode(jsonString)
-                        return outPut
-                    } catch {
-                        printWarn(title: "JSONDecoder.decode(_ json: String)", msg: error.localizedDescription)
-                    }
-                    if let string: T = data.string as? T {
-                        return string
-                    } else {
-                        printWarn(title: "Parse data.string as? T", msg: error.localizedDescription)
-                    }
-                    throw NSError.createErrorWith(
-                        code: 0,
-                        description: "Your result protocol cannot be decoded",
-                        reasonForError: "Your result protocol cannot be decoded"
-                    )
                 case 400..<500:
                     // - Debug LOG
                     if debug {

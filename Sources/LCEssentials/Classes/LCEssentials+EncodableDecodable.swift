@@ -46,7 +46,24 @@ extension JSONDecoder {
     /// - Parameter data: Data
     /// - returns: Object: Codable/Decodable
     public static func decode<T: Codable>(data: Data) throws -> T {
-        return try JSONDecoder().decode(T.self, from: data)
+        var error = NSError()
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .useDefaultKeys
+        do {
+            return try decoder.decode(T.self, from: data)
+        } catch let DecodingError.keyNotFound(key, context) {
+            let msg = "Missing key '\(key.stringValue)' in JSON: \(context.debugDescription)"
+            error = NSError.createErrorWith(code: 0, description: msg, reasonForError: msg)
+        } catch let DecodingError.typeMismatch(type, context) {
+            let msg = "Type mismatch for type '\(type)': \(context.debugDescription)"
+            error = NSError.createErrorWith(code: 0, description: msg, reasonForError: msg)
+        } catch let DecodingError.valueNotFound(value, context) {
+            let msg = "Missing value '\(value)' in JSON: \(context.debugDescription)"
+            error = NSError.createErrorWith(code: 0, description: msg, reasonForError: msg)
+        } catch {
+            throw error
+        }
+        throw error
     }
     
     /// - LoverdeCo: Decode JSON String to Object
@@ -54,10 +71,24 @@ extension JSONDecoder {
     /// - Parameter json: String
     /// - returns: Object: Codable/Decodable
     public static func decode<T: Codable>(_ json: String, using encoding: String.Encoding = .utf8) throws -> T {
-        guard let data = json.data(using: encoding) else {
-            throw NSError(domain: "JSONDecoding", code: 0, userInfo: nil)
+        var error = NSError()
+        if let jsonData = json.data(using: .utf8) {
+            do {
+                return try decode(data: jsonData)
+            } catch let DecodingError.keyNotFound(key, context) {
+                let msg = "Missing key '\(key.stringValue)' in JSON: \(context.debugDescription)"
+                error = NSError.createErrorWith(code: 0, description: msg, reasonForError: msg)
+            } catch let DecodingError.typeMismatch(type, context) {
+                let msg = "Type mismatch for type '\(type)': \(context.debugDescription)"
+                error = NSError.createErrorWith(code: 0, description: msg, reasonForError: msg)
+            } catch let DecodingError.valueNotFound(value, context) {
+                let msg = "Missing value '\(value)' in JSON: \(context.debugDescription)"
+                error = NSError.createErrorWith(code: 0, description: msg, reasonForError: msg)
+            } catch {
+                throw error
+            }
         }
-        return try decode(data: data)
+        throw error
     }
     
     /// - LoverdeCo: Decode JSON URL to Object
