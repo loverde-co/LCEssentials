@@ -241,16 +241,21 @@ public struct API {
                     
                     // - Check if is JSON result and try decode it
                     do {
+                        return try JSONDecoder.decode(data: data)
+                    } catch {
+                        printWarn(title: "JSONDecoder", msg: error.localizedDescription)
+                    }
+                    do {
                         let jsonString = String(data: data, encoding: .utf8) ?? ""
                         let outPut: T = try JSONDecoder.decode(jsonString)
                         return outPut
                     } catch {
-                        printWarn(title: "JSONDecoder", msg: error.localizedDescription)
+                        printWarn(title: "JSONDecoder.decode(_ json: String)", msg: error.localizedDescription)
                     }
                     if let string: T = data.string as? T {
                         return string
                     } else {
-                        printWarn(title: "Parse String as Codable", msg: error.localizedDescription)
+                        printWarn(title: "Parse data.string as? T", msg: error.localizedDescription)
                     }
                     throw NSError.createErrorWith(
                         code: 0,
