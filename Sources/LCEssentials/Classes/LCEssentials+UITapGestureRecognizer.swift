@@ -21,6 +21,7 @@
  
 
 import Foundation
+#if canImport(UIKit) && !canImport(SwiftUI)
 import UIKit
 
 #if os(iOS) || os(macOS)
@@ -57,4 +58,5 @@ public extension UITapGestureRecognizer {
         return NSLocationInRange(indexOfCharacter, targetRange)
     }
 }
+#endif
 #endif

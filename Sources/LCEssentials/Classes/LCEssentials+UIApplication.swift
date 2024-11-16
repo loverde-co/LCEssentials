@@ -20,7 +20,7 @@
 // THE SOFTWARE.
  
 
-#if canImport(UIKit)
+#if canImport(UIKit) && !canImport(SwiftUI)
 import UIKit
 
 #if os(iOS) || os(tvOS)
