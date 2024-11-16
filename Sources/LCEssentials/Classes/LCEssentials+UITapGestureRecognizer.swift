@@ -21,12 +21,9 @@
  
 
 import Foundation
-#if canImport(SwiftUI)
-
-#elseif canImport(UIKit)
+#if canImport(UIKit) && os(iOS) || os(macOS)
 import UIKit
 
-#if os(iOS) || os(macOS)
 public extension UITapGestureRecognizer {
     
     func didTapAttributedTextInLabel(label: UILabel, textToTouch: String) -> Bool {
@@ -60,5 +57,4 @@ public extension UITapGestureRecognizer {
         return NSLocationInRange(indexOfCharacter, targetRange)
     }
 }
-#endif
 #endif

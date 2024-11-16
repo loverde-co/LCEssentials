@@ -19,12 +19,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
  
-#if canImport(SwiftUI)
-
-#elseif canImport(UIKit)
+#if canImport(UIKit) && os(iOS) || os(macOS)
 import UIKit
-
-#if os(iOS) || os(tvOS)
 
 public extension UIApplication {
     /// Application running environment.
@@ -107,7 +103,5 @@ public extension UIApplication {
         }
     }
 }
-
-#endif
 
 #endif
