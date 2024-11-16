@@ -18,8 +18,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-#if canImport(UIKit)
-#elseif canImport(SwiftUI)
+#if canImport(SwiftUI)
 import SwiftUI
 
 @available(iOS 15, *)
@@ -39,7 +38,7 @@ class LCENavigationState: ObservableObject {
 }
 
 @available(iOS 15, *)
-public final struct LCENavigationView<Content: View>: View {
+public struct LCENavigationView<Content: View>: View {
     @ObservedObject private var state: LCENavigationState
     
     let content: Content
