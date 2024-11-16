@@ -67,6 +67,7 @@
 		A93934B45F51011B749B8641A5A9FABB /* LCEssentials+UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1913BEF758C280C6807A53D0AC4288 /* LCEssentials+UIDevice.swift */; };
 		AE2A523FD574D733B659E018098BDFB8 /* LCEssentials+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8869A989D297D00C1F95DEEB325C5 /* LCEssentials+Dictionary.swift */; };
 		B115B9662CBEEF3A00450FE8 /* LCSnackBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115B9642CBEEF3A00450FE8 /* LCSnackBarView.swift */; };
+		B1C13EBF2CE8E8B000274517 /* LCENavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C13EBE2CE8E8B000274517 /* LCENavigationView.swift */; };
 		B1C593F42CA987CB00A1B690 /* LCEssentials+CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C593F32CA987CB00A1B690 /* LCEssentials+CGPoint.swift */; };
 		B1C5F4432BEFDE2700343136 /* LCEssentials+NSError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C5F4422BEFDE2700343136 /* LCEssentials+NSError.swift */; };
 		B644DFEFA350D3F21724DDDCABE0846D /* LCEssentials+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D99247D9BC0AEF68889E5847A4EB305 /* LCEssentials+UILabel.swift */; };
@@ -155,6 +156,7 @@
 		AC2D99281AC4D5FC721CA34E87E2908A /* Pods-LCEssentialsExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LCEssentialsExample-dummy.m"; sourceTree = "<group>"; };
 		AF025927759869CC5FD418A31C266047 /* LCEssentials+UserDefaults.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UserDefaults.swift"; sourceTree = "<group>"; };
 		B115B9642CBEEF3A00450FE8 /* LCSnackBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSnackBarView.swift; sourceTree = "<group>"; };
+		B1C13EBE2CE8E8B000274517 /* LCENavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCENavigationView.swift; sourceTree = "<group>"; };
 		B1C593F32CA987CB00A1B690 /* LCEssentials+CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+CGPoint.swift"; sourceTree = "<group>"; };
 		B1C5F4422BEFDE2700343136 /* LCEssentials+NSError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+NSError.swift"; sourceTree = "<group>"; };
 		B3308E3CC2C4BE34D376B75B2F66C132 /* LCEssentials-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LCEssentials-umbrella.h"; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 		B15F5FF87C6B4D734E8949BD6E0CEC11 /* LCEssentials */ = {
 			isa = PBXGroup;
 			children = (
+				B1C13EBD2CE8E89B00274517 /* SwiftUI */,
 				B115B9652CBEEF3A00450FE8 /* Message */,
 				AD3497195E54B3CD7FE59382F54CBF72 /* Classes */,
 				A46DA0E0415FE6DC628A1498EC7F1562 /* HUDAlert */,
@@ -368,6 +371,14 @@
 			);
 			name = LCEssentials;
 			path = ../..;
+			sourceTree = "<group>";
+		};
+		B1C13EBD2CE8E89B00274517 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				B1C13EBE2CE8E8B000274517 /* LCENavigationView.swift */,
+			);
+			path = SwiftUI;
 			sourceTree = "<group>";
 		};
 		BB2A4E9A5E4B9BBBBE2225329653420F /* Support Files */ = {
@@ -574,6 +585,7 @@
 				76C15B1B0394F850399AD2DADC34D022 /* LCEssentials+StringProtocol.swift in Sources */,
 				13008E9E6C2F13C803D906FD26306B8C /* LCEssentials+UIApplication.swift in Sources */,
 				724655020B5181003E42ED14B487F4F8 /* LCEssentials+UIButton.swift in Sources */,
+				B1C13EBF2CE8E8B000274517 /* LCENavigationView.swift in Sources */,
 				A1B28257D0B4AF4C4A02AA75DB58BC7C /* LCEssentials+UICollectionView.swift in Sources */,
 				7BD0DB27028DF203A3FC78C11B2727BF /* LCEssentials+UIColor.swift in Sources */,
 				A93934B45F51011B749B8641A5A9FABB /* LCEssentials+UIDevice.swift in Sources */,
