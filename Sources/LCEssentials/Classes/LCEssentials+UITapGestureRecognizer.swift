@@ -21,7 +21,9 @@
  
 
 import Foundation
-#if canImport(UIKit) && !canImport(SwiftUI)
+#if canImport(SwiftUI)
+
+#elseif canImport(UIKit)
 import UIKit
 
 #if os(iOS) || os(macOS)

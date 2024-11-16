@@ -19,8 +19,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
  
+#if canImport(SwiftUI)
 
-#if canImport(UIKit) && !canImport(SwiftUI)
+#elseif canImport(UIKit)
 import UIKit
 
 #if os(iOS) || os(tvOS)
