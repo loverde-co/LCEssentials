@@ -67,6 +67,7 @@
 		A93934B45F51011B749B8641A5A9FABB /* LCEssentials+UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1913BEF758C280C6807A53D0AC4288 /* LCEssentials+UIDevice.swift */; };
 		AE2A523FD574D733B659E018098BDFB8 /* LCEssentials+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B8869A989D297D00C1F95DEEB325C5 /* LCEssentials+Dictionary.swift */; };
 		B115B9662CBEEF3A00450FE8 /* LCSnackBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B115B9642CBEEF3A00450FE8 /* LCSnackBarView.swift */; };
+		B1B8A6DB2CEA337C005E621B /* RIPEMD160+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B8A6DA2CEA337C005E621B /* RIPEMD160+Extension.swift */; };
 		B1C13FA02CE9389900274517 /* LCENavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C13F9E2CE9389900274517 /* LCENavigationView.swift */; };
 		B1C593F42CA987CB00A1B690 /* LCEssentials+CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C593F32CA987CB00A1B690 /* LCEssentials+CGPoint.swift */; };
 		B1C5F4432BEFDE2700343136 /* LCEssentials+NSError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C5F4422BEFDE2700343136 /* LCEssentials+NSError.swift */; };
@@ -156,6 +157,7 @@
 		AC2D99281AC4D5FC721CA34E87E2908A /* Pods-LCEssentialsExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-LCEssentialsExample-dummy.m"; sourceTree = "<group>"; };
 		AF025927759869CC5FD418A31C266047 /* LCEssentials+UserDefaults.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+UserDefaults.swift"; sourceTree = "<group>"; };
 		B115B9642CBEEF3A00450FE8 /* LCSnackBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCSnackBarView.swift; sourceTree = "<group>"; };
+		B1B8A6DA2CEA337C005E621B /* RIPEMD160+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RIPEMD160+Extension.swift"; sourceTree = "<group>"; };
 		B1C13F9E2CE9389900274517 /* LCENavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCENavigationView.swift; sourceTree = "<group>"; };
 		B1C593F32CA987CB00A1B690 /* LCEssentials+CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+CGPoint.swift"; sourceTree = "<group>"; };
 		B1C5F4422BEFDE2700343136 /* LCEssentials+NSError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+NSError.swift"; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				AF025927759869CC5FD418A31C266047 /* LCEssentials+UserDefaults.swift */,
 				1FCD7453633EF88ADC318BC76D2664C6 /* LCSingleton.swift */,
 				5DF322C4B96D9BD1CEF28428A9481E56 /* ReachabilityHelper.swift */,
+				B1B8A6DA2CEA337C005E621B /* RIPEMD160+Extension.swift */,
 			);
 			name = Classes;
 			path = Sources/LCEssentials/Classes;
@@ -554,6 +557,7 @@
 				5923C740012737DAC3FA24149135E746 /* LCEssentials+BidirectionalCollection.swift in Sources */,
 				F872D4ADFB41D9424744073E9C8262A7 /* LCEssentials+BinaryFloatingPoint.swift in Sources */,
 				51EA154D1ABA17A25CB6D202756719A4 /* LCEssentials+BinaryInteger.swift in Sources */,
+				B1B8A6DB2CEA337C005E621B /* RIPEMD160+Extension.swift in Sources */,
 				B1C593F42CA987CB00A1B690 /* LCEssentials+CGPoint.swift in Sources */,
 				B115B9662CBEEF3A00450FE8 /* LCSnackBarView.swift in Sources */,
 				7E9F580FD7530E228C80CA144FBC72CC /* LCEssentials+Bool.swift in Sources */,

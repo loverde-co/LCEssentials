@@ -61,13 +61,13 @@ public extension Data {
         self = data
     }
     
-    func hmacSHA512(key: Data) -> Data {
+    func HMACSHA512(key: Data) -> Data {
         var hmac = HMAC<SHA512>.init(key: SymmetricKey(data: key))
         hmac.update(data: self)
         return Data(hmac.finalize())
     }
     
-    func sha512() -> Data {
+    func SHA512() -> Data {
         var digest = [UInt8](repeating: 0, count: Int(CC_SHA512_DIGEST_LENGTH))
         self.withUnsafeBytes {
             _ = CC_SHA512($0.baseAddress, CC_LONG(self.count), &digest)
@@ -75,11 +75,11 @@ public extension Data {
         return Data(digest)
     }
     
-    func xor(with other: Data) -> Data {
+    func XOR(with other: Data) -> Data {
         return Data(zip(self, other).map { $0 ^ $1 })
     }
     
-    func sha256() -> Data {
+    func SHA256() -> Data {
         var digest = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
         self.withUnsafeBytes {
             _ = CC_SHA256($0.baseAddress, CC_LONG(self.count), &digest)
