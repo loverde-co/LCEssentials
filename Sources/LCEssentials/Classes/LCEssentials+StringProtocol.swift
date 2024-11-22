@@ -26,4 +26,5 @@ extension StringProtocol {
     var data: Data { Data(utf8) }
     var base64Encoded: Data { data.base64EncodedData() }
     var base64Decoded: Data? { Data(base64Encoded: string) }
+    var string: String { String(self) }
 }

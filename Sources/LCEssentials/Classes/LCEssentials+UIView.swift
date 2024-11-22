@@ -679,7 +679,7 @@ public extension UIView {
     @discardableResult
     func setConstraintsTo(anchorType: AnchorType, value: CGFloat, safeArea: Bool = false) -> UIView {
         guard let currentView = self.viewReference
-        else { fatalError("Ops! Faltou o parentView. Utilize constraintsTo(parentView... primeiro.") }
+        else { fatalError("Ops! Faltou o parentView. Utilize setConstraintsTo(parentView... primeiro.") }
         self.setConstraintsTo(parentView: currentView, anchorType: anchorType, value: value, safeArea: safeArea)
         return self
     }
