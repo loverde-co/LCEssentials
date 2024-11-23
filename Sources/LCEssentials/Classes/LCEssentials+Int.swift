@@ -55,6 +55,14 @@ public extension Int {
     var uInt: UInt {
         return UInt(self)
     }
+    
+    var uInt32: UInt32 {
+        return UInt32(truncatingIfNeeded: self)
+    }
+    
+    var uInt64: UInt64 {
+        return UInt64(truncatingIfNeeded: self)
+    }
 
     /// Double.
     var double: Double {
