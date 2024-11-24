@@ -96,18 +96,18 @@ public extension LCENavigationView {
     
     private var NavLeftButton: some View {
         Button(action: state.leftButtonAction) {
-//            if let image = state.leftButtonImage {
-//                image.foregroundColor(.loGrey)
-//            }
+            if let image = state.leftButtonImage {
+                image
+            }
             state.leftButtonText
         }
     }
     
     private var NavRightButton: some View {
         Button(action: state.rightButtonAction) {
-//            if let image = state.rightButtonImage {
-//                image.foregroundColor(.loGrey)
-//            }
+            if let image = state.rightButtonImage {
+                image
+            }
             state.rightButtonText
         }
     }
