@@ -115,7 +115,7 @@ public struct LCENavigationView<Content: View>: View {
     public func setRightButton(
         text: String,
         color: Color = .primary,
-        image: Image? = nil,
+        image: (any View)? = nil,
         action: @escaping () -> Void
     ) -> LCENavigationView {
         if let image {
@@ -139,7 +139,7 @@ public struct LCENavigationView<Content: View>: View {
     public func setLeftButton(
         text: String,
         color: Color = .primary,
-        image: Image? = nil,
+        image: (any View)? = nil,
         action: @escaping () -> Void
     ) -> LCENavigationView {
         if let image {
