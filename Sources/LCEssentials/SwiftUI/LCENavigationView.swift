@@ -112,7 +112,7 @@ public struct LCENavigationView<Content: View>: View {
         }
     }
     
-    func setRightButton(
+    public func setRightButton(
         text: String,
         color: Color = .primary,
         image: Image? = nil,
@@ -136,7 +136,7 @@ public struct LCENavigationView<Content: View>: View {
         return self
     }
     
-    func setLeftButton(
+    public func setLeftButton(
         text: String,
         color: Color = .primary,
         image: Image? = nil,
@@ -160,7 +160,7 @@ public struct LCENavigationView<Content: View>: View {
         return self
     }
     
-    func setTitle(
+    public func setTitle(
         text: Text,
         subTitle: Text? = nil
     ) -> LCENavigationView {
@@ -169,7 +169,7 @@ public struct LCENavigationView<Content: View>: View {
         return self
     }
     
-    func hideNavigationView(_ hide: Bool) -> LCENavigationView {
+    public func hideNavigationView(_ hide: Bool) -> LCENavigationView {
         state.hideNavigationBar = hide
         return self
     }
