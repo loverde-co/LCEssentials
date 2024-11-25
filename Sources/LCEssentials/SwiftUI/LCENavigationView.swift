@@ -117,7 +117,7 @@ public struct LCENavigationView<Content: View>: View {
         color: Color = .primary,
         image: Image? = nil,
         action: @escaping () -> Void
-    ) -> Self {
+    ) -> LCENavigationView {
         if let image {
             state.rightButtonImage = AnyView(image)
         } else {
@@ -141,7 +141,7 @@ public struct LCENavigationView<Content: View>: View {
         color: Color = .primary,
         image: Image? = nil,
         action: @escaping () -> Void
-    ) -> Self {
+    ) -> LCENavigationView {
         if let image {
             state.leftButtonImage = AnyView(image)
         } else {
@@ -163,13 +163,13 @@ public struct LCENavigationView<Content: View>: View {
     func setTitle(
         text: Text,
         subTitle: Text? = nil
-    ) -> Self {
+    ) -> LCENavigationView {
         state.title = text
         state.subTitle = subTitle
         return self
     }
     
-    func hideNavigationView(_ hide: Bool) -> Self {
+    func hideNavigationView(_ hide: Bool) -> LCENavigationView {
         state.hideNavigationBar = hide
         return self
     }
