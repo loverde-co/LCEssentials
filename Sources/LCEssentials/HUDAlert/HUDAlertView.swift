@@ -128,17 +128,17 @@ public final class HUDAlertView: UIView {
         rotatinProgress.setHeight(size: 40)
         
         titleLabel
-            .setConstraintsTo(rotatinProgress, .bottomToTop, 8)
+            .setConstraintsTo(rotatinProgress, .topToBottom, 8)
             .setConstraintsTo(containerView, .leading, 10)
             .setConstraints(.trailing, -10)
         
         descLabel
-            .setConstraintsTo(titleLabel, .bottomToTop, 8)
+            .setConstraintsTo(titleLabel, .topToBottom, 8)
             .setConstraintsTo(containerView, .leading, 10)
             .setConstraints(.trailing, -10)
         
         stackButtons
-            .setConstraintsTo(descLabel, .bottomToTop, 8)
+            .setConstraintsTo(descLabel, .topToBottom, 8)
             .setConstraintsTo(containerView, .leading, 10)
             .setConstraints(.leading, 10)
             .setConstraints(.trailing, -10)
