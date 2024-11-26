@@ -33,6 +33,10 @@ import Darwin
 import Glibc
 #endif
 
+var bitcoinIntConvertion: Int {
+    return 100_000_000
+}
+
 // MARK: - Properties
 
 public extension Int {
@@ -81,15 +85,16 @@ public extension Int {
     }
     #endif
     
-    var satsToBTC: Double {
-        return (self / 100_000_000).double
+    var satsToBTC: String {
+        let result = double / (bitcoinIntConvertion).double
+        return String(format: "%.8f", result)
     }
     
-    var convertToBTC: Double {
+    var convertToBTC: String {
         return satsToBTC
     }
     
-    var toBTC: Double {
+    var toBTC: String {
         return satsToBTC
     }
     

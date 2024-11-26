@@ -332,6 +332,16 @@ public extension String {
         return Double(self)
     }
     
+    var btcToSats: Int {
+        let decamal = Decimal(string: self) ?? Decimal()
+        var scaledResult = decamal * Decimal(bitcoinIntConvertion)
+        return NSDecimalNumber(decimal: scaledResult).intValue
+    }
+    
+    var bitcoinToSatoshis: Int {
+        btcToSats
+    }
+    
     /// NSString from a string.
     var nsString: NSString {
         return NSString(string: self)
