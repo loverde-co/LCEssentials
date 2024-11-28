@@ -44,6 +44,10 @@ public extension Data {
         }
     }
     
+    var toHexString: String {
+        String(self.map { String(format: "%02hhx", $0) }.joined())
+    }
+    
     init?(hexString: String) {
         let cleanHex = hexString.replacingOccurrences(of: " ", with: "")
         let length = cleanHex.count / 2
@@ -97,7 +101,7 @@ public extension Data {
         }
     }
     
-    func toHexString() -> String {
+    func toHexadecimalString() -> String {
         return `lazy`.reduce("") {
             var s = String($1, radix: 16)
             if s.count == 1 {
