@@ -85,4 +85,8 @@ public extension UserDefaults {
         UserDefaults.standard.removePersistentDomain(forName: domain)
         UserDefaults.standard.synchronize()
     }
+    
+    func showEverything() -> [String: Any] {
+        return UserDefaults.standard.dictionaryRepresentation()
+    }
 }
