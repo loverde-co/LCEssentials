@@ -78,19 +78,23 @@ public final class LCSnackBarView: UIView {
     
     // MARK: - Private properties
     
+    private lazy var contentView: UIView = {
+        $0.backgroundColor = .white
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.isOpaque = true
+        return $0
+    }(UIView())
+    
     private lazy var descriptionLabel: UILabel = {
         $0.font = .systemFont(ofSize: 12, weight: .regular)
         $0.text = nil
-        $0.contentMode = .top
         $0.textColor = .black
         $0.backgroundColor = UIColor.clear
         $0.numberOfLines = 0
         $0.lineBreakMode = .byWordWrapping
         $0.textAlignment = .center
         $0.isOpaque = true
-        $0.setContentCompressionResistancePriority(.required, for: .vertical)
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.sizeToFit()
         return $0
     }(UILabel())
     
@@ -159,6 +163,7 @@ public extension LCSnackBarView {
     
     private func setupDefaultLayout() {
         backgroundColor = .white
+        contentView.backgroundColor = .white
         clipsToBounds = true
     }
     
@@ -252,18 +257,28 @@ public extension LCSnackBarView {
     }
     
     private func positioningView(_ view: UIView) {
-        switch _orientation {
-        case .bottom:
-            _height = (descriptionLabel.lineNumbers().cgFloat * descriptionLabel.font.pointSize) + spacing + UIDevice.bottomNotch
-            originPositionY = UIScreen.main.bounds.height
-        default:
-            _height = (descriptionLabel.lineNumbers().cgFloat * descriptionLabel.font.pointSize) + spacing + UIDevice.topNotch
-            originPositionY = -_height
-        }
-        
         view
         .addSubview(self,
                     translatesAutoresizingMaskIntoConstraints: true)
+        
+        switch _orientation {
+        case .bottom:
+            var bottomNotch = UIDevice.bottomNotch
+            if _style != .rounded {
+                bottomNotch = (1.25 * bottomNotch)
+                contentView.bottomConstraint?.isActive = false
+            }
+            _height = (descriptionLabel.lineNumbers().cgFloat * descriptionLabel.font.pointSize) + spacing + bottomNotch
+            originPositionY = UIScreen.main.bounds.height
+        default:
+            var topNotch = UIDevice.topNotch
+            if _style != .rounded {
+                topNotch = (1.25 * topNotch)
+                contentView.topConstraint?.isActive = false
+            }
+            _height = (descriptionLabel.lineNumbers().cgFloat * descriptionLabel.font.pointSize) + spacing + topNotch
+            originPositionY = -_height
+        }
         
         frame = CGRect(x: originPositionX,
                        y: originPositionY,
@@ -340,15 +355,22 @@ public extension LCSnackBarView {
     private func addComponentsAndConstraints() {
         
         // MARK: - Add Subviews
-        addSubviews([descriptionLabel])
+        contentView.addSubviews([descriptionLabel])
+        addSubviews([contentView])
         
         // MARK: - Add Constraints
         
-        descriptionLabel
+        contentView
             .setConstraintsTo(self, .top, 10)
             .setConstraints(.leading, 10)
             .setConstraints(.trailing, -10)
             .setConstraints(.bottom, -10)
+        
+        descriptionLabel
+            .setConstraintsTo(contentView, .top, 0)
+            .setConstraints(.leading, 0)
+            .setConstraints(.trailing, 0)
+            .setConstraints(.bottom, 0)
     }
 }
 
@@ -378,6 +400,7 @@ public extension LCSnackBarView {
     @discardableResult
     func configure(backgroundColor: UIColor) -> Self {
         self.backgroundColor = backgroundColor
+        contentView.backgroundColor = backgroundColor
         return self
     }
     
@@ -396,12 +419,13 @@ public extension LCSnackBarView {
         if let withTintColor {
             icon.image = icon.image?.withRenderingMode(.alwaysTemplate).tintImage(color: withTintColor)
         }
-        addSubviews([icon])
+        
+        contentView
+            .addSubviews([icon])
+        
         icon
-            .setConstraintsTo(self, .leading, 10)
-            .setConstraints(.centerY, 0)
-            .setConstraints(.top, 10)
-            .setConstraints(.bottom, -10)
+            .setConstraintsTo(contentView, .leading, 10)
+            .setConstraintsTo(descriptionLabel, .centerY, 0)
 
         return self
     }

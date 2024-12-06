@@ -77,7 +77,7 @@ class SecondVC: UIViewController {
             .setConstraints(.trailing, -20)
     
         let md5Data = Data.MD5(string: md5String)
-        let toHex = md5Data.toHexString()
+        let toHex = md5Data.toHexString
         printLog(title: "MD5", msg: toHex)
         self.lblMD5.text = "Original message: \(md5String)\n\nMD5 output: "+toHex
         
