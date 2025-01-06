@@ -431,6 +431,7 @@ public extension LCSnackBarView {
     }
     
     func present(completion: (()->())? = nil) {
+        if isOpen { return }
         if let controller = LCEssentials.getTopViewController(aboveBars: true) {
             showSnackBar(controller: controller) {
                 completion?()
