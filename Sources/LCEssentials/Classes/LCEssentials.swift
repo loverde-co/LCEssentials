@@ -325,32 +325,46 @@ public struct LCEssentials {
     
     #if os(iOS) || os(tvOS)
     /// - LoverdeCo: Most top view controller (if applicable).
-    public static func getTopViewController(base: UIViewController? = UIViewController(),
-                                            aboveBars: Bool = true) -> UIViewController? {
+    public static func getTopViewController(base: UIViewController? = nil, aboveBars: Bool = true) -> UIViewController? {
         var viewController = base
-        if #available(iOS 13.0, *) {
-            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-            viewController = window?.rootViewController
-        } else {
-            viewController = UIApplication.shared.keyWindow?.rootViewController
+        
+        if viewController == nil {
+            // iOS 13+ - Obter o rootViewController da UIWindow correta
+            if #available(iOS 13.0, *) {
+                // Acessa a janela ativa na cena principal
+                if let windowScene = UIApplication.shared.connectedScenes
+                    .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene,
+                   let window = windowScene.windows.first(where: { $0.isKeyWindow }) {
+                    viewController = window.rootViewController
+                }
+            } else {
+                // Pré-iOS 13
+                viewController = UIApplication.shared.keyWindow?.rootViewController
+            }
         }
         
+        // Navegação - UINavigationController
         if let nav = viewController as? UINavigationController {
             if aboveBars {
                 return nav
             }
             return getTopViewController(base: nav.visibleViewController)
-
-        } else if let tab = viewController as? UITabBarController,
-                    let selected = tab.selectedViewController {
+        }
+        
+        // Tabs - UITabBarController
+        if let tab = viewController as? UITabBarController,
+           let selected = tab.selectedViewController {
             if aboveBars {
                 return tab
             }
             return getTopViewController(base: selected)
-
-        } else if let presented = viewController?.presentedViewController {
+        }
+        
+        // Apresentações modais
+        if let presented = viewController?.presentedViewController {
             return getTopViewController(base: presented)
         }
+        
         return viewController
     }
     #endif
