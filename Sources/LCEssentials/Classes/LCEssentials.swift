@@ -438,6 +438,12 @@ public extension LCEssentials {
         }
     }
     
+    static func dispatchAsync(completion: @escaping () -> Void) {
+        DispatchQueue.main.async {
+            completion()
+        }
+    }
+    
     #if os(iOS) || os(macOS)
     //MARK: - Set Root View Controller
     static func setRootViewController(to viewController: UIViewController,

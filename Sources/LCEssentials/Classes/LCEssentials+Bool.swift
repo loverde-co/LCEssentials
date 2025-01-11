@@ -42,5 +42,4 @@ public extension Bool {
     var string: String {
         return self ? "true" : "false"
     }
-
 }

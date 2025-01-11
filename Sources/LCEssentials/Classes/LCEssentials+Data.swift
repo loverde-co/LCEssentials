@@ -48,6 +48,10 @@ public extension Data {
         String(self.map { String(format: "%02hhx", $0) }.joined())
     }
     
+    var bool: Bool {
+        String(data: self, encoding: .utf8).flatMap(Bool.init) ?? false
+    }
+    
     init?(hexString: String) {
         let cleanHex = hexString.replacingOccurrences(of: " ", with: "")
         let length = cleanHex.count / 2

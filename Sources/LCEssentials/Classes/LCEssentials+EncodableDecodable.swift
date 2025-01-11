@@ -52,13 +52,13 @@ extension JSONDecoder {
         do {
             return try decoder.decode(T.self, from: data)
         } catch let DecodingError.keyNotFound(key, context) {
-            let msg = "Missing key '\(key.stringValue)' in JSON: \(context.debugDescription)"
+            let msg = "Missing key '\(key.stringValue)' in \(T.self) Object in JSON: \(context.debugDescription)"
             error = NSError.createErrorWith(code: 0, description: msg, reasonForError: msg)
         } catch let DecodingError.typeMismatch(type, context) {
-            let msg = "Type mismatch for type '\(type)': \(context.debugDescription)"
+            let msg = "Type mismatch for type '\(type)' \(T.self) Object: \(context.debugDescription)"
             error = NSError.createErrorWith(code: 0, description: msg, reasonForError: msg)
         } catch let DecodingError.valueNotFound(value, context) {
-            let msg = "Missing value '\(value)' in JSON: \(context.debugDescription)"
+            let msg = "Missing value '\(value)' in \(T.self) Object in JSON: \(context.debugDescription)"
             error = NSError.createErrorWith(code: 0, description: msg, reasonForError: msg)
         } catch {
             throw error
@@ -75,15 +75,6 @@ extension JSONDecoder {
         if let jsonData = json.data(using: .utf8) {
             do {
                 return try decode(data: jsonData)
-            } catch let DecodingError.keyNotFound(key, context) {
-                let msg = "Missing key '\(key.stringValue)' in JSON: \(context.debugDescription)"
-                error = NSError.createErrorWith(code: 0, description: msg, reasonForError: msg)
-            } catch let DecodingError.typeMismatch(type, context) {
-                let msg = "Type mismatch for type '\(type)': \(context.debugDescription)"
-                error = NSError.createErrorWith(code: 0, description: msg, reasonForError: msg)
-            } catch let DecodingError.valueNotFound(value, context) {
-                let msg = "Missing value '\(value)' in JSON: \(context.debugDescription)"
-                error = NSError.createErrorWith(code: 0, description: msg, reasonForError: msg)
             } catch {
                 throw error
             }
