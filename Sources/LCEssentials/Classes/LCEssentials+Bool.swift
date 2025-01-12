@@ -42,4 +42,8 @@ public extension Bool {
     var string: String {
         return self ? "true" : "false"
     }
+    
+    var data: Data {
+        Data([self ? 1 : 0])
+    }
 }

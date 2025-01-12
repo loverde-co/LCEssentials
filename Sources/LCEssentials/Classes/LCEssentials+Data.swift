@@ -49,7 +49,7 @@ public extension Data {
     }
     
     var bool: Bool {
-        String(data: self, encoding: .utf8).flatMap(Bool.init) ?? false
+        first != 0
     }
     
     init?(hexString: String) {
