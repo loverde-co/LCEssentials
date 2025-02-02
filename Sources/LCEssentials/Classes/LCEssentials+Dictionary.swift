@@ -316,7 +316,7 @@ public extension Dictionary where Key: StringProtocol {
     }
 }
 
-extension Dictionary where Value: Hashable {
+public extension Dictionary where Value: Hashable {
     var uniqueValues: Dictionary<Key, Value> {
         var seenValues = Set<Value>()
         return self.filter { seenValues.insert($0.value).inserted }
