@@ -270,14 +270,19 @@ public struct API {
                         )
                         return persist
                     } else {
-                        throw error
+                        if debug {
+                            API.responseLOG(method: method, request: request, data: data, statusCode: code, error: error)
+                        }
+                        let friendlyError = NSError.createErrorWith(code: code, description: error.localizedDescription, reasonForError: data.prettyJson ?? "")
+                        throw friendlyError
                     }
                 default:
                     // - Debug LOG
                     if debug {
                         API.responseLOG(method: method, request: request, data: data, statusCode: code, error: error)
                     }
-                    throw error
+                    let friendlyError = NSError.createErrorWith(code: code, description: error.localizedDescription, reasonForError: data.prettyJson ?? "")
+                    throw friendlyError
                 }
             } catch {
                 throw error
