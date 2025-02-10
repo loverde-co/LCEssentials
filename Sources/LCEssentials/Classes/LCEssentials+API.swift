@@ -85,7 +85,7 @@ public struct API {
             // - Check if URL is valid and replace URL params on address
             if let urlReq = URL(string: url.replaceURL(params)) {
                 var request = URLRequest(url: urlReq, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 20)
-                if method == .post {
+                if method == .post || method == .put || method == .delete {
                     var newParams = API.defaultParams
                     newParams += params
                     if jsonEncoding {
@@ -163,6 +163,7 @@ public struct API {
                     }else{
                         completion(Result.success(data))
                     }
+                    API.responseLOG(method: method, request: request, data: data, statusCode: code, error: error)
                 }
                 task.resume()
             }
@@ -183,7 +184,7 @@ public struct API {
         
         if let urlReq = URL(string: url.replaceURL(params as? [String: Any] ?? [:] )) {
             var request = URLRequest(url: urlReq, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
-            if method == .post {
+            if method == .post || method == .put || method == .delete {
                 if jsonEncoding, let params = params as? [String: Any] {
                     let requestObject = try JSONSerialization.data(withJSONObject: params)
                     request.httpBody = requestObject
