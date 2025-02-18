@@ -186,7 +186,8 @@ public struct API {
             var request = URLRequest(url: urlReq, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
             if method == .post || method == .put || method == .delete {
                 if let params = params as? [String: Any],
-                   let fileURL = params["file"] as? URL {
+                   let pathFile = params["file"] as? String,
+                   let fileURL = URL(string: pathFile) {
                     let boundary = UUID().uuidString
                     request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
                     
