@@ -195,13 +195,10 @@ public struct API {
                     
                     // Adiciona campos adicionais (se houver)
                     for (key, value) in params where key != "file" {
-                        if let stringValue = value as? String {
-                            body.append("--\(boundary)\r\n".data(using: .utf8)!)
-                            body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
-                            body.append("\(stringValue)\r\n".data(using: .utf8)!)
-                        } else {
-                            printError(title: "Multipart Form Data", msg: "Valor inválido para o campo '\(key)': \(value)")
-                        }
+                        let stringValue = "\(value)"
+                        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+                        body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
+                        body.append("\(stringValue)\r\n".data(using: .utf8)!)
                     }
                     
                     // Adiciona o arquivo
