@@ -199,6 +199,8 @@ public struct API {
                             body.append("--\(boundary)\r\n".data(using: .utf8)!)
                             body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
                             body.append("\(stringValue)\r\n".data(using: .utf8)!)
+                        } else {
+                            printError(title: "Multipart Form Data", msg: "Valor inválido para o campo '\(key)': \(value)")
                         }
                     }
                     
@@ -219,6 +221,11 @@ public struct API {
                     // Finaliza o corpo da requisição
                     body.append("--\(boundary)--\r\n".data(using: .utf8)!)
                     request.httpBody = body
+                    // Logs de depuração
+                    printLog(title: "Boundary", msg: boundary)
+                    if let bodyString = String(data: body, encoding: .utf8) {
+                        printLog(title: "Body Content", msg: bodyString)
+                    }
                 } else if jsonEncoding, let params = params as? [String: Any] {
                     let requestObject = try JSONSerialization.data(withJSONObject: params)
                     request.httpBody = requestObject
