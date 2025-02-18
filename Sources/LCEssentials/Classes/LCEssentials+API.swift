@@ -185,7 +185,40 @@ public struct API {
         if let urlReq = URL(string: url.replaceURL(params as? [String: Any] ?? [:] )) {
             var request = URLRequest(url: urlReq, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
             if method == .post || method == .put || method == .delete {
-                if jsonEncoding, let params = params as? [String: Any] {
+                if let params = params as? [String: Any],
+                   let fileURL = params["file"] as? URL {
+                    let boundary = UUID().uuidString
+                    request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+                    
+                    var body = Data()
+                    
+                    // Adiciona campos adicionais (se houver)
+                    for (key, value) in params where key != "file" {
+                        if let stringValue = value as? String {
+                            body.append("--\(boundary)\r\n".data(using: .utf8)!)
+                            body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
+                            body.append("\(stringValue)\r\n".data(using: .utf8)!)
+                        }
+                    }
+                    
+                    // Adiciona o arquivo
+                    let fileName = fileURL.lastPathComponent
+                    let mimeType = mimeTypeForPath(path: fileName)
+                    do {
+                        let fileData = try Data(contentsOf: fileURL)
+                        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+                        body.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
+                        body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
+                        body.append(fileData)
+                        body.append("\r\n".data(using: .utf8)!)
+                    } catch {
+                        printError(title: "Upload File", msg: error.localizedDescription)
+                    }
+                    
+                    // Finaliza o corpo da requisição
+                    body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+                    request.httpBody = body
+                } else if jsonEncoding, let params = params as? [String: Any] {
                     let requestObject = try JSONSerialization.data(withJSONObject: params)
                     request.httpBody = requestObject
                 } else if let params = params as? [String: Any] {
@@ -377,7 +410,7 @@ extension API {
     
     fileprivate static func requestLOG(method: httpMethod, request: URLRequest) {
         
-        print("\n<=========================  INTERNET CONNECTION - REQUEST =========================>")
+        print("\n<========================= 🟠 INTERNET CONNECTION - REQUEST =========================>")
         printLog(title: "DATE AND TIME", msg: Date().debugDescription)
         printLog(title: "METHOD", msg: method.rawValue)
         printLog(title: "REQUEST", msg: String(describing: request))
@@ -395,7 +428,8 @@ extension API {
     
     fileprivate static func responseLOG(method: httpMethod, request: URLRequest, data: Data?, statusCode: Int, error: Error?) {
         ///
-         print("\n<=========================  INTERNET CONNECTION - RESPONSE =========================>")
+        let icon = error != nil ? "🔴" : "🟢"
+         print("\n<========================= \(icon) INTERNET CONNECTION - RESPONSE =========================>")
          printLog(title: "DATE AND TIME", msg: Date().debugDescription)
          printLog(title: "METHOD", msg: method.rawValue)
          printLog(title: "REQUEST", msg: String(describing: request))
@@ -449,6 +483,38 @@ extension API {
          }
          //
         print("<======================================================================================>")
+    }
+    
+    func mimeTypeForPath(path: String) -> String {
+        let url = URL(fileURLWithPath: path)
+        let pathExtension = url.pathExtension.lowercased()
+        
+        // Dicionário de extensões e MIME types comuns
+        let mimeTypes: [String: String] = [
+            "jpg": "image/jpeg",
+            "jpeg": "image/jpeg",
+            "png": "image/png",
+            "gif": "image/gif",
+            "pdf": "application/pdf",
+            "txt": "text/plain",
+            "html": "text/html",
+            "htm": "text/html",
+            "json": "application/json",
+            "xml": "application/xml",
+            "zip": "application/zip",
+            "mp3": "audio/mpeg",
+            "mp4": "video/mp4",
+            "mov": "video/quicktime",
+            "doc": "application/msword",
+            "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "xls": "application/vnd.ms-excel",
+            "xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "ppt": "application/vnd.ms-powerpoint",
+            "pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        ]
+        
+        // Retorna o MIME type correspondente à extensão, ou "application/octet-stream" como padrão
+        return mimeTypes[pathExtension] ?? "application/octet-stream"
     }
 }
 #endif
