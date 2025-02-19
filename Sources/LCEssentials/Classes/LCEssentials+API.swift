@@ -218,6 +218,7 @@ public struct API {
                     // Finaliza o corpo da requisição
                     body.append("--\(boundary)--\r\n".data(using: .utf8)!)
                     request.httpBody = body
+                    request.setValue("\(body.count)", forHTTPHeaderField: "Content-Length")
                     // Logs de depuração
                     printLog(title: "Boundary", msg: boundary)
                     if let bodyString = String(data: body, encoding: .utf8) {
