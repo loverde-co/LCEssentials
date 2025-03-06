@@ -34,7 +34,7 @@ class LCENavigationState: ObservableObject {
     @Published var hideNavigationBar: Bool = false
     
     @Published var title: (any View) = Text("")
-    @Published var subTitle: AnyView? = nil
+    @Published var subTitle: (any View) = Text("")
 }
 
 @available(iOS 15, *)
@@ -45,7 +45,7 @@ public struct LCENavigationView<Content: View>: View {
     
     public init(
         title: (any View) = Text(""),
-        subTitle: AnyView? = nil,
+        subTitle: (any View) = Text(""),
         @ViewBuilder content: () -> Content
     ) {
         self.content = content()
@@ -84,8 +84,8 @@ public struct LCENavigationView<Content: View>: View {
     private var TitleView: some View {
         VStack {
             AnyView(state.title)
-            if let subTitle = state.subTitle {
-                AnyView(subTitle)
+            if (try? state.subTitle.getTag() ?? "hidden" ) != "hidden" {
+                AnyView(state.subTitle)
             }
         }
     }
@@ -162,10 +162,10 @@ public struct LCENavigationView<Content: View>: View {
     
     public func setTitle(
         text: (any View) = Text(""),
-        subTitle: AnyView? = nil
+        subTitle: (any View)? = nil
     ) -> LCENavigationView {
         state.title = text
-        state.subTitle = subTitle
+        state.subTitle = subTitle ?? Text("").tag("hidden")
         return self
     }
     

@@ -71,6 +71,7 @@
 		B1C13FA02CE9389900274517 /* LCENavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C13F9E2CE9389900274517 /* LCENavigationView.swift */; };
 		B1C593F42CA987CB00A1B690 /* LCEssentials+CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C593F32CA987CB00A1B690 /* LCEssentials+CGPoint.swift */; };
 		B1C5F4432BEFDE2700343136 /* LCEssentials+NSError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C5F4422BEFDE2700343136 /* LCEssentials+NSError.swift */; };
+		B1DB43582D79EBAF00EEF435 /* View+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DB43572D79EBA800EEF435 /* View+Ext.swift */; };
 		B644DFEFA350D3F21724DDDCABE0846D /* LCEssentials+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D99247D9BC0AEF68889E5847A4EB305 /* LCEssentials+UILabel.swift */; };
 		BC68EBDED47EE331A6C1EA82696089ED /* LCEssentials+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436BCA9F22B1442F359A7251C32C16BA /* LCEssentials+Comparable.swift */; };
 		BE9FBF9674803D50B506C954210DD9D0 /* LCEssentials+API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428FE5691046F034D13FB8C845C9AF6A /* LCEssentials+API.swift */; };
@@ -161,6 +162,7 @@
 		B1C13F9E2CE9389900274517 /* LCENavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCENavigationView.swift; sourceTree = "<group>"; };
 		B1C593F32CA987CB00A1B690 /* LCEssentials+CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+CGPoint.swift"; sourceTree = "<group>"; };
 		B1C5F4422BEFDE2700343136 /* LCEssentials+NSError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LCEssentials+NSError.swift"; sourceTree = "<group>"; };
+		B1DB43572D79EBA800EEF435 /* View+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
 		B3308E3CC2C4BE34D376B75B2F66C132 /* LCEssentials-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "LCEssentials-umbrella.h"; sourceTree = "<group>"; };
 		B5EE5931A68D35189A7F08191EDA2FFE /* LCEssentials+BidirectionalCollection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+BidirectionalCollection.swift"; sourceTree = "<group>"; };
 		B7A027C2A76221435DA48E8DF0189BAC /* LCEssentials+SignedNumeric.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "LCEssentials+SignedNumeric.swift"; sourceTree = "<group>"; };
@@ -379,6 +381,7 @@
 		B1C13F9F2CE9389900274517 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				B1DB43572D79EBA800EEF435 /* View+Ext.swift */,
 				B1C13F9E2CE9389900274517 /* LCENavigationView.swift */,
 			);
 			name = SwiftUI;
@@ -581,6 +584,7 @@
 				4EB118691377277440F058C3FAB3D52E /* LCEssentials+NSLayoutConstraints.swift in Sources */,
 				6C6A20E82A87AFDB426ADA9A2CB51F34 /* LCEssentials+NSMutableAttributedString.swift in Sources */,
 				020B3B8FADB36388C64AB9300B00B128 /* LCEssentials+NSString.swift in Sources */,
+				B1DB43582D79EBAF00EEF435 /* View+Ext.swift in Sources */,
 				88CB8FB3BD85B9E8A04F2004B65642DA /* LCEssentials+Optional.swift in Sources */,
 				755DE84E85AE68562FFFFA6CFD80A248 /* LCEssentials+RangeReplaceableCollection.swift in Sources */,
 				4C0DC4E9DE9AADEB1FE8DED3273ECFC7 /* LCEssentials+ReachabilityManager.swift in Sources */,
