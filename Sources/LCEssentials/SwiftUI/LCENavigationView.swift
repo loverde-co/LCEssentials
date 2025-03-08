@@ -113,8 +113,7 @@ public struct LCENavigationView<Content: View>: View {
     }
     
     public func setRightButton(
-        text: String,
-        color: Color = .primary,
+        text: Text,
         image: (any View)? = nil,
         action: @escaping () -> Void
     ) -> LCENavigationView {
@@ -123,11 +122,11 @@ public struct LCENavigationView<Content: View>: View {
         } else {
             state.rightButtonImage = nil
         }
-        state.rightButtonText = Text(text).foregroundColor(color)
+        state.rightButtonText = text
         state.rightButtonAction = action
         
         if let string = state.leftButtonText.string, string.isEmpty {
-            state.leftButtonText = Text(text).foregroundColor(.clear)
+            state.leftButtonText = text.foregroundColor(.clear)
         }
         if state.leftButtonImage == nil {
             state.leftButtonImage = image?.foregroundColor(.clear) as? AnyView
@@ -137,8 +136,7 @@ public struct LCENavigationView<Content: View>: View {
     }
     
     public func setLeftButton(
-        text: String,
-        color: Color = .primary,
+        text: Text,
         image: (any View)? = nil,
         action: @escaping () -> Void
     ) -> LCENavigationView {
@@ -147,11 +145,11 @@ public struct LCENavigationView<Content: View>: View {
         } else {
             state.leftButtonImage = nil
         }
-        state.leftButtonText = Text(text).foregroundColor(color)
+        state.leftButtonText = text
         state.leftButtonAction = action
         
         if let string = state.rightButtonText.string, string.isEmpty {
-            state.rightButtonText = Text(text).foregroundColor(.clear)
+            state.rightButtonText = text.foregroundColor(.clear)
         }
         if state.rightButtonImage == nil {
             state.rightButtonImage = image?.foregroundColor(.clear) as? AnyView
