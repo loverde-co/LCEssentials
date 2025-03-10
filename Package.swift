@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "LCEssentials",
     platforms: [
-        .iOS(.v13),
+        .iOS("15.0"),
     ],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
@@ -23,12 +23,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "LCEssentials",
-            dependencies: [],
-            swiftSettings: [
-                // Adicione o suporte às arquiteturas simuladas
-                .define("ARCH_X86_64_SIMULATOR"),
-                .define("ARCH_ARM64_SIMULATOR")
-            ]
+            dependencies: []
         )
 //        .target(name: "Classes", path: "Sources/LCEssentials/Class"),
 //        .target(name: "HUDAlert", path: "Sources/LCEssentials/HUDAlert"),

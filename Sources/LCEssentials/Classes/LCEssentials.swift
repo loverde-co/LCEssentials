@@ -149,6 +149,12 @@ public struct LCEssentials {
     public static let DEFAULT_ERROR_CODE = -99
     public static let DEFAULT_ERROR_MSG = "Error Unknow"
     
+    private static let cache = URLCache(
+            memoryCapacity: 50 * 1024 * 1024,  // 50 MB em memória
+            diskCapacity: 200 * 1024 * 1024,    // 200 MB em disco
+            diskPath: "file_cache"
+        )
+    
     #if os(iOS) || os(macOS)
     /// Extract the file name from the file path
     ///
@@ -521,6 +527,75 @@ public extension LCEssentials {
                                                    object: nil,
                                                    queue: OperationQueue.main) { notification in
                                                     action(notification)
+        }
+    }
+    #endif
+    
+    #if os(iOS)
+    static func cachedFileURL(for url: URL) -> URL? {
+        let request = URLRequest(url: url)
+        guard let cachedResponse = cache.cachedResponse(for: request) else { return nil }
+        
+        let tempDir = FileManager.default.temporaryDirectory
+        let tempFile = tempDir.appendingPathComponent(url.lastPathComponent)
+        
+        do {
+            try cachedResponse.data.write(to: tempFile)
+            return tempFile
+        } catch {
+            return nil
+        }
+    }
+    
+    static func downloadFileWithCache(from url: URL, completion: @escaping (Result<URL, Error>) -> Void) {
+        // Verifica se já existe no cache
+        if let cachedURL = cachedFileURL(for: url) {
+            completion(.success(cachedURL))
+            return
+        }
+        
+        let request = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, let response = response else {
+                completion(.failure(error ?? URLError(.badServerResponse)))
+                return
+            }
+            
+            // Armazena no cache
+            let cachedResponse = CachedURLResponse(response: response, data: data)
+            cache.storeCachedResponse(cachedResponse, for: request)
+            
+            // Escreve no diretório temporário
+            let tempDir = FileManager.default.temporaryDirectory
+            let tempFile = tempDir.appendingPathComponent(url.lastPathComponent)
+            
+            do {
+                try data.write(to: tempFile)
+                completion(.success(tempFile))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
+    static func cleanExpiredCache(expiration: TimeInterval = 7 * 24 * 60 * 60) { // 1 semana padrão
+        cache.removeCachedResponses(since: Date().addingTimeInterval(-expiration))
+        
+        // Limpa arquivos temporários antigos
+        let tempDir = FileManager.default.temporaryDirectory
+        do {
+            let files = try FileManager.default.contentsOfDirectory(at: tempDir, includingPropertiesForKeys: [.creationDateKey])
+            let expirationDate = Date().addingTimeInterval(-expiration)
+            
+            for file in files {
+                let attributes = try FileManager.default.attributesOfItem(atPath: file.path)
+                if let creationDate = attributes[.creationDate] as? Date, creationDate < expirationDate {
+                    try FileManager.default.removeItem(at: file)
+                }
+            }
+        } catch {
+            print("Erro ao limpar cache: \(error)")
         }
     }
     #endif
