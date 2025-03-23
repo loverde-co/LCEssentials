@@ -5,7 +5,11 @@ Loverde Co. Essentials Swift Scripts
 
 This is a repository of essential scripts written in Swift for Loverde Co. used to save time on re-writing and keeping it on all other projects. So this Cocoapods will evolve with Swift and will improve with every release!
 
-**This repository was moving to a new one, this one https://git.loverde.com.br/git/LCEssentials**
+
+This repository was moving to a new one
+---
+This one [https://git.loverde.com.br/git/LCEssentials](https://git.loverde.com.br/git/LCEssentials)
+
 
 Author:
 ----
