@@ -1,6 +1,0 @@
-framework module LCEssentials {
-  umbrella header "LCEssentials-umbrella.h"
-
-  export *
-  module * { export * }
-}
