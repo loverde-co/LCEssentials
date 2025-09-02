@@ -8,7 +8,7 @@ This is a repository of essential scripts written in Swift for Loverde Co. used 
 
 This repository was moving to a new one
 ---
-This one [https://git.loverde.com.br/git/LCEssentials](https://git.loverde.com.br/git/LCEssentials)
+This one [https://git.loverde.com.br/Loverde-Company-LTDA/LCEssentials](https://git.loverde.com.br/Loverde-Company-LTDA/LCEssentials)
 
 
 Author:
